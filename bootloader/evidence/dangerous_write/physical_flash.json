@@ -1,0 +1,61 @@
+{
+  "image_bytes": 2097152,
+  "image_sha256": "130fa197cd37b9e456737796b8600f2d2bde0f7cc2b4db2b112d33e27c0ca453",
+  "packet_sha256": "28e28fec0cfc6ad5d6beda23bb761030d9ef03069529bf13e9bfd0d086b5c8ed",
+  "bytes_transferred": 2097184,
+  "status_changes": [
+    {
+      "layout_version": 2,
+      "mode": "installer",
+      "held": true,
+      "busy": true,
+      "app_valid": false,
+      "dangerous_write": true,
+      "reboot_blocked": false,
+      "remaining_ms": 0,
+      "status": "80",
+      "application_flash": "0x0",
+      "application_capacity": 2097152
+    },
+    {
+      "layout_version": 2,
+      "mode": "installer",
+      "held": true,
+      "busy": true,
+      "app_valid": false,
+      "dangerous_write": true,
+      "reboot_blocked": true,
+      "remaining_ms": 0,
+      "status": "80",
+      "application_flash": "0x0",
+      "application_capacity": 2097152
+    },
+    {
+      "layout_version": 2,
+      "mode": "installer",
+      "held": true,
+      "busy": false,
+      "app_valid": true,
+      "dangerous_write": true,
+      "reboot_blocked": false,
+      "remaining_ms": 0,
+      "status": "C0",
+      "application_flash": "0x0",
+      "application_capacity": 2097152
+    }
+  ],
+  "result": "full_flash_readback_verified",
+  "before": {
+    "layout_version": 2,
+    "mode": "installer",
+    "held": true,
+    "busy": false,
+    "app_valid": false,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x0",
+    "application_capacity": 2097152
+  }
+}

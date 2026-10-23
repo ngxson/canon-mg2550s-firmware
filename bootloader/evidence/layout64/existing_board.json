@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-23",
+  "hardware_writes_this_change": false,
+  "status": {
+    "layout_version": 1,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "product": "MG2550s Demo",
+  "pid": "0x12fe"
+}

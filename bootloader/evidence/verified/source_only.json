@@ -1,0 +1,6 @@
+{
+  "all_artifacts_match": true,
+  "no_stock_dump_or_private_workspace_inputs": true,
+  "factory_sha256": "a0de8248e5f0e85e41dc74a67899fce0c71ab5fbdb3d1368a8d70319e8623e05",
+  "compiler": "arm-none-eabi-gcc (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 14.2.1 20241119"
+}

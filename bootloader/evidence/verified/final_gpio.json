@@ -1,0 +1,25 @@
+{
+  "port": "/dev/cu.usbmodem1101",
+  "i2c_transactions": 0,
+  "eeprom_data_writes": 0,
+  "esp_flash_writes": 0,
+  "chip": "ESP32-C3 (QFN32) (revision v0.4)",
+  "final_gpio_state": {
+    "gpio_output_enable": "0x0",
+    "pins": {
+      "4": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      },
+      "5": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      }
+    }
+  },
+  "left_in_rom_bootloader": true
+}

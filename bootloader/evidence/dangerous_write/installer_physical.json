@@ -1,0 +1,42 @@
+{
+  "started_utc": "2026-10-23T00:54:59.222385+00:00",
+  "installer_sha256": "66ce5f02e258ffde4c54247ed17efe97585c9be1fa5ebd3368c731654d8c7be4",
+  "before": {
+    "layout_version": 1,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "programming": {
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "C0",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "installer": {
+    "layout_version": 2,
+    "mode": "installer",
+    "held": true,
+    "busy": false,
+    "app_valid": false,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x0",
+    "application_capacity": 2097152
+  },
+  "product": "MG2550s Installer",
+  "result": "temporary_installer_running"
+}

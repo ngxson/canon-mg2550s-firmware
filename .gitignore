@@ -1,0 +1,38 @@
+# Generated firmware and ESP-IDF / PlatformIO outputs
+/bootloader/build/
+/tools/esp32/.pio/
+/tools/esp32/build/
+/tools/esp32/managed_components/
+/tools/esp32/sdkconfig
+/tools/esp32/sdkconfig.*
+!/tools/esp32/sdkconfig.defaults
+!/tools/esp32/sdkconfig.defaults.*
+
+# Python environments, bytecode and tool caches
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+
+# Local editor state and generated C/C++ indexing configuration
+.idea/
+.vscode/c_cpp_properties.json
+.vscode/.browse.c_cpp.db*
+.vscode/ipch/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# macOS metadata
+.DS_Store
+._*
+
+# Keep firmware dumps, SDK defaults, and evidence JSON/logs versionable.
+# Do not add blanket *.bin, *.json or *.log exclusions.

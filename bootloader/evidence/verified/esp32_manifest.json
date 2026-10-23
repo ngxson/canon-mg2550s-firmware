@@ -1,0 +1,31 @@
+{
+  "source_sha256": {
+    "tools/esp32/CMakeLists.txt": "124840b59f00f66a56e6f41bbb0066a50f3a56143efa987856b2ade92e829ea4",
+    "tools/esp32/platformio.ini": "1f0d6aa034aa70af38b1de3474589620283ba142acd516d3c43dfee8f4f7c313",
+    "tools/esp32/partitions.csv": "9db330da9203168a9de16ca8df0b3505f9be00b37cedcdc2c7d084cdb500571e",
+    "tools/esp32/sdkconfig.defaults": "b7e3f8dc9e0c60004a73da1ef0409efe247b396f9a886ca64f9d7a8a1c584813",
+    "tools/esp32/src/CMakeLists.txt": "4dc2c62434f209799bd3d30126c1a107b213169622f56994cd9680259911a9a7",
+    "tools/esp32/src/main.c": "3ab2e2d4fb0e93822e7a8879885c8b619dadbac751999c61ad2ecd1c3927091c",
+    "bootloader/src/integrity.c": "80561a30b92b6f380d8f4d2e01da9ca84e8c72bae33ce844bb6ec9959fea6584",
+    "bootloader/include/board_values.h": "54da9edd7d1f39608f11124287b53535c8e1d6afdc83dcdfe3bbab7d95dee2b5",
+    "bootloader/include/fw.h": "a07f47ba148d679f7bf364a791ac15a4b45128d1995ddcf3104e27211943ef53",
+    "bootloader/include/protocol.h": "4a2ca067d5abc0489c5d1d5acca0b11472a01976cf9c5b6096ca1a2f57347614",
+    "bootloader/include/service.h": "e36cb9fa44c3e597774897683fbd9e9643fff699ef255d112809eaa9d08a08f1"
+  },
+  "artifacts": {
+    "firmware.bin": {
+      "bytes": 214544,
+      "sha256": "55a096b3844477b654f5be30b8baf00e375fae3481313d55d95ea93a2d34f4f8"
+    },
+    "bootloader.bin": {
+      "bytes": 12960,
+      "sha256": "e0bc1500175db7c73f36a8610f3cc56d8cc073e72af80d485fe1e5731630dd40"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "fd010fa4f4a0beee25eabac1f4936b8ba284a99ee5c952c5b47534d4a20f6247"
+    }
+  },
+  "upload_hash_verified": true,
+  "upload_log": "esp32_upload.log"
+}

@@ -1,0 +1,12 @@
+{
+  "all_assertions_passed": true,
+  "checks": [
+    "short_rejected_before_usb_access",
+    "long_rejected_before_usb_access",
+    "wrong_hash_rejected_before_usb_access",
+    "old_layout_rejected_without_begin_or_bulk",
+    "no_capability_rejected_without_begin_or_bulk",
+    "busy_rejected_without_begin_or_bulk",
+    "status_decodes_reboot_block_and_installer"
+  ]
+}

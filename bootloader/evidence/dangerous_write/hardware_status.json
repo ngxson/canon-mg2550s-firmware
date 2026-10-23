@@ -1,0 +1,77 @@
+{
+  "time_utc": "2026-10-23T00:56:58.479548+00:00",
+  "new_bootloader": {
+    "layout_version": 2,
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616,
+    "pid": "0x176d",
+    "product": "MG2550s Bootloader"
+  },
+  "invalid_dangerous_length": "USB STALL; no transfer begun",
+  "held_beyond_five_seconds": {
+    "layout_version": 2,
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "normal_window": {
+    "layout_version": 2,
+    "mode": "bootloader",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 4764,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616,
+    "pid": "0x176d",
+    "product": "MG2550s Bootloader"
+  },
+  "timer_samples": [
+    {
+      "host_seconds": 2.7909409254789352e-06,
+      "remaining_ms": 4763
+    },
+    {
+      "host_seconds": 0.201279791072011,
+      "remaining_ms": 4562
+    },
+    {
+      "host_seconds": 0.40236650011502206,
+      "remaining_ms": 4361
+    }
+  ],
+  "demo_application": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616,
+    "pid": "0x12fe",
+    "product": "MG2550s Demo"
+  },
+  "result": "new_64k_bootloader_and_demo_verified_without_power_cycle"
+}

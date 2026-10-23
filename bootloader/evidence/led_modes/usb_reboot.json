@@ -1,0 +1,40 @@
+{
+  "manual_power_cycles": 0,
+  "command": "python3 tools/fwctl.py reboot",
+  "expected_default": "bootloader",
+  "before": {
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080,
+    "product": "MG2550s Demo",
+    "pid": "0x12fe"
+  },
+  "after": {
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080,
+    "product": "MG2550s Bootloader",
+    "pid": "0x176d"
+  },
+  "after_5_5_seconds": {
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "all_assertions_passed": true
+}

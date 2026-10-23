@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-23",
+  "manual_power_cycles": 0,
+  "printer_usb_connected": true,
+  "usb_used_for_reboot_commands": false,
+  "after_i2c_update": {
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "i2c_reboot_to_bootloader": {
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "i2c_reboot_to_application": {
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "all_assertions_passed": true
+}

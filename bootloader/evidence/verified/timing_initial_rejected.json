@@ -1,0 +1,10 @@
+{
+  "initial_clock_assumption_hz": 48000000,
+  "observed_countdown_ms_per_host_second": 2000.0,
+  "inferred_counter_hz": 96000000,
+  "samples_first_remaining_ms": 4592,
+  "samples_last_remaining_ms": 264,
+  "host_seconds_between_samples": 2.164,
+  "host_seconds_first_boot_observation_to_app": 2.819,
+  "result": "Timing assertion rejected initial assumption; firmware and model being corrected"
+}

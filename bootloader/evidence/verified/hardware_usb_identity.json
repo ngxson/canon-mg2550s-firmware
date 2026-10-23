@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-23",
+  "manual_power_cycles": 0,
+  "unheld_window": {
+    "mode": "bootloader",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 4745,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "bootloader_identity": {
+    "vid": "04a9",
+    "pid": "176d",
+    "product": "MG2550s Bootloader",
+    "manufacturer": "OpenFW",
+    "serial": "OPEN0001",
+    "bcdDevice": "0200"
+  },
+  "stay_in_window_after_5_5_seconds": {
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "application_identity": {
+    "vid": "04a9",
+    "pid": "12fe",
+    "product": "MG2550s Demo",
+    "manufacturer": "OpenFW",
+    "serial": "OPEN0001",
+    "bcdDevice": "0200"
+  },
+  "final_status": {
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "all_assertions_passed": true
+}

@@ -1,0 +1,17 @@
+{
+  "final_status": {
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x20000",
+    "application_capacity": 1966080
+  },
+  "product": "MG2550s Demo",
+  "pid": "0x12fe",
+  "manual_power_cycles": 0,
+  "user_observation": "Yes, only power blinks",
+  "observation_mode": "held bootloader before returning to demo"
+}

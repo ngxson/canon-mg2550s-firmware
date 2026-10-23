@@ -1,0 +1,475 @@
+{
+  "factory_sha256": "a0de8248e5f0e85e41dc74a67899fce0c71ab5fbdb3d1368a8d70319e8623e05",
+  "cases": {
+    "five_second_window_then_distinct_application": {
+      "identities": [
+        "0x176d",
+        "0x12fe"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 307,
+      "protected_128k_unchanged": true
+    },
+    "stay_full_speed": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 998,
+      "protected_128k_unchanged": true
+    },
+    "stay_high_speed_coalesced": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 998,
+      "protected_128k_unchanged": true
+    },
+    "invalid_application_stays_in_rescue": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 999,
+      "protected_128k_unchanged": true
+    },
+    "no_usb_host_still_launches_app": {
+      "identities": [],
+      "entered": [
+        "0x20010000",
+        "0x20020000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 249,
+      "protected_128k_unchanged": true
+    },
+    "usb_application_update_header_last": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [
+        131072
+      ],
+      "programs": [
+        135168,
+        131072
+      ],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 9,
+      "protected_128k_unchanged": true
+    },
+    "reject_bad_usb_crc": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 8,
+      "protected_128k_unchanged": true
+    },
+    "partial_usb_upload_times_out_before_erase": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 1673,
+      "protected_128k_unchanged": true
+    },
+    "stage0_ignores_main_image_bootloader_accepts_i2c": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [
+        131072
+      ],
+      "programs": [
+        135168,
+        131072
+      ],
+      "i2c_results": [
+        192
+      ],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 158,
+      "protected_128k_unchanged": true
+    },
+    "flash_readback_error": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [
+        131072
+      ],
+      "programs": [
+        135168
+      ],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 8,
+      "protected_128k_unchanged": true
+    },
+    "power_loss_before_header_commit_stays_rescue": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 999,
+      "protected_128k_unchanged": true
+    },
+    "i2c_recovery_after_power_loss": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [
+        131072
+      ],
+      "programs": [
+        135168,
+        131072
+      ],
+      "i2c_results": [
+        192
+      ],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 158,
+      "protected_128k_unchanged": true
+    },
+    "usb_acknowledged_reboot_to_application": {
+      "identities": [
+        "0x176d",
+        "0x12fe"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20010000",
+        "0x20020000"
+      ],
+      "resets": 2,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 10,
+      "protected_128k_unchanged": true
+    },
+    "main_app_usb_reboot_to_held_bootloader": {
+      "identities": [
+        "0x176d",
+        "0x12fe",
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000",
+        "0x20010000"
+      ],
+      "resets": 2,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 312,
+      "protected_128k_unchanged": true
+    },
+    "main_app_i2c_offer_reboots_and_updates_without_usb_command": {
+      "identities": [
+        "0x176d",
+        "0x12fe",
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000",
+        "0x20010000"
+      ],
+      "resets": 2,
+      "erases": [
+        131072
+      ],
+      "programs": [
+        135168,
+        131072
+      ],
+      "i2c_results": [
+        192
+      ],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 473,
+      "protected_128k_unchanged": true
+    },
+    "i2c_reboot_to_application": {
+      "identities": [
+        "0x176d",
+        "0x12fe"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20010000",
+        "0x20020000"
+      ],
+      "resets": 2,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [
+        192
+      ],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 17,
+      "protected_128k_unchanged": true
+    },
+    "no_reboot_before_status_ack": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 801,
+      "protected_128k_unchanged": true
+    },
+    "reject_begin_length_0": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 5,
+      "protected_128k_unchanged": true
+    },
+    "reject_begin_length_31": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 5,
+      "protected_128k_unchanged": true
+    },
+    "reject_begin_length_1966081": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 5,
+      "protected_128k_unchanged": true
+    },
+    "reject_valid_crc_wrong_load_address": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 8,
+      "protected_128k_unchanged": true
+    },
+    "reject_reboot_and_second_upload_while_busy": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [
+        131072
+      ],
+      "programs": [
+        135168,
+        131072
+      ],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 9,
+      "protected_128k_unchanged": true
+    },
+    "i2c_does_not_interleave_with_owned_usb_transfer": {
+      "identities": [
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000"
+      ],
+      "resets": 1,
+      "erases": [
+        131072
+      ],
+      "programs": [
+        135168,
+        131072
+      ],
+      "i2c_results": [
+        192
+      ],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 1826,
+      "protected_128k_unchanged": true
+    },
+    "corrupt_i2c_offer_cannot_modify_flash": {
+      "identities": [
+        "0x176d",
+        "0x12fe"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 369,
+      "protected_128k_unchanged": true
+    }
+  },
+  "all_assertions_passed": true
+}
