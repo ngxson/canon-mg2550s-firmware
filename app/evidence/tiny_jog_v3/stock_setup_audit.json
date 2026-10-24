@@ -1,0 +1,2172 @@
+{
+  "app_sha256": "696c4612b35f69a2dc82c6f8cf426f85b3cc004d6386565f74eed38535b33746",
+  "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "assumptions": "Capture current app MMIO at drive enable, against fresh stock-home evidence.\n\nUses the public app/bootloader emulator with inert motor registers. Does not\npredict physical movement. No flash/upload/device commands are issued.\n",
+  "stock_state": {
+    "0xc0c41400": 0,
+    "0xc0c41404": 4,
+    "0xc0c41408": 5,
+    "0xc0c4140c": 6,
+    "0xc0c41410": 7,
+    "0xc0c41414": 11,
+    "0xc0c41418": 10,
+    "0xc0c41008": 1,
+    "0xc0c85604": null,
+    "0xc0c85624": 0,
+    "0xc0c81090": 63,
+    "0xc0c57000": 8205,
+    "0xc0c57004": 0,
+    "0xc0c57008": 120,
+    "0xc0c57100": 7340032,
+    "0xc0c57140": 0,
+    "0xc0c57148": 1,
+    "0xc0c57304": 0,
+    "0xc0c57308": 1,
+    "0xc0c56000": 258,
+    "0xc0c56004": 4000,
+    "0xc0c56008": 2000,
+    "0xc0101000": 2,
+    "0xc0101100": 474922,
+    "0xc0101124": 218572711,
+    "0xc010112c": 785,
+    "0xc0101134": 263,
+    "0xc0102004": 383
+  },
+  "cases": [
+    {
+      "direction": 0,
+      "drive_state": {
+        "0xc0c41400": 0,
+        "0xc0c41404": 4,
+        "0xc0c41408": 5,
+        "0xc0c4140c": 6,
+        "0xc0c41410": 7,
+        "0xc0c41414": 11,
+        "0xc0c41418": 10,
+        "0xc0c41008": 1,
+        "0xc0c85604": 1,
+        "0xc0c85624": 0,
+        "0xc0c81090": 63,
+        "0xc0c57000": 8205,
+        "0xc0c57004": 0,
+        "0xc0c57008": 120,
+        "0xc0c57100": 7340032,
+        "0xc0c57140": 0,
+        "0xc0c57148": 1,
+        "0xc0c57304": 0,
+        "0xc0c57308": 1,
+        "0xc0c56000": 258,
+        "0xc0c56004": 4000,
+        "0xc0c56008": 2000,
+        "0xc0101000": 2,
+        "0xc0101100": 474922,
+        "0xc0101124": 218572711,
+        "0xc010112c": 785,
+        "0xc0101134": 263,
+        "0xc0102004": 383
+      },
+      "writes": [
+        {
+          "pc": "0x2c0",
+          "address": "0xc0101000",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101124",
+          "value": 73760
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41008",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41404",
+          "value": 1
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41408",
+          "value": 2
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41418",
+          "value": 3
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50200",
+          "value": 513
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50208",
+          "value": 1
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50204",
+          "value": 554
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41404",
+          "value": 4
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41408",
+          "value": 5
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41418",
+          "value": 10
+        },
+        {
+          "pc": "0x378",
+          "address": "0xc0101000",
+          "value": 0
+        },
+        {
+          "pc": "0x3c8",
+          "address": "0xc0101000",
+          "value": 2
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101000",
+          "value": 17835282
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101100",
+          "value": 474922
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101124",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc010112c",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101134",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0102004",
+          "value": 271
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101000",
+          "value": 2
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101100",
+          "value": 474922
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101124",
+          "value": 218572711
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc010112c",
+          "value": 785
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101134",
+          "value": 263
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0102004",
+          "value": 383
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c81090",
+          "value": 0
+        },
+        {
+          "pc": "0x20023364",
+          "address": "0xc0c41008",
+          "value": 0
+        },
+        {
+          "pc": "0x2002336c",
+          "address": "0xc0c50000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023370",
+          "address": "0xc0c50004",
+          "value": 4000
+        },
+        {
+          "pc": "0x20023374",
+          "address": "0xc0c50008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023378",
+          "address": "0xc0c52000",
+          "value": 0
+        },
+        {
+          "pc": "0x2002337c",
+          "address": "0xc0c52004",
+          "value": 4000
+        },
+        {
+          "pc": "0x20023380",
+          "address": "0xc0c52008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023384",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023388",
+          "address": "0xc0c56004",
+          "value": 4000
+        },
+        {
+          "pc": "0x2002338c",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41404",
+          "value": 1
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41408",
+          "value": 2
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c4140c",
+          "value": 6
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41410",
+          "value": 7
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41414",
+          "value": 11
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41418",
+          "value": 3
+        },
+        {
+          "pc": "0x200233a8",
+          "address": "0xc0c41008",
+          "value": 1
+        },
+        {
+          "pc": "0x200233b4",
+          "address": "0xc0c41008",
+          "value": 0
+        },
+        {
+          "pc": "0x200233b8",
+          "address": "0xc0c50200",
+          "value": 3847
+        },
+        {
+          "pc": "0x200233d0",
+          "address": "0xc0c50208",
+          "value": 3
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483659
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483658
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483657
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483656
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147500047
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147500047
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 554
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 50368
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 50368
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 50368
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41404",
+          "value": 4
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41408",
+          "value": 5
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c4140c",
+          "value": 6
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41410",
+          "value": 7
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41414",
+          "value": 11
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41418",
+          "value": 10
+        },
+        {
+          "pc": "0x20023460",
+          "address": "0xc0c85604",
+          "value": 1
+        },
+        {
+          "pc": "0x20023464",
+          "address": "0xc0c41008",
+          "value": 1
+        },
+        {
+          "pc": "0x20023474",
+          "address": "0xc0c51000",
+          "value": 32
+        },
+        {
+          "pc": "0x20023484",
+          "address": "0xc0c53000",
+          "value": 32
+        },
+        {
+          "pc": "0x20023494",
+          "address": "0xc0c57000",
+          "value": 32
+        },
+        {
+          "pc": "0x20023498",
+          "address": "0xc0c85624",
+          "value": 0
+        },
+        {
+          "pc": "0x200234a8",
+          "address": "0xc0c81090",
+          "value": 63
+        },
+        {
+          "pc": "0x200234b8",
+          "address": "0xc0c51000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234c4",
+          "address": "0xc0c53000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234d0",
+          "address": "0xc0c57000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234d8",
+          "address": "0xc0c5712c",
+          "value": 0
+        },
+        {
+          "pc": "0x200234dc",
+          "address": "0xc0c57000",
+          "value": 40973
+        },
+        {
+          "pc": "0x200234e4",
+          "address": "0xc0c57304",
+          "value": 0
+        },
+        {
+          "pc": "0x200234e8",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234ec",
+          "address": "0xc0c56004",
+          "value": 4000
+        },
+        {
+          "pc": "0x200234f4",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x200234f8",
+          "address": "0xc0c57100",
+          "value": 7340032
+        },
+        {
+          "pc": "0x20023500",
+          "address": "0xc0c57200",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023504",
+          "address": "0xc0c57108",
+          "value": 0
+        },
+        {
+          "pc": "0x20023508",
+          "address": "0xc0c5710c",
+          "value": 0
+        },
+        {
+          "pc": "0x2002350c",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x20023510",
+          "address": "0xc0c57400",
+          "value": 0
+        },
+        {
+          "pc": "0x20023514",
+          "address": "0xc0c56104",
+          "value": 0
+        },
+        {
+          "pc": "0x20023518",
+          "address": "0xc0c57404",
+          "value": 0
+        },
+        {
+          "pc": "0x2002351c",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023520",
+          "address": "0xc0c56010",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023524",
+          "address": "0xc0c57120",
+          "value": 0
+        },
+        {
+          "pc": "0x20023528",
+          "address": "0xc0c56014",
+          "value": 0
+        },
+        {
+          "pc": "0x2002352c",
+          "address": "0xc0c57220",
+          "value": 0
+        },
+        {
+          "pc": "0x20023530",
+          "address": "0xc0c57204",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023534",
+          "address": "0xc0c57208",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023538",
+          "address": "0xc0c5720c",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023540",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023544",
+          "address": "0xc0c57128",
+          "value": 0
+        },
+        {
+          "pc": "0x20023548",
+          "address": "0xc0c56024",
+          "value": 0
+        },
+        {
+          "pc": "0x2002354c",
+          "address": "0xc0c57004",
+          "value": 0
+        },
+        {
+          "pc": "0x20023550",
+          "address": "0xc0c57008",
+          "value": 120
+        },
+        {
+          "pc": "0x20023554",
+          "address": "0xc0c5712c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023558",
+          "address": "0xc0c57148",
+          "value": 1
+        },
+        {
+          "pc": "0x2002355c",
+          "address": "0xc0c57308",
+          "value": 1
+        },
+        {
+          "pc": "0x20023560",
+          "address": "0xc0c57140",
+          "value": 0
+        },
+        {
+          "pc": "0x20023570",
+          "address": "0xc0c57000",
+          "value": 8205
+        },
+        {
+          "pc": "0x20023014",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023018",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023020",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023024",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023028",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x2002302c",
+          "address": "0xc0c57400",
+          "value": 0
+        },
+        {
+          "pc": "0x200235f4",
+          "address": "0xc0c57200",
+          "value": 16777215
+        },
+        {
+          "pc": "0x200235f8",
+          "address": "0xc0c57204",
+          "value": 16777215
+        },
+        {
+          "pc": "0x200235fc",
+          "address": "0xc0c57208",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023600",
+          "address": "0xc0c5720c",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023604",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023608",
+          "address": "0xc0c57200",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023610",
+          "address": "0xc0c57160",
+          "value": 1
+        },
+        {
+          "pc": "0x2002361c",
+          "address": "0xc0c57164",
+          "value": 7340032
+        },
+        {
+          "pc": "0x20023634",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023638",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x2002363c",
+          "address": "0xc0c57120",
+          "value": 7340096
+        },
+        {
+          "pc": "0x20023648",
+          "address": "0xc0c56010",
+          "value": 2000
+        },
+        {
+          "pc": "0x2002364c",
+          "address": "0xc0c57128",
+          "value": 7340097
+        },
+        {
+          "pc": "0x20023650",
+          "address": "0xc0c56028",
+          "value": 0
+        },
+        {
+          "pc": "0x20023654",
+          "address": "0xc0c5601c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023658",
+          "address": "0xc0c57124",
+          "value": 1
+        },
+        {
+          "pc": "0x2002365c",
+          "address": "0xc0c56018",
+          "value": 0
+        },
+        {
+          "pc": "0x20023660",
+          "address": "0xc0c5600c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023664",
+          "address": "0xc0c5711c",
+          "value": 1
+        },
+        {
+          "pc": "0x20023668",
+          "address": "0xc0c57130",
+          "value": 0
+        },
+        {
+          "pc": "0x2002366c",
+          "address": "0xc0c5712c",
+          "value": 0
+        },
+        {
+          "pc": "0x2002367c",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x20023684",
+          "address": "0xc0c56104",
+          "value": 0
+        },
+        {
+          "pc": "0x20023688",
+          "address": "0xc0c56100",
+          "value": 1
+        },
+        {
+          "pc": "0x200236e4",
+          "address": "0xc0c56000",
+          "value": 258
+        },
+        {
+          "pc": "0x200236f0",
+          "address": "0xc0c56008",
+          "value": 2030
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2090
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 2120
+        },
+        {
+          "pc": "0x20023190",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023014",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023018",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023020",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023024",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023028",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x2002302c",
+          "address": "0xc0c57400",
+          "value": 0
+        }
+      ],
+      "management_after": [
+        1464223565,
+        2,
+        2,
+        4,
+        0,
+        128,
+        65536,
+        2031616
+      ],
+      "protected": {
+        "identities": [
+          "0x176d",
+          "0x12fe"
+        ],
+        "entered": [
+          "0x20010000",
+          "0x20020000"
+        ],
+        "resets": 1,
+        "erases": [],
+        "erase_sizes": [],
+        "programs": [],
+        "i2c_results": [],
+        "i2c_addresses": [
+          66
+        ],
+        "led_frames": 310,
+        "led_pattern_samples": {
+          "stage0": [
+            [
+              0,
+              16,
+              0,
+              0
+            ]
+          ],
+          "bootloader": [
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "application": [
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              32,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              32,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              16
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              32,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              32,
+              0
+            ]
+          ]
+        },
+        "protected_prefix_bytes": 65536,
+        "protected_prefix_unchanged": true,
+        "main_app_unchanged_during_maintenance": null
+      },
+      "differences": []
+    },
+    {
+      "direction": 1,
+      "drive_state": {
+        "0xc0c41400": 0,
+        "0xc0c41404": 4,
+        "0xc0c41408": 5,
+        "0xc0c4140c": 6,
+        "0xc0c41410": 7,
+        "0xc0c41414": 11,
+        "0xc0c41418": 10,
+        "0xc0c41008": 1,
+        "0xc0c85604": 1,
+        "0xc0c85624": 0,
+        "0xc0c81090": 63,
+        "0xc0c57000": 8205,
+        "0xc0c57004": 0,
+        "0xc0c57008": 120,
+        "0xc0c57100": 7340032,
+        "0xc0c57140": 0,
+        "0xc0c57148": 1,
+        "0xc0c57304": 0,
+        "0xc0c57308": 1,
+        "0xc0c56000": 258,
+        "0xc0c56004": 4000,
+        "0xc0c56008": 2000,
+        "0xc0101000": 2,
+        "0xc0101100": 474922,
+        "0xc0101124": 218572711,
+        "0xc010112c": 785,
+        "0xc0101134": 263,
+        "0xc0102004": 383
+      },
+      "writes": [
+        {
+          "pc": "0x2c0",
+          "address": "0xc0101000",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101124",
+          "value": 73760
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41008",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41404",
+          "value": 1
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41408",
+          "value": 2
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41418",
+          "value": 3
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50200",
+          "value": 513
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50208",
+          "value": 1
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50204",
+          "value": 554
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41404",
+          "value": 4
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41408",
+          "value": 5
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c41418",
+          "value": 10
+        },
+        {
+          "pc": "0x378",
+          "address": "0xc0101000",
+          "value": 0
+        },
+        {
+          "pc": "0x3c8",
+          "address": "0xc0101000",
+          "value": 2
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101000",
+          "value": 17835282
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101100",
+          "value": 474922
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101124",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc010112c",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101134",
+          "value": 0
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0102004",
+          "value": 271
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101000",
+          "value": 2
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101100",
+          "value": 474922
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101124",
+          "value": 218572711
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc010112c",
+          "value": 785
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0101134",
+          "value": 263
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0102004",
+          "value": 383
+        },
+        {
+          "pc": "0x21c",
+          "address": "0xc0c81090",
+          "value": 0
+        },
+        {
+          "pc": "0x20023364",
+          "address": "0xc0c41008",
+          "value": 0
+        },
+        {
+          "pc": "0x2002336c",
+          "address": "0xc0c50000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023370",
+          "address": "0xc0c50004",
+          "value": 4000
+        },
+        {
+          "pc": "0x20023374",
+          "address": "0xc0c50008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023378",
+          "address": "0xc0c52000",
+          "value": 0
+        },
+        {
+          "pc": "0x2002337c",
+          "address": "0xc0c52004",
+          "value": 4000
+        },
+        {
+          "pc": "0x20023380",
+          "address": "0xc0c52008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023384",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023388",
+          "address": "0xc0c56004",
+          "value": 4000
+        },
+        {
+          "pc": "0x2002338c",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41404",
+          "value": 1
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41408",
+          "value": 2
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c4140c",
+          "value": 6
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41410",
+          "value": 7
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41414",
+          "value": 11
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41418",
+          "value": 3
+        },
+        {
+          "pc": "0x200233a8",
+          "address": "0xc0c41008",
+          "value": 1
+        },
+        {
+          "pc": "0x200233b4",
+          "address": "0xc0c41008",
+          "value": 0
+        },
+        {
+          "pc": "0x200233b8",
+          "address": "0xc0c50200",
+          "value": 3847
+        },
+        {
+          "pc": "0x200233d0",
+          "address": "0xc0c50208",
+          "value": 3
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483659
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483658
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483657
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147483656
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147500047
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 2147500047
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 554
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 50368
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 50368
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x200233dc",
+          "address": "0xc0c50204",
+          "value": 50368
+        },
+        {
+          "pc": "0x200233e0",
+          "address": "0xc0c50210",
+          "value": 4294967295
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41400",
+          "value": 0
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41404",
+          "value": 4
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41408",
+          "value": 5
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c4140c",
+          "value": 6
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41410",
+          "value": 7
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41414",
+          "value": 11
+        },
+        {
+          "pc": "0x2002305c",
+          "address": "0xc0c41418",
+          "value": 10
+        },
+        {
+          "pc": "0x20023460",
+          "address": "0xc0c85604",
+          "value": 1
+        },
+        {
+          "pc": "0x20023464",
+          "address": "0xc0c41008",
+          "value": 1
+        },
+        {
+          "pc": "0x20023474",
+          "address": "0xc0c51000",
+          "value": 32
+        },
+        {
+          "pc": "0x20023484",
+          "address": "0xc0c53000",
+          "value": 32
+        },
+        {
+          "pc": "0x20023494",
+          "address": "0xc0c57000",
+          "value": 32
+        },
+        {
+          "pc": "0x20023498",
+          "address": "0xc0c85624",
+          "value": 0
+        },
+        {
+          "pc": "0x200234a8",
+          "address": "0xc0c81090",
+          "value": 63
+        },
+        {
+          "pc": "0x200234b8",
+          "address": "0xc0c51000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234c4",
+          "address": "0xc0c53000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234d0",
+          "address": "0xc0c57000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234d8",
+          "address": "0xc0c5712c",
+          "value": 0
+        },
+        {
+          "pc": "0x200234dc",
+          "address": "0xc0c57000",
+          "value": 40973
+        },
+        {
+          "pc": "0x200234e4",
+          "address": "0xc0c57304",
+          "value": 0
+        },
+        {
+          "pc": "0x200234e8",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x200234ec",
+          "address": "0xc0c56004",
+          "value": 4000
+        },
+        {
+          "pc": "0x200234f4",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x200234f8",
+          "address": "0xc0c57100",
+          "value": 7340032
+        },
+        {
+          "pc": "0x20023500",
+          "address": "0xc0c57200",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023504",
+          "address": "0xc0c57108",
+          "value": 0
+        },
+        {
+          "pc": "0x20023508",
+          "address": "0xc0c5710c",
+          "value": 0
+        },
+        {
+          "pc": "0x2002350c",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x20023510",
+          "address": "0xc0c57400",
+          "value": 0
+        },
+        {
+          "pc": "0x20023514",
+          "address": "0xc0c56104",
+          "value": 0
+        },
+        {
+          "pc": "0x20023518",
+          "address": "0xc0c57404",
+          "value": 0
+        },
+        {
+          "pc": "0x2002351c",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023520",
+          "address": "0xc0c56010",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023524",
+          "address": "0xc0c57120",
+          "value": 0
+        },
+        {
+          "pc": "0x20023528",
+          "address": "0xc0c56014",
+          "value": 0
+        },
+        {
+          "pc": "0x2002352c",
+          "address": "0xc0c57220",
+          "value": 0
+        },
+        {
+          "pc": "0x20023530",
+          "address": "0xc0c57204",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023534",
+          "address": "0xc0c57208",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023538",
+          "address": "0xc0c5720c",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023540",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023544",
+          "address": "0xc0c57128",
+          "value": 0
+        },
+        {
+          "pc": "0x20023548",
+          "address": "0xc0c56024",
+          "value": 0
+        },
+        {
+          "pc": "0x2002354c",
+          "address": "0xc0c57004",
+          "value": 0
+        },
+        {
+          "pc": "0x20023550",
+          "address": "0xc0c57008",
+          "value": 120
+        },
+        {
+          "pc": "0x20023554",
+          "address": "0xc0c5712c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023558",
+          "address": "0xc0c57148",
+          "value": 1
+        },
+        {
+          "pc": "0x2002355c",
+          "address": "0xc0c57308",
+          "value": 1
+        },
+        {
+          "pc": "0x20023560",
+          "address": "0xc0c57140",
+          "value": 0
+        },
+        {
+          "pc": "0x20023570",
+          "address": "0xc0c57000",
+          "value": 8205
+        },
+        {
+          "pc": "0x20023014",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023018",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023020",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023024",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023028",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x2002302c",
+          "address": "0xc0c57400",
+          "value": 0
+        },
+        {
+          "pc": "0x200235f4",
+          "address": "0xc0c57200",
+          "value": 16777215
+        },
+        {
+          "pc": "0x200235f8",
+          "address": "0xc0c57204",
+          "value": 16777215
+        },
+        {
+          "pc": "0x200235fc",
+          "address": "0xc0c57208",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023600",
+          "address": "0xc0c5720c",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023604",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023608",
+          "address": "0xc0c57200",
+          "value": 16777215
+        },
+        {
+          "pc": "0x20023610",
+          "address": "0xc0c57160",
+          "value": 1
+        },
+        {
+          "pc": "0x2002361c",
+          "address": "0xc0c57164",
+          "value": 7340032
+        },
+        {
+          "pc": "0x20023634",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023638",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x2002363c",
+          "address": "0xc0c57120",
+          "value": 7339968
+        },
+        {
+          "pc": "0x20023648",
+          "address": "0xc0c56010",
+          "value": 2000
+        },
+        {
+          "pc": "0x2002364c",
+          "address": "0xc0c57128",
+          "value": 7339967
+        },
+        {
+          "pc": "0x20023650",
+          "address": "0xc0c56028",
+          "value": 0
+        },
+        {
+          "pc": "0x20023654",
+          "address": "0xc0c5601c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023658",
+          "address": "0xc0c57124",
+          "value": 1
+        },
+        {
+          "pc": "0x2002365c",
+          "address": "0xc0c56018",
+          "value": 0
+        },
+        {
+          "pc": "0x20023660",
+          "address": "0xc0c5600c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023664",
+          "address": "0xc0c5711c",
+          "value": 1
+        },
+        {
+          "pc": "0x20023668",
+          "address": "0xc0c57130",
+          "value": 0
+        },
+        {
+          "pc": "0x2002366c",
+          "address": "0xc0c5712c",
+          "value": 0
+        },
+        {
+          "pc": "0x2002367c",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x20023684",
+          "address": "0xc0c56104",
+          "value": 0
+        },
+        {
+          "pc": "0x20023688",
+          "address": "0xc0c56100",
+          "value": 1
+        },
+        {
+          "pc": "0x200236e4",
+          "address": "0xc0c56000",
+          "value": 258
+        },
+        {
+          "pc": "0x200236f0",
+          "address": "0xc0c56008",
+          "value": 1970
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1910
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x200237b8",
+          "address": "0xc0c56008",
+          "value": 1880
+        },
+        {
+          "pc": "0x20023190",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023014",
+          "address": "0xc0c56000",
+          "value": 0
+        },
+        {
+          "pc": "0x20023018",
+          "address": "0xc0c56008",
+          "value": 2000
+        },
+        {
+          "pc": "0x20023020",
+          "address": "0xc0c5711c",
+          "value": 0
+        },
+        {
+          "pc": "0x20023024",
+          "address": "0xc0c57124",
+          "value": 0
+        },
+        {
+          "pc": "0x20023028",
+          "address": "0xc0c56100",
+          "value": 0
+        },
+        {
+          "pc": "0x2002302c",
+          "address": "0xc0c57400",
+          "value": 0
+        }
+      ],
+      "management_after": [
+        1464223565,
+        2,
+        2,
+        4,
+        0,
+        128,
+        65536,
+        2031616
+      ],
+      "protected": {
+        "identities": [
+          "0x176d",
+          "0x12fe"
+        ],
+        "entered": [
+          "0x20010000",
+          "0x20020000"
+        ],
+        "resets": 1,
+        "erases": [],
+        "erase_sizes": [],
+        "programs": [],
+        "i2c_results": [],
+        "i2c_addresses": [
+          66
+        ],
+        "led_frames": 310,
+        "led_pattern_samples": {
+          "stage0": [
+            [
+              0,
+              16,
+              0,
+              0
+            ]
+          ],
+          "bootloader": [
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ]
+          ],
+          "application": [
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              32,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              32,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              16
+            ],
+            [
+              0,
+              16,
+              0,
+              0
+            ],
+            [
+              32,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              32,
+              0
+            ]
+          ]
+        },
+        "protected_prefix_bytes": 65536,
+        "protected_prefix_unchanged": true,
+        "main_app_unchanged_during_maintenance": null
+      },
+      "differences": []
+    }
+  ],
+  "assertions_passed": true
+}

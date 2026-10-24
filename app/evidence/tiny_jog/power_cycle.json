@@ -1,0 +1,35 @@
+{
+  "operation": "user-requested power cycle before USB app upload",
+  "previous_attempt": "Python urllib POST received HTTP 403",
+  "transitions": [
+    {
+      "elapsed_s": 0.007,
+      "usb_pids": [
+        "0x12fe"
+      ]
+    },
+    {
+      "elapsed_s": 2.295,
+      "usb_pids": []
+    },
+    {
+      "elapsed_s": 6.425,
+      "usb_pids": [
+        "0x176d"
+      ]
+    },
+    {
+      "elapsed_s": 11.705,
+      "usb_pids": []
+    },
+    {
+      "elapsed_s": 12.222,
+      "usb_pids": [
+        "0x12fe"
+      ]
+    }
+  ],
+  "curl_exit_code": 0,
+  "http_response": "HTTP/2 200 \ndate: Fri, 23 Oct 2026 22:36:35 GMT\ncontent-length: 0\nreferrer-policy: no-referrer\nserver: cloudflare\nx-content-type-options: nosniff\nx-frame-options: SAMEORIGIN\ncf-cache-status: DYNAMIC\nreport-to: {\"group\":\"cf-nel\",\"max_age\":604800,\"endpoints\":[{\"url\":\"https://a.nel.cloudflare.com/report/v4?s=DUWCjJ4rsmxdH6tWsVbIC8pfcsUE%2FYozUKp%2FOtlee4kD8jffTeWXCawBloFAilPmvj8qVikuMemPCxP4ZbZn5pWYhmt2mNTLAUCdYubr18trHTcIzFCTe6t3tbq%2BpoPS\"}]}\nnel: {\"report_to\":\"cf-nel\",\"success_fraction\":0.0,\"max_age\":604800}\ncf-ray: a4f438b47bb4f097-CDG\nalt-svc: h3=\":443\"; ma=86400\n\n",
+  "usb_disappeared_and_app_returned": true
+}

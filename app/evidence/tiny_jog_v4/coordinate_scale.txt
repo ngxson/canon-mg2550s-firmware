@@ -1,0 +1,37 @@
+Source stock SHA-256: 4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533
+
+Position scale at flash 0x18ccb0: 38400
+
+Stock line-pitch arithmetic: 38400 * 10 / vertical resolution (tenths of dpi).
+
+6000 (600 dpi) produces 64 coordinate units per line.
+
+Physical scale 38400 units/inch is an inference; not hardware-calibrated.
+
+64 counts = 0.042333 mm nominal; 512 counts = 0.338667 mm nominal.
+
+000f7114: e86a       ldr      r0, [r5, #0x2c]
+000f7116: 816a       ldr      r1, [r0, #0x28]
+000f7118: 6962       str      r1, [r5, #0x24]
+000f711a: c06a       ldr      r0, [r0, #0x2c]
+000f711c: a862       str      r0, [r5, #0x28]
+
+000f7174: 0921       movs     r1, #9
+000f7176: c901       lsls     r1, r1, #7
+000f7178: 4018       adds     r0, r0, r1
+000f717a: 806a       ldr      r0, [r0, #0x28]
+000f717c: 7047       bx       lr
+
+000fa890: fbf723fe   bl       #0xf64da
+000fa894: 0a21       movs     r1, #0xa
+000fa896: 4843       muls     r0, r1, r0
+000fa898: 2900       movs     r1, r5
+000fa89a: 55f0d7fb   bl       #0x15004c
+000fa89e: 0600       movs     r6, r0
+
+000fae92: fbf722fb   bl       #0xf64da
+000fae96: 0a21       movs     r1, #0xa
+000fae98: 4843       muls     r0, r1, r0
+000fae9a: 2900       movs     r1, r5
+000fae9c: 55f0d6f8   bl       #0x15004c
+000faea0: 0500       movs     r5, r0

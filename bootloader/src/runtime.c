@@ -6,16 +6,36 @@
 #define COUNTER 0xc0c82008u
 #define TICKS_PER_MS CLOCK_TICKS_PER_MS
 static uint32_t previous_ticks, milliseconds, fractional_ticks;
+#ifdef APPLICATION_BUILD
+/* The first long homing run exposed a raw counter discontinuity equivalent
+ * to a 29-bit rollover. Accumulate low-29-bit deltas between frequent samples;
+ * this also works on a wider counter. Never reset the shared timer to time a
+ * move. App-only: the installed/hash-pinned recovery stages are unchanged. */
+static uint32_t counter_sample, accumulated_ticks;
+uint32_t app_clock_ticks(void)
+{
+    uint32_t raw = rd(COUNTER);
+    accumulated_ticks += (raw - counter_sample) & 0x1fffffffu;
+    counter_sample = raw;
+    return accumulated_ticks;
+}
+#define READ_TICKS() app_clock_ticks()
+#else
+#define READ_TICKS() rd(COUNTER)
+#endif
 
 void clock_init(void)
 {
     wr(0xc0c8200c,0); wr(COUNTER,0); wr(0xc0c82010,0); wr(0xc0c8200c,1);
     previous_ticks=milliseconds=fractional_ticks=0;
+#ifdef APPLICATION_BUILD
+    counter_sample=accumulated_ticks=0;
+#endif
 }
 
 uint32_t time_ms(void)
 {
-    uint32_t now=rd(COUNTER), delta=now-previous_ticks;
+    uint32_t now=READ_TICKS(), delta=now-previous_ticks;
     previous_ticks=now;
     milliseconds+=delta/TICKS_PER_MS;
     fractional_ticks+=delta%TICKS_PER_MS;
@@ -27,8 +47,8 @@ uint32_t time_ms(void)
 
 void delay_ticks(uint32_t ticks)
 {
-    uint32_t start=rd(COUNTER);
-    while((uint32_t)(rd(COUNTER)-start)<ticks) {}
+    uint32_t start=READ_TICKS();
+    while((uint32_t)(READ_TICKS()-start)<ticks) {}
 }
 
 void *memcpy(void *to,const void *from,size_t length)

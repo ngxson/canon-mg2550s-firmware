@@ -1,0 +1,85 @@
+{
+  "app_sha256": "28c045e55c74fec907f824c8f5b12d7fb3f3a77993c97cf5ecba11157c97605f",
+  "completed": true,
+  "rows": 880,
+  "samples_per_row": 2592,
+  "nominal_y_dpi": 75,
+  "host_elapsed_s": 329.46083041699603,
+  "position_error_counts": [
+    0,
+    42
+  ],
+  "max_capture_drift_counts": 1,
+  "return_position_error_counts": 26,
+  "final_status": {
+    "magic": 1196446541,
+    "version": 1,
+    "state": 7,
+    "error": 0,
+    "row": 880,
+    "rows": 880,
+    "width": 2592,
+    "row_bytes": 5184,
+    "pitch": 512,
+    "origin": 7263769,
+    "position": 7263795,
+    "capture_start": 7713833,
+    "capture_end": 7713833,
+    "chunks_read": 2097151,
+    "elapsed_ms": 329455,
+    "variant": 70
+  },
+  "management_after": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "image": {
+    "min": 24585,
+    "max": 65535,
+    "mean": 60312.180509960715,
+    "preview_low": 25297.0,
+    "preview_high": 65535.0,
+    "raw_width": 2592,
+    "rows": 880,
+    "preview_width": 638,
+    "preview_assumed_width_mm": 216,
+    "nominal_y_dpi": 75.0
+  },
+  "visual_review": "Preview shows recognizable document content and page layout. No OCR/transcription performed. Optical calibration remains incomplete.",
+  "private_outputs": {
+    "page_poc_2026-10-24.bin": {
+      "bytes": 4561920,
+      "sha256": "93659882a32a299d6c23e1b27668a16ee0fcdb4eac9d2544eea75a7a13e17f0c"
+    },
+    "page_poc_2026-10-24.pgm": {
+      "bytes": 4561938,
+      "sha256": "63a62eafb238420987ccd296b0e57523d65a7f9df6c3dcbeb2fe5527425c326c"
+    },
+    "page_poc_2026-10-24.png": {
+      "bytes": 158356,
+      "sha256": "f23c28c9d62adb7e8176be76cf35f4085d8ecc0e3e0ffd6f6c874fcffd25aec4"
+    },
+    "page_poc_2026-10-24-raw.png": {
+      "bytes": 566594,
+      "sha256": "864c5626c4869c4af819f936b7ebe7f65b592a252430db2f3d8fa73289804e83"
+    },
+    "page_poc_2026-10-24.json": {
+      "bytes": 315459,
+      "sha256": "e2939db3ee0c25ef415b78dc630dfda9eb54d828d14e84417e8f44ff408a36fd"
+    },
+    "page_poc_2026-10-24.log": {
+      "bytes": 481037,
+      "sha256": "6df929ef1e96dee1c02cfdaadd3ff0e0cbfcc74c88fab7ea5c91eb8c4ddab73d"
+    }
+  },
+  "raw_pgm_samples_identical": true
+}

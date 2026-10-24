@@ -1,0 +1,351 @@
+{
+  "factory_sha256": "8eb947d45541610c7ac1351e9e805a7273368c12a32eb718f5bfd28fc88ccd7f",
+  "app_sha256": "35dc5360dd68040fa8933be12eec32e89bfe6ed7cddda32f2d58529d0714e6eb",
+  "cases": {
+    "app_boots_and_reports_management": {
+      "identities": [
+        "0x176d",
+        "0x12fe"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "erase_sizes": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 307,
+      "led_pattern_samples": {
+        "stage0": [
+          [
+            0,
+            16,
+            0,
+            0
+          ]
+        ],
+        "bootloader": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "application": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            32,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            32,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            16
+          ]
+        ]
+      },
+      "protected_prefix_bytes": 65536,
+      "protected_prefix_unchanged": true,
+      "main_app_unchanged_during_maintenance": null
+    },
+    "usb_debug_log_drains": {
+      "identities": [
+        "0x176d",
+        "0x12fe"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000"
+      ],
+      "resets": 1,
+      "erases": [],
+      "erase_sizes": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 308,
+      "led_pattern_samples": {
+        "stage0": [
+          [
+            0,
+            16,
+            0,
+            0
+          ]
+        ],
+        "bootloader": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "application": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            32,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            32,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            16
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ]
+        ]
+      },
+      "protected_prefix_bytes": 65536,
+      "protected_prefix_unchanged": true,
+      "main_app_unchanged_during_maintenance": null
+    },
+    "app_reboots_into_held_rescue": {
+      "identities": [
+        "0x176d",
+        "0x12fe",
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000",
+        "0x20010000"
+      ],
+      "resets": 2,
+      "erases": [],
+      "erase_sizes": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 313,
+      "led_pattern_samples": {
+        "stage0": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ]
+        ],
+        "bootloader": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "application": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            32,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            32,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            16
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ]
+        ]
+      },
+      "protected_prefix_bytes": 65536,
+      "protected_prefix_unchanged": true,
+      "main_app_unchanged_during_maintenance": null
+    }
+  },
+  "all_assertions_passed": true
+}

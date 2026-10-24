@@ -1,0 +1,1743 @@
+
+[app] MG2550s open app
+app_flash=0x00010000
+app_ram=0x20020000
+[app] usb up, entering main loop
+[btn] B/W=short forward jog; Colour=home; Cancel=stop
+[home] stock PI seek + verified backoff + repeat seek; mechanical reference
+[page] USB stop-and-capture page scan; returns home; Cancel=stop
+[scan] serial controller 0xc0120000:
+  c0120000 = 0x00000000
+  c0120004 = 0x00000000
+  c0120008 = 0x00000000
+  c012000c = 0x00000000
+  c0120010 = 0x00000000
+  c012001c = 0x00000000
+  c0120024 = 0x00000000
+  c0120100 = 0x00000000
+  c0120104 = 0x00000000
+  c0120108 = 0x00000001
+  c012010c = 0x80024110
+  c0120110 = 0x00000000
+  c0120114 = 0x00000020
+  c012011c = 0x60bb70b1
+  c0120124 = 0x40ff500d
+  c0c840c0 = 0x00000000
+  c0c840c4 = 0x00000000
+  c0c81200 = 0x00000fdf
+  c0c81204 = 0x00001020
+  c0c8121c = 0x00000300
+[scan] capture engine 0xc0d60000:
+  c0d60000 = 0x00000001
+  c0d60008 = 0x00000000
+  c0d60080 = 0x00000000
+  c0d60084 = 0x00000000
+  c0d60130 = 0x00000000
+  c0d6015c = 0x00000000
+  c0d60164 = 0x00000000
+  c0d601c0 = 0xffffffff
+  c0d601d4 = 0x00000000
+  c0d601d8 = 0x00000000
+  c0d601dc = 0x00000000
+  c0d601e0 = 0x00000000
+  c0d601e4 = 0x00000000
+  c0d601e8 = 0x00000000
+  c0d601ec = 0x00000000
+  c0d601f0 = 0x00000000
+  c0d601f4 = 0x00000000
+  c0d60294 = 0x00000051
+  c0d602c0 = 0x00000007
+  c0c85614 = 0x00000000
+[scan] peek done
+[page] start rows=880 pitch=512
+[motor] setup c0c41404=00000004
+[motor] setup c0c41408=00000005
+[motor] setup c0c41418=0000000a
+[motor] setup c0c81090=0000003f
+[motor] setup c0c57000=0000200d
+[motor] setup c0c57100=00700000
+[motor] setup c0c57148=00000001
+[motor] setup c0c57308=00000001
+[home] seek left start=00700000 target=0067ed12
+[home] phase=4 ms=100 pos=00700000 compare=1400 speed=0
+[home] phase=4 ms=200 pos=006fffff compare=1400 speed=0
+[home] phase=4 ms=300 pos=006fffff compare=1400 speed=0
+[home] phase=4 ms=400 pos=006fffff compare=1400 speed=0
+[home] phase=4 ms=500 pos=006fffff compare=1400 speed=0
+[home] backoff start=00700000 target=00702956
+[home] phase=5 ms=100 pos=0070053f compare=2232 speed=20287
+[home] phase=5 ms=200 pos=00700d0e compare=2254 speed=20185
+[home] phase=5 ms=300 pos=007014de compare=2250 speed=20219
+[home] phase=5 ms=400 pos=00701caf compare=2253 speed=20159
+[home] phase=5 ms=500 pos=00701f78 compare=2047 speed=4567
+[home] phase=5 ms=600 pos=00702108 compare=2039 speed=4622
+[home] phase=5 ms=700 pos=00702298 compare=2061 speed=4497
+[home] phase=5 ms=800 pos=00702428 compare=2058 speed=4485
+[home] phase=5 ms=900 pos=007025b8 compare=2065 speed=4459
+[home] phase=5 ms=1000 pos=00702748 compare=2027 speed=4733
+[home] phase=5 ms=1100 pos=007028d8 compare=2068 speed=4512
+[home] repeat left seek start=00702970 target=006ff462
+[home] phase=6 ms=100 pos=00702173 compare=1653 speed=28152
+[home] phase=6 ms=200 pos=00701683 compare=1669 speed=28251
+[home] phase=6 ms=300 pos=00700b94 compare=1650 speed=28135
+[home] phase=6 ms=400 pos=007000c6 compare=1400 speed=22471
+[home] phase=6 ms=500 pos=006fffc4 compare=1400 speed=51
+[home] phase=6 ms=600 pos=006fffc4 compare=1400 speed=22
+[home] phase=6 ms=700 pos=006fffc4 compare=1400 speed=14
+[home] phase=6 ms=800 pos=006fffc4 compare=1400 speed=10
+[home] phase=6 ms=900 pos=006fffc4 compare=1400 speed=8
+[home] phase=6 ms=1000 pos=006fffc4 compare=1400 speed=6
+[home] stop: mechanical reference established; optical calibration pending pos=006fffc5 elapsed_ms=0 compare=2000
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648f 000064bd 000064de 000064b7 000064a2 000064a2 000064cd 000064c2
+[scan] FULL capture done
+[page] row ready=0
+[motor] page step start=006fffc5 target=007001c5
+[home] phase=8 ms=100 pos=0070014e compare=2072 speed=4266
+[motor] stop: page endpoint pos=007001ca elapsed_ms=131 compare=2100
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064af 000064c7 000064ad 000064b8 000064c0 000064c4 000064b3 000064ad
+[scan] FULL capture done
+[motor] page step start=007001ea target=007003c5
+[home] phase=8 ms=100 pos=00700366 compare=2072 speed=4291
+[motor] stop: page endpoint pos=007003c8 elapsed_ms=124 compare=2024
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b6 000064bf 000064b7 000064a2 000064bc 000064b7 000064b3 000064a2
+[scan] FULL capture done
+[motor] page step start=007003d8 target=007005c5
+[home] phase=8 ms=100 pos=00700556 compare=2083 speed=4131
+[motor] stop: page endpoint pos=007005c9 elapsed_ms=129 compare=2124
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a9 000064b6 000064c1 000064a3 000064b7 000064af 000064be 0000649f
+[scan] FULL capture done
+[motor] page step start=007005da target=007007c5
+[home] phase=8 ms=100 pos=00700758 compare=2111 speed=3963
+[motor] stop: page endpoint pos=007007c6 elapsed_ms=127 compare=2026
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ab 000064ba 000064db 000064a7 000064b5 000064c0 000064c1 000064a6
+[scan] FULL capture done
+[motor] page step start=007007e4 target=007009c5
+[home] phase=8 ms=100 pos=00700965 compare=2161 speed=3629
+[motor] stop: page endpoint pos=007009c6 elapsed_ms=124 compare=2118
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b0 000064c8 000064d3 000064b5 000064b3 000064c5 000064bc 000064ac
+[scan] FULL capture done
+[motor] page step start=007009d7 target=00700bc5
+[home] phase=8 ms=100 pos=00700b55 compare=2210 speed=3243
+[motor] stop: page endpoint pos=00700bc7 elapsed_ms=128 compare=2104
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006497 000064c7 000064d8 000064b4 0000649f 000064b1 000064ca 000064bb
+[scan] FULL capture done
+[motor] page step start=00700bd5 target=00700dc5
+[home] phase=8 ms=100 pos=00700d4a compare=2091 speed=4151
+[motor] stop: page endpoint pos=00700dc9 elapsed_ms=132 compare=2110
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064b4 000064e5 000064a7 000064a4 000064ab 000064c8 000064b8
+[scan] FULL capture done
+[motor] page step start=00700de0 target=00700fc5
+[home] phase=8 ms=100 pos=00700f54 compare=2102 speed=4176
+[motor] stop: page endpoint pos=00700fc6 elapsed_ms=128 compare=2098
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006491 000064b5 000064de 000064b8 000064a6 000064b0 000064c1 000064c3
+[scan] FULL capture done
+[motor] page step start=00700fcd target=007011c5
+[home] phase=8 ms=100 pos=00701144 compare=2056 speed=4557
+[motor] stop: page endpoint pos=007011c6 elapsed_ms=132 compare=2147
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b8 000064b7 000064c4 000064a6 000064bb 000064b7 000064bf 000064a9
+[scan] FULL capture done
+[motor] page step start=007011d9 target=007013c5
+[home] phase=8 ms=100 pos=0070134d compare=2222 speed=3299
+[motor] stop: page endpoint pos=007013c6 elapsed_ms=130 compare=2078
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064c3 000064e2 000064b5 0000649c 000064b5 000064ce 000064af
+[scan] FULL capture done
+[motor] page step start=007013db target=007015c5
+[home] phase=8 ms=100 pos=00701559 compare=2096 speed=4090
+[motor] stop: page endpoint pos=007015c7 elapsed_ms=128 compare=2232
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a9 000064d2 000064c8 000064a2 000064a4 000064c2 000064c1 000064b5
+[scan] FULL capture done
+[motor] page step start=007015d7 target=007017c5
+[home] phase=8 ms=100 pos=00701753 compare=2246 speed=3133
+[motor] stop: page endpoint pos=007017c7 elapsed_ms=128 compare=2083
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a0 000064ac 000064c9 000064c1 000064b4 000064a5 000064b5 000064ce
+[scan] FULL capture done
+[motor] page step start=007017da target=007019c5
+[home] phase=8 ms=100 pos=0070194d compare=2098 speed=4109
+[motor] stop: page endpoint pos=007019c6 elapsed_ms=130 compare=2065
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a7 000064c0 000064b9 000064a9 000064b6 000064aa 000064a4 000064b1
+[scan] FULL capture done
+[motor] page step start=007019e0 target=00701bc5
+[home] phase=8 ms=100 pos=00701b65 compare=2060 speed=4294
+[motor] stop: page endpoint pos=00701bc8 elapsed_ms=125 compare=2150
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006499 000064b1 000064d6 000064bb 000064b1 000064aa 000064ab 000064cc
+[scan] FULL capture done
+[motor] page step start=00701bd7 target=00701dc5
+[home] phase=8 ms=100 pos=00701d4d compare=2131 speed=3834
+[motor] stop: page endpoint pos=00701dc6 elapsed_ms=130 compare=2082
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064b0 000064cb 000064be 000064b9 000064b2 000064b4 000064ca
+[scan] FULL capture done
+[motor] page step start=00701dda target=00701fc5
+[home] phase=8 ms=100 pos=00701f51 compare=2091 speed=4328
+[motor] stop: page endpoint pos=00701fc6 elapsed_ms=129 compare=2051
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ac 000064c6 000064bf 000064a0 000064b0 000064c5 000064cd 000064ae
+[scan] FULL capture done
+[motor] page step start=00701fd8 target=007021c5
+[home] phase=8 ms=100 pos=00702155 compare=2107 speed=3962
+[motor] stop: page endpoint pos=007021c8 elapsed_ms=129 compare=2192
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649d 000064c4 000064d7 000064b3 000064a0 000064a0 000064bb 000064dd
+[scan] FULL capture done
+[motor] page step start=007021df target=007023c5
+[home] phase=8 ms=100 pos=00702353 compare=2159 speed=3694
+[motor] stop: page endpoint pos=007023c6 elapsed_ms=128 compare=2072
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006497 000064ae 000064da 000064ab 000064aa 000064a5 000064b9 000064cc
+[scan] FULL capture done
+[motor] page step start=007023cf target=007025c5
+[home] phase=8 ms=100 pos=0070254f compare=2055 speed=4335
+[motor] stop: page endpoint pos=007025ca elapsed_ms=131 compare=2101
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006497 000064c2 000064df 000064b1 00006497 000064ac 000064cb 000064af
+[scan] FULL capture done
+[motor] page step start=007025de target=007027c5
+[home] phase=8 ms=100 pos=00702759 compare=2090 speed=4202
+[motor] stop: page endpoint pos=007027c8 elapsed_ms=128 compare=2215
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a4 000064b5 000064d2 000064bd 000064b8 0000649b 000064b6 000064c9
+[scan] FULL capture done
+[motor] page step start=007027df target=007029c5
+[home] phase=8 ms=100 pos=0070295c compare=2122 speed=4014
+[motor] stop: page endpoint pos=007029c6 elapsed_ms=126 compare=2078
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006498 000064b7 000064c0 000064b1 000064b6 000064ab 0000649a 000064b4
+[scan] FULL capture done
+[motor] page step start=007029d4 target=00702bc5
+[home] phase=8 ms=100 pos=00702b4c compare=2113 speed=4022
+[motor] stop: page endpoint pos=00702bc9 elapsed_ms=131 compare=2196
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006487 000064c3 000064ce 000064b3 0000649a 000064ac 000064cf 000064b2
+[scan] FULL capture done
+[motor] page step start=00702bd4 target=00702dc5
+[home] phase=8 ms=100 pos=00702d51 compare=2141 speed=3762
+[motor] stop: page endpoint pos=00702dca elapsed_ms=130 compare=2158
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649d 000064a8 000064bb 000064c4 0000649d 000064ba 000064b1 000064c2
+[scan] FULL capture done
+[motor] page step start=00702dea target=00702fc5
+[home] phase=8 ms=100 pos=00702f69 compare=2160 speed=3676
+[motor] stop: page endpoint pos=00702fc7 elapsed_ms=123 compare=2086
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a8 000064c0 000064bc 000064ac 000064c4 000064b2 000064b3 000064a9
+[scan] FULL capture done
+[motor] page step start=00702fd3 target=007031c5
+[home] phase=8 ms=100 pos=00703155 compare=2134 speed=3733
+[motor] stop: page endpoint pos=007031ca elapsed_ms=129 compare=2070
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b1 000064bf 000064c0 000064ad 000064be 000064bc 000064b0 000064b8
+[scan] FULL capture done
+[motor] page step start=007031d6 target=007033c5
+[home] phase=8 ms=100 pos=0070334f compare=2045 speed=4537
+[motor] stop: page endpoint pos=007033c9 elapsed_ms=130 compare=2073
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b5 000064cb 000064bd 000064af 000064b9 000064bc 000064b4 000064b0
+[scan] FULL capture done
+[motor] page step start=007033e7 target=007035c5
+[home] phase=8 ms=100 pos=0070355d compare=2088 speed=4256
+[motor] stop: page endpoint pos=007035c6 elapsed_ms=126 compare=2082
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064cb 000064cf 000064a9 00006499 000064b4 000064bc 000064c2
+[scan] FULL capture done
+[motor] page step start=007035d3 target=007037c5
+[home] phase=8 ms=100 pos=0070374b compare=2118 speed=3917
+[motor] stop: page endpoint pos=007037c7 elapsed_ms=131 compare=2144
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b7 000064b5 000064c8 000064a2 000064b7 000064c7 000064bc 000064a3
+[scan] FULL capture done
+[motor] page step start=007037d5 target=007039c5
+[home] phase=8 ms=100 pos=0070394d compare=2149 speed=3696
+[motor] stop: page endpoint pos=007039c7 elapsed_ms=130 compare=2027
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649c 000064cd 000064c6 000064ad 0000649d 000064be 000064b7 000064ad
+[scan] FULL capture done
+[motor] page step start=007039e1 target=00703bc5
+[home] phase=8 ms=100 pos=00703b6d compare=2110 speed=4048
+[motor] stop: page endpoint pos=00703bc8 elapsed_ms=123 compare=2213
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a6 000064ba 000064cf 000064a2 000064af 000064c4 000064b5 000064a7
+[scan] FULL capture done
+[motor] page step start=00703bd2 target=00703dc5
+[home] phase=8 ms=100 pos=00703d4a compare=2054 speed=4328
+[motor] stop: page endpoint pos=00703dc6 elapsed_ms=131 compare=2122
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064cd 000064c5 000064b0 00006494 000064c0 000064c0 000064b8
+[scan] FULL capture done
+[motor] page step start=00703dd6 target=00703fc5
+[home] phase=8 ms=100 pos=00703f51 compare=2076 speed=4268
+[motor] stop: page endpoint pos=00703fc8 elapsed_ms=130 compare=2132
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006499 000064b0 000064cf 000064c0 000064ae 000064a8 000064b3 000064c3
+[scan] FULL capture done
+[page] row ready=32
+[motor] page step start=00703fdf target=007041c5
+[home] phase=8 ms=100 pos=00704154 compare=2103 speed=4107
+[motor] stop: page endpoint pos=007041c8 elapsed_ms=129 compare=2193
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064cd 000064c7 000064ae 0000649f 000064c4 000064b7 000064be
+[scan] FULL capture done
+[motor] page step start=007041cf target=007043c5
+[home] phase=8 ms=100 pos=00704349 compare=2096 speed=4152
+[motor] stop: page endpoint pos=007043c6 elapsed_ms=131 compare=2119
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a4 000064db 000064cf 00006499 000064a5 000064c0 000064a6 000064b7
+[scan] FULL capture done
+[motor] page step start=007043de target=007045c5
+[home] phase=8 ms=100 pos=00704558 compare=2103 speed=4085
+[motor] stop: page endpoint pos=007045c9 elapsed_ms=128 compare=2107
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064c7 000064cc 000064a6 000064aa 000064bc 000064cf 000064bc
+[scan] FULL capture done
+[motor] page step start=007045d8 target=007047c5
+[home] phase=8 ms=100 pos=00704755 compare=2082 speed=4195
+[motor] stop: page endpoint pos=007047c7 elapsed_ms=129 compare=2226
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006493 000064c7 000064d8 000064b3 0000649f 000064b5 000064c7 000064ac
+[scan] FULL capture done
+[motor] page step start=007047d8 target=007049c5
+[home] phase=8 ms=100 pos=00704957 compare=2202 speed=3491
+[motor] stop: page endpoint pos=007049c7 elapsed_ms=127 compare=2093
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006490 000064c8 000064c9 000064bf 0000649c 000064b7 000064cd 000064b1
+[scan] FULL capture done
+[motor] page step start=007049d9 target=00704bc5
+[home] phase=8 ms=100 pos=00704b56 compare=2044 speed=4434
+[motor] stop: page endpoint pos=00704bc9 elapsed_ms=129 compare=2107
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648b 000064b5 000064d7 000064b7 000064aa 000064a0 000064c2 000064cb
+[scan] FULL capture done
+[motor] page step start=00704be0 target=00704dc5
+[home] phase=8 ms=100 pos=00704d59 compare=2039 speed=4544
+[motor] stop: page endpoint pos=00704dc9 elapsed_ms=128 compare=2133
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649e 000064d6 000064be 000064a5 0000649b 000064bb 000064c1 000064ae
+[scan] FULL capture done
+[motor] page step start=00704dd6 target=00704fc5
+[home] phase=8 ms=100 pos=00704f4d compare=2130 speed=3838
+[motor] stop: page endpoint pos=00704fc6 elapsed_ms=130 compare=2055
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006499 000064d3 000064cf 000064a6 000064a2 000064c0 000064cf 000064bb
+[scan] FULL capture done
+[motor] page step start=00704fd9 target=007051c5
+[home] phase=8 ms=100 pos=00705150 compare=2097 speed=4285
+[motor] stop: page endpoint pos=007051c7 elapsed_ms=129 compare=2049
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006495 000064b1 000064b8 000064c2 000064a3 000064a6 000064a3 000064bd
+[scan] FULL capture done
+[motor] page step start=007051d8 target=007053c5
+[home] phase=8 ms=100 pos=00705361 compare=2101 speed=4078
+[motor] stop: page endpoint pos=007053c9 elapsed_ms=126 compare=2134
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b3 000064ae 000064c4 000064ad 000064ae 000064a2 000064b5 000064a9
+[scan] FULL capture done
+[motor] page step start=007053de target=007055c5
+[home] phase=8 ms=100 pos=00705550 compare=2144 speed=3788
+[motor] stop: page endpoint pos=007055c6 elapsed_ms=129 compare=2068
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006487 000064b2 000064d6 000064b5 00006496 000064a5 000064c5 000064b4
+[scan] FULL capture done
+[motor] page step start=007055ce target=007057c5
+[home] phase=8 ms=100 pos=00705745 compare=2068 speed=4312
+[motor] stop: page endpoint pos=007057c6 elapsed_ms=132 compare=2107
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649c 000064d8 000064bf 000064a2 00006499 000064bd 000064c1 000064be
+[scan] FULL capture done
+[motor] page step start=007057dc target=007059c5
+[home] phase=8 ms=100 pos=00705950 compare=2110 speed=4032
+[motor] stop: page endpoint pos=007059c8 elapsed_ms=130 compare=2142
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a5 000064d2 000064be 000064a8 00006493 000064be 000064b6 000064af
+[scan] FULL capture done
+[motor] page step start=007059e2 target=00705bc5
+[home] phase=8 ms=100 pos=00705b64 compare=2105 speed=4091
+[motor] stop: page endpoint pos=00705bc6 elapsed_ms=124 compare=2088
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649f 000064b4 000064ce 000064ab 000064b2 000064c6 000064bb 000064a0
+[scan] FULL capture done
+[motor] page step start=00705bd5 target=00705dc5
+[home] phase=8 ms=100 pos=00705d4c compare=2079 speed=4294
+[motor] stop: page endpoint pos=00705dc8 elapsed_ms=131 compare=2188
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648c 000064c2 000064d7 000064b6 0000649b 000064a8 000064c6 000064a8
+[scan] FULL capture done
+[motor] page step start=00705dd6 target=00705fc5
+[home] phase=8 ms=100 pos=00705f58 compare=2154 speed=3726
+[motor] stop: page endpoint pos=00705fca elapsed_ms=128 compare=2054
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b2 000064c3 000064bf 000064b4 000064b9 000064a7 000064a0 000064b3
+[scan] FULL capture done
+[motor] page step start=00705fe8 target=007061c5
+[home] phase=8 ms=100 pos=00706166 compare=2106 speed=3960
+[motor] stop: page endpoint pos=007061c6 elapsed_ms=124 compare=2084
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006491 000064bb 000064db 000064b5 000064a2 000064a4 000064b4 000064ce
+[scan] FULL capture done
+[motor] page step start=007061d1 target=007063c5
+[home] phase=8 ms=100 pos=00706353 compare=2104 speed=3920
+[motor] stop: page endpoint pos=007063c6 elapsed_ms=129 compare=2102
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a8 000064bc 000064c1 0000649e 000064b3 000064b1 000064c3 000064a5
+[scan] FULL capture done
+[motor] page step start=007063d5 target=007065c5
+[home] phase=8 ms=100 pos=0070654b compare=2111 speed=4059
+[motor] stop: page endpoint pos=007065c9 elapsed_ms=131 compare=2144
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649e 000064d8 000064c4 000064a3 000064a1 000064c5 000064ab 000064ad
+[scan] FULL capture done
+[motor] page step start=007065e8 target=007067c5
+[home] phase=8 ms=100 pos=0070675c compare=2114 speed=4022
+[motor] stop: page endpoint pos=007067c7 elapsed_ms=126 compare=2045
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648d 000064bc 000064c4 000064b5 000064a7 000064b3 000064a7 000064af
+[scan] FULL capture done
+[motor] page step start=007067d3 target=007069c5
+[home] phase=8 ms=100 pos=00706949 compare=2105 speed=4081
+[motor] stop: page endpoint pos=007069c8 elapsed_ms=131 compare=2108
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006484 000064cd 000064cc 000064b7 00006494 000064bb 000064c8 000064b2
+[scan] FULL capture done
+[motor] page step start=007069d9 target=00706bc5
+[home] phase=8 ms=100 pos=00706b58 compare=2109 speed=4047
+[motor] stop: page endpoint pos=00706bc6 elapsed_ms=127 compare=2029
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006498 000064bc 000064f1 000064c4 000064a0 000064a3 000064c9 000064ac
+[scan] FULL capture done
+[motor] page step start=00706be1 target=00706dc5
+[home] phase=8 ms=100 pos=00706d5d compare=2101 speed=4024
+[motor] stop: page endpoint pos=00706dc8 elapsed_ms=127 compare=2224
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649b 000064d1 000064bd 000064ad 00006498 000064bc 000064b4 000064ae
+[scan] FULL capture done
+[motor] page step start=00706dd0 target=00706fc5
+[home] phase=8 ms=100 pos=00706f4a compare=2066 speed=4240
+[motor] stop: page endpoint pos=00706fc6 elapsed_ms=131 compare=2121
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064af 000064b2 000064c3 000064a1 000064aa 000064bb 000064be 000064a5
+[scan] FULL capture done
+[motor] page step start=00706fd8 target=007071c5
+[home] phase=8 ms=100 pos=0070714b compare=2021 speed=4668
+[motor] stop: page endpoint pos=007071c6 elapsed_ms=131 compare=2153
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a9 000064b1 000064cc 000064c2 000064af 0000649a 000064aa 000064b9
+[scan] FULL capture done
+[motor] page step start=007071e1 target=007073c5
+[home] phase=8 ms=100 pos=00707354 compare=2022 speed=4796
+[motor] stop: page endpoint pos=007073c6 elapsed_ms=128 compare=2097
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a1 000064db 000064d6 000064b3 000064a7 000064c4 000064b1 000064a7
+[scan] FULL capture done
+[motor] page step start=007073d1 target=007075c5
+[home] phase=8 ms=100 pos=0070754a compare=2018 speed=4786
+[motor] stop: page endpoint pos=007075c6 elapsed_ms=131 compare=2148
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a5 000064d9 000064ca 000064a2 000064b4 000064c2 000064a1 000064aa
+[scan] FULL capture done
+[motor] page step start=007075dc target=007077c5
+[home] phase=8 ms=100 pos=00707757 compare=2164 speed=3622
+[motor] stop: page endpoint pos=007077c9 elapsed_ms=128 compare=2142
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ab 000064a8 000064c4 000064c8 000064af 0000649c 000064a5 000064c5
+[scan] FULL capture done
+[motor] page step start=007077d6 target=007079c5
+[home] phase=8 ms=100 pos=00707955 compare=2074 speed=4260
+[motor] stop: page endpoint pos=007079c7 elapsed_ms=129 compare=2224
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006493 000064ba 000064c8 000064b4 000064ae 000064ad 000064a6 000064b5
+[scan] FULL capture done
+[motor] page step start=007079d8 target=00707bc5
+[home] phase=8 ms=100 pos=00707b53 compare=2260 speed=3013
+[motor] stop: page endpoint pos=00707bc7 elapsed_ms=128 compare=2106
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649d 000064cf 000064c9 000064a6 000064ab 000064bf 000064af 000064b0
+[scan] FULL capture done
+[motor] page step start=00707bd9 target=00707dc5
+[home] phase=8 ms=100 pos=00707d5f compare=2096 speed=3978
+[motor] stop: page endpoint pos=00707dc6 elapsed_ms=126 compare=2073
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648e 000064be 000064b8 000064b9 000064b5 000064b8 000064a0 000064b1
+[scan] FULL capture done
+[motor] page step start=00707de0 target=00707fc5
+[home] phase=8 ms=100 pos=00707f5a compare=2046 speed=4454
+[motor] stop: page endpoint pos=00707fc9 elapsed_ms=128 compare=2149
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ba 000064b6 000064bb 000064b6 000064b9 00006498 000064b0 000064b1
+[scan] FULL capture done
+[page] row ready=64
+[motor] page step start=00707fd7 target=007081c5
+[home] phase=8 ms=100 pos=00708152 compare=2123 speed=3862
+[motor] stop: page endpoint pos=007081c6 elapsed_ms=129 compare=2077
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a4 000064b1 000064b8 0000649c 000064ad 000064b8 000064b6 000064a9
+[scan] FULL capture done
+[motor] page step start=007081d8 target=007083c5
+[home] phase=8 ms=100 pos=00708354 compare=2085 speed=4244
+[motor] stop: page endpoint pos=007083c6 elapsed_ms=128 compare=2047
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006490 000064b1 000064c7 000064bc 0000649e 000064a7 000064b2 000064b0
+[scan] FULL capture done
+[motor] page step start=007083d5 target=007085c5
+[home] phase=8 ms=100 pos=00708558 compare=2060 speed=4493
+[motor] stop: page endpoint pos=007085c9 elapsed_ms=128 compare=2137
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006496 000064b5 000064cb 000064b7 000064b2 000064b3 0000649d 000064b9
+[scan] FULL capture done
+[motor] page step start=007085da target=007087c5
+[home] phase=8 ms=100 pos=00708750 compare=2153 speed=3718
+[motor] stop: page endpoint pos=007087c6 elapsed_ms=129 compare=2070
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006498 000064b1 000064df 000064b2 000064a4 000064a0 000064b8 000064b3
+[scan] FULL capture done
+[motor] page step start=007087cf target=007089c5
+[home] phase=8 ms=100 pos=00708949 compare=2082 speed=4180
+[motor] stop: page endpoint pos=007089c6 elapsed_ms=131 compare=2086
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648b 000064aa 000064de 000064ad 0000649f 000064ad 000064c1 000064ba
+[scan] FULL capture done
+[motor] page step start=007089dd target=00708bc5
+[home] phase=8 ms=100 pos=00708b59 compare=2113 speed=4007
+[motor] stop: page endpoint pos=00708bc8 elapsed_ms=128 compare=2180
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a5 000064ba 000064aa 000064bb 000064c6 000064b3 000064a9 000064ac
+[scan] FULL capture done
+[motor] page step start=00708be2 target=00708dc5
+[home] phase=8 ms=100 pos=00708d66 compare=2064 speed=4335
+[motor] stop: page endpoint pos=00708dc6 elapsed_ms=124 compare=2066
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064c2 000064c2 000064ad 0000649c 000064b7 000064af 000064a6
+[scan] FULL capture done
+[motor] page step start=00708dd7 target=00708fc5
+[home] phase=8 ms=100 pos=00708f54 compare=2107 speed=4048
+[motor] stop: page endpoint pos=00708fc8 elapsed_ms=129 compare=2186
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649c 000064b3 000064dc 000064ad 00006494 0000649c 000064c8 000064bc
+[scan] FULL capture done
+[motor] page step start=00708fd6 target=007091c5
+[home] phase=8 ms=100 pos=00709158 compare=2208 speed=3361
+[motor] stop: page endpoint pos=007091ca elapsed_ms=128 compare=2084
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006496 0000649f 000064c6 000064cc 000064a0 00006499 0000649e 000064b8
+[scan] FULL capture done
+[motor] page step start=007091ec target=007093c5
+[home] phase=8 ms=100 pos=0070936a compare=2121 speed=3818
+[motor] stop: page endpoint pos=007093c6 elapsed_ms=123 compare=2093
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006494 000064cd 000064ca 000064b1 0000649c 000064b0 000064cb 000064a6
+[scan] FULL capture done
+[motor] page step start=007093d2 target=007095c5
+[home] phase=8 ms=100 pos=0070954a compare=2085 speed=4014
+[motor] stop: page endpoint pos=007095c6 elapsed_ms=131 compare=2082
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064aa 000064b5 000064b6 000064b9 000064bc 000064b5 000064aa 000064b0
+[scan] FULL capture done
+[motor] page step start=007095d5 target=007097c5
+[home] phase=8 ms=100 pos=0070974c compare=2100 speed=4132
+[motor] stop: page endpoint pos=007097ca elapsed_ms=131 compare=2054
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a0 000064ac 000064cc 0000649f 000064a8 000064c1 000064be 000064b8
+[scan] FULL capture done
+[motor] page step start=007097e8 target=007099c5
+[home] phase=8 ms=100 pos=00709960 compare=2101 speed=4110
+[motor] stop: page endpoint pos=007099c8 elapsed_ms=126 compare=2143
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a9 000064b5 000064c6 000064b7 000064a8 000064a8 000064a8 000064bf
+[scan] FULL capture done
+[motor] page step start=007099d2 target=00709bc5
+[home] phase=8 ms=100 pos=00709b4d compare=2046 speed=4429
+[motor] stop: page endpoint pos=00709bc8 elapsed_ms=131 compare=2185
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648e 000064c4 000064e1 000064bc 0000649e 000064a5 000064d0 000064a5
+[scan] FULL capture done
+[motor] page step start=00709bd7 target=00709dc5
+[home] phase=8 ms=100 pos=00709d54 compare=2115 speed=3977
+[motor] stop: page endpoint pos=00709dca elapsed_ms=129 compare=2004
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649d 000064a3 000064d0 000064c6 000064a0 000064a3 000064ac 000064c6
+[scan] FULL capture done
+[motor] page step start=00709de1 target=00709fc5
+[home] phase=8 ms=100 pos=00709f66 compare=2130 speed=3819
+[motor] stop: page endpoint pos=00709fc6 elapsed_ms=124 compare=2157
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a6 000064cc 000064c9 000064a1 000064a5 000064c1 000064ab 000064a9
+[scan] FULL capture done
+[motor] page step start=00709fd3 target=0070a1c5
+[home] phase=8 ms=100 pos=0070a154 compare=2198 speed=3276
+[motor] stop: page endpoint pos=0070a1c7 elapsed_ms=128 compare=2085
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649d 000064c7 000064bf 0000649e 0000649e 000064c0 0000649f 000064a3
+[scan] FULL capture done
+[motor] page step start=0070a1d6 target=0070a3c5
+[home] phase=8 ms=100 pos=0070a351 compare=2067 speed=4317
+[motor] stop: page endpoint pos=0070a3c8 elapsed_ms=130 compare=2128
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649b 000064be 000064c2 000064b9 000064b4 000064b1 00006499 000064aa
+[scan] FULL capture done
+[motor] page step start=0070a3e0 target=0070a5c5
+[home] phase=8 ms=100 pos=0070a558 compare=2107 speed=4053
+[motor] stop: page endpoint pos=0070a5c8 elapsed_ms=128 compare=2164
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006497 000064ac 000064d3 000064c6 000064a4 0000649c 000064ac 000064bd
+[scan] FULL capture done
+[motor] page step start=0070a5d1 target=0070a7c5
+[home] phase=8 ms=100 pos=0070a749 compare=2078 speed=4240
+[motor] stop: page endpoint pos=0070a7ca elapsed_ms=132 compare=2087
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a9 000064b2 000064be 000064b0 000064b0 000064ae 000064b5 000064a0
+[scan] FULL capture done
+[motor] page step start=0070a7e0 target=0070a9c5
+[home] phase=8 ms=100 pos=0070a955 compare=2185 speed=3644
+[motor] stop: page endpoint pos=0070a9c7 elapsed_ms=128 compare=2116
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006491 000064bc 000064db 0000649d 00006497 000064a1 000064b6 000064b1
+[scan] FULL capture done
+[motor] page step start=0070a9dc target=0070abc5
+[home] phase=8 ms=100 pos=0070ab55 compare=2102 speed=4032
+[motor] stop: page endpoint pos=0070abc8 elapsed_ms=129 compare=2228
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649a 000064cc 000064bd 000064aa 000064a0 000064b7 000064bf 000064ba
+[scan] FULL capture done
+[motor] page step start=0070abd9 target=0070adc5
+[home] phase=8 ms=100 pos=0070ad52 compare=2210 speed=3344
+[motor] stop: page endpoint pos=0070adc7 elapsed_ms=128 compare=2105
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006499 000064ae 000064d1 000064b9 000064a0 000064a8 000064bc 000064cd
+[scan] FULL capture done
+[motor] page step start=0070addb target=0070afc5
+[home] phase=8 ms=100 pos=0070af55 compare=2064 speed=4292
+[motor] stop: page endpoint pos=0070afc9 elapsed_ms=129 compare=2096
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649f 000064ae 000064bf 000064b4 000064c2 000064ae 000064a6 000064b5
+[scan] FULL capture done
+[motor] page step start=0070afe1 target=0070b1c5
+[home] phase=8 ms=100 pos=0070b15c compare=2087 speed=4143
+[motor] stop: page endpoint pos=0070b1c8 elapsed_ms=127 compare=2175
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006486 000064b2 000064d4 000064ac 0000649d 000064a5 000064c6 000064ba
+[scan] FULL capture done
+[motor] page step start=0070b1d8 target=0070b3c5
+[home] phase=8 ms=100 pos=0070b35c compare=2137 speed=3816
+[motor] stop: page endpoint pos=0070b3c6 elapsed_ms=126 compare=2056
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648d 000064b9 000064de 000064bc 0000649e 0000649f 000064b5 000064a8
+[scan] FULL capture done
+[motor] page step start=0070b3da target=0070b5c5
+[home] phase=8 ms=100 pos=0070b550 compare=2076 speed=4297
+[motor] stop: page endpoint pos=0070b5c6 elapsed_ms=129 compare=2042
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a6 000064ad 000064c0 000064c0 0000649d 0000649a 000064b0 000064bf
+[scan] FULL capture done
+[motor] page step start=0070b5d6 target=0070b7c5
+[home] phase=8 ms=100 pos=0070b756 compare=2028 speed=4553
+[motor] stop: page endpoint pos=0070b7c8 elapsed_ms=128 compare=2138
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006490 000064b3 000064d2 000064b9 000064a8 000064a2 000064bd 000064cb
+[scan] FULL capture done
+[motor] page step start=0070b7dd target=0070b9c5
+[home] phase=8 ms=100 pos=0070b958 compare=2090 speed=4186
+[motor] stop: page endpoint pos=0070b9c6 elapsed_ms=127 compare=2069
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648b 000064b9 000064da 0000649d 000064a5 000064a8 000064ba 000064bf
+[scan] FULL capture done
+[motor] page step start=0070b9cf target=0070bbc5
+[home] phase=8 ms=100 pos=0070bb4d compare=2084 speed=4141
+[motor] stop: page endpoint pos=0070bbc6 elapsed_ms=130 compare=2080
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a7 000064bd 000064c1 00006494 000064a4 000064c0 000064c1 000064a9
+[scan] FULL capture done
+[motor] page step start=0070bbdc target=0070bdc5
+[home] phase=8 ms=100 pos=0070bd54 compare=2106 speed=4058
+[motor] stop: page endpoint pos=0070bdc9 elapsed_ms=129 compare=2142
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b4 000064ba 000064c1 000064b0 000064ae 000064a7 000064b6 0000649e
+[scan] FULL capture done
+[motor] page step start=0070bde4 target=0070bfc5
+[home] phase=8 ms=100 pos=0070bf5d compare=2119 speed=4012
+[motor] stop: page endpoint pos=0070bfc7 elapsed_ms=126 compare=2039
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648a 000064b7 000064e3 000064bf 000064aa 000064a7 000064c1 000064b3
+[scan] FULL capture done
+[page] row ready=96
+[motor] page step start=0070bfd6 target=0070c1c5
+[home] phase=8 ms=100 pos=0070c148 compare=2125 speed=3908
+[motor] stop: page endpoint pos=0070c1c9 elapsed_ms=132 compare=2187
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064aa 000064be 000064be 000064b0 000064b9 000064b6 0000649d 000064a3
+[scan] FULL capture done
+[motor] page step start=0070c1d5 target=0070c3c5
+[home] phase=8 ms=100 pos=0070c355 compare=2193 speed=3393
+[motor] stop: page endpoint pos=0070c3ca elapsed_ms=129 compare=2084
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006491 000064b7 000064b2 000064b6 000064cc 000064b0 000064a3 000064a5
+[scan] FULL capture done
+[motor] page step start=0070c3ec target=0070c5c5
+[home] phase=8 ms=100 pos=0070c56a compare=2132 speed=3842
+[motor] stop: page endpoint pos=0070c5c7 elapsed_ms=123 compare=2121
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648b 000064b9 000064c6 000064a7 000064a8 000064ac 000064bb 000064b1
+[scan] FULL capture done
+[motor] page step start=0070c5d6 target=0070c7c5
+[home] phase=8 ms=100 pos=0070c75c compare=2139 speed=3772
+[motor] stop: page endpoint pos=0070c7ca elapsed_ms=127 compare=2075
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064b0 000064c0 000064be 000064a4 000064a6 000064ad 000064bc
+[scan] FULL capture done
+[motor] page step start=0070c7d6 target=0070c9c5
+[home] phase=8 ms=100 pos=0070c94c compare=2090 speed=4184
+[motor] stop: page endpoint pos=0070c9ca elapsed_ms=131 compare=2046
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006489 000064c0 000064d8 000064ae 00006490 000064af 000064c1 000064ac
+[scan] FULL capture done
+[motor] page step start=0070c9e9 target=0070cbc5
+[home] phase=8 ms=100 pos=0070cb64 compare=2050 speed=4469
+[motor] stop: page endpoint pos=0070cbc9 elapsed_ms=125 compare=2128
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006493 000064cd 000064c9 000064b8 0000649c 000064af 000064c6 000064b1
+[scan] FULL capture done
+[motor] page step start=0070cbd3 target=0070cdc5
+[home] phase=8 ms=100 pos=0070cd50 compare=2098 speed=4042
+[motor] stop: page endpoint pos=0070cdc8 elapsed_ms=130 compare=2150
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006491 000064d6 000064b8 000064a5 00006499 000064c0 000064b2 000064a1
+[scan] FULL capture done
+[motor] page step start=0070cdd7 target=0070cfc5
+[home] phase=8 ms=100 pos=0070cf59 compare=2131 speed=3867
+[motor] stop: page endpoint pos=0070cfc6 elapsed_ms=127 compare=2050
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064bd 000064c4 000064b8 000064a9 000064ad 000064a5 000064b2 000064ac
+[scan] FULL capture done
+[motor] page step start=0070cfdd target=0070d1c5
+[home] phase=8 ms=100 pos=0070d162 compare=2116 speed=3964
+[motor] stop: page endpoint pos=0070d1c6 elapsed_ms=125 compare=2094
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649d 0000649c 000064c8 000064c9 000064a4 0000649e 000064a6 000064b8
+[scan] FULL capture done
+[motor] page step start=0070d1d4 target=0070d3c5
+[home] phase=8 ms=100 pos=0070d356 compare=2160 speed=3522
+[motor] stop: page endpoint pos=0070d3c6 elapsed_ms=128 compare=2087
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006494 000064a5 000064c3 000064bf 000064ac 000064ac 000064ac 000064b9
+[scan] FULL capture done
+[motor] page step start=0070d3d5 target=0070d5c5
+[home] phase=8 ms=100 pos=0070d54d compare=2076 speed=4274
+[motor] stop: page endpoint pos=0070d5c9 elapsed_ms=131 compare=2114
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006491 000064aa 000064b7 000064b5 000064ac 000064b4 000064a7 000064a3
+[scan] FULL capture done
+[motor] page step start=0070d5e0 target=0070d7c5
+[home] phase=8 ms=100 pos=0070d750 compare=2097 speed=4133
+[motor] stop: page endpoint pos=0070d7c8 elapsed_ms=130 compare=2178
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006490 000064bc 000064cd 000064b4 000064a1 000064ae 000064ce 000064be
+[scan] FULL capture done
+[motor] page step start=0070d7d0 target=0070d9c5
+[home] phase=8 ms=100 pos=0070d945 compare=2081 speed=4254
+[motor] stop: page endpoint pos=0070d9ca elapsed_ms=133 compare=2090
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b1 000064c5 000064cc 000064a2 000064ac 000064b9 000064b9 0000649d
+[scan] FULL capture done
+[motor] page step start=0070d9de target=0070dbc5
+[home] phase=8 ms=100 pos=0070db58 compare=2090 speed=4168
+[motor] stop: page endpoint pos=0070dbc9 elapsed_ms=128 compare=2098
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006487 000064b5 000064b9 000064bc 000064ac 0000649f 0000649e 000064b3
+[scan] FULL capture done
+[motor] page step start=0070dbd9 target=0070ddc5
+[home] phase=8 ms=100 pos=0070dd60 compare=2115 speed=3948
+[motor] stop: page endpoint pos=0070ddc8 elapsed_ms=126 compare=2216
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064ac 000064e1 000064ac 00006497 0000649a 000064be 000064b6
+[scan] FULL capture done
+[motor] page step start=0070ddd9 target=0070dfc5
+[home] phase=8 ms=100 pos=0070df57 compare=2185 speed=3586
+[motor] stop: page endpoint pos=0070dfc7 elapsed_ms=127 compare=2044
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006495 000064b5 000064cd 000064d3 000064b6 00006495 000064b2 000064bc
+[scan] FULL capture done
+[motor] page step start=0070dfd8 target=0070e1c5
+[home] phase=8 ms=100 pos=0070e155 compare=2105 speed=3998
+[motor] stop: page endpoint pos=0070e1c9 elapsed_ms=129 compare=2088
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a7 000064a3 000064b6 000064a0 000064b2 000064b7 000064b0 000064ab
+[scan] FULL capture done
+[motor] page step start=0070e1e1 target=0070e3c5
+[home] phase=8 ms=100 pos=0070e363 compare=2026 speed=4547
+[motor] stop: page endpoint pos=0070e3c9 elapsed_ms=126 compare=2180
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064c2 000064be 000064b6 000064b7 000064b1 000064a5 000064a4
+[scan] FULL capture done
+[motor] page step start=0070e3d6 target=0070e5c5
+[home] phase=8 ms=100 pos=0070e554 compare=2146 speed=3721
+[motor] stop: page endpoint pos=0070e5ca elapsed_ms=129 compare=2056
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006498 000064b0 000064ca 000064b4 000064ac 0000649c 000064a9 000064c4
+[scan] FULL capture done
+[motor] page step start=0070e5d9 target=0070e7c5
+[home] phase=8 ms=100 pos=0070e74c compare=2134 speed=3933
+[motor] stop: page endpoint pos=0070e7c7 elapsed_ms=130 compare=2018
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064b0 000064d1 000064b5 000064a9 0000649e 000064bd 000064bb
+[scan] FULL capture done
+[motor] page step start=0070e7d8 target=0070e9c5
+[home] phase=8 ms=100 pos=0070e95e compare=2120 speed=3825
+[motor] stop: page endpoint pos=0070e9c9 elapsed_ms=127 compare=2105
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064d3 000064ca 000064a8 0000649d 000064c0 000064b0 000064ae
+[scan] FULL capture done
+[motor] page step start=0070e9dd target=0070ebc5
+[home] phase=8 ms=100 pos=0070eb58 compare=2124 speed=3919
+[motor] stop: page endpoint pos=0070ebc6 elapsed_ms=127 compare=2080
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064af 000064cf 000064b8 000064ad 00006493 000064a7 000064c0
+[scan] FULL capture done
+[motor] page step start=0070ebd0 target=0070edc5
+[home] phase=8 ms=100 pos=0070ed49 compare=2042 speed=4449
+[motor] stop: page endpoint pos=0070edca elapsed_ms=132 compare=2106
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ab 000064bb 000064c7 0000649e 000064a3 000064bb 000064b6 000064b2
+[scan] FULL capture done
+[motor] page step start=0070edde target=0070efc5
+[home] phase=8 ms=100 pos=0070ef57 compare=2045 speed=4532
+[motor] stop: page endpoint pos=0070efc8 elapsed_ms=128 compare=2159
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ac 000064b4 000064b6 0000649b 000064af 000064b6 000064a4 0000649c
+[scan] FULL capture done
+[motor] page step start=0070efda target=0070f1c5
+[home] phase=8 ms=100 pos=0070f163 compare=2070 speed=4334
+[motor] stop: page endpoint pos=0070f1c7 elapsed_ms=125 compare=2051
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a2 000064a8 000064c0 000064cd 0000649a 0000649e 000064ac 000064c0
+[scan] FULL capture done
+[motor] page step start=0070f1d8 target=0070f3c5
+[home] phase=8 ms=100 pos=0070f34c compare=2080 speed=4239
+[motor] stop: page endpoint pos=0070f3c8 elapsed_ms=131 compare=2187
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649f 000064b2 000064be 000064a0 000064a3 000064bf 000064ae 000064a1
+[scan] FULL capture done
+[motor] page step start=0070f3d6 target=0070f5c5
+[home] phase=8 ms=100 pos=0070f554 compare=2148 speed=3662
+[motor] stop: page endpoint pos=0070f5ca elapsed_ms=129 compare=2058
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006492 000064c9 000064d1 000064b6 00006496 000064b4 000064c2 000064b1
+[scan] FULL capture done
+[motor] page step start=0070f5eb target=0070f7c5
+[home] phase=8 ms=100 pos=0070f76c compare=2202 speed=3361
+[motor] stop: page endpoint pos=0070f7c7 elapsed_ms=122 compare=2075
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ad 000064a8 000064bd 0000649f 000064b5 000064a7 000064a7 00006498
+[scan] FULL capture done
+[motor] page step start=0070f7d3 target=0070f9c5
+[home] phase=8 ms=100 pos=0070f956 compare=2151 speed=3573
+[motor] stop: page endpoint pos=0070f9c6 elapsed_ms=128 compare=2089
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b4 000064c0 000064c0 000064a6 000064b3 000064b1 000064ac 000064a2
+[scan] FULL capture done
+[motor] page step start=0070f9d6 target=0070fbc5
+[home] phase=8 ms=100 pos=0070fb51 compare=2055 speed=4406
+[motor] stop: page endpoint pos=0070fbca elapsed_ms=130 compare=2042
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649d 000064a2 000064cc 000064c8 000064a0 00006493 000064a4 000064c0
+[scan] FULL capture done
+[motor] page step start=0070fbed target=0070fdc5
+[home] phase=8 ms=100 pos=0070fd6a compare=2062 speed=4306
+[motor] stop: page endpoint pos=0070fdc6 elapsed_ms=123 compare=2086
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649f 000064a7 000064c5 0000649f 000064a2 000064c0 000064c1 000064a1
+[scan] FULL capture done
+[motor] page step start=0070fdd4 target=0070ffc5
+[home] phase=8 ms=100 pos=0070ff52 compare=2075 speed=4196
+[motor] stop: page endpoint pos=0070ffc6 elapsed_ms=129 compare=2140
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648e 000064a8 000064b6 000064bd 0000649d 000064a6 000064a3 000064b7
+[scan] FULL capture done
+[page] row ready=128
+[motor] page step start=0070ffd9 target=007101c5
+[home] phase=8 ms=100 pos=00710154 compare=2110 speed=3997
+[motor] stop: page endpoint pos=007101ca elapsed_ms=129 compare=2004
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006490 000064b6 000064b0 000064b7 0000649d 000064a6 000064ac 000064b2
+[scan] FULL capture done
+[motor] page step start=007101e1 target=007103c5
+[home] phase=8 ms=100 pos=00710368 compare=2113 speed=3992
+[motor] stop: page endpoint pos=007103c8 elapsed_ms=124 compare=2208
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a0 000064b4 000064e0 000064ab 000064a1 000064a2 000064c6 000064b4
+[scan] FULL capture done
+[motor] page step start=007103d3 target=007105c5
+[home] phase=8 ms=100 pos=00710556 compare=2143 speed=3614
+[motor] stop: page endpoint pos=007105c7 elapsed_ms=128 compare=2074
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006486 000064ae 000064cc 000064a6 0000649c 000064a0 000064b8 000064ae
+[scan] FULL capture done
+[motor] page step start=007105d6 target=007107c5
+[home] phase=8 ms=100 pos=0071074c compare=2083 speed=4179
+[motor] stop: page endpoint pos=007107c8 elapsed_ms=131 compare=2126
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064bb 000064b9 000064b8 000064ac 000064b6 000064af 000064aa 000064bb
+[scan] FULL capture done
+[motor] page step start=007107e1 target=007109c5
+[home] phase=8 ms=100 pos=00710959 compare=2089 speed=4206
+[motor] stop: page endpoint pos=007109c9 elapsed_ms=128 compare=2145
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064bb 000064b1 000064bb 000064a2 000064ae 000064b4 000064b0 0000649d
+[scan] FULL capture done
+[motor] page step start=007109d4 target=00710bc5
+[home] phase=8 ms=100 pos=00710b49 compare=2021 speed=4772
+[motor] stop: page endpoint pos=00710bc6 elapsed_ms=130 compare=2117
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006493 000064b8 000064e0 000064bd 00006499 000064a0 000064c4 000064ad
+[scan] FULL capture done
+[motor] page step start=00710bdc target=00710dc5
+[home] phase=8 ms=100 pos=00710d58 compare=2077 speed=4226
+[motor] stop: page endpoint pos=00710dc9 elapsed_ms=128 compare=2096
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649f 000064b7 000064bf 000064a9 000064b3 000064c5 000064b6 000064a4
+[scan] FULL capture done
+[motor] page step start=00710dd9 target=00710fc5
+[home] phase=8 ms=100 pos=00710f5c compare=2093 speed=4062
+[motor] stop: page endpoint pos=00710fc7 elapsed_ms=127 compare=2187
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b9 000064c3 000064c5 000064b1 000064b4 000064a2 000064af 000064a0
+[scan] FULL capture done
+[motor] page step start=00710fd9 target=007111c5
+[home] phase=8 ms=100 pos=00711153 compare=2241 speed=3089
+[motor] stop: page endpoint pos=007111c7 elapsed_ms=128 compare=2078
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648a 000064b8 000064dc 000064b9 00006499 0000649f 000064c3 000064b5
+[scan] FULL capture done
+[motor] page step start=007111da target=007113c5
+[home] phase=8 ms=100 pos=00711357 compare=2049 speed=4310
+[motor] stop: page endpoint pos=007113c6 elapsed_ms=128 compare=2072
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ac 000064b1 000064bf 000064a9 000064a6 000064ad 000064ba 000064b1
+[scan] FULL capture done
+[motor] page step start=007113e1 target=007115c5
+[home] phase=8 ms=100 pos=00711568 compare=2064 speed=4203
+[motor] stop: page endpoint pos=007115c6 elapsed_ms=124 compare=2139
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064af 000064b3 000064c1 000064a6 000064b5 000064ad 000064ad 000064af
+[scan] FULL capture done
+[motor] page step start=007115d1 target=007117c5
+[home] phase=8 ms=100 pos=0071174a compare=2100 speed=4086
+[motor] stop: page endpoint pos=007117c7 elapsed_ms=131 compare=2094
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006497 000064ad 000064cd 000064b2 0000649e 000064a1 000064b8 000064be
+[scan] FULL capture done
+[motor] page step start=007117dd target=007119c5
+[home] phase=8 ms=100 pos=00711951 compare=2094 speed=4151
+[motor] stop: page endpoint pos=007119c6 elapsed_ms=129 compare=2066
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064b1 000064b1 000064c6 000064ab 000064b4 000064b8 000064a7 000064a0
+[scan] FULL capture done
+[motor] page step start=007119d6 target=00711bc5
+[home] phase=8 ms=100 pos=00711b59 compare=2111 speed=3892
+[motor] stop: page endpoint pos=00711bc8 elapsed_ms=128 compare=2178
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a8 000064b3 000064bb 0000649d 000064b3 000064a6 000064a5 00006498
+[scan] FULL capture done
+[motor] page step start=00711bde target=00711dc5
+[home] phase=8 ms=100 pos=00711d5c compare=2075 speed=4261
+[motor] stop: page endpoint pos=00711dc6 elapsed_ms=126 compare=2061
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000649b 000064b7 000064c1 000064c2 0000649f 000064a2 000064a5 000064b2
+[scan] FULL capture done
+[motor] page step start=00711dd0 target=00711fc5
+[home] phase=8 ms=100 pos=00711f49 compare=2050 speed=4387
+[motor] stop: page endpoint pos=00711fc9 elapsed_ms=132 compare=2107
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 0000648a 000064cb 000064cd 000064af 000064a5 000064b1 000064bf 000064a2
+[scan] FULL capture done
+[motor] page step start=00711fdf target=007121c5
+[home] phase=8 ms=100 pos=00712154 compare=2094 speed=4137
+[motor] stop: page endpoint pos=007121c9 elapsed_ms=129 compare=2112
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064ac 000064b5 000064b8 000064aa 000064b6 000064ac 000064a2 0000649f
+[scan] FULL capture done
+[motor] page step start=007121e4 target=007123c5
+[home] phase=8 ms=100 pos=00712369 compare=2102 speed=4062
+[motor] stop: page endpoint pos=007123c6 elapsed_ms=123 compare=2064
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006487 000064b7 000064d7 000064a5 000064a1 000064a0 000064cb 000064a7
+[scan] FULL capture done
+[motor] page step start=007123d6 target=007125c5
+[home] phase=8 ms=100 pos=0071254c compare=2088 speed=4267
+[motor] stop: page endpoint pos=007125c6 elapsed_ms=130 compare=2116
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006496 000064b2 000064bb 000064b8 0000649d 000064a7 000064a5 000064b3
+[scan] FULL capture done
+[motor] page step start=007125d5 target=007127c5
+[home] phase=8 ms=100 pos=00712755 compare=2203 speed=3349
+[motor] stop: page endpoint pos=007127ca elapsed_ms=129 compare=2086
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 00006496 000064c7 000064c8 000064b0 00006491 000064bc 000064d2 000064b6
+[scan] FULL capture done
+[motor] page step start=007127e8 target=007129c5
+[home] phase=8 ms=100 pos=00712969 compare=2191 speed=3376
+[motor] stop: page endpoint pos=007129c6 elapsed_ms=123 compare=2077
+[scan] FULL capture v=0x0000000e R=0x20028380
+  AFE serial config (type0)
+  lamp / scanner power ON
+  exposure boost (4x LEDTIME)
+  readcnt 0x00000000->0x00000001 ldmac ev0=0x00000007 ev1=0x00000007 scnio08=0x00000000
+  buf non-sentinel=3072/3072  pattern-mismatch=3072
+  buf[0..7]: 000064a7 000064bb 000064c4 000064a0 000064ad 000064c8 000064b7 00006499
+[scan] FULL capture done
+[page] end state=9 error=7 rows=149

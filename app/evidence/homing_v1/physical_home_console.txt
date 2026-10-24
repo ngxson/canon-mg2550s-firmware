@@ -1,0 +1,70 @@
+
+[app] MG2550s open app
+app_flash=0x00010000
+app_ram=0x20020000
+[app] usb up, entering main loop
+[btn] B/W=short forward jog; Colour=home; Cancel=stop
+[home] stock PI seek + verified backoff + repeat seek; mechanical reference
+[scan] serial controller 0xc0120000:
+  c0120000 = 0x00000000
+  c0120004 = 0x00000000
+  c0120008 = 0x00000000
+  c012000c = 0x00000000
+  c0120010 = 0x00000000
+  c012001c = 0x00000000
+  c0120024 = 0x00000000
+  c0120100 = 0x00000000
+  c0120104 = 0x00000000
+  c0120108 = 0x00000001
+  c012010c = 0x80024110
+  c0120110 = 0x00000000
+  c0120114 = 0x00000020
+  c012011c = 0x60bb70b1
+  c0120124 = 0x40ff500d
+  c0c840c0 = 0x00000000
+  c0c840c4 = 0x00000000
+  c0c81200 = 0x00000fdf
+  c0c81204 = 0x00001020
+  c0c8121c = 0x00000300
+[scan] capture engine 0xc0d60000:
+  c0d60000 = 0x00000001
+  c0d60008 = 0x00000000
+  c0d60080 = 0x00000000
+  c0d60084 = 0x00000000
+  c0d60130 = 0x00000000
+  c0d6015c = 0x00000000
+  c0d60164 = 0x00000000
+  c0d601c0 = 0xffffffff
+  c0d601d4 = 0x00000000
+  c0d601d8 = 0x00000000
+  c0d601dc = 0x00000000
+  c0d601e0 = 0x00000000
+  c0d601e4 = 0x00000000
+  c0d601e8 = 0x00000000
+  c0d601ec = 0x00000000
+  c0d601f0 = 0x00000000
+  c0d601f4 = 0x00000000
+  c0d60294 = 0x00000051
+  c0d602c0 = 0x00000007
+  c0c85614 = 0x00000000
+[scan] peek done
+[motor] setup c0c41404=00000004
+[motor] setup c0c41408=00000005
+[motor] setup c0c41418=0000000a
+[motor] setup c0c81090=0000003f
+[motor] setup c0c57000=0000200d
+[motor] setup c0c57100=00700000
+[motor] setup c0c57148=00000001
+[motor] setup c0c57308=00000001
+[home] seek left start=00700000 target=0067ed12
+STATUS {"result": 1, "phase": 4, "position": 7340029, "reference": 0, "first_stop": 0, "backoff_end": 0, "host_elapsed_s": 0.036}
+[home] phase=4 ms=100 pos=006ff809 compare=1636 speed=28135
+[home] phase=4 ms=200 pos=006fed18 compare=1645 speed=28169
+[home] phase=4 ms=300 pos=006fe227 compare=1644 speed=28135
+[home] phase=4 ms=400 pos=006fd737 compare=1652 speed=28185
+[home] phase=4 ms=500 pos=006fcc47 compare=1645 speed=28103
+[home] phase=4 ms=600 pos=006fc157 compare=1654 speed=28152
+[home] phase=4 ms=700 pos=006fb666 compare=1655 speed=28152
+[home] stop: phase deadline pos=006fae88 elapsed_ms=39918 compare=1648
+STATUS {"result": 3, "phase": 0, "position": 7319051, "reference": 0, "first_stop": 0, "backoff_end": 0, "host_elapsed_s": 0.803}
+FINAL {"result": 3, "phase": 0, "position": 7319051, "reference": 0, "first_stop": 0, "backoff_end": 0, "host_elapsed_s": 0.803}

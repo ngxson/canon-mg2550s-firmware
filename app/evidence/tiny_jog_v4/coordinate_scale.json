@@ -1,0 +1,29 @@
+{
+  "assumptions": "Execute stock configuration-copy/getter and scan line-pitch arithmetic.\n\nSynthetic RAM context; stock flash is unmodified. This establishes coordinate\narithmetic, not electrical encoder resolution or calibrated physical travel.\n",
+  "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "resolution_from_stock_configuration": 38400,
+  "line_pitch_cases": [
+    {
+      "tenths_dpi": 3000,
+      "position_units_per_line": 128
+    },
+    {
+      "tenths_dpi": 6000,
+      "position_units_per_line": 64
+    },
+    {
+      "tenths_dpi": 12000,
+      "position_units_per_line": 32
+    }
+  ],
+  "inferred_units_per_inch": 38400,
+  "physical_scale_calibrated": false,
+  "nominal_mm_for_counts": {
+    "3": 0.0019843749999999996,
+    "4": 0.0026458333333333334,
+    "46": 0.03042708333333333,
+    "64": 0.042333333333333334,
+    "512": 0.33866666666666667
+  },
+  "all_assertions_passed": true
+}

@@ -1,0 +1,26 @@
+homing error 0
+1/880 rows, position 0, 3.3s
+33/880 rows, position 16410, 14.5s
+65/880 rows, position 32786, 25.8s
+97/880 rows, position 49169, 37.1s
+129/880 rows, position 65556, 48.4s
+{"completed": false, "rows": 149, "output": "canon-mg2550s-firmware/app/evidence/page_v1/scan", "image": {"min": 25665, "max": 25841, "mean": 25744.884505645274, "preview_low": 25684.0, "preview_high": 25811.0, "raw_width": 3072, "rows": 149, "preview_width": 638, "preview_assumed_width_mm": 216, "nominal_y_dpi": 75.0}}
+Traceback (most recent call last):
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/tools/scan_page.py", line 145, in <module>
+    dev.ctrl_transfer(0x40, 0x76, 0, 0, b'', timeout=2000)
+
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/tools/scan_page.py", line 105, in main
+    if s['state'] in (1, 6, 7, 8, 9):
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/tools/scan_page.py", line 105, in <genexpr>
+    if s['state'] in (1, 6, 7, 8, 9):
+                          ^^^^^^^^^^^^
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/core.py", line 1093, in ctrl_transfer
+    ret = self._ctx.backend.ctrl_transfer(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/backend/libusb1.py", line 897, in ctrl_transfer
+    ret = _check(self.lib.libusb_control_transfer(
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/backend/libusb1.py", line 604, in _check
+    raise USBError(_strerror(ret), ret, _libusb_errno[ret])
+usb.core.USBError: [Errno 32] Pipe error

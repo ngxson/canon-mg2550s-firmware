@@ -1,0 +1,26 @@
+[btn] probe enabled; Copy keys already active
+[btn] 028=0x00000008
+[btn] 028=0x0000040a
+[motor] setup c0c41404=00000004
+[motor] setup c0c41408=00000005
+[motor] setup c0c41418=0000000a
+[motor] setup c0c81090=0000003f
+[motor] setup c0c57000=0000200d
+[motor] setup c0c57100=00700000
+[motor] setup c0c57148=00000001
+[motor] setup c0c57308=00000001
+[motor] tiny forward max=8ms effort=120 pos=00700000
+[motor] stop: 8ms deadline elapsed_us=8012 control=00000102 compare=2120 pos=00700003 delta=+3 s304=00000001
+[btn] 028=0x00000008
+[btn] 028=0x0000100c
+[motor] tiny backward max=8ms effort=120 pos=00700003
+[motor] stop: 8ms deadline elapsed_us=8018 control=00000102 compare=1880 pos=00700000 delta=-3 s304=00000005
+[btn] 028=0x00000008
+[btn] 028=0x0000040a
+[motor] tiny forward max=8ms effort=120 pos=006ffffe
+[motor] stop: 8ms deadline elapsed_us=8018 control=00000102 compare=2120 pos=00700002 delta=+4 s304=00000001
+[btn] 028=0x00000008
+[btn] 028=0x0000100c
+[motor] tiny backward max=8ms effort=120 pos=00700004
+[motor] stop: 8ms deadline elapsed_us=8018 control=00000102 compare=1880 pos=00700000 delta=-4 s304=00000007
+[btn] 028=0x00000008

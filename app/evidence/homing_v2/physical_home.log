@@ -1,0 +1,238 @@
+
+[app] MG2550s open app
+app_flash=0x00010000
+app_ram=0x20020000
+[app] usb up, entering main loop
+[btn] B/W=short forward jog; Colour=home; Cancel=stop
+[home] stock PI seek + verified backoff + repeat seek; mechanical reference
+[scan] serial controller 0xc0120000:
+  c0120000 = 0x00000000
+  c0120004 = 0x00000000
+  c0120008 = 0x00000000
+  c012000c = 0x00000000
+  c0120010 = 0x00000000
+  c012001c = 0x00000000
+  c0120024 = 0x00000000
+  c0120100 = 0x00000000
+  c0120104 = 0x00000000
+  c0120108 = 0x00000001
+  c012010c = 0x80024110
+  c0120110 = 0x00000000
+  c0120114 = 0x00000020
+  c012011c = 0x60bb70b1
+  c0120124 = 0x40ff500d
+  c0c840c0 = 0x00000000
+  c0c840c4 = 0x00000000
+  c0c81200 = 0x00000fdf
+  c0c81204 = 0x00001020
+  c0c8121c = 0x00000300
+[scan] capture engine 0xc0d60000:
+  c0d60000 = 0x00000001
+  c0d60008 = 0x00000000
+  c0d60080 = 0x00000000
+  c0d60084 = 0x00000000
+  c0d60130 = 0x00000000
+  c0d6015c = 0x00000000
+  c0d60164 = 0x00000000
+  c0d601c0 = 0xffffffff
+  c0d601d4 = 0x00000000
+  c0d601d8 = 0x00000000
+  c0d601dc = 0x00000000
+  c0d601e0 = 0x00000000
+  c0d601e4 = 0x00000000
+  c0d601e8 = 0x00000000
+  c0d601ec = 0x00000000
+  c0d601f0 = 0x00000000
+  c0d601f4 = 0x00000000
+  c0d60294 = 0x00000051
+  c0d602c0 = 0x00000007
+  c0c85614 = 0x00000000
+[scan] peek done
+[motor] setup c0c41404=00000004
+[motor] setup c0c41408=00000005
+[motor] setup c0c41418=0000000a
+[motor] setup c0c81090=0000003f
+[motor] setup c0c57000=0000200d
+[motor] setup c0c57100=00700000
+[motor] setup c0c57148=00000001
+[motor] setup c0c57308=00000001
+[home] seek left start=00700000 target=0067ed12
+[home] phase=4 ms=100 pos=006ff809 compare=1622 speed=27939
+[home] phase=4 ms=200 pos=006fed19 compare=1615 speed=27890
+[home] phase=4 ms=300 pos=006fe228 compare=1628 speed=27955
+[home] phase=4 ms=400 pos=006fd738 compare=1611 speed=27826
+[home] phase=4 ms=500 pos=006fcc48 compare=1623 speed=27890
+[home] phase=4 ms=600 pos=006fc157 compare=1616 speed=27842
+[home] phase=4 ms=700 pos=006fb667 compare=1629 speed=27923
+[home] phase=4 ms=800 pos=006fab79 compare=1614 speed=27826
+[home] phase=4 ms=900 pos=006fa087 compare=1628 speed=27906
+[home] phase=4 ms=1000 pos=006f9597 compare=1606 speed=27745
+[home] phase=4 ms=1100 pos=006f8aa6 compare=1630 speed=27906
+[home] phase=4 ms=1200 pos=006f7fb6 compare=1613 speed=27793
+[home] phase=4 ms=1300 pos=006f74c6 compare=1630 speed=27906
+[home] phase=4 ms=1400 pos=006f69d6 compare=1609 speed=27761
+[home] phase=4 ms=1500 pos=006f5ee5 compare=1633 speed=27939
+[home] phase=4 ms=1600 pos=006f53f6 compare=1609 speed=27777
+[home] phase=4 ms=1700 pos=006f4905 compare=1631 speed=27906
+[home] phase=4 ms=1800 pos=006f3e16 compare=1606 speed=27729
+[home] phase=4 ms=1900 pos=006f3325 compare=1638 speed=27955
+[home] phase=4 ms=2000 pos=006f2836 compare=1610 speed=27761
+[home] phase=4 ms=2100 pos=006f1d45 compare=1630 speed=27890
+[home] phase=4 ms=2200 pos=006f1255 compare=1609 speed=27745
+[home] phase=4 ms=2300 pos=006f0764 compare=1635 speed=27923
+[home] phase=4 ms=2400 pos=006efc75 compare=1602 speed=27697
+[home] phase=4 ms=2500 pos=006ef184 compare=1628 speed=27890
+[home] phase=4 ms=2600 pos=006ee694 compare=1604 speed=27713
+[home] phase=4 ms=2700 pos=006edba4 compare=1630 speed=27890
+[home] phase=4 ms=2800 pos=006ed0b5 compare=1602 speed=27713
+[home] phase=4 ms=2900 pos=006ec5c5 compare=1629 speed=27874
+[home] phase=4 ms=3000 pos=006ebad6 compare=1608 speed=27729
+[home] phase=4 ms=3100 pos=006eafe5 compare=1629 speed=27874
+[home] phase=4 ms=3200 pos=006ea4f6 compare=1608 speed=27745
+[home] phase=4 ms=3300 pos=006e9a05 compare=1624 speed=27842
+[home] phase=4 ms=3400 pos=006e8f15 compare=1604 speed=27697
+[home] phase=4 ms=3500 pos=006e8425 compare=1623 speed=27826
+[home] phase=4 ms=3600 pos=006e7935 compare=1606 speed=27713
+[home] phase=4 ms=3700 pos=006e6e45 compare=1627 speed=27858
+[home] phase=4 ms=3800 pos=006e6355 compare=1606 speed=27713
+[home] phase=4 ms=3900 pos=006e5864 compare=1632 speed=27890
+[home] phase=4 ms=4000 pos=006e4d75 compare=1601 speed=27681
+[home] phase=4 ms=4100 pos=006e4284 compare=1636 speed=27923
+[home] phase=4 ms=4200 pos=006e3794 compare=1606 speed=27697
+[home] phase=4 ms=4300 pos=006e2ca4 compare=1623 speed=27809
+[home] phase=4 ms=4400 pos=006e21b5 compare=1606 speed=27713
+[home] phase=4 ms=4500 pos=006e16c4 compare=1627 speed=27858
+[home] phase=4 ms=4600 pos=006e0bd4 compare=1602 speed=27681
+[home] phase=4 ms=4700 pos=006e00e4 compare=1630 speed=27890
+[home] phase=4 ms=4800 pos=006df5f5 compare=1603 speed=27697
+[home] phase=4 ms=4900 pos=006deb04 compare=1627 speed=27858
+[home] phase=4 ms=5000 pos=006de015 compare=1605 speed=27697
+[home] phase=4 ms=5100 pos=006dd524 compare=1623 speed=27826
+[home] phase=4 ms=5200 pos=006dca34 compare=1602 speed=27681
+[home] phase=4 ms=5300 pos=006dbf44 compare=1627 speed=27858
+[home] phase=4 ms=5400 pos=006db455 compare=1599 speed=27649
+[home] phase=4 ms=5500 pos=006da965 compare=1630 speed=27874
+[home] phase=4 ms=5600 pos=006d9e75 compare=1601 speed=27665
+[home] phase=4 ms=5700 pos=006d9384 compare=1635 speed=27906
+[home] phase=4 ms=5800 pos=006d8895 compare=1608 speed=27713
+[home] phase=4 ms=5900 pos=006d7da4 compare=1620 speed=27793
+[home] phase=4 ms=6000 pos=006d72b4 compare=1609 speed=27713
+[home] phase=4 ms=6100 pos=006d67c4 compare=1633 speed=27890
+[home] phase=4 ms=6200 pos=006d5cd4 compare=1608 speed=27713
+[home] phase=4 ms=6300 pos=006d51e3 compare=1640 speed=27939
+[home] phase=4 ms=6400 pos=006d46f6 compare=1608 speed=27713
+[home] phase=4 ms=6500 pos=006d3c04 compare=1618 speed=27761
+[home] phase=4 ms=6600 pos=006d3116 compare=1605 speed=27681
+[home] phase=4 ms=6700 pos=006d2625 compare=1625 speed=27826
+[home] phase=4 ms=6800 pos=006d1b36 compare=1602 speed=27665
+[home] phase=4 ms=6900 pos=006d1045 compare=1640 speed=27939
+[home] phase=4 ms=7000 pos=006d0556 compare=1610 speed=27729
+[home] phase=4 ms=7100 pos=006cfa65 compare=1632 speed=27874
+[home] phase=4 ms=7200 pos=006cef77 compare=1608 speed=27713
+[home] phase=4 ms=7300 pos=006ce486 compare=1626 speed=27826
+[home] phase=4 ms=7400 pos=006cd997 compare=1606 speed=27697
+[home] phase=4 ms=7500 pos=006ccea6 compare=1629 speed=27858
+[home] phase=4 ms=7600 pos=006cc3b7 compare=1615 speed=27777
+[home] phase=4 ms=7700 pos=006cb8c7 compare=1629 speed=27858
+[home] phase=4 ms=7800 pos=006cadd7 compare=1612 speed=27745
+[home] phase=4 ms=7900 pos=006ca2e6 compare=1632 speed=27890
+[home] phase=4 ms=8000 pos=006c97f6 compare=1606 speed=27697
+[home] phase=4 ms=8100 pos=006c8d06 compare=1633 speed=27890
+[home] phase=4 ms=8200 pos=006c8216 compare=1605 speed=27697
+[home] phase=4 ms=8300 pos=006c7726 compare=1628 speed=27858
+[home] phase=4 ms=8400 pos=006c6c36 compare=1600 speed=27665
+[home] phase=4 ms=8500 pos=006c6146 compare=1632 speed=27890
+[home] phase=4 ms=8600 pos=006c5657 compare=1609 speed=27729
+[home] phase=4 ms=8700 pos=006c4b66 compare=1632 speed=27874
+[home] phase=4 ms=8800 pos=006c4077 compare=1609 speed=27713
+[home] phase=4 ms=8900 pos=006c3585 compare=1629 speed=27858
+[home] phase=4 ms=9000 pos=006c2a97 compare=1607 speed=27713
+[home] phase=4 ms=9100 pos=006c1fa6 compare=1632 speed=27890
+[home] phase=4 ms=9200 pos=006c14b6 compare=1601 speed=27665
+[home] phase=4 ms=9300 pos=006c09c5 compare=1637 speed=27923
+[home] phase=4 ms=9400 pos=006bfed6 compare=1608 speed=27713
+[home] phase=4 ms=9500 pos=006bf3e5 compare=1626 speed=27826
+[home] phase=4 ms=9600 pos=006be8f6 compare=1613 speed=27745
+[home] phase=4 ms=9700 pos=006bde06 compare=1625 speed=27826
+[home] phase=4 ms=9800 pos=006bd316 compare=1608 speed=27713
+[home] phase=4 ms=9900 pos=006bc825 compare=1630 speed=27858
+[home] phase=4 ms=10000 pos=006bbd36 compare=1604 speed=27681
+[home] phase=4 ms=10100 pos=006bb246 compare=1630 speed=27890
+[home] phase=4 ms=10200 pos=006ba756 compare=1604 speed=27697
+[home] phase=4 ms=10300 pos=006b9c66 compare=1630 speed=27890
+[home] phase=4 ms=10400 pos=006b9176 compare=1612 speed=27761
+[home] phase=4 ms=10500 pos=006b8686 compare=1628 speed=27858
+[home] phase=4 ms=10600 pos=006b7b96 compare=1610 speed=27729
+[home] phase=4 ms=10700 pos=006b70a5 compare=1628 speed=27858
+[home] phase=4 ms=10800 pos=006b65b7 compare=1610 speed=27745
+[home] phase=4 ms=10900 pos=006b5ac6 compare=1630 speed=27890
+[home] phase=4 ms=11000 pos=006b4fd6 compare=1611 speed=27761
+[home] phase=4 ms=11100 pos=006b44e6 compare=1631 speed=27874
+[home] phase=4 ms=11200 pos=006b39f6 compare=1611 speed=27745
+[home] phase=4 ms=11300 pos=006b2f05 compare=1631 speed=27890
+[home] phase=4 ms=11400 pos=006b2416 compare=1605 speed=27697
+[home] phase=4 ms=11500 pos=006b1926 compare=1631 speed=27890
+[home] phase=4 ms=11600 pos=006b0e36 compare=1607 speed=27729
+[home] phase=4 ms=11700 pos=006b0345 compare=1626 speed=27858
+[home] phase=4 ms=11800 pos=006af857 compare=1618 speed=27809
+[home] phase=4 ms=11900 pos=006aed66 compare=1624 speed=27826
+[home] phase=4 ms=12000 pos=006ae277 compare=1619 speed=27809
+[home] phase=4 ms=12100 pos=006ad786 compare=1627 speed=27842
+[home] phase=4 ms=12200 pos=006acc96 compare=1606 speed=27697
+[home] phase=4 ms=12300 pos=006ac1a6 compare=1648 speed=28004
+[home] phase=4 ms=12400 pos=006ab6b7 compare=1607 speed=27713
+[home] phase=4 ms=12500 pos=006aabc6 compare=1630 speed=27874
+[home] phase=4 ms=12600 pos=006aa0d7 compare=1611 speed=27745
+[home] phase=4 ms=12700 pos=006a95e6 compare=1629 speed=27874
+[home] phase=4 ms=12800 pos=006a8af6 compare=1606 speed=27729
+[home] phase=4 ms=12900 pos=006a8005 compare=1629 speed=27890
+[home] phase=4 ms=13000 pos=006a7517 compare=1606 speed=27729
+[home] phase=4 ms=13100 pos=006a6a25 compare=1628 speed=27874
+[home] phase=4 ms=13200 pos=006a5f37 compare=1602 speed=27697
+[home] phase=4 ms=13300 pos=006a5446 compare=1626 speed=27858
+[home] phase=4 ms=13400 pos=006a4956 compare=1603 speed=27697
+[home] phase=4 ms=13500 pos=006a3e67 compare=1631 speed=27906
+[home] phase=4 ms=13600 pos=006a3378 compare=1618 speed=27826
+[home] phase=4 ms=13700 pos=006a2886 compare=1626 speed=27874
+[home] phase=4 ms=13800 pos=006a1d96 compare=1604 speed=27713
+[home] phase=4 ms=13900 pos=006a12a6 compare=1632 speed=27906
+[home] phase=4 ms=14000 pos=006a07b6 compare=1607 speed=27729
+[home] phase=4 ms=14100 pos=0069fcc7 compare=1630 speed=27890
+[home] phase=4 ms=14200 pos=0069f1d8 compare=1612 speed=27761
+[home] phase=4 ms=14300 pos=0069e6e6 compare=1627 speed=27842
+[home] phase=4 ms=14400 pos=0069dbf7 compare=1610 speed=27745
+[home] phase=4 ms=14500 pos=0069d106 compare=1625 speed=27842
+[home] phase=4 ms=14600 pos=0069c616 compare=1608 speed=27745
+[home] phase=4 ms=14700 pos=0069bb48 compare=1400 speed=23076
+[home] phase=4 ms=14800 pos=0069ba3b compare=1400 speed=52
+[home] phase=4 ms=14900 pos=0069ba3b compare=1400 speed=22
+[home] phase=4 ms=15000 pos=0069ba3b compare=1400 speed=14
+[home] phase=4 ms=15100 pos=0069ba3b compare=1400 speed=10
+[home] phase=4 ms=15200 pos=0069ba3b compare=1400 speed=8
+[home] phase=4 ms=15300 pos=0069ba3b compare=1400 speed=6
+[home] phase=4 ms=15400 pos=0069ba3b compare=1400 speed=5
+[home] phase=4 ms=15500 pos=0069ba3b compare=1400 speed=5
+[home] backoff start=0069ba3b target=0069e391
+[home] phase=5 ms=100 pos=0069bf6f compare=2223 speed=20390
+[home] phase=5 ms=200 pos=0069c73f compare=2243 speed=20295
+[home] phase=5 ms=300 pos=0069cf0f compare=2240 speed=20304
+[home] phase=5 ms=400 pos=0069d6df compare=2230 speed=20347
+[home] phase=5 ms=500 pos=0069d9b6 compare=2149 speed=3844
+[home] phase=5 ms=600 pos=0069db46 compare=2138 speed=3924
+[home] phase=5 ms=700 pos=0069dcd6 compare=2175 speed=3653
+[home] phase=5 ms=800 pos=0069de66 compare=2130 speed=3971
+[home] phase=5 ms=900 pos=0069dff6 compare=2165 speed=3714
+[home] phase=5 ms=1000 pos=0069e186 compare=2094 speed=4247
+[home] phase=5 ms=1100 pos=0069e317 compare=2105 speed=4188
+[home] repeat left seek start=0069e39c target=0069ae8e
+[home] phase=6 ms=100 pos=0069db9f compare=1638 speed=28004
+[home] phase=6 ms=200 pos=0069d0ae compare=1639 speed=28004
+[home] phase=6 ms=300 pos=0069c5be compare=1642 speed=28053
+[home] phase=6 ms=400 pos=0069bb03 compare=1400 speed=20134
+[home] phase=6 ms=500 pos=0069ba46 compare=1400 speed=49
+[home] phase=6 ms=600 pos=0069ba46 compare=1400 speed=22
+[home] phase=6 ms=700 pos=0069ba46 compare=1400 speed=14
+[home] phase=6 ms=800 pos=0069ba46 compare=1400 speed=10
+[home] phase=6 ms=900 pos=0069ba46 compare=1400 speed=8
+[home] phase=6 ms=1000 pos=0069ba46 compare=1400 speed=6
+[home] stop: mechanical reference established; optical calibration pending pos=0069ba47 elapsed_ms=0 compare=2000

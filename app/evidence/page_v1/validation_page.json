@@ -1,0 +1,45 @@
+{
+  "assumptions": "Actual ARM page orchestration with scripted motor feedback and synthetic DMA.\nChecks row ownership/ACKs, fresh images, positioning, return home and failure\ncleanup. This verifies software contracts, not optical quality or motor physics.\n",
+  "app_sha256": "57e6c5a988e39a544c97cb06a1ae3237d245532f67aed0280460c0d72bb1357d",
+  "cases": {
+    "full_sequence_fresh_rows_return_home": {
+      "phase": 7,
+      "captures": 4,
+      "protected_prefix_unchanged": true
+    },
+    "missing_dma_rejected": {
+      "phase": 8,
+      "captures": 0,
+      "protected_prefix_unchanged": true
+    },
+    "abandoned_host_stops": {
+      "phase": 8,
+      "captures": 1,
+      "protected_prefix_unchanged": true
+    },
+    "stuck_forward_step": {
+      "phase": 8,
+      "captures": 1,
+      "protected_prefix_unchanged": true
+    },
+    "cancel_during_step": {
+      "phase": 9,
+      "captures": 1,
+      "protected_prefix_unchanged": true
+    },
+    "usb_cancel": {
+      "phase": 9,
+      "captures": 1,
+      "protected_prefix_unchanged": true
+    },
+    "button_cancel": {
+      "phase": 9,
+      "captures": 1,
+      "protected_prefix_unchanged": true
+    },
+    "live_management_conflict_and_reboot": {
+      "passed": true
+    }
+  },
+  "all_assertions_passed": true
+}

@@ -1,4 +1,5 @@
 # Generated firmware and ESP-IDF / PlatformIO outputs
+/app/build/
 /bootloader/build/
 /tools/esp32/.pio/
 /tools/esp32/build/
@@ -7,6 +8,20 @@
 /tools/esp32/sdkconfig.*
 !/tools/esp32/sdkconfig.defaults
 !/tools/esp32/sdkconfig.defaults.*
+
+# Local scans (raw document data, previews and per-scan logs)
+/scans/
+/app/scans/
+
+# Generated artifacts in app milestone archives. Keep their source snapshots,
+# manifests, validation reports and reviewed logs available to Git.
+/app/evidence/**/*.bin
+/app/evidence/**/*.elf
+/app/evidence/**/*.map
+/app/evidence/**/*.dis
+/app/evidence/**/scan.pgm
+/app/evidence/**/scan.png
+/app/evidence/**/scan-raw.png
 
 # Python environments, bytecode and tool caches
 __pycache__/
@@ -34,5 +49,5 @@ htmlcov/
 .DS_Store
 ._*
 
-# Keep firmware dumps, SDK defaults, and evidence JSON/logs versionable.
+# Keep reference firmware dumps, SDK defaults, and evidence JSON/logs versionable.
 # Do not add blanket *.bin, *.json or *.log exclusions.

@@ -1,0 +1,314 @@
+{
+  "app_sha256": "57e6c5a988e39a544c97cb06a1ae3237d245532f67aed0280460c0d72bb1357d",
+  "assumptions": "Regress bounded jogs and key guards alongside the home controller.\nSynthetic position/clock inputs; no physical motion claim.\n",
+  "cases": {
+    "both_usb_jog_polarities_frozen_deadline": {
+      "drives": [
+        {
+          "x0": 7340032,
+          "target": 7340544,
+          "direction": 0,
+          "start": 2572800,
+          "values": [
+            2052,
+            2059,
+            2074,
+            2099,
+            2132,
+            2173,
+            2223,
+            2282,
+            2350,
+            2426,
+            2511,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600
+          ],
+          "duration_ms": 40.05
+        },
+        {
+          "x0": 7340032,
+          "target": 7339520,
+          "direction": 1,
+          "start": 38716800,
+          "values": [
+            1947,
+            1940,
+            1925,
+            1900,
+            1868,
+            1826,
+            1776,
+            1717,
+            1649,
+            1573,
+            1488,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400,
+            1400
+          ],
+          "duration_ms": 40.05
+        }
+      ],
+      "protected_prefix_unchanged": true
+    },
+    "held_bw_key_no_repeat": {
+      "drives": [
+        {
+          "x0": 7340032,
+          "target": 7340544,
+          "direction": 0,
+          "start": 2760000,
+          "values": [
+            2052,
+            2059,
+            2074,
+            2099,
+            2132,
+            2173,
+            2223,
+            2282,
+            2350,
+            2426,
+            2511,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600
+          ],
+          "duration_ms": 40.1
+        }
+      ],
+      "protected_prefix_unchanged": true
+    },
+    "startup_held_key_requires_release": {
+      "drives": [
+        {
+          "x0": 7340032,
+          "target": 7340544,
+          "direction": 0,
+          "start": 7080000,
+          "values": [
+            2052,
+            2059,
+            2074,
+            2099,
+            2132,
+            2173,
+            2223,
+            2282,
+            2350,
+            2426,
+            2511,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600,
+            2600
+          ],
+          "duration_ms": 40.1
+        }
+      ],
+      "protected_prefix_unchanged": true
+    },
+    "both_keys_do_not_start": {
+      "drives": [],
+      "protected_prefix_unchanged": true
+    },
+    "cancel_stops_without_toggling_lamp": {
+      "drives": [
+        {
+          "x0": 7340032,
+          "target": 7340544,
+          "direction": 0,
+          "start": 2760000,
+          "values": [],
+          "duration_ms": 0.15
+        }
+      ],
+      "protected_prefix_unchanged": true
+    },
+    "travel_guard_0": {
+      "drives": [
+        {
+          "x0": 7340032,
+          "target": 7340544,
+          "direction": 0,
+          "start": 2572800,
+          "values": [
+            2052,
+            2059,
+            2074,
+            2099,
+            2132,
+            2173,
+            2223,
+            2282,
+            2350,
+            2426,
+            2511,
+            2600,
+            2600,
+            2600,
+            2600
+          ],
+          "duration_ms": 16.05
+        }
+      ],
+      "protected_prefix_unchanged": true
+    },
+    "travel_guard_1": {
+      "drives": [
+        {
+          "x0": 7340032,
+          "target": 7339520,
+          "direction": 1,
+          "start": 2572800,
+          "values": [
+            1947,
+            1940,
+            1925,
+            1900,
+            1868,
+            1826,
+            1776,
+            1717,
+            1649,
+            1573,
+            1488,
+            1400,
+            1400,
+            1400,
+            1400
+          ],
+          "duration_ms": 16.05
+        }
+      ],
+      "protected_prefix_unchanged": true
+    },
+    "serial_timeout_no_drive": {
+      "drives": [],
+      "protected_prefix_unchanged": true
+    },
+    "invalid_direction": {
+      "drives": [],
+      "protected_prefix_unchanged": true
+    },
+    "shared_setup_refuses_other_active_motor": {
+      "drives": [],
+      "protected_prefix_unchanged": true
+    },
+    "overlap_stops": {
+      "drives": [
+        {
+          "x0": 7340032,
+          "target": 7340544,
+          "direction": 0,
+          "start": 2760000,
+          "values": [],
+          "duration_ms": 0.2
+        }
+      ],
+      "protected_prefix_unchanged": true
+    }
+  },
+  "all_assertions_passed": true
+}

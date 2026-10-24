@@ -1,0 +1,163 @@
+{
+  "before": {
+    "result": 0,
+    "phase": 0,
+    "position": 7340424,
+    "reference": 0,
+    "first_stop": 0,
+    "backoff_end": 0
+  },
+  "samples": [
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7340029,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.036
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7338957,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.092
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7337383,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.148
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7335897,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.201
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7334325,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.257
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7332833,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.311
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7331261,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.367
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7329776,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.42
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7328222,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.475
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7326645,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.531
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7325087,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.587
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7323531,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.643
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7322088,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.694
+    },
+    {
+      "result": 1,
+      "phase": 4,
+      "position": 7320520,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.75
+    },
+    {
+      "result": 3,
+      "phase": 0,
+      "position": 7319051,
+      "reference": 0,
+      "first_stop": 0,
+      "backoff_end": 0,
+      "host_elapsed_s": 0.803
+    }
+  ],
+  "management_after": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "home_request_sent": true,
+  "visible_motion_confirmed": false,
+  "physical_observation": "Requires user observation; counters are not visual proof."
+}

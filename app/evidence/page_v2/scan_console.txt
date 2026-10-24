@@ -1,0 +1,32 @@
+homing error 0
+1/880 rows, position 0, 6.3s
+33/880 rows, position 16393, 17.3s
+65/880 rows, position 32780, 28.4s
+97/880 rows, position 49180, 39.5s
+129/880 rows, position 65565, 50.5s
+161/880 rows, position 81936, 61.6s
+193/880 rows, position 98323, 72.6s
+225/880 rows, position 114711, 83.7s
+257/880 rows, position 131100, 94.8s
+289/880 rows, position 147472, 105.8s
+321/880 rows, position 163858, 116.9s
+353/880 rows, position 180250, 127.9s
+385/880 rows, position 196642, 139.1s
+417/880 rows, position 213004, 150.1s
+449/880 rows, position 229403, 161.2s
+481/880 rows, position 245778, 172.3s
+513/880 rows, position 262182, 183.3s
+545/880 rows, position 278552, 194.4s
+577/880 rows, position 294927, 205.5s
+609/880 rows, position 311320, 216.5s
+641/880 rows, position 327712, 227.6s
+673/880 rows, position 344075, 238.7s
+705/880 rows, position 360466, 249.8s
+737/880 rows, position 376854, 260.9s
+769/880 rows, position 393238, 271.9s
+801/880 rows, position 409628, 283.0s
+833/880 rows, position 425994, 294.0s
+865/880 rows, position 442380, 305.1s
+returning_home error 0
+done error 0
+{"completed": true, "rows": 880, "output": "fw_dump/scans/page_poc_2026-10-24", "image": {"min": 24585, "max": 65535, "mean": 60312.180509960715, "preview_low": 25297.0, "preview_high": 65535.0, "raw_width": 2592, "rows": 880, "preview_width": 638, "preview_assumed_width_mm": 216, "nominal_y_dpi": 75.0}}

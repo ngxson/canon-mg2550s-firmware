@@ -1,0 +1,1154 @@
+{
+  "assumptions": "Compare every stock-written scanner C/P field at the first home arm.\nAlso expose wider clock/shared/power differences instead of hiding them in a\nhand-picked register checklist. Last-written values do not prove silicon state.\n",
+  "app_sha256": "ff46d12271607442e0ea57e6d284d465a4bbe37ed5cfa423607cf41852ff93a9",
+  "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "comparisons": [
+    {
+      "address": "0xc0101000",
+      "stock_value": 2,
+      "stock_pc": "0x116a2c",
+      "app_value": 2,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101004",
+      "stock_value": 1,
+      "stock_pc": "0x116a30",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc010100c",
+      "stock_value": 0,
+      "stock_pc": "0x116a34",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101024",
+      "stock_value": 0,
+      "stock_pc": "0x116a36",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc010102c",
+      "stock_value": 0,
+      "stock_pc": "0x116a38",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101034",
+      "stock_value": 0,
+      "stock_pc": "0x116a3a",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc010105c",
+      "stock_value": 1,
+      "stock_pc": "0x116a40",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101100",
+      "stock_value": 474922,
+      "stock_pc": "0x116a46",
+      "app_value": 474922,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101104",
+      "stock_value": 1,
+      "stock_pc": "0x116a48",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101108",
+      "stock_value": 1,
+      "stock_pc": "0x116a4a",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc010110c",
+      "stock_value": 2,
+      "stock_pc": "0x116a4c",
+      "app_value": 2,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101110",
+      "stock_value": 1,
+      "stock_pc": "0x116a4e",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101124",
+      "stock_value": 218572711,
+      "stock_pc": "0x116a52",
+      "app_value": 218572711,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc010112c",
+      "stock_value": 785,
+      "stock_pc": "0x116a56",
+      "app_value": 785,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101134",
+      "stock_value": 263,
+      "stock_pc": "0x116a5c",
+      "app_value": 263,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101144",
+      "stock_value": 3,
+      "stock_pc": "0x116a64",
+      "app_value": 3,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101158",
+      "stock_value": 1,
+      "stock_pc": "0x116a66",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc010115c",
+      "stock_value": 1,
+      "stock_pc": "0x116a68",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101200",
+      "stock_value": 2,
+      "stock_pc": "0x115ade",
+      "app_value": 4294967295,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101214",
+      "stock_value": 5,
+      "stock_pc": "0x109f12",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101218",
+      "stock_value": 5,
+      "stock_pc": "0x109f12",
+      "app_value": 5,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101224",
+      "stock_value": 5,
+      "stock_pc": "0x109f12",
+      "app_value": 5,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101314",
+      "stock_value": 1,
+      "stock_pc": "0x109f1a",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101318",
+      "stock_value": 1,
+      "stock_pc": "0x109f1a",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101324",
+      "stock_value": 1,
+      "stock_pc": "0x109fbc",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0102004",
+      "stock_value": 383,
+      "stock_pc": "0x116a70",
+      "app_value": 383,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41004",
+      "stock_value": 0,
+      "stock_pc": "0x116db6",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41008",
+      "stock_value": 1,
+      "stock_pc": "0x116ed8",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41400",
+      "stock_value": 0,
+      "stock_pc": "0x116ca0",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41404",
+      "stock_value": 4,
+      "stock_pc": "0x116ca4",
+      "app_value": 4,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41408",
+      "stock_value": 5,
+      "stock_pc": "0x116ca8",
+      "app_value": 5,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c4140c",
+      "stock_value": 6,
+      "stock_pc": "0x116cac",
+      "app_value": 6,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41410",
+      "stock_value": 7,
+      "stock_pc": "0x116cb0",
+      "app_value": 7,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41414",
+      "stock_value": 11,
+      "stock_pc": "0x116cb4",
+      "app_value": 11,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c41418",
+      "stock_value": 10,
+      "stock_pc": "0x116cb8",
+      "app_value": 10,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c50000",
+      "stock_value": 0,
+      "stock_pc": "0xd33ae",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c50004",
+      "stock_value": 4000,
+      "stock_pc": "0xd33be",
+      "app_value": 4000,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c50008",
+      "stock_value": 2000,
+      "stock_pc": "0xd33d6",
+      "app_value": 2000,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c50200",
+      "stock_value": 3847,
+      "stock_pc": "0x116d7e",
+      "app_value": 3847,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c50204",
+      "stock_value": 50368,
+      "stock_pc": "0x116cfe",
+      "app_value": 50368,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c50208",
+      "stock_value": 3,
+      "stock_pc": "0x116d82",
+      "app_value": 3,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c50210",
+      "stock_value": 4294967295,
+      "stock_pc": "0x116d00",
+      "app_value": 4294967295,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51000",
+      "stock_value": 13,
+      "stock_pc": "0xd33e2",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51004",
+      "stock_value": 0,
+      "stock_pc": "0xd33e8",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51008",
+      "stock_value": 1200,
+      "stock_pc": "0xd33ee",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51100",
+      "stock_value": 983040,
+      "stock_pc": "0xd33fa",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51200",
+      "stock_value": 1048575,
+      "stock_pc": "0xd3406",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51218",
+      "stock_value": 768,
+      "stock_pc": "0xd3418",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c5121c",
+      "stock_value": 1048575,
+      "stock_pc": "0xd3412",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51220",
+      "stock_value": 0,
+      "stock_pc": "0xd341e",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51400",
+      "stock_value": 0,
+      "stock_pc": "0xd3558",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52000",
+      "stock_value": 0,
+      "stock_pc": "0xd87ba",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52004",
+      "stock_value": 4000,
+      "stock_pc": "0xd87c0",
+      "app_value": 4000,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52008",
+      "stock_value": 2000,
+      "stock_pc": "0xd87ac",
+      "app_value": 2000,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52010",
+      "stock_value": 2000,
+      "stock_pc": "0xd8996",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52014",
+      "stock_value": 0,
+      "stock_pc": "0xd899a",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52024",
+      "stock_value": 0,
+      "stock_pc": "0xd89a8",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52100",
+      "stock_value": 0,
+      "stock_pc": "0xd8986",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53000",
+      "stock_value": 40973,
+      "stock_pc": "0xd8968",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53004",
+      "stock_value": 0,
+      "stock_pc": "0xd89aa",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53008",
+      "stock_value": 120,
+      "stock_pc": "0xd89ae",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53100",
+      "stock_value": 7340032,
+      "stock_pc": "0xd8974",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53108",
+      "stock_value": 0,
+      "stock_pc": "0xd897e",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c5310c",
+      "stock_value": 0,
+      "stock_pc": "0xd8980",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c5311c",
+      "stock_value": 0,
+      "stock_pc": "0xd898e",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53120",
+      "stock_value": 0,
+      "stock_pc": "0xd8998",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53124",
+      "stock_value": 0,
+      "stock_pc": "0xd89a4",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53128",
+      "stock_value": 0,
+      "stock_pc": "0xd89a6",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c5312c",
+      "stock_value": 0,
+      "stock_pc": "0xd89b0",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53200",
+      "stock_value": 16777215,
+      "stock_pc": "0xd897a",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53204",
+      "stock_value": 16777215,
+      "stock_pc": "0xd899e",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53208",
+      "stock_value": 16777215,
+      "stock_pc": "0xd89a0",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c5320c",
+      "stock_value": 16777215,
+      "stock_pc": "0xd89a2",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53220",
+      "stock_value": 16777215,
+      "stock_pc": "0xd899c",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53224",
+      "stock_value": 16777215,
+      "stock_pc": "0xd8982",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53400",
+      "stock_value": 0,
+      "stock_pc": "0xd898a",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53404",
+      "stock_value": 0,
+      "stock_pc": "0xd898c",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c56000",
+      "stock_value": 258,
+      "stock_pc": "0xf2362",
+      "app_value": 258,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56004",
+      "stock_value": 4000,
+      "stock_pc": "0xf7bfc",
+      "app_value": 4000,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56008",
+      "stock_value": 2000,
+      "stock_pc": "0xf8aa4",
+      "app_value": 2000,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c5600c",
+      "stock_value": 0,
+      "stock_pc": "0xf8ba0",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56010",
+      "stock_value": 2000,
+      "stock_pc": "0xf8b0a",
+      "app_value": 2000,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56014",
+      "stock_value": 0,
+      "stock_pc": "0xf7cc4",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56018",
+      "stock_value": 0,
+      "stock_pc": "0xf8b9a",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c5601c",
+      "stock_value": 0,
+      "stock_pc": "0xf8b2e",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56024",
+      "stock_value": 0,
+      "stock_pc": "0xf7d12",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56028",
+      "stock_value": 0,
+      "stock_pc": "0xf8b28",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56100",
+      "stock_value": 1,
+      "stock_pc": "0xf8a06",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c56104",
+      "stock_value": 0,
+      "stock_pc": "0xf89f8",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57000",
+      "stock_value": 8205,
+      "stock_pc": "0xf22f4",
+      "app_value": 8205,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57004",
+      "stock_value": 0,
+      "stock_pc": "0xf7d22",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57008",
+      "stock_value": 120,
+      "stock_pc": "0xf7d2a",
+      "app_value": 120,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57100",
+      "stock_value": 7340032,
+      "stock_pc": "0xf7d68",
+      "app_value": 7340032,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57108",
+      "stock_value": 0,
+      "stock_pc": "0xf7c6c",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c5710c",
+      "stock_value": 0,
+      "stock_pc": "0xf7c76",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c5711c",
+      "stock_value": 1,
+      "stock_pc": "0xf8bac",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57120",
+      "stock_value": 6810898,
+      "stock_pc": "0xf8b04",
+      "app_value": 6810898,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57124",
+      "stock_value": 1,
+      "stock_pc": "0xf8b3a",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57128",
+      "stock_value": 6810897,
+      "stock_pc": "0xf8b20",
+      "app_value": 6810897,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c5712c",
+      "stock_value": 0,
+      "stock_pc": "0xf8bc4",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57130",
+      "stock_value": 0,
+      "stock_pc": "0xf8bba",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57140",
+      "stock_value": 0,
+      "stock_pc": "0xf765a",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57148",
+      "stock_value": 1,
+      "stock_pc": "0xf7680",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57160",
+      "stock_value": 1,
+      "stock_pc": "0xf8a3e",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57164",
+      "stock_value": 7340032,
+      "stock_pc": "0xf8ad4",
+      "app_value": 7340032,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57200",
+      "stock_value": 16777215,
+      "stock_pc": "0xf8ab0",
+      "app_value": 16777215,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57204",
+      "stock_value": 16777215,
+      "stock_pc": "0xf8a82",
+      "app_value": 16777215,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57208",
+      "stock_value": 16777215,
+      "stock_pc": "0xf8a8e",
+      "app_value": 16777215,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c5720c",
+      "stock_value": 16777215,
+      "stock_pc": "0xf8a9a",
+      "app_value": 16777215,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57220",
+      "stock_value": 0,
+      "stock_pc": "0xf7cd2",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57304",
+      "stock_value": 0,
+      "stock_pc": "0xf7c3e",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57308",
+      "stock_value": 1,
+      "stock_pc": "0xf2308",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57400",
+      "stock_value": 0,
+      "stock_pc": "0xf7c8c",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c57404",
+      "stock_value": 0,
+      "stock_pc": "0xf7c9e",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": true
+    },
+    {
+      "address": "0xc0c81000",
+      "stock_value": 3,
+      "stock_pc": "0x117d5c",
+      "app_value": 3,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c81090",
+      "stock_value": 63,
+      "stock_pc": "0x1166a6",
+      "app_value": 63,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c8121c",
+      "stock_value": 768,
+      "stock_pc": "0xf35e0",
+      "app_value": 768,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c81580",
+      "stock_value": 0,
+      "stock_pc": "0x117d50",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c8159c",
+      "stock_value": 0,
+      "stock_pc": "0x117d52",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c840c4",
+      "stock_value": 1,
+      "stock_pc": "0xf35e6",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c85614",
+      "stock_value": 1,
+      "stock_pc": "0xfa280",
+      "app_value": 1,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c85624",
+      "stock_value": 0,
+      "stock_pc": "0x11669a",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    }
+  ],
+  "wider_differences": [
+    {
+      "address": "0xc0101200",
+      "stock_value": 2,
+      "stock_pc": "0x115ade",
+      "app_value": 4294967295,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101214",
+      "stock_value": 5,
+      "stock_pc": "0x109f12",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101318",
+      "stock_value": 1,
+      "stock_pc": "0x109f1a",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0101324",
+      "stock_value": 1,
+      "stock_pc": "0x109fbc",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51000",
+      "stock_value": 13,
+      "stock_pc": "0xd33e2",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51008",
+      "stock_value": 1200,
+      "stock_pc": "0xd33ee",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51100",
+      "stock_value": 983040,
+      "stock_pc": "0xd33fa",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51200",
+      "stock_value": 1048575,
+      "stock_pc": "0xd3406",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c51218",
+      "stock_value": 768,
+      "stock_pc": "0xd3418",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c5121c",
+      "stock_value": 1048575,
+      "stock_pc": "0xd3412",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c52010",
+      "stock_value": 2000,
+      "stock_pc": "0xd8996",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53000",
+      "stock_value": 40973,
+      "stock_pc": "0xd8968",
+      "app_value": 0,
+      "app_written": true,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53008",
+      "stock_value": 120,
+      "stock_pc": "0xd89ae",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53100",
+      "stock_value": 7340032,
+      "stock_pc": "0xd8974",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53200",
+      "stock_value": 16777215,
+      "stock_pc": "0xd897a",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53204",
+      "stock_value": 16777215,
+      "stock_pc": "0xd899e",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53208",
+      "stock_value": 16777215,
+      "stock_pc": "0xd89a0",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c5320c",
+      "stock_value": 16777215,
+      "stock_pc": "0xd89a2",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53220",
+      "stock_value": 16777215,
+      "stock_pc": "0xd899c",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c53224",
+      "stock_value": 16777215,
+      "stock_pc": "0xd8982",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    },
+    {
+      "address": "0xc0c840c4",
+      "stock_value": 1,
+      "stock_pc": "0xf35e6",
+      "app_value": 0,
+      "app_written": false,
+      "scanner_motor_local": false
+    }
+  ],
+  "all_scanner_motor_local_fields_match": true
+}

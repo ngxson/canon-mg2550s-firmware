@@ -1,0 +1,126 @@
+{
+  "source": "physical USB debug log; user-generated button presses",
+  "visible_motion_confirmed": false,
+  "nominal_scale_calibrated": false,
+  "pulses": [
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: no progress 25ms elapsed_us=25023 control=00000102 compare=1880 pos=00700000 delta=+0 s304=00000004",
+      "elapsed_us": 25023,
+      "compare": 1880,
+      "delta_counts": 0
+    },
+    {
+      "direction": "forward",
+      "raw": "[motor] stop: completion elapsed_us=125673 control=00000102 compare=2120 pos=00700201 delta=+513 s304=00000002",
+      "elapsed_us": 125673,
+      "compare": 2120,
+      "delta_counts": 513
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: completion elapsed_us=121339 control=00000102 compare=1880 pos=00700025 delta=-512 s304=00000007",
+      "elapsed_us": 121339,
+      "compare": 1880,
+      "delta_counts": -512
+    },
+    {
+      "direction": "forward",
+      "raw": "[motor] stop: travel limit elapsed_us=123273 control=00000102 compare=2120 pos=0070020b delta=+513 s304=00000003",
+      "elapsed_us": 123273,
+      "compare": 2120,
+      "delta_counts": 513
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: overlapping request elapsed_us=103399 control=00000102 compare=1880 pos=0070007d delta=-434 s304=00000007",
+      "elapsed_us": 103399,
+      "compare": 1880,
+      "delta_counts": -434
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: no progress 25ms elapsed_us=137316 control=00000102 compare=1880 pos=006fff72 delta=-236 s304=00000007",
+      "elapsed_us": 137316,
+      "compare": 1880,
+      "delta_counts": -236
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: no progress 25ms elapsed_us=25025 control=00000102 compare=1880 pos=006fff72 delta=+0 s304=00000007",
+      "elapsed_us": 25025,
+      "compare": 1880,
+      "delta_counts": 0
+    },
+    {
+      "direction": "forward",
+      "raw": "[motor] stop: travel limit elapsed_us=114184 control=00000102 compare=2120 pos=00700173 delta=+513 s304=00000003",
+      "elapsed_us": 114184,
+      "compare": 2120,
+      "delta_counts": 513
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: travel limit elapsed_us=119761 control=00000102 compare=1880 pos=006fff9a delta=-513 s304=00000006",
+      "elapsed_us": 119761,
+      "compare": 1880,
+      "delta_counts": -513
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: no progress 25ms elapsed_us=25040 control=00000102 compare=1880 pos=006fff7b delta=+0 s304=00000002",
+      "elapsed_us": 25040,
+      "compare": 1880,
+      "delta_counts": 0
+    },
+    {
+      "direction": "forward",
+      "raw": "[motor] stop: travel limit elapsed_us=115754 control=00000102 compare=2120 pos=0070017c delta=+513 s304=00000002",
+      "elapsed_us": 115754,
+      "compare": 2120,
+      "delta_counts": 513
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: travel limit elapsed_us=118462 control=00000102 compare=1880 pos=006fff9c delta=-513 s304=00000005",
+      "elapsed_us": 118462,
+      "compare": 1880,
+      "delta_counts": -513
+    },
+    {
+      "direction": "forward",
+      "raw": "[motor] stop: travel limit elapsed_us=113707 control=00000102 compare=2120 pos=0070017d delta=+513 s304=00000000",
+      "elapsed_us": 113707,
+      "compare": 2120,
+      "delta_counts": 513
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: travel limit elapsed_us=116140 control=00000102 compare=1880 pos=006fff9e delta=-513 s304=00000006",
+      "elapsed_us": 116140,
+      "compare": 1880,
+      "delta_counts": -513
+    },
+    {
+      "direction": "forward",
+      "raw": "[motor] stop: completion elapsed_us=113813 control=00000102 compare=2120 pos=0070017d delta=+512 s304=00000001",
+      "elapsed_us": 113813,
+      "compare": 2120,
+      "delta_counts": 512
+    },
+    {
+      "direction": "forward",
+      "raw": "[motor] stop: travel limit elapsed_us=129095 control=00000102 compare=2120 pos=007003a1 delta=+513 s304=00000002",
+      "elapsed_us": 129095,
+      "compare": 2120,
+      "delta_counts": 513
+    },
+    {
+      "direction": "backward",
+      "raw": "[motor] stop: travel limit elapsed_us=115493 control=00000102 compare=1880 pos=007001ab delta=-513 s304=00000004",
+      "elapsed_us": 115493,
+      "compare": 1880,
+      "delta_counts": -513
+    }
+  ]
+}

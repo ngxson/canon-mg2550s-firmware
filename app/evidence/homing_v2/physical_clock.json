@@ -1,0 +1,1643 @@
+{
+  "before": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "after": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "samples": [
+    {
+      "host_s": 0.00033887499012053013,
+      "raw": 385595997,
+      "extended": 1459338010,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.05578558286651969,
+      "raw": 390916717,
+      "extended": 1464658730,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.1101308329962194,
+      "raw": 396135472,
+      "extended": 1469877485,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.16567491693422198,
+      "raw": 401464131,
+      "extended": 1475206144,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.2164746248163283,
+      "raw": 406341839,
+      "extended": 1480083852,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.2716582918073982,
+      "raw": 411640103,
+      "extended": 1485382116,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.32281074998900294,
+      "raw": 416548222,
+      "extended": 1490290235,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.3783137497957796,
+      "raw": 421880073,
+      "extended": 1495622086,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.43081779195927083,
+      "raw": 426917179,
+      "extended": 1500659192,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.4833685827907175,
+      "raw": 431965417,
+      "extended": 1505707430,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.5345135419629514,
+      "raw": 436873532,
+      "extended": 1510615545,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.5876654169987887,
+      "raw": 441977427,
+      "extended": 1515719440,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.6420366249512881,
+      "raw": 447193007,
+      "extended": 1520935020,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.6931750827934593,
+      "raw": 452104296,
+      "extended": 1525846309,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.7444529579952359,
+      "raw": 457028313,
+      "extended": 1530770326,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.7955978747922927,
+      "raw": 461937826,
+      "extended": 1535679839,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.8468058749567717,
+      "raw": 466853892,
+      "extended": 1540595905,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.9004539169836789,
+      "raw": 472007353,
+      "extended": 1545749366,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 0.9559064998757094,
+      "raw": 477328073,
+      "extended": 1551070086,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.0114714168012142,
+      "raw": 482659906,
+      "extended": 1556401919,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.0661295829340816,
+      "raw": 487909066,
+      "extended": 1561651079,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.1172521668486297,
+      "raw": 492818578,
+      "extended": 1566560591,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.1728083328343928,
+      "raw": 498148647,
+      "extended": 1571890660,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.228243582881987,
+      "raw": 503471143,
+      "extended": 1577213156,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.283668417017907,
+      "raw": 508793268,
+      "extended": 1582535281,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.3376067078206688,
+      "raw": 513969094,
+      "extended": 1587711107,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.3922849579248577,
+      "raw": 519217897,
+      "extended": 1592959910,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.443641166901216,
+      "raw": 524149864,
+      "extended": 1597891877,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.4989304998889565,
+      "raw": 529456082,
+      "extended": 1603198095,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.5504684578627348,
+      "raw": 534405727,
+      "extended": 1608147740,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.6024493749719113,
+      "raw": 2525613,
+      "extended": 1613138538,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.6568932919763029,
+      "raw": 7749144,
+      "extended": 1618362069,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.7118252078071237,
+      "raw": 13023555,
+      "extended": 1623636480,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.7627714998088777,
+      "raw": 17915770,
+      "extended": 1628528695,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.8180580828338861,
+      "raw": 23223761,
+      "extended": 1633836686,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.870733957970515,
+      "raw": 28278885,
+      "extended": 1638891810,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.9257552078925073,
+      "raw": 33559850,
+      "extended": 1644172775,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 1.9773339999374002,
+      "raw": 38510894,
+      "extended": 1649123819,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.029637541854754,
+      "raw": 43532098,
+      "extended": 1654145023,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.0831543328240514,
+      "raw": 48669573,
+      "extended": 1659282498,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.1357830418273807,
+      "raw": 53722581,
+      "extended": 1664335506,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.1885975829791278,
+      "raw": 58794666,
+      "extended": 1669407591,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.244152749888599,
+      "raw": 64125119,
+      "extended": 1674738044,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.2989357919432223,
+      "raw": 69381854,
+      "extended": 1679994779,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.350217416882515,
+      "raw": 74307654,
+      "extended": 1684920579,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.404233707813546,
+      "raw": 79492835,
+      "extended": 1690105760,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.4552042079158127,
+      "raw": 84385047,
+      "extended": 1694997972,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.506412041839212,
+      "raw": 89302509,
+      "extended": 1699915434,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.5580562078393996,
+      "raw": 94258350,
+      "extended": 1704871275,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.6102952079381794,
+      "raw": 99274761,
+      "extended": 1709887686,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.6627416668925434,
+      "raw": 104311868,
+      "extended": 1714924793,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.7181958749424666,
+      "raw": 109634007,
+      "extended": 1720246932,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.7698554578237236,
+      "raw": 114591230,
+      "extended": 1725204155,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.825364707969129,
+      "raw": 119921665,
+      "extended": 1730534590,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.880905707832426,
+      "raw": 125252421,
+      "extended": 1735865346,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.9337819998618215,
+      "raw": 130331066,
+      "extended": 1740943991,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 2.9869816668797284,
+      "raw": 135434959,
+      "extended": 1746047884,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.0406484168488532,
+      "raw": 140586932,
+      "extended": 1751199857,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.09166704188101,
+      "raw": 145488493,
+      "extended": 1756101418,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.1429852079600096,
+      "raw": 150412509,
+      "extended": 1761025434,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.19840916688554,
+      "raw": 155736408,
+      "extended": 1766349333,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.253855832852423,
+      "raw": 161057134,
+      "extended": 1771670059,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.309299167012796,
+      "raw": 166381028,
+      "extended": 1776993953,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.3607913330197334,
+      "raw": 171320946,
+      "extended": 1781933871,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.414638082962483,
+      "raw": 176490222,
+      "extended": 1787103147,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.4680479168891907,
+      "raw": 181599292,
+      "extended": 1792212217,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.5194535828195512,
+      "raw": 186551699,
+      "extended": 1797164624,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.5746453749015927,
+      "raw": 191849964,
+      "extended": 1802462889,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.6266160828527063,
+      "raw": 196839365,
+      "extended": 1807452290,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.682126791914925,
+      "raw": 202171210,
+      "extended": 1812784135,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.7341936668381095,
+      "raw": 207168561,
+      "extended": 1817781486,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.78972979192622,
+      "raw": 212498637,
+      "extended": 1823111562,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.840360957896337,
+      "raw": 217359932,
+      "extended": 1827972857,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.8941072919405997,
+      "raw": 222521260,
+      "extended": 1833134185,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.948371874867007,
+      "raw": 227728898,
+      "extended": 1838341823,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 3.999668624950573,
+      "raw": 232654317,
+      "extended": 1843267242,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.054192957933992,
+      "raw": 237887575,
+      "extended": 1848500500,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.108743916964158,
+      "raw": 243128411,
+      "extended": 1853741336,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.159729291917756,
+      "raw": 248020632,
+      "extended": 1858633557,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.210597249912098,
+      "raw": 252904539,
+      "extended": 1863517464,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.262360249878839,
+      "raw": 257870086,
+      "extended": 1868483011,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.317715500015765,
+      "raw": 263184258,
+      "extended": 1873797183,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.371888333000243,
+      "raw": 268385339,
+      "extended": 1878998264,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.426418332848698,
+      "raw": 273618601,
+      "extended": 1884231526,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.479460957925767,
+      "raw": 278714527,
+      "extended": 1889327452,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.5343950828537345,
+      "raw": 283987541,
+      "extended": 1894600466,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.5884895420167595,
+      "raw": 289180666,
+      "extended": 1899793591,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.6397848329506814,
+      "raw": 294104683,
+      "extended": 1904717608,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.691283624852076,
+      "raw": 299047776,
+      "extended": 1909660701,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.745768791995943,
+      "raw": 304279258,
+      "extended": 1914892183,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.800322957802564,
+      "raw": 309514668,
+      "extended": 1920127593,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.8517263329122216,
+      "raw": 314454585,
+      "extended": 1925067510,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.906708541791886,
+      "raw": 319728997,
+      "extended": 1930341922,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 4.962223416892812,
+      "raw": 325059432,
+      "extended": 1935672357,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.017162750009447,
+      "raw": 330333843,
+      "extended": 1940946768,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.069255125010386,
+      "raw": 335332595,
+      "extended": 1945945520,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.1203644999768585,
+      "raw": 340240710,
+      "extended": 1950853635,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.173029666999355,
+      "raw": 345295116,
+      "extended": 1955908041,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.225590041838586,
+      "raw": 350341956,
+      "extended": 1960954881,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.280546583002433,
+      "raw": 355616371,
+      "extended": 1966229296,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.334436042001471,
+      "raw": 360792196,
+      "extended": 1971405121,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.389920707792044,
+      "raw": 366114313,
+      "extended": 1976727238,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.442987499991432,
+      "raw": 371208852,
+      "extended": 1981821777,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.494176791980863,
+      "raw": 376128091,
+      "extended": 1986741016,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.549452499952167,
+      "raw": 381432912,
+      "extended": 1992045837,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.600736916996539,
+      "raw": 386358335,
+      "extended": 1996971260,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.652994707925245,
+      "raw": 391371592,
+      "extended": 2001984517,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.707503207959235,
+      "raw": 396604490,
+      "extended": 2007217415,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.7626043749041855,
+      "raw": 401893405,
+      "extended": 2012506330,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.816858874866739,
+      "raw": 407103152,
+      "extended": 2017716077,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.872313124826178,
+      "raw": 412427045,
+      "extended": 2023039970,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.925112999975681,
+      "raw": 417497734,
+      "extended": 2028110659,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 5.976448707981035,
+      "raw": 422423149,
+      "extended": 2033036074,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.031978291925043,
+      "raw": 427751827,
+      "extended": 2038364752,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.0842808748129755,
+      "raw": 432776214,
+      "extended": 2043389139,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.139561791904271,
+      "raw": 438081020,
+      "extended": 2048693945,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.19508562493138,
+      "raw": 443411105,
+      "extended": 2054024030,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.250456957845017,
+      "raw": 448725623,
+      "extended": 2059338548,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.305955666815862,
+      "raw": 454055692,
+      "extended": 2064668617,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.357101041823626,
+      "raw": 458963823,
+      "extended": 2069576748,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.412264832993969,
+      "raw": 464263849,
+      "extended": 2074876774,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.468066666973755,
+      "raw": 469599107,
+      "extended": 2080212032,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.520555750001222,
+      "raw": 474656658,
+      "extended": 2085269583,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.571854207897559,
+      "raw": 479582073,
+      "extended": 2090194998,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.626447749789804,
+      "raw": 484823282,
+      "extended": 2095436207,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.679846792016178,
+      "raw": 489951027,
+      "extended": 2100563952,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.732518957927823,
+      "raw": 495005811,
+      "extended": 2105618736,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.786454957909882,
+      "raw": 500183715,
+      "extended": 2110796640,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.837000333005562,
+      "raw": 505034403,
+      "extended": 2115647328,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.887997166952118,
+      "raw": 509928014,
+      "extended": 2120540939,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.943152124993503,
+      "raw": 515226665,
+      "extended": 2125839590,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 6.9970967918634415,
+      "raw": 520402120,
+      "extended": 2131015045,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.048377332976088,
+      "raw": 525327913,
+      "extended": 2135940838,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.103758624987677,
+      "raw": 530642074,
+      "extended": 2141254999,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.156965707894415,
+      "raw": 535752523,
+      "extended": 2146365448,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.211577582871541,
+      "raw": 4122468,
+      "extended": 2151606305,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.26624008291401,
+      "raw": 9371630,
+      "extended": 2156855467,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.321778749814257,
+      "raw": 14701687,
+      "extended": 2162185524,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.37723833299242,
+      "raw": 20025581,
+      "extended": 2167509418,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.4286063748877496,
+      "raw": 24957557,
+      "extended": 2172441394,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.484149457886815,
+      "raw": 30289409,
+      "extended": 2177773246,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.535963624948636,
+      "raw": 35261132,
+      "extended": 2182744969,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.589930624933913,
+      "raw": 40446311,
+      "extended": 2187930148,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.645384999923408,
+      "raw": 45768810,
+      "extended": 2193252647,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.701003916794434,
+      "raw": 51098884,
+      "extended": 2198582721,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.754325249930844,
+      "raw": 56227887,
+      "extended": 2203711724,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.805126499850303,
+      "raw": 61105595,
+      "extended": 2208589432,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.860595791833475,
+      "raw": 66426315,
+      "extended": 2213910152,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.911469666985795,
+      "raw": 71311975,
+      "extended": 2218795812,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 7.964868082897738,
+      "raw": 76438319,
+      "extended": 2223922156,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.02034275000915,
+      "raw": 81762213,
+      "extended": 2229246050,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.07584754191339,
+      "raw": 87092286,
+      "extended": 2234576123,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.127732916967943,
+      "raw": 92073741,
+      "extended": 2239557578,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.178786041913554,
+      "raw": 96975303,
+      "extended": 2244459140,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.229592624818906,
+      "raw": 101851615,
+      "extended": 2249335452,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.281013499945402,
+      "raw": 106784981,
+      "extended": 2254268818,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.334222124889493,
+      "raw": 111897206,
+      "extended": 2259381043,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.388590499991551,
+      "raw": 117114184,
+      "extended": 2264598021,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.439530957955867,
+      "raw": 122006397,
+      "extended": 2269490234,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.494632749818265,
+      "raw": 127296718,
+      "extended": 2274780555,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.549834250006825,
+      "raw": 132593585,
+      "extended": 2280077422,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.604936457937583,
+      "raw": 137882142,
+      "extended": 2285365979,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.65846904180944,
+      "raw": 143026165,
+      "extended": 2290510002,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.709730666829273,
+      "raw": 147943635,
+      "extended": 2295427472,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.76315770787187,
+      "raw": 153072509,
+      "extended": 2300556346,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.816969041945413,
+      "raw": 158239999,
+      "extended": 2305723836,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.868801249889657,
+      "raw": 163214896,
+      "extended": 2310698733,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.919837874826044,
+      "raw": 168115059,
+      "extended": 2315598896,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 8.972583416849375,
+      "raw": 173179193,
+      "extended": 2320663030,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.02373266685754,
+      "raw": 178087308,
+      "extended": 2325571145,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.07894012494944,
+      "raw": 183385573,
+      "extended": 2330869410,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.13382204179652,
+      "raw": 188658586,
+      "extended": 2336142423,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.188428666908294,
+      "raw": 193901194,
+      "extended": 2341385031,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.24108066689223,
+      "raw": 198954206,
+      "extended": 2346438043,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.29503924981691,
+      "raw": 204131418,
+      "extended": 2351615255,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.346485916990787,
+      "raw": 209073115,
+      "extended": 2356556952,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.399836082942784,
+      "raw": 214192909,
+      "extended": 2361676746,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.450709874974564,
+      "raw": 219077174,
+      "extended": 2366561011,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.50396820786409,
+      "raw": 224189014,
+      "extended": 2371672851,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.559472374850884,
+      "raw": 229519460,
+      "extended": 2377003297,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.613654125016183,
+      "raw": 234720536,
+      "extended": 2382204373,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.66685783280991,
+      "raw": 239830977,
+      "extended": 2387314814,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.721233791904524,
+      "raw": 245048695,
+      "extended": 2392532532,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.77574387495406,
+      "raw": 250281578,
+      "extended": 2397765415,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.831181332934648,
+      "raw": 255604074,
+      "extended": 2403087911,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.882320791948587,
+      "raw": 260511830,
+      "extended": 2407995667,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.933340082876384,
+      "raw": 265411996,
+      "extended": 2412895833,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 9.988794999895617,
+      "raw": 270734119,
+      "extended": 2418217956,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.0413822918199,
+      "raw": 275780957,
+      "extended": 2423264794,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.096892041852698,
+      "raw": 281111025,
+      "extended": 2428594862,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.151986291864887,
+      "raw": 286399945,
+      "extended": 2433883782,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.206859666854143,
+      "raw": 291666401,
+      "extended": 2439150238,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.257995332824066,
+      "raw": 296574523,
+      "extended": 2444058360,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.312230458017439,
+      "raw": 301785329,
+      "extended": 2449269166,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.36547933286056,
+      "raw": 306895775,
+      "extended": 2454379612,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.416525332955644,
+      "raw": 311797344,
+      "extended": 2459281181,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.470630291849375,
+      "raw": 316990477,
+      "extended": 2464474314,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.525479167001322,
+      "raw": 322255547,
+      "extended": 2469739384,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.578829541802406,
+      "raw": 327375337,
+      "extended": 2474859174,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.631974041927606,
+      "raw": 332477828,
+      "extended": 2479961665,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.684220291906968,
+      "raw": 337494940,
+      "extended": 2484978777,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.73519124998711,
+      "raw": 342387153,
+      "extended": 2489870990,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.78834708291106,
+      "raw": 347491042,
+      "extended": 2494974879,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.839725832920521,
+      "raw": 352423010,
+      "extended": 2499906847,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.895278166979551,
+      "raw": 357754855,
+      "extended": 2505238692,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 10.950772207928821,
+      "raw": 363083517,
+      "extended": 2510567354,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.004360457882285,
+      "raw": 368228936,
+      "extended": 2515712773,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.054907916812226,
+      "raw": 373079618,
+      "extended": 2520563455,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.110359499929473,
+      "raw": 378401760,
+      "extended": 2525885597,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.165842957794666,
+      "raw": 383730430,
+      "extended": 2531214267,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.21808679192327,
+      "raw": 388745082,
+      "extended": 2536228919,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.269672874826938,
+      "raw": 393696132,
+      "extended": 2541179969,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.32021095789969,
+      "raw": 398548580,
+      "extended": 2546032417,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.375750832958147,
+      "raw": 403878652,
+      "extended": 2551362489,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.426628791959956,
+      "raw": 408762914,
+      "extended": 2556246751,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.478526916820556,
+      "raw": 413745761,
+      "extended": 2561229598,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.530027417000383,
+      "raw": 418685681,
+      "extended": 2566169518,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.582577582914382,
+      "raw": 423733912,
+      "extended": 2571217749,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.637088041985407,
+      "raw": 428965394,
+      "extended": 2576449231,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.69041766691953,
+      "raw": 434087843,
+      "extended": 2581571680,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.74173012492247,
+      "raw": 439011859,
+      "extended": 2586495696,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.797068957937881,
+      "raw": 444326026,
+      "extended": 2591809863,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.85081991693005,
+      "raw": 449485950,
+      "extended": 2596969787,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.903071916894987,
+      "raw": 454500604,
+      "extended": 2601984441,
+      "limit": 1,
+      "control": 1
+    },
+    {
+      "host_s": 11.95706812501885,
+      "raw": 459684380,
+      "extended": 2607168217,
+      "limit": 1,
+      "control": 1
+    }
+  ],
+  "raw_wraps": [
+    {
+      "before": {
+        "host_s": 1.5504684578627348,
+        "raw": 534405727,
+        "extended": 1608147740,
+        "limit": 1,
+        "control": 1
+      },
+      "after": {
+        "host_s": 1.6024493749719113,
+        "raw": 2525613,
+        "extended": 1613138538,
+        "limit": 1,
+        "control": 1
+      }
+    },
+    {
+      "before": {
+        "host_s": 7.156965707894415,
+        "raw": 535752523,
+        "extended": 2146365448,
+        "limit": 1,
+        "control": 1
+      },
+      "after": {
+        "host_s": 7.211577582871541,
+        "raw": 4122468,
+        "extended": 2151606305,
+        "limit": 1,
+        "control": 1
+      }
+    }
+  ],
+  "extended_ticks_per_second": 95998678.48452301,
+  "max_delta_disagreement": 0,
+  "assertions_passed": true,
+  "motor_command_sent": false
+}
