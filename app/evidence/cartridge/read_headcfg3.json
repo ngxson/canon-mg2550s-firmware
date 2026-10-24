@@ -1,0 +1,64 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "heads_requested": "both",
+  "raw": false,
+  "wait_ticks": 28800,
+  "sequence": 1,
+  "connection": {
+    "black": "ok",
+    "colour": "ok"
+  },
+  "options": "0x3800",
+  "left_prepared": false,
+  "heads": {
+    "black": {
+      "raw_low": "64f12b7f",
+      "raw_low_repeat": "64f12b7f",
+      "raw_high": "0000",
+      "sense_idle": 0,
+      "fields": {
+        "id": 6,
+        "dest": 19,
+        "rank1": 37,
+        "rank2": null,
+        "inklvl": 127,
+        "inklvl_bits": "1111111",
+        "high": 0
+      },
+      "notes": [
+        "idle sense bit0=0"
+      ]
+    },
+    "colour": {
+      "raw_low": "a737853f",
+      "raw_low_repeat": "a737853f",
+      "raw_high": "03ef",
+      "sense_idle": 1,
+      "fields": {
+        "id": 10,
+        "dest": 19,
+        "rank1": 16,
+        "rank2": 7,
+        "inklvl": 63,
+        "inklvl_bits": "0111111",
+        "high": 1007
+      },
+      "notes": [
+        "idle sense bit0=1"
+      ]
+    }
+  },
+  "firmware_log": "[http] c1 POST /ipp/faxout\n[http] c1 -> 404\n[http] c1 GET /eSCL/ScannerCapabilities\n[http] c1 -> 200\n[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00003800\n[cart] head cfg3 before: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00070707 00070707 00070707 0000000b 00000000 00000000 00000000 00000000 0012180b 00000000\n[cart] head cfg3 after: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000\n[cart] head cfg before: 00000000 14040007 00000700 1f07000b 07010002 00000001 00000000 00000000\n[cart] head cfg after: 00000000 14040007 00000700 1f07000b 07010002 00000001 00000000 00000000\n[cart] head interface shut down\n"
+}

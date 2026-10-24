@@ -1,0 +1,42 @@
+[motor] setup c0c41404=00000004
+[motor] setup c0c41408=00000005
+[motor] setup c0c41418=0000000a
+[motor] setup c0c81090=0000003f
+[motor] setup c0c57000=0000200d
+[motor] setup c0c57100=00700000
+[motor] setup c0c57148=00000001
+[motor] setup c0c57308=00000001
+[lf] button: colour -> command 1800
+[lf] jog command=1800 ms=1500
+[lf] start=000f0000 end=000efdc0 evt=00000000/00000000
+[lf] button: b/w -> command 2200
+[lf] jog command=2200 ms=1500
+[lf] start=000efdc0 end=000f0962 evt=00000000/00000000
+[lf] button: colour -> command 1800
+[lf] jog command=1800 ms=1500
+[lf] start=000f0962 end=000f07d5 evt=00000000/00000000
+[lf] button: b/w -> command 2200
+[lf] jog command=2200 ms=1500
+[lf] start=000f07d5 end=000f13a0 evt=00000000/00000000
+[lf] button: b/w -> command 2200
+[lf] jog command=2200 ms=1500
+[lf] start=000f13a0 end=000f1f3d evt=00000000/00000000
+[lf] button: colour -> command 1800
+[lf] jog command=1800 ms=1500
+[lf] start=000f1f3d end=000f1d89 evt=00000000/00000000
+[lf] button: colour -> command 1800
+[lf] jog command=1800 ms=1500
+[lf] start=000f1d89 end=000f1d88 evt=00000000/00000000
+[http] c0 POST /ipp/print
+[ipp] operation 0x0000000b status 0x00000000
+[http] c0 -> 200
+[http] c1 POST /ipp/faxout
+[http] c1 -> 404
+[http] c1 GET /eSCL/ScannerCapabilities
+[http] c1 -> 200
+[http] c1 POST /
+[ipp] operation 0x0000000b status 0x00000000
+[http] c1 -> 200
+[lf] button: b/w -> command 2200
+[lf] jog command=2200 ms=1500
+[lf] start=000f1dbf end=000f29dc evt=00000000/00000000

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regress bounded jogs and key guards alongside the home controller.
+"""Regress bounded USB jogs and guards alongside the home controller.
 Synthetic position/clock inputs; no physical motion claim.
 """
 import hashlib,json,sys
@@ -39,14 +39,8 @@ def main():
     assert all(v<=2000 for v in e.drives[1]['values'])
     assert all(40<=d['duration_ms']<40.6 for d in e.drives)
     record('both_usb_jog_polarities_frozen_deadline',e)
-    e=booted();e.keys=0x400;pump(e,650);assert len(e.drives)==1
-    record('held_bw_key_no_repeat',e)
-    e=booted(0x400);pump(e,40);assert not e.drives
-    e.keys=0;pump(e,5);e.keys=0x400;pump(e,50);assert len(e.drives)==1
-    record('startup_held_key_requires_release',e)
-    e=booted();e.keys=0x1400;pump(e,40);assert not e.drives
-    record('both_keys_do_not_start',e)
-    e=booted();e.keys=0x400;e.run(lambda e:e.drive is not None,resume=True)
+    # The Copy keys now drive the paper-feed motor (validate_buttons.py); scanner jogs are USB-only.
+    e=booted();e.requests.appendleft(('jog',setup(0x40,0x73,0)));e.run(lambda e:e.drive is not None,resume=True)
     e.keys=0x20;pump(e,8);assert e.drives[0]['duration_ms']<3
     assert e.regs.get(0xc0c85614,0)==0
     record('cancel_stops_without_toggling_lamp',e)
@@ -55,14 +49,14 @@ def main():
         e.requests.appendleft(('jog',setup(0x40,0x73,direction)));pump(e,50)
         assert len(e.drives)==1 and e.drives[0]['duration_ms']<18
         record('travel_guard_'+str(direction),e)
-    e=booted();e.serial_stuck=True;e.keys=0x400;pump(e,40)
+    e=booted();e.serial_stuck=True;e.requests.appendleft(('jog',setup(0x40,0x73,0)));pump(e,40)
     assert not e.drives and e.regs[0xc0c41008]==0;record('serial_timeout_no_drive',e)
     e=booted();e.requests.appendleft(('invalid',setup(0x40,0x73,2)));pump(e,20)
     assert not e.drives and 'invalid' in e.stalls;record('invalid_direction',e)
-    e=booted();e.regs[0xc0c52000]=0x102;e.keys=0x400;pump(e,40)
+    e=booted();e.regs[0xc0c52000]=0x102;e.requests.appendleft(('jog_refused',setup(0x40,0x73,0)));pump(e,40)
     assert not e.drives and e.regs[0xc0c52000]==0x102
     record('shared_setup_refuses_other_active_motor',e)
-    e=booted();e.keys=0x400;e.run(lambda e:e.drive is not None,resume=True)
+    e=booted();e.requests.appendleft(('jog',setup(0x40,0x73,0)));e.run(lambda e:e.drive is not None,resume=True)
     e.requests.appendleft(('overlap',setup(0x40,0x73,1)));pump(e,15)
     assert len(e.drives)==1 and 'overlap' in e.stalls;record('overlap_stops',e)
     report['all_assertions_passed']=True

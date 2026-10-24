@@ -75,17 +75,8 @@ def main():
     assert len(e.motor_writes) == nmotor0, f'motor registers written during lamp toggle: {e.motor_writes}'
     print('PASS lamp_toggle: illumination ON/OFF via Cancel, 0xc0c85614 1->0, motor untouched')
 
-    # 3) Copy-BW jogs the carriage one bounded pulse: enable C+0=0x102 then stop=0,
-    #    and the firmware returns (bounded) -- i.e. the pulse self-terminates.
-    e.regs[KEY] = 0
-    pump(lambda x: log_text(x).count(b'028=0x00000000') >= 4)
-    e.regs[KEY] = 0x400                     # Copy-BW -> jog dir 0
-    pump(lambda x: b'[motor] stop:' in log_text(x))
-    cwr = [v for a, v in e.motor_writes if a == 0xc0c56000]
-    assert 0x102 in cwr, f'motor output-enable (C+0=0x102) not issued: {cwr}'
-    assert cwr[-1] == 0, f'motor not left stopped (C+0 last = {cwr[-1]:#x})'
-    assert b'[motor] jog forward' in log_text(e), 'jog did not arm'
-    print(f'PASS motor_jog: C+0 sequence {[hex(v) for v in cwr]} -> target move armed + bounded stop')
+    # The Copy keys are bound to hands-on paper-feed pulses for the owner's bench tests only.
+    # Emulator coverage of the feed motor uses the USB request (validate_printregs.py), not keys.
     print('ALL BUTTON PROBE ASSERTIONS PASSED')
 
 

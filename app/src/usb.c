@@ -239,7 +239,7 @@ static void setup_request(void)
     } else if(type==0x40 && request==APP_REQUEST_HOME && !value && !index && !length) {
         if(scanner_home_request()) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_MOTOR_STOP && !value && !index && !length) {
-        scan_page_cancel(); scanner_motor_cancel(); scanner_lamp_off(); ack();
+        scan_page_cancel(); scanner_motor_cancel(); paper_feed_cancel(); scanner_lamp_off(); ack();
     } else if(type==0xc0 && request==REQUEST_INFO && !value && !index) {
         reply(service_info(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_LOG && !value && !index) {
@@ -288,6 +288,27 @@ static void setup_request(void)
         print_selftest(); ack();
     } else if(type==0x40 && request==APP_REQUEST_PRINT_BEGIN && !length) {
         print_bulk_begin((unsigned)value | ((unsigned)index<<16)); arm_bulk(); ack();
+    } else if(type==0x40 && request==APP_REQUEST_CART_READ && !length) {
+        if(!scanner_motor_busy() && !scan_page_busy() && cartridge_request(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_CART_STATUS && !value && !index) {
+        reply(cartridge_status(control_buffer),length);
+    } else if(type==0xc0 && request==APP_REQUEST_PRINT_REGS && !value && !index) {
+        reply(print_mech_dump(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_PRINT_PREP && !index && !length) {
+        if(!scanner_motor_busy() && !scan_page_busy() && print_mech_prepare(value)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_GPIO_SNAPSHOT && !index) {
+        unsigned n=print_mech_snapshot(control_buffer,value);
+        if(n) reply(n,length); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_LF_JOG && !length) {
+        if(print_mech_lf_request(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_LF_STATUS && !value && !index) {
+        reply(print_mech_lf_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_PAPER_FEED && !length) {
+        if(paper_feed_request(value,index)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_PAPER_MANUAL && !index && !length) {
+        if(paper_manual_request(value)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_PAPER_STATUS && !value && !index) {
+        reply(paper_feed_status(control_buffer),length);
     } else if(type==0x40 && request==APP_REQUEST_BTN && !value && !index && !length) {
         buttons_request(); ack();
     } else if(type==0x40 && request==APP_REQUEST_MOTOR_JOG && !index && !length && value<=1u) {

@@ -1,0 +1,69 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "heads_requested": "both",
+  "raw": false,
+  "wait_ticks": 28800,
+  "sequence": 1,
+  "connection": {
+    "black": "ok",
+    "colour": "ok"
+  },
+  "options": "0x20000",
+  "left_prepared": false,
+  "head_block_initialized": true,
+  "heads": {
+    "black": {
+      "raw_low": "64f12b7f",
+      "raw_low_repeat": "64f12b7f",
+      "raw_high": "0000",
+      "sense_idle": 0,
+      "fields": {
+        "id": 6,
+        "dest": 19,
+        "rank1": 37,
+        "rank2": null,
+        "inklvl": 127,
+        "inklvl_bits": "1111111",
+        "level_index": 7,
+        "level_note": "thermometer code: 7 of 7 fuses cut is the last stock level step",
+        "high": 0
+      },
+      "notes": [
+        "idle sense bit0=0"
+      ]
+    },
+    "colour": {
+      "raw_low": "a737853f",
+      "raw_low_repeat": "a737853f",
+      "raw_high": "03ef",
+      "sense_idle": 1,
+      "fields": {
+        "id": 10,
+        "dest": 19,
+        "rank1": 16,
+        "rank2": 7,
+        "inklvl": 63,
+        "inklvl_bits": "0111111",
+        "level_index": 6,
+        "level_note": "",
+        "high": 1007
+      },
+      "notes": [
+        "idle sense bit0=1"
+      ]
+    }
+  },
+  "firmware_log": "000000\n  c0d601ec = 0x00000000\n  c0d601f0 = 0x00000000\n  c0d601f4 = 0x00000000\n  c0d60294 = 0x00000000\n  c0d602c0 = 0x00000000\n  c0c85614 = 0x00000000\n[scan] peek done\n[http] c0 POST /ipp/print\n[ipp] operation 0x0000000b status 0x00000000\n[http] c0 -> 200\n[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000000\n[cart] head block before: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000\n[cart] head block after: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000\n[http] c1 POST /\n[ipp] operation 0x0000000b status 0x00000000\n[http] c1 -> 200\n"
+}

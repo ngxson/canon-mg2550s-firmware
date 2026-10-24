@@ -18,6 +18,13 @@ No stock executable code is linked into the application.
 - **Panel controls and LEDs:** Colour homes, B/W requests a short forward jog,
   and Cancel stops motion. Held keys do not repeat; keys held at startup are
   ignored. There is no automatic motion at boot.
+- **Cartridge identification:** reads both cartridges' fuse ROM (ID,
+  destination code, rank values, level field) through the stock head-interface
+  sequence; USB requests 0x62/0x63 and `app/tools/cartridge.py`.
+- **Paper path:** closed-loop feed routine (pickup with bounded retries using
+  the paper-end sensor, measured advance, eject), bounded open-loop pulses for
+  the paper-feed and carriage motors, and a read-only GPIO snapshot/diff tool
+  that located the sensor. Printing itself (head drive) is not implemented.
 - **Recovery management and diagnostics:** application USB identity `04a9:12fe`,
   `fwctl` status/reboot support and a USB debug log. USB is serviced during
   motion; I²C management is polled when the motor is idle. Stationary captures
@@ -53,16 +60,16 @@ work, keep the bootloader artifacts matching the installed recovery stages.
 Tests combine `bootloader/build/boot_region.bin` and its symbol manifest with
 the new app package and manifest.
 
-Run all six scanner and management checks before flashing:
+Run all nine scanner, cartridge, mechanism and management checks before flashing:
 
 ```sh
-for check in app home motor buttons scanner page; do
+for check in app home motor buttons scanner page cartridge printregs feed; do
   docker run --rm --network none -v "$PWD:/project:rw" \
     mg2550s-emu "app/tests/validate_${check}.py" || break
 done
 ```
 
-Proceed only after all six pass. Reports are written under `app/build/`.
+Proceed only after all nine pass. Reports are written under `app/build/`.
 Tests execute the linked ARM instructions, including boot and recovery, and
 check motion sequencing, capture/transfer failures, Cancel and management
 liveness. No stock dump is needed for these tests. Native execution is also
@@ -124,6 +131,33 @@ stops the pass with motor and lamp off; partial output is marked incomplete.
 Individual Copy keys are ignored during a scan. Cancel or both Copy keys abort
 it. A successful pass returns home before reporting completion.
 
+## Read the cartridge fuse ROM
+
+```sh
+python3 app/tools/cartridge.py --output /tmp/cartridge.json
+```
+
+Read-only: it configures the head block as stock does at start-up, runs the
+stock head-interface preparation (connection test, cold preparation, acquire),
+samples the cartridge identification fuses (stock names `PK*ID`, `PK*DEST`,
+`PK*RANK*`, `PK*INKLVL`), then releases and shuts the interface down. It never
+touches the fuse-cut path. `INKLVL` is a seven-bit thermometer code of
+programmed level fuses, not a measured volume. Physical results and the
+register contract are in [CARTRIDGE.md](evidence/CARTRIDGE.md).
+
+## Feed a sheet
+
+```sh
+python3 app/tools/paper_feed.py feed     # pick up, advance, eject
+python3 app/tools/paper_feed.py hold     # pick up and stop past the sensor
+python3 app/tools/paper_feed.py eject    # forward until the sensor clears, plus margin
+```
+
+Physically drives the paper-feed motor. Pickup retries three times and reports
+`no_paper` if the paper-end sensor never sees a sheet; Cancel or USB stop abort.
+Register contract and measurements are in [PRINT_MECH.md](evidence/PRINT_MECH.md).
+The Copy keys are currently bound to bench pulses of the print carriage.
+
 ## Home and inspect logs
 
 ```sh
@@ -149,6 +183,9 @@ Protocol and controller details are in [HOMING.md](evidence/HOMING.md) and
 | `src/scanner.c`, `src/scnio_seq.h` | Sensor timing, illumination, DMA and line capture |
 | `src/scan_page.c` | Page sequencing and row ownership |
 | `src/print.c` | Experimental print-data decoder; physical printing is unfinished |
+| `src/cartridge.c` | Cartridge fuse-ROM reader with the stock head-interface sequence (USB 0x62/0x63); see [evidence](evidence/CARTRIDGE.md) |
+| `src/print_mech.c`, `src/paper_feed.c` | CR/LF register dump, bounded motor pulses, GPIO snapshot, closed-loop paper feed; see [evidence](evidence/PRINT_MECH.md) |
+| `PRINT_TEST_PLAN.md` | Staged physical test plan for the CR/LF print motors and head controller |
 | `tests/`, `tools/`, `evidence/` | Emulator checks, host commands and reviewed results |
 
 The app compiles shared bootloader entry, runtime, panel, integrity and I²C

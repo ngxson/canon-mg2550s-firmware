@@ -14,7 +14,7 @@ import sys
 from stock.inputs import DEFAULT_FIRMWARE
 
 ROOT = Path(__file__).resolve().parents[1]
-APP_TESTS = ('app', 'home', 'motor', 'buttons', 'scanner', 'page')
+APP_TESTS = ('app', 'home', 'motor', 'buttons', 'scanner', 'page', 'cartridge')
 
 
 def positive(value):
@@ -70,13 +70,13 @@ def parser():
             sub.add_argument('--mode', type=lambda v: int(v, 0),
                              choices=(0, 0x0200000f, 0x0b00000f), default=0x0200000f)
     sub = commands.add_parser('test', help='run the existing replacement-firmware ARM suites')
-    sub.add_argument('--suite', choices=('app', 'bootloader', 'all'), default='app')
+    sub.add_argument('--suite', choices=('app', 'cartridge', 'bootloader', 'all'), default='app')
     return p
 
 
 def replacement_tests(suite):
     needed = ['bootloader/build/boot_region.bin', 'bootloader/build/manifest.json']
-    if suite in ('app', 'all'):
+    if suite in ('app', 'cartridge', 'all'):
         needed += ['app/build/application.bin', 'app/build/manifest.json']
     if suite in ('bootloader', 'all'):
         needed += ['bootloader/build/factory.bin', 'bootloader/build/application.bin',
@@ -89,6 +89,8 @@ def replacement_tests(suite):
         scripts += ['bootloader/tests/validate.py', 'bootloader/tests/validate_dangerous.py']
     if suite in ('app', 'all'):
         scripts += [f'app/tests/validate_{name}.py' for name in APP_TESTS]
+    elif suite == 'cartridge':
+        scripts += ['app/tests/validate_cartridge.py']
     for script in scripts:
         print(f'Running {script}', flush=True)
         result = subprocess.run([sys.executable, '-u', str(ROOT / script)], cwd=ROOT)

@@ -1,0 +1,66 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "heads_requested": "both",
+  "raw": false,
+  "wait_ticks": 28800,
+  "sequence": 1,
+  "connection": {
+    "black": "ok",
+    "colour": "ok"
+  },
+  "options": "0x400",
+  "left_prepared": false,
+  "heads": {
+    "black": {
+      "raw_low": "ffffffff",
+      "raw_low_repeat": "ffffffff",
+      "raw_high": "0000",
+      "sense_idle": 0,
+      "fields": {
+        "id": 15,
+        "dest": 63,
+        "rank1": 63,
+        "rank2": null,
+        "inklvl": 127,
+        "inklvl_bits": "1111111",
+        "high": 0
+      },
+      "notes": [
+        "all samples low (complemented ones): sense line stuck low",
+        "idle sense bit0=0"
+      ]
+    },
+    "colour": {
+      "raw_low": "ffffffff",
+      "raw_low_repeat": "ffffffff",
+      "raw_high": "ffff",
+      "sense_idle": 0,
+      "fields": {
+        "id": 15,
+        "dest": 63,
+        "rank1": 31,
+        "rank2": 15,
+        "inklvl": 127,
+        "inklvl_bits": "1111111",
+        "high": 65535
+      },
+      "notes": [
+        "all samples low (complemented ones): sense line stuck low",
+        "idle sense bit0=0"
+      ]
+    }
+  },
+  "firmware_log": "\n[app] MG2550s open app\napp_flash=0x00010000\napp_ram=0x20020000\n[app] usb up, entering main loop\n[btn] B/W=short forward jog; Colour=home; Cancel=stop\n[home] stock PI seek + verified backoff + repeat seek; mechanical reference\n[page] USB stop-and-capture page scan; returns home; Cancel=stop\n[escl] eSCL over IPP-USB (interfaces 2-3)\n[cart] USB 0x62 reads cartridge fuse ROM (read-only); 0x63 status\n[scan] serial controller 0xc0120000:\n  c0120000 = 0x00000000\n  c0120004 = 0x00000000\n  c0120008 = 0x00000000\n  c012000c = 0x00000000\n  c0120010 = 0x00000000\n  c012001c = 0x00000000\n  c0120024 = 0x00000000\n  c0120100 = 0x00000000\n  c0120104 = 0x00000000\n  c0120108 = 0x00000000\n  c012010c = 0x00000000\n  c0120110 = 0x00000000\n  c0120114 = 0x00000000\n  c012011c = 0x00000000\n  c0120124 = 0x00000000\n  c0c840c0 = 0x00000000\n  c0c840c4 = 0x00000000\n  c0c81200 = 0x00000fdf\n  c0c81204 = 0x00001020\n  c0c8121c = 0x00000300\n[scan] capture engine 0xc0d60000:\n  c0d60000 = 0x00000000\n  c0d60008 = 0x00000000\n  c0d60080 = 0x00000000\n  c0d60084 = 0x00000000\n  c0d60130 = 0x00000000\n  c0d6015c = 0x00000000\n  c0d60164 = 0x00000000\n  c0d601c0 = 0x00000000\n  c0d601d4 = 0x00000000\n  c0d601d8 = 0x00000000\n  c0d601dc = 0x00000000\n  c0d601e0 = 0x00000000\n  c0d601e4 = 0x00000000\n  c0d601e8 = 0x00000000\n  c0d601ec = 0x00000000\n  c0d601f0 = 0x00000000\n  c0d601f4 = 0x00000000\n  c0d60294 = 0x00000000\n  c0d602c0 = 0x00000000\n  c0c85614 = 0x00000000\n[scan] peek done\n[cart] connection black=1 colour=1\n0000 8461c=00000000 84688=00000001 \n[cart] head block readback 2954c=00000001 29540=00000641 29550=00000000 29544=00000000 29548=00000000 \n[cart] pulse head=0 bit=0 sel=0x00000641 ones=0/20000 first=4294967295 last=0 span_us=48548 trig_rb=0\n[cart] pulse he7295 last=0 span_us=48547 trig_rb=0\n[cart] pulse head=1 bit=40 sel=0x00000241 ones=0/20000 first=4294967295 last=0 span_us=48547 trig_rb=0\n[cart] black low=0xffffffff high=0x00000000 stable id=15 dest=63 rank1=63 inklvl=127 sense_idle=0\n[cart] colour low=0"
+}

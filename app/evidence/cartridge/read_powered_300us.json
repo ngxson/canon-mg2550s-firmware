@@ -1,0 +1,66 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "heads_requested": "both",
+  "raw": false,
+  "wait_ticks": 28800,
+  "sequence": 1,
+  "connection": {
+    "black": "ok",
+    "colour": "ok"
+  },
+  "options": "0x0",
+  "left_prepared": false,
+  "heads": {
+    "black": {
+      "raw_low": "ffffffff",
+      "raw_low_repeat": "ffffffff",
+      "raw_high": "0000",
+      "sense_idle": 0,
+      "fields": {
+        "id": 15,
+        "dest": 63,
+        "rank1": 63,
+        "rank2": null,
+        "inklvl": 127,
+        "inklvl_bits": "1111111",
+        "high": 0
+      },
+      "notes": [
+        "all samples low (complemented ones): sense line stuck low",
+        "idle sense bit0=0"
+      ]
+    },
+    "colour": {
+      "raw_low": "ffffffff",
+      "raw_low_repeat": "ffffffff",
+      "raw_high": "ffff",
+      "sense_idle": 0,
+      "fields": {
+        "id": 15,
+        "dest": 63,
+        "rank1": 31,
+        "rank2": 15,
+        "inklvl": 127,
+        "inklvl_bits": "1111111",
+        "high": 65535
+      },
+      "notes": [
+        "all samples low (complemented ones): sense line stuck low",
+        "idle sense bit0=0"
+      ]
+    }
+  },
+  "firmware_log": "[cart] head interface shut down\n"
+}

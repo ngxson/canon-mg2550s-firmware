@@ -136,13 +136,13 @@ python3 app/build.py
 
 docker run --rm --network none -v "$PWD:/project:rw" \
   mg2550s-emu emu/run.py test --suite app
-# Includes both bootloader suites and all six application suites:
+# Includes both bootloader suites and all seven application suites:
 docker run --rm --network none -v "$PWD:/project:rw" \
   mg2550s-emu emu/run.py test --suite all
 ```
 
 `--suite app` checks startup/reboot, homing, motor commands, buttons, stationary
-capture and full-page sequencing. `--suite bootloader` checks management,
+capture, full-page sequencing and cartridge reads. `--suite bootloader` checks management,
 protected updates, recovery and simulated whole-flash updates. These tests
 operate on simulated flash only. A failed suite stops the runner with a nonzero
 exit code. Reports remain in `app/build/` and `bootloader/build/`.
@@ -152,6 +152,36 @@ it does not duplicate them. App tests combine `bootloader/build/boot_region.bin`
 and its symbols with `app/build/application.bin` and its symbols. Keep these
 artifacts consistent with the combination being tested. No stock dump or EEPROM
 snapshot is needed for the replacement suites.
+
+### Cartridge reads
+
+Run just the cartridge ARM suite with:
+
+```sh
+python3 emu/run.py test --suite cartridge
+```
+
+The shared model in `stock/head_interface.py` uses the configuration group
+documented in [CARTRIDGE.md](../app/evidence/CARTRIDGE.md). The earlier model
+accepted the control sequence alone, although that setup failed on hardware.
+It now withholds fuse responses until the recovered fixed `0xc3096` words and
+interface controls match. The five fuse-group words plus three profile words
+alone still produce stuck-low sense; the full configuration allows reads.
+The profile words are recorded but are not separately required by the model.
+
+Tests execute the replacement firmware from reset with simulated USB requests
+`0x62/0x63`, checking incomplete initialization, full initialization, retained
+configuration, repeated reads, invalid requests and management polling. They use
+both synthetic words and the captured black/colour words as explicit inputs.
+`0xc0c291d0` readback is masked to `0x3ff`; trigger readback is zero, matching
+the captures without deciding whether that register is self-clearing or write-only.
+
+This is an empirical group contract, not a discovery of the minimum necessary
+register subset or a model of head voltage. Passing a replay verifies the
+selector/packing/control path against supplied data. It does not independently
+discover cartridge contents or establish cold-start behavior on hardware. The
+public `boot` command does not yet inject cartridge responses; this contract is
+used by the replacement suite and the separate internal stock-reader harness.
 
 ## Reports and model boundaries
 
@@ -193,7 +223,9 @@ recorded separately in [homing](../app/evidence/HOMING.md) and
 | `stock/boot.py` | Readiness levels, additional timers and boot tracing |
 | `stock/home.py` | Scanner command input, timer4/serial IRQ and motor trace |
 | `stock/feedback.py` | Explicit scripted seek/backoff and completion controls |
+| `stock/head_interface.py` | Empirical cartridge configuration, selector and sense contract |
 | `tests/test_cli.py` | Input protection, argument validation and runner checks |
+| `tests/test_head_interface.py` | Cartridge configuration failures, readbacks, retention and fixture bits |
 
 Run CLI regression checks with:
 

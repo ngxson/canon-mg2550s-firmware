@@ -25,14 +25,14 @@ void service_init(bool bootloader)
 }
 
 bool service_is_bootloader(void) { return false; }
-bool service_busy(void) { return scanner_motor_busy() || scan_page_busy(); }
+bool service_busy(void) { return scanner_motor_busy() || scan_page_busy() || paper_feed_busy(); }
 void service_hold(void) {}
 bool service_stay(void) { return false; } /* only the bootloader can hold rescue */
 
 bool service_reboot(unsigned mode)
 {
     if (mode > REBOOT_APPLICATION) return false;
-    scan_page_cancel(); scanner_lamp_off();
+    scan_page_cancel(); scanner_lamp_off(); paper_feed_cancel();
     scanner_motor_shutdown();
     reboot_mode = mode; reboot_pending = true; reboot_acknowledged = false;
     return true;

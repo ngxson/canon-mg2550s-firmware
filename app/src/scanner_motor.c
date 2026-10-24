@@ -447,3 +447,7 @@ void scanner_motor_poll(void)
     }
     control_tick(ms, x, progress);
 }
+
+/* Stage A2 experiment: the shared motor-off setup (routing + driver-IC serial wake +
+ * scanner block init) for print_mech.c; identical to the path every scanner move uses. */
+bool scanner_motor_shared_init(void) { return initialize(); }

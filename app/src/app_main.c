@@ -123,10 +123,11 @@ void firmware_main(void)
 
     usb_init();
     dbg_puts("[app] usb up, entering main loop\n");
-    dbg_puts("[btn] B/W=short forward jog; Colour=home; Cancel=stop\n");
+    dbg_puts("[btn] B/W=toggle feeder (LF reverse); Colour=toggle transport (LF forward); Cancel=stop\n");
     dbg_puts("[home] stock PI seek + verified backoff + repeat seek; mechanical reference\n");
     dbg_puts("[page] USB stop-and-capture page scan; returns home; Cancel=stop\n");
     dbg_puts("[escl] eSCL over IPP-USB (interfaces 2-3)\n");
+    dbg_puts("[cart] USB 0x62 reads cartridge fuse ROM (read-only); 0x63 status\n");
 
     scanner_request();                 /* one peek at boot; re-trigger via USB 0x51 */
 
@@ -144,7 +145,7 @@ void firmware_main(void)
         /* Long scanner captures and I2C retry loops cannot extend a jog. */
         if (!scanner_motor_busy()) {
             mailbox_poll();
-            if (!scan_page_busy()) scanner_poll();
+            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); }
         }
     }
 }

@@ -44,3 +44,35 @@ sources were retained unchanged.
 These results validate the stated software scenarios and model inputs. They do
 not establish electrical, mechanical or optical behavior; see the
 [model boundaries](README.md#reports-and-model-boundaries).
+
+## Cartridge model correction — later on 2026-10-24
+
+The earlier export results above remain historical. Following the physical
+breakthrough recorded in [CARTRIDGE.md](../app/evidence/CARTRIDGE.md), the shared
+head model now rejects the incomplete setup that the old model accepted.
+
+- All **12** public unit/CLI/state tests passed, including four new head-model
+  tests for failed subset/full configuration, captured bits/readbacks, retention
+  versus explicit cold reset, and invalid transactions/injected failures.
+- `emu/run.py test --suite cartridge` passed **eight** ARM scenarios: both heads,
+  keep-prepared/release, raw mode, disconnected colour head, incomplete/full/
+  retained initialization, captured-word replay, rejected requests, and management
+  service followed by reboot into the bootloader. No fuse-cut or flash writes.
+- Full initialization gives black `0x64f12b7f`, colour `0xa737853f` plus `0x03ef`
+  high bits when those captured words are supplied as model inputs. Controls
+  alone or the earlier partial configuration return all ones after inversion.
+
+Detailed report: [evidence/cartridge_validation.json](evidence/cartridge_validation.json).
+Latest tested app: 74,176 bytes, SHA-256
+`299f2d813d5c7d52fdb5bc813371dbe41b65c6d701e885e0d6e8d386e3336913`.
+The same eight scenarios first passed on the 73,120-byte app
+`54e49a134ea82c438377a1721c1306c5de67b38af575d5bc9ba5378fe64de1c5`;
+that [earlier report](evidence/cartridge_validation_54e49a13.json) is retained.
+The suite was rerun after a concurrent application rebuild. Both reports record
+the boot-region hash. Existing firmware artifacts were used; this emulator work
+did not rebuild, flash or access hardware. Other ARM suites were not rerun for
+this change; the earlier eight-suite export result is not a test of this app.
+
+The model treats the fixed register configuration as a group. Individual
+prerequisites and electrical meanings remain unproven. Captured fuse data are
+test inputs, and a modeled cold reset is not physical cold-start confirmation.

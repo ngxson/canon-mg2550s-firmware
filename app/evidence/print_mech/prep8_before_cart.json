@@ -1,0 +1,52 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "samples": [
+    {
+      "t": 0.0,
+      "regs": {
+        "CR_enable": 0,
+        "CR_period": 4000,
+        "CR_command": 2000,
+        "CR_p000": 13,
+        "CR_p004": 0,
+        "CR_p008": 1200,
+        "CR_position": 436608,
+        "CR_head_stage_pos": 0,
+        "CR_evt_mask": 0,
+        "CR_evt_status": 0,
+        "LF_enable": 0,
+        "LF_period": 4000,
+        "LF_command": 2000,
+        "LF_p000": 7,
+        "LF_p004": 0,
+        "LF_p008": 0,
+        "LF_position": 16777215,
+        "LF_p108": 0,
+        "LF_p120": 0,
+        "LF_p220": 0,
+        "LF_cap0": 0,
+        "LF_cap1": 0,
+        "LF_cap2": 0,
+        "LF_cap3": 0,
+        "LF_evt_mask": 0,
+        "LF_evt_status": 0,
+        "LF_c_evt_mask": 0,
+        "LF_c_evt_status": 0,
+        "SCAN_enable": 0,
+        "SCAN_position": 7340032
+      }
+    }
+  ]
+}

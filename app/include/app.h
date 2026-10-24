@@ -36,6 +36,16 @@
 #define APP_REQUEST_PAGE_PARK 0x7bu      /* OUT: wValue = offset / 256 counts; home, move, stay */
 #define APP_REQUEST_PRINT_TEST 0x60u     /* decode an embedded BJL band, log the result */
 #define APP_REQUEST_PRINT_BEGIN 0x61u    /* control-OUT, wValue|wIndex<<16 = total bytes of BJL stream to follow on bulk OUT */
+#define APP_REQUEST_CART_READ 0x62u      /* control-OUT: wValue = head mask (1 black, 2 colour), wIndex = wait per sample in 10 us (0 = 1 ms) */
+#define APP_REQUEST_CART_STATUS 0x63u    /* IN: 16 words, see src/cartridge.c */
+#define APP_REQUEST_PRINT_REGS 0x64u     /* IN: read-only CR/LF motor register dump, see src/print_mech.c */
+#define APP_REQUEST_PRINT_PREP 0x65u     /* OUT: wValue variant bits, motor-off CR/LF counter preparation */
+#define APP_REQUEST_GPIO_SNAPSHOT 0x66u  /* IN: wValue = 64-word chunk of the GPIO alias/bank snapshot */
+#define APP_REQUEST_LF_JOG 0x67u         /* OUT: wValue = raw LF command (1400..2600, 2000 neutral), wIndex = ms (1..2000) */
+#define APP_REQUEST_LF_STATUS 0x68u      /* IN: last LF jog result */
+#define APP_REQUEST_PAPER_FEED 0x69u     /* OUT: wValue = mode (0 feed+eject, 1 feed+hold, 2 eject), wIndex = advance counts/64 (0 default) */
+#define APP_REQUEST_PAPER_STATUS 0x6au   /* IN: 12 words, see src/paper_feed.c */
+#define APP_REQUEST_PAPER_MANUAL 0x6bu   /* OUT: wValue 0 stop, 1 reverse (feeder), 2 forward; 10 s auto-stop */
 #define APP_REQUEST_BTN 0x70u            /* control-OUT, no data: enable front-panel key probe (logs PANEL+0x28 on change) */
 #define APP_REQUEST_MOTOR_JOG 0x73u     /* control-OUT, wValue=dir(0/1); fixed tiny pulse */
 #define APP_REQUEST_HOME 0x74u          /* control-OUT, no data: bounded mechanical home */
@@ -83,6 +93,31 @@ void print_selftest(void);          /* decode an embedded BJL band, emit result 
 void print_bulk_begin(unsigned total); /* start a USB bulk print transfer of `total` bytes (USB 0x61) */
 void print_bulk_feed(const uint8_t *data, unsigned len); /* feed received bulk bytes; decodes when complete */
 bool print_is_active(void);         /* true while a bulk print transfer is in progress (gates bulk OUT arming) */
+/* Cartridge fuse-ROM identification (src/cartridge.c): read-only, bounded. */
+bool cartridge_request(unsigned heads, unsigned wait_units);
+bool cartridge_busy(void);
+void cartridge_poll(void);
+unsigned cartridge_status(uint8_t *out);
+unsigned print_mech_dump(uint8_t *out);  /* read-only CR/LF register dump (USB 0x64) */
+bool print_mech_prepare(unsigned variant); /* motor-off counter preparation (USB 0x65) */
+unsigned print_mech_snapshot(uint8_t *out, unsigned chunk); /* read-only GPIO snapshot (USB 0x66) */
+bool print_mech_lf_request(unsigned command, unsigned ms);  /* bounded LF pulse (USB 0x67) */
+bool print_mech_lf_busy(void);
+void print_mech_poll(void);
+unsigned print_mech_lf_status(uint8_t *out);                /* USB 0x68 */
+bool print_mech_lf_button(unsigned dir);                    /* panel: bounded carriage pulse (bench) */
+/* Closed-loop paper feed (src/paper_feed.c): pickup with bounded retries, advance, eject. */
+bool paper_feed_request(unsigned mode, unsigned advance_units);
+void paper_feed_poll(void);
+void paper_feed_cancel(void);
+bool paper_feed_busy(void);
+bool paper_feed_holding(void);
+unsigned paper_feed_status(uint8_t *out);
+bool paper_manual_request(unsigned dir);   /* bench: continuous LF run (USB 0x6b) */
+bool paper_manual_toggle(unsigned dir);
+bool paper_manual_running(void);
+void paper_manual_poll(void);
+bool scanner_motor_shared_init(void);     /* scanner driver's motor-off shared setup, for experiments */
 void buttons_request(void);         /* enable the front-panel key probe (USB 0x70) */
 void buttons_poll(void);            /* always-active keys, optional change log */
 void scanner_poll(void);            /* run an armed action, if any */

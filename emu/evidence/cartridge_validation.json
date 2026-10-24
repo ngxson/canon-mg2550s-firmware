@@ -1,0 +1,398 @@
+{
+  "assumptions": "Emulate the app's read-only cartridge fuse-ROM read (USB 0x62 / 0x63).\n\nSynthetic fuse words and a head-interface gate are served by model_cartridge.py.\nThe test checks the stock power sequence (connection test, cold preparation,\nacquire, release, shutdown), the selector sequence, active-low packing and\ncomplement, the 32/48-bit head widths, field extraction, the repeat read,\nrequest validation, raw mode, a disconnected head, and that the firmware never\nwrites the fuse-cut GPIO or a non-zero pair word. Waits are modeled time, not\nmeasured time; the model says nothing about the real head electrical state.\n",
+  "cases": {
+    "both_heads_power_sequence": {
+      "status": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x3",
+        "0x7080",
+        "0x1",
+        "0x101",
+        "0x20000",
+        "0x854152bf",
+        "0x854152bf",
+        "0x0",
+        "0x0",
+        "0x580b9cff",
+        "0x580b9cff",
+        "0xbeef",
+        "0x0"
+      ],
+      "black": {
+        "id": 5,
+        "dest": 21,
+        "rank1": 42,
+        "rank2": null,
+        "inklvl": 63,
+        "high": 0
+      },
+      "colour": {
+        "id": 9,
+        "dest": 44,
+        "rank1": 19,
+        "rank2": 11,
+        "inklvl": 127,
+        "high": 48879
+      },
+      "controls": [
+        [
+          "0xc0c84664",
+          1
+        ],
+        [
+          "0xc0c84664",
+          0
+        ],
+        [
+          "0xc0c84664",
+          1
+        ],
+        [
+          "0xc0c84654",
+          1
+        ],
+        [
+          "0xc0c84604",
+          0
+        ],
+        [
+          "0xc0c84604",
+          1
+        ],
+        [
+          "0xc0c84604",
+          0
+        ],
+        [
+          "0xc0c84604",
+          0
+        ],
+        [
+          "0xc0c84654",
+          0
+        ],
+        [
+          "0xc0c84664",
+          0
+        ]
+      ]
+    },
+    "keep_prepared_then_shutdown": {
+      "status": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x1",
+        "0x7080",
+        "0x3",
+        "0x101",
+        "0x20000",
+        "0x854152bf",
+        "0x854152bf",
+        "0x0",
+        "0x0",
+        "0x580b9cff",
+        "0x580b9cff",
+        "0xbeef",
+        "0x0"
+      ]
+    },
+    "raw_mode_matches_first_attempt": {
+      "status": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x3",
+        "0x7080",
+        "0x1",
+        "0x0",
+        "0x100",
+        "0xffffffff",
+        "0xffffffff",
+        "0x0",
+        "0x0",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffff",
+        "0x0"
+      ]
+    },
+    "colour_connection_failure_reported": {
+      "status": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x3",
+        "0x7080",
+        "0x1",
+        "0x201",
+        "0x20000",
+        "0x854152bf",
+        "0x854152bf",
+        "0x0",
+        "0x0",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffff",
+        "0x0"
+      ]
+    },
+    "head_block_init_and_retention": {
+      "cold_no_init": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x1",
+        "0x7080",
+        "0x1",
+        "0x101",
+        "0x800",
+        "0xffffffff",
+        "0xffffffff",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "subset_only": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x1",
+        "0x7080",
+        "0x2",
+        "0x101",
+        "0x800",
+        "0xffffffff",
+        "0xffffffff",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "full_init": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x1",
+        "0x7080",
+        "0x3",
+        "0x101",
+        "0x20000",
+        "0x854152bf",
+        "0x854152bf",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "retained": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x1",
+        "0x7080",
+        "0x4",
+        "0x101",
+        "0x20800",
+        "0x854152bf",
+        "0x854152bf",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0",
+        "0x0"
+      ],
+      "blocked_samples": 128,
+      "scope": "Empirical group contract; individual necessary words not isolated."
+    },
+    "captured_words_fixture": {
+      "input": "evidence/cartridge/read_default_after_fix.json",
+      "input_sha256": "da9ac61b340ce5d941d8bf63695b491da933e83e9678bf9d188870aca7426e12",
+      "status": [
+        "0x5443474d",
+        "0x2",
+        "0x2",
+        "0x3",
+        "0x7080",
+        "0x1",
+        "0x101",
+        "0x20000",
+        "0x64f12b7f",
+        "0x64f12b7f",
+        "0x0",
+        "0x0",
+        "0xa737853f",
+        "0xa737853f",
+        "0x3ef",
+        "0x1"
+      ],
+      "scope": "Captured words supplied to model; verifies packing, not independent hardware discovery."
+    },
+    "invalid_requests_stall": {
+      "stalls": [
+        "no_heads",
+        "bad_mask",
+        "bad_option",
+        "wait_too_long"
+      ]
+    },
+    "management_during_and_after": {
+      "identities": [
+        "0x176d",
+        "0x12fe",
+        "0x176d"
+      ],
+      "entered": [
+        "0x20010000",
+        "0x20020000",
+        "0x20010000"
+      ],
+      "resets": 2,
+      "erases": [],
+      "erase_sizes": [],
+      "programs": [],
+      "i2c_results": [],
+      "i2c_addresses": [
+        66
+      ],
+      "led_frames": 505,
+      "led_pattern_samples": {
+        "stage0": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ]
+        ],
+        "bootloader": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            0
+          ]
+        ],
+        "application": [
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            32,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            32,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            16
+          ],
+          [
+            0,
+            16,
+            0,
+            0
+          ],
+          [
+            32,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            32,
+            0
+          ],
+          [
+            0,
+            0,
+            0,
+            16
+          ]
+        ]
+      },
+      "protected_prefix_bytes": 65536,
+      "protected_prefix_unchanged": true,
+      "main_app_unchanged_during_maintenance": null
+    }
+  },
+  "application_sha256": "299f2d813d5c7d52fdb5bc813371dbe41b65c6d701e885e0d6e8d386e3336913",
+  "boot_region_sha256": "67fd01b7baf43c7a3c3c770b45b67075e807ccde2c808cfd8d4af08c754d9f9b",
+  "all_assertions_passed": true,
+  "model_sources_sha256": {
+    "emu/stock/head_interface.py": "7cce7a22e1559a8c61e9ecc678b82969d3975810a25282f39adc9fbdb265ff2c",
+    "app/tests/model_cartridge.py": "0dc37fbed2accc3c90eb982d5a2ed6779b4338cc3ed9a1984f36a2adc71b0fd7",
+    "app/tests/validate_cartridge.py": "b838f5c5250dc570fd81237e8ce21a9004bdcf3f6bfc45f3c4e20039e80d4efb"
+  }
+}

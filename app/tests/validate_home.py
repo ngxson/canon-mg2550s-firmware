@@ -101,7 +101,7 @@ def main():
         print('PASS',name,flush=True)
     for behavior in ('normal','frozen','backoff_stuck','wrong','wrong_return_end','early_completion'):
         print('RUN',behavior,flush=True)
-        e=booted();e.behavior=behavior;start(e,button=behavior=='normal')
+        e=booted();e.behavior=behavior;start(e)
         try:
             e.run(lambda e:state(e) in (2,3,4),resume=True,budget=100000000)
         except AssertionError:
