@@ -11,6 +11,7 @@
 #ifndef APP_H
 #define APP_H
 #include "service.h"   /* pulls in fw.h + protocol.h */
+#include "escl.h"      /* IPP-USB / eSCL driverless scanning */
 
 /* Vendor control-IN (bmRequestType 0xC0) request that drains the debug log
  * ring buffer. The host polls it; an empty reply means "nothing buffered". */
@@ -68,6 +69,11 @@ unsigned scanner_home_status(uint8_t *out);
 uint32_t app_clock_ticks(void); /* extends low-29-bit hardware counter deltas */
 bool scanner_motor_busy(void);
 void scanner_motor_poll(void);             /* drive deadline checked every main loop */
+/* Service the 1 ms motor controller from inside long work. It stops a move
+ * when more than 4 ms pass between polls (~15 k instructions on this CPU), so
+ * protocol and encoding loops call this every few thousand instructions. */
+void app_yield(void);
+extern const char *app_section;   /* protocol work in progress, for motor diagnostics */
 void scanner_motor_cancel(void);
 void scanner_motor_shutdown(void);         /* stop and inhibit until reset */
 unsigned scanner_home_result(void);
@@ -75,9 +81,14 @@ uint32_t scanner_motor_position(void);
 uint32_t scanner_motor_reference(void);
 bool scanner_motor_page_move(uint32_t position);
 bool scanner_motor_move_ok(void);
-bool scanner_capture_row(void); /* bounded stationary capture; motor must be off */
+bool scanner_capture_row(bool first); /* bounded stationary capture; motor must be off */
 void scanner_lamp_off(void);
 bool scan_page_request(unsigned rows, unsigned pitch);
+bool scan_page_start(unsigned rows, unsigned pitch, uint32_t start, bool owned);
+const uint16_t *scan_page_take(unsigned *row);  /* owned page: ready row samples, else NULL */
+bool scan_page_release(unsigned row);           /* owned page: row consumed, move on */
+bool scan_page_failed(void);
+const uint16_t *scanner_row(void);              /* last captured row: 2592 LE samples */
 bool scan_page_busy(void);
 void scan_page_poll(void);
 void scan_page_cancel(void);

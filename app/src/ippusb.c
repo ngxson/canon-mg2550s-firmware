@@ -1,0 +1,397 @@
+/* IPP-over-USB transport (interface class 7/1/4) with HTTP/1.1 framing.
+ *
+ * Each IPP-USB interface is a persistent byte stream carrying HTTP/1.1, so a
+ * "connection" is a request parser plus a transmit buffer per interface.
+ * Requests are served one at a time per interface: the bulk OUT endpoint is
+ * not re-armed for a new request until the previous response has been sent
+ * completely. That is the flow control; no second request is ever buffered.
+ *
+ * Responses either fit the transmit buffer (Content-Length) or are produced
+ * incrementally (chunked). Chunk sizes use a fixed eight-digit header so the
+ * payload stays word aligned for the endpoint DMA. A host read only completes
+ * on a short packet, so whenever a transfer ends on a packet boundary and
+ * nothing follows immediately, a zero-length packet terminates it.
+ *
+ * IPP USB 1.0 (USB-IF, 2012) device rules followed here: HTTP/1.1 only
+ * (HTTP/1.0 gets 505), and the request's Host value is echoed as the Server
+ * header and in self-referencing URLs (see escl.c and ipp.c). */
+#include "app.h"
+
+#define RX_SIZE 8192u
+#define TX_SIZE 16384u
+#define CHUNK_HEAD 10u     /* "xxxxxxxx\r\n" */
+#define CHUNK_TAIL 7u      /* "\r\n" after the payload, then "0\r\n\r\n" */
+
+enum rx_state { RX_HEAD, RX_BODY, RX_CHUNK_SIZE, RX_CHUNK_DATA, RX_CHUNK_END,
+                RX_TRAILER, RX_DONE };
+
+struct conn {
+    enum rx_state rx;
+    struct http_request request;       /* valid from header end to dispatch */
+    bool bad;                          /* unusable request line or headers */
+    bool http10;                       /* HTTP/1.0 request line */
+    unsigned rx_length, head_length, left, line;
+    uint32_t tail;                     /* last four header bytes */
+    bool overflow, extension;
+    unsigned packet_length, packet_position;
+    bool armed, sending, unterminated;
+    unsigned pending;                  /* complete bytes waiting in tx */
+    const struct http_stream *stream;
+};
+
+static struct conn conns[IPPUSB_INTERFACES];
+static uint8_t packets[IPPUSB_INTERFACES][512] ALIGNED;
+static uint8_t rx_buffers[IPPUSB_INTERFACES][RX_SIZE];
+static uint8_t tx_buffers[IPPUSB_INTERFACES][TX_SIZE] ALIGNED;
+static char scratch[8192];
+static const char *reply_host = "localhost";  /* Host of the request being handled */
+
+void ob_mem(struct obuf *o, const void *data, unsigned length)
+{
+    const uint8_t *from = data;
+    if (length > o->cap - o->n) { length = o->cap - o->n; o->overflow = true; }
+    while (length) {                     /* bounded pieces: see app_yield */
+        unsigned piece = length < 512u ? length : 512u;
+        memcpy(o->p + o->n, from, piece);
+        o->n += piece; from += piece; length -= piece;
+        app_yield();
+    }
+}
+
+void ob_str(struct obuf *o, const char *text) { ob_mem(o, text, (unsigned)strlen(text)); }
+
+void ob_dec(struct obuf *o, unsigned value)
+{
+    char digits[10]; unsigned i = sizeof(digits);
+    do { digits[--i] = (char)('0' + value % 10u); value /= 10u; } while (value);
+    ob_mem(o, digits + i, sizeof(digits) - i);
+}
+
+void ob_hex(struct obuf *o, uint32_t value, unsigned digits)
+{
+    char text[8];
+    for (unsigned i = 0; i < digits && i < 8u; ++i)
+        text[i] = "0123456789abcdef"[(value >> (4u * (digits - 1u - i))) & 15u];
+    ob_mem(o, text, digits);
+}
+
+struct obuf http_body(void) { return (struct obuf){scratch, 0, sizeof(scratch), false}; }
+
+static char lower(char c) { return c >= 'A' && c <= 'Z' ? (char)(c + 32) : c; }
+
+static bool same(const char *a, const char *b)
+{
+    while (*a && lower(*a) == lower(*b)) { ++a; ++b; }
+    return lower(*a) == lower(*b);
+}
+
+static bool contains(const char *text, const char *word)
+{
+    for (; *text; ++text) {
+        unsigned i = 0;
+        while (word[i] && lower(text[i]) == lower(word[i])) ++i;
+        if (!word[i]) return true;
+    }
+    return false;
+}
+
+static const char *reason(unsigned status)
+{
+    switch (status) {
+    case 200: return "OK";
+    case 201: return "Created";
+    case 400: return "Bad Request";
+    case 404: return "Not Found";
+    case 405: return "Method Not Allowed";
+    case 409: return "Conflict";
+    case 413: return "Payload Too Large";
+    case 503: return "Service Unavailable";
+    case 505: return "HTTP Version Not Supported";
+    default: return "Internal Server Error";
+    }
+}
+
+static struct obuf response_head(unsigned conn, unsigned status, const char *type,
+                                 const char *headers)
+{
+    dbg_puts("[http] c"); dbg_dec(conn); dbg_puts(" -> "); dbg_dec(status); dbg_putc('\n');
+    struct obuf o = {(char *)tx_buffers[conn], 0, TX_SIZE, false};
+    ob_str(&o, "HTTP/1.1 "); ob_dec(&o, status); ob_str(&o, " "); ob_str(&o, reason(status));
+    ob_str(&o, "\r\nServer: "); ob_str(&o, reply_host);
+    ob_str(&o, "\r\nCache-Control: no-cache\r\n");
+    if (type) { ob_str(&o, "Content-Type: "); ob_str(&o, type); ob_str(&o, "\r\n"); }
+    if (headers) ob_str(&o, headers);
+    return o;
+}
+
+static bool idle(const struct conn *k)
+{ return !k->sending && !k->pending && !k->stream && !k->unterminated; }
+
+/* More request bytes may be accepted: always while a request is partly
+ * received (hosts such as macOS ippusbd write a whole request, Expect:
+ * 100-continue included, before reading anything back), but a new request
+ * only once the previous response has gone out completely. */
+static bool can_receive(const struct conn *k)
+{
+    if (k->armed || k->rx == RX_DONE || k->packet_position != k->packet_length) return false;
+    return k->rx != RX_HEAD || k->rx_length || idle(k);
+}
+
+/* Start the next bulk IN transfer, if there is one. */
+static void kick(unsigned conn)
+{
+    struct conn *k = &conns[conn];
+    uint8_t *tx = tx_buffers[conn];
+    if (k->sending) return;
+    unsigned n = k->pending;
+    k->pending = 0;
+    if (!n && k->stream) {
+        bool done = false;
+        unsigned size = k->stream->produce(tx + CHUNK_HEAD, TX_SIZE - CHUNK_HEAD - CHUNK_TAIL, &done);
+        if (size) {
+            struct obuf o = {(char *)tx, 0, CHUNK_HEAD, false};
+            ob_hex(&o, size, 8); ob_str(&o, "\r\n");
+            memcpy(tx + CHUNK_HEAD + size, "\r\n", 2);
+            n = CHUNK_HEAD + size + 2u;
+        }
+        if (done) { memcpy(tx + n, "0\r\n\r\n", 5); n += 5u; k->stream = NULL; }
+    }
+    if (!n && !k->unterminated) return;
+    /* n == 0 here is the zero-length packet that ends a boundary transfer. */
+    k->unterminated = n && !(n & (usb_max_packet() - 1u));
+    if (usb_ipp_send(conn, tx, n)) k->sending = true;
+    else { k->unterminated = false; if (k->stream && k->stream->abort) k->stream->abort(); k->stream = NULL; }
+}
+
+void http_reply(unsigned conn, unsigned status, const char *type,
+                const char *headers, const struct obuf *body)
+{
+    if (body && body->overflow) { status = 500; type = headers = NULL; body = NULL; }
+    struct obuf o = response_head(conn, status, type, headers);
+    ob_str(&o, "Content-Length: "); ob_dec(&o, body ? body->n : 0); ob_str(&o, "\r\n\r\n");
+    if (body) ob_mem(&o, body->p, body->n);
+    conns[conn].pending = o.n;
+    kick(conn);
+}
+
+void http_stream(unsigned conn, unsigned status, const char *type,
+                 const struct http_stream *stream)
+{
+    struct obuf o = response_head(conn, status, type, "Transfer-Encoding: chunked\r\n");
+    ob_str(&o, "\r\n");
+    conns[conn].pending = o.n;
+    conns[conn].stream = stream;
+    kick(conn);
+}
+
+static void store(unsigned conn, uint8_t byte)
+{
+    struct conn *k = &conns[conn];
+    if (k->rx_length < RX_SIZE - 1u) rx_buffers[conn][k->rx_length++] = byte;
+    else k->overflow = true;
+}
+
+/* Split the header block in place and pick out the fields routing needs. */
+static void parse_head(unsigned conn, unsigned *content_length, bool *chunked, bool *expect)
+{
+    struct conn *k = &conns[conn];
+    char *line = (char *)rx_buffers[conn], *end = line + k->head_length;
+    struct http_request *rq = &k->request;
+    *rq = (struct http_request){0};
+    *content_length = 0; *chunked = *expect = false;
+    k->bad = k->overflow;
+    for (bool first = true; line < end && !k->bad; first = false) {
+        char *eol = line;
+        while (eol < end && *eol != '\n') ++eol;
+        char *stop = eol;
+        if (stop > line && stop[-1] == '\r') --stop;
+        *stop = 0;
+        app_yield();
+        if (first) {
+            char *path = line;
+            while (*path && *path != ' ') ++path;
+            char *version = *path ? path + 1 : path;
+            while (*version && *version != ' ') ++version;
+            if (!*path || !*version) { k->bad = true; break; }
+            *path++ = 0; *version++ = 0;
+            rq->method = line; rq->path = path;
+            k->http10 = same(version, "HTTP/1.0");
+        } else if (*line) {
+            char *value = line;
+            while (*value && *value != ':') ++value;
+            if (!*value) { line = eol + 1; continue; }
+            *value++ = 0;
+            while (*value == ' ' || *value == '\t') ++value;
+            for (char *t = stop; t > value && (t[-1] == ' ' || t[-1] == '\t'); ) *--t = 0;
+            if (same(line, "content-length")) {
+                unsigned n = 0;
+                for (const char *d = value; *d >= '0' && *d <= '9'; ++d)
+                    n = n > 0x0fffffffu ? n : n * 10u + (unsigned)(*d - '0');
+                *content_length = n;
+            } else if (same(line, "transfer-encoding")) *chunked = contains(value, "chunked");
+            else if (same(line, "expect")) *expect = same(value, "100-continue");
+            else if (same(line, "host")) rq->host = value;
+            else if (same(line, "content-type")) rq->content_type = value;
+        }
+        line = eol + 1;
+    }
+}
+
+static void header_complete(unsigned conn)
+{
+    struct conn *k = &conns[conn];
+    unsigned length; bool chunked, expect;
+    k->head_length = k->rx_length;
+    parse_head(conn, &length, &chunked, &expect);
+    k->overflow = false;
+    if (k->bad) { k->rx = RX_DONE; return; }
+    if (chunked) { k->rx = RX_CHUNK_SIZE; k->left = 0; k->extension = false; }
+    else if (length) { k->rx = RX_BODY; k->left = length; }
+    else { k->rx = RX_DONE; return; }
+    if (expect) {
+        static const char interim[] = "HTTP/1.1 100 Continue\r\n\r\n";
+        memcpy(tx_buffers[conn], interim, sizeof(interim) - 1u);
+        k->pending = sizeof(interim) - 1u; kick(conn);
+    }
+}
+
+/* Feed bytes of the last received packet through the request state machine. */
+static void consume(unsigned conn)
+{
+    struct conn *k = &conns[conn];
+    while (k->rx != RX_DONE && k->packet_position < k->packet_length) {
+        uint8_t b = packets[conn][k->packet_position++];
+        switch (k->rx) {
+        case RX_HEAD:
+            if (!k->rx_length && (b == '\r' || b == '\n')) break;  /* stray CRLF */
+            store(conn, b);
+            k->tail = (k->tail << 8) | b;
+            if (k->tail == 0x0d0a0d0au || (k->tail & 0xffffu) == 0x0a0au) header_complete(conn);
+            break;
+        case RX_BODY:
+            store(conn, b);
+            if (!--k->left) k->rx = RX_DONE;
+            break;
+        case RX_CHUNK_SIZE:
+            if (b == '\n') {
+                k->rx = k->left ? RX_CHUNK_DATA : RX_TRAILER;
+                k->line = 0; k->extension = false;
+            } else if (b == ';') k->extension = true;
+            else if (!k->extension && b != '\r') {
+                unsigned c = b | 32u;                    /* lower-case letters */
+                unsigned digit = b >= '0' && b <= '9' ? b - (unsigned)'0'
+                               : c >= 'a' && c <= 'f' ? c - (unsigned)'a' + 10u : 16u;
+                if (digit > 15u || k->left > 0x0fffffffu) k->overflow = true;
+                else k->left = k->left * 16u + digit;
+            }
+            break;
+        case RX_CHUNK_DATA:
+            store(conn, b);
+            if (!--k->left) k->rx = RX_CHUNK_END;
+            break;
+        case RX_CHUNK_END:
+            if (b == '\n') k->rx = RX_CHUNK_SIZE;
+            break;
+        case RX_TRAILER:
+            if (b == '\n') { if (!k->line) k->rx = RX_DONE; k->line = 0; }
+            else if (b != '\r') ++k->line;
+            break;
+        case RX_DONE:
+            break;
+        }
+    }
+}
+
+static void root_page(unsigned conn)
+{
+    struct obuf o = http_body();
+    ob_str(&o, "<!doctype html><html><head><meta charset=\"utf-8\"><title>" DEVICE_MAKE_MODEL
+               "</title></head><body><h1>" DEVICE_MAKE_MODEL "</h1><p>Open firmware. Scanning: "
+               "<a href=\"/eSCL/ScannerCapabilities\">eSCL</a> over IPP-USB.</p></body></html>\n");
+    http_reply(conn, 200, "text/html; charset=utf-8", NULL, &o);
+}
+
+static bool escl_path(const char *path)
+{
+    const char *root = "/eSCL";
+    while (*root && *path == *root) { ++path; ++root; }
+    return !*root && (!*path || *path == '/' || *path == '?');
+}
+
+static void dispatch(unsigned conn)
+{
+    struct conn *k = &conns[conn];
+    struct http_request rq = k->request;
+    bool bad = k->bad, overflow = k->overflow, http10 = k->http10;
+    rx_buffers[conn][k->rx_length] = 0;
+    rq.body = rx_buffers[conn] + k->head_length;
+    rq.body_length = k->rx_length - k->head_length;
+    k->rx = RX_HEAD; k->rx_length = k->head_length = 0; k->tail = 0;
+    k->overflow = k->bad = k->http10 = false;
+    /* Request trace for host-interoperability work (status follows on reply). */
+    dbg_puts("[http] c"); dbg_dec(conn); dbg_putc(' ');
+    dbg_puts(bad ? "(bad request)" : rq.method); dbg_putc(' ');
+    if (!bad) dbg_puts(rq.path);
+    dbg_putc('\n');
+    /* The handler runs now; new bytes are only stored on a later poll. */
+    app_section = "http";
+    reply_host = !bad && rq.host && *rq.host && strlen(rq.host) < 96u ? rq.host : "localhost";
+    if (bad) http_reply(conn, 400, NULL, NULL, NULL);
+    else if (http10) http_reply(conn, 505, NULL, NULL, NULL);
+    else if (overflow) http_reply(conn, 413, NULL, NULL, NULL);
+    else if (escl_path(rq.path)) escl_handle(conn, &rq);
+    else if (same(rq.method, "POST") && rq.content_type && contains(rq.content_type, "application/ipp")
+             && (same(rq.path, "/ipp/print") || same(rq.path, "/")))
+        ipp_handle(conn, &rq);                   /* the only IPP object; no /ipp/faxout */
+    else if (same(rq.method, "GET") && (same(rq.path, "/") || same(rq.path, "/index.html")))
+        root_page(conn);
+    else http_reply(conn, 404, NULL, NULL, NULL);
+    reply_host = "localhost";                    /* rq.host dies with the request */
+}
+
+static void drop(unsigned conn, bool endpoints_reset)
+{
+    struct conn *k = &conns[conn];
+    if (k->stream && k->stream->abort) k->stream->abort();
+    bool armed = k->armed, sending = k->sending;
+    memset(k, 0, sizeof(*k));
+    /* A transfer still owned by the controller completes later as usual. */
+    if (!endpoints_reset) { k->armed = armed; k->sending = sending; }
+}
+
+void ippusb_reset(void)
+{
+    for (unsigned c = 0; c < IPPUSB_INTERFACES; ++c) drop(c, true);
+}
+
+void ippusb_reset_conn(unsigned conn)
+{
+    if (conn < IPPUSB_INTERFACES) drop(conn, false);
+}
+
+void ippusb_received(unsigned conn, unsigned length)
+{
+    struct conn *k = &conns[conn];
+    k->armed = false;
+    k->packet_length = length > sizeof(packets[0]) ? sizeof(packets[0]) : length;
+    k->packet_position = 0;
+}
+
+void ippusb_sent(unsigned conn)
+{
+    conns[conn].sending = false;
+    kick(conn);
+}
+
+void ippusb_poll(void)
+{
+    app_section = "ippusb";
+    for (unsigned c = 0; c < IPPUSB_INTERFACES; ++c) {
+        struct conn *k = &conns[c];
+        consume(c);
+        if (k->rx == RX_DONE && idle(k)) dispatch(c);
+        kick(c);
+        if (can_receive(k)) k->armed = usb_ipp_receive(c, packets[c]);
+    }
+    escl_poll();
+}

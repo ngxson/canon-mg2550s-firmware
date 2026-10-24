@@ -324,7 +324,14 @@ void scanner_motor_poll(void)
     unsigned ms = elapsed / CLOCK_TICKS_PER_MS;
     if (ms >= limit_ms) { finish("phase deadline", HOME_FAILED); return; }
     if (ms == last_ms) return;
-    if (ms - last_ms > 4u) { finish("control tick delayed", HOME_FAILED); return; }
+    if (ms - last_ms > 4u) {
+        dbg_puts("[motor] late tick in "); dbg_puts(app_section); dbg_putc('\n');
+        finish("control tick delayed", HOME_FAILED); return;
+    }
+    if (ms - last_ms > 2u) {                    /* early warning, before a failure */
+        dbg_puts("[motor] slow tick "); dbg_dec(ms - last_ms); dbg_puts("ms in ");
+        dbg_puts(app_section); dbg_putc('\n');
+    }
     uint32_t x = rd(P + 0x100u);
     int32_t delta = (int32_t)(x - x0), progress = direction ? -delta : delta;
     if (x > 0xffffffu || progress < -32) { finish("opposite position feedback", HOME_FAILED); return; }

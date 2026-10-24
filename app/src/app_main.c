@@ -103,6 +103,13 @@ void print_selftest(void)
     dbg_puts("[print] emitted head bytes: "); dbg_dec(print_st.row_bytes[0]); dbg_putc('\n');
 }
 
+const char *app_section = "main";
+
+void app_yield(void)
+{
+    if (scanner_motor_busy()) scanner_motor_poll();
+}
+
 void firmware_main(void)
 {
     clock_init();
@@ -118,6 +125,7 @@ void firmware_main(void)
     dbg_puts("[btn] B/W=short forward jog; Colour=home; Cancel=stop\n");
     dbg_puts("[home] stock PI seek + verified backoff + repeat seek; mechanical reference\n");
     dbg_puts("[page] USB stop-and-capture page scan; returns home; Cancel=stop\n");
+    dbg_puts("[escl] eSCL over IPP-USB (interfaces 2-3)\n");
 
     scanner_request();                 /* one peek at boot; re-trigger via USB 0x51 */
 
@@ -125,6 +133,8 @@ void firmware_main(void)
         scanner_motor_poll();
         leds_tick();
         usb_poll();
+        ippusb_poll();
+        app_section = "main";
         scanner_motor_poll();
         service_poll();
         buttons_poll();

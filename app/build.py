@@ -24,7 +24,11 @@ FLAGS = ['-mcpu=arm946e-s', '-marm', '-Os', '-std=c11', '-ffreestanding',
 
 # Reused unchanged from the bootloader (leaf drivers / entry), plus app sources.
 REUSED = ['src/entry.c', 'src/runtime.c', 'src/panel.c', 'src/integrity.c', 'src/i2c.c', 'src/mailbox.c']
-APP = ['src/usb.c', 'src/service.c', 'src/debug_log.c', 'src/scanner.c', 'src/scanner_motor.c', 'src/motor_control.c', 'src/scan_page.c', 'src/print.c', 'src/buttons.c', 'src/app_main.c']
+APP = ['src/usb.c', 'src/service.c', 'src/debug_log.c', 'src/scanner.c', 'src/scanner_motor.c', 'src/motor_control.c', 'src/scan_page.c', 'src/print.c', 'src/buttons.c', 'src/app_main.c',
+       'src/ippusb.c', 'src/escl.c', 'src/ipp.c', 'src/png.c', 'src/jpeg.c', 'src/divide.c']
+# The eSCL image provider: the scanner for the flashed app; a synthetic chart
+# for the protocol tests (app/tests/validate_escl.py), built into build/dummy.
+SOURCES = {'scanner': 'src/scan_source_scanner.c', 'dummy': 'src/scan_source_dummy.c'}
 LOAD_ADDRESS = 0x20020000
 
 
@@ -41,7 +45,11 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output', type=Path, default=ROOT / 'build')
     args = parser.parse_args()
-    output = args.output.resolve()
+    build(args.output.resolve(), 'scanner')
+    build(args.output.resolve() / 'dummy', 'dummy')
+
+
+def build(output, variant):
     output.mkdir(parents=True, exist_ok=True)
 
     prefix = os.environ.get('ARM_PREFIX')
@@ -55,7 +63,7 @@ def main():
 
     includes = ['-Iinclude', '-I' + str(BOOT / 'include')]
     objects, inputs = [], {Path(__file__).resolve(), ROOT / 'app.ld'}
-    for relative in REUSED + APP:
+    for relative in REUSED + APP + [SOURCES[variant]]:
         source = (BOOT if relative in REUSED else ROOT) / relative
         inputs.add(source)
         obj = output / ('app_' + relative.replace('/', '_') + '.o')
@@ -85,6 +93,7 @@ def main():
     inputs.update(ROOT.glob('src/*.h'))
     inputs.update(BOOT.glob('include/*.h'))
     manifest = {
+        'scan_source': variant,
         'compiler': run('gcc', '--version').decode().splitlines()[0],
         'layout': {'version': 2, 'application': [0x10000, 0x200000], 'load_address': LOAD_ADDRESS},
         'artifacts': {'application.bin': {'bytes': len(app), 'sha256': sha(app)}},
@@ -92,7 +101,7 @@ def main():
         'source_sha256': {str(p): sha(p.read_bytes()) for p in sorted(inputs)},
     }
     (output / 'manifest.json').write_text(json.dumps(manifest, indent=2) + '\n')
-    print(json.dumps(manifest['artifacts'], indent=2))
+    print(variant, json.dumps(manifest['artifacts']))
 
 
 if __name__ == '__main__':

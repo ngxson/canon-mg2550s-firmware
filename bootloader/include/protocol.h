@@ -41,5 +41,7 @@ static inline uint32_t get32(const uint8_t *p)
 static inline void put32(uint8_t *p,uint32_t x)
 { for(unsigned i=0;i<4;++i) p[i]=(uint8_t)(x>>(i*8)); }
 uint32_t recovery_crc32(const void *data,size_t length);
+uint32_t recovery_crc32_update(uint32_t crc,const void *data,size_t length);
+uint32_t app_header_length(const uint8_t *image,size_t available);
 bool app_valid(const uint8_t *image,size_t available);
 #endif

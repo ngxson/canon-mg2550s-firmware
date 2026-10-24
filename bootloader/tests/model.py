@@ -191,9 +191,10 @@ class Model:
     def write(self, cpu, offset, size, value, user):
         address = 0xc0000000 + offset; self.ticks += 1
         off = address - USB
-        if off == 0x14 or (0x900 <= off < 0xb60 and off % 32 == 8):
+        # Endpoint n: IN control at 0x900+32n, OUT control at 0xb00+32n (n < 16).
+        if off == 0x14 or (0x900 <= off < 0xd00 and off % 32 == 8):
             self.setreg(off, self.reg(off) & ~value); return
-        if off in (0x900, 0x920, 0x940, 0xb00, 0xb20, 0xb40):
+        if 0x900 <= off < 0xd00 and off % 32 == 0:
             direction = 'in' if off < 0xb00 else 'out'; number = (off-(0x900 if direction=='in' else 0xb00))//32
             if value & 0x40000000: value &= ~ENABLE; self.armed.discard((direction, number))
             elif value & ENABLE: self.armed.add((direction, number))

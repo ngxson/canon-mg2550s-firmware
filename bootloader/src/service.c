@@ -45,10 +45,24 @@ void service_hold(void) { if(boot_mode) held=true; }
 bool service_stay(void)
 { if(!boot_mode) return false; held=true; return true; }
 
+/* Slot validity as seen by USB/I2C status and reboot requests, which run
+ * inside a control transfer. A completed application update has already
+ * CRC-checked its flash copy; only other outcomes (failures, whole-flash
+ * writes) pay for a fresh check. */
+static bool slot_valid(void)
+{
+    uint8_t status=update_status();
+    if(status!=observed_status && !service_busy()) {
+        app_ok=update_app_verified() || app_valid((const uint8_t *)APP_FLASH,APP_CAPACITY);
+        observed_status=status;
+    }
+    return app_ok;
+}
+
 bool service_reboot(unsigned mode)
 {
     if(mode>REBOOT_APPLICATION || service_busy() || !update_can_reboot()) return false;
-    if(mode==REBOOT_APPLICATION && !app_valid((const uint8_t *)APP_FLASH,APP_CAPACITY)) return false;
+    if(mode==REBOOT_APPLICATION && !slot_valid()) return false;
     reboot_mode=mode; reboot_pending=true; reboot_acknowledged=false;
     return true;
 }
@@ -59,10 +73,7 @@ void service_reboot_ack(void)
 unsigned service_info(uint8_t *data)
 {
     uint8_t status=update_status();
-    if(status!=observed_status && !service_busy()) {
-        app_ok=app_valid((const uint8_t *)APP_FLASH,APP_CAPACITY);
-        observed_status=status;
-    }
+    bool valid=slot_valid();
     uint32_t elapsed=time_ms()-window_start;
     uint32_t remaining=boot_mode && !held && elapsed<BOOT_WINDOW_MS?BOOT_WINDOW_MS-elapsed:0;
     put32(data,0x5746474du); /* MGFW */
@@ -71,7 +82,7 @@ unsigned service_info(uint8_t *data)
 #ifndef APPLICATION_BUILD
     capabilities|=8u; /* Explicit whole-flash USB writer is available. */
 #endif
-    put32(data+12,(held?1u:0)|(service_busy()?2u:0)|(app_ok && !service_busy()?4u:0)|capabilities);
+    put32(data+12,(held?1u:0)|(service_busy()?2u:0)|(valid && !service_busy()?4u:0)|capabilities);
     put32(data+16,remaining); put32(data+20,status);
     put32(data+24,APP_FLASH); put32(data+28,APP_CAPACITY);
     return 32;

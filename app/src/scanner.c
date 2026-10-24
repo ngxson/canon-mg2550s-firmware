@@ -383,27 +383,33 @@ static bool last_capture_ok;
  * 0x08 = exposure boost, 0x40 = optical profile 0, 0x30 = wait strategy
  * (0 fixed, 1 poll read-count, 2 poll IRQ19). NEVER writes the motor
  * (0xc0c56000/57000). Bounded throughout. */
+#define CAPTURE_KEEP_POWER 0x100u  /* leave scanner power / lamp on afterwards */
+#define CAPTURE_AFE_RUN 0x200u     /* AFE already configured: operating step only */
+#define CAPTURE_QUIET 0x400u       /* page rows: log failures only */
+
 static void scanner_full_capture(unsigned v)
 {
     const uint32_t R = (uint32_t)(uintptr_t)cap_buf;
     bool optical = (v & 0x40u) != 0;
     uint32_t samples = optical ? 0xa20u : 0xc00u;
     uint32_t window = optical ? 0x2880u : 0x3000u;
+    bool quiet = (v & CAPTURE_QUIET) != 0;
     last_capture_ok = false;
-    dbg_puts("[scan] FULL capture v=0x"); dbg_u32(v); dbg_puts(" R=0x"); dbg_u32(R); dbg_putc('\n');
-    memset(cap_buf, 0xa5, sizeof(cap_buf));
+    if (!quiet) { dbg_puts("[scan] FULL capture v=0x"); dbg_u32(v); dbg_puts(" R=0x"); dbg_u32(R); dbg_putc('\n'); }
+    for (unsigned i = 0; i < sizeof(cap_buf) / 4u; ++i)       /* sentinel, word stores */
+        ((uint32_t *)(uintptr_t)cap_buf)[i] = 0xa5a5a5a5u;
 
     modify(0xc0133100u, 0u, 0x10u); wr(0xc0133100u, 8u);     /* A.1 IRQ18 src */
     modify(0xc0133104u, 0u, 0x10u); wr(0xc0133104u, 8u);     /* A.1 IRQ19 src */
 
     if (v & 0x02u) {
-        dbg_puts("  AFE serial config (type0)\n");
+        if (!quiet) dbg_puts("  AFE serial config (type0)\n");
         afe_setup(); afe_word(0x0004u); afe_word(0x2000u);
         delay_ticks(CLOCK_TICKS_PER_MS * 5u);
         modify(0xc0c8121cu, 0u, 0x300u);
     }
     if (v & 0x04u) {
-        dbg_puts("  lamp / scanner power ON\n");
+        if (!quiet) dbg_puts("  lamp / scanner power ON\n");
         wr(0xc0c85614u, 1u);
         delay_ticks(CLOCK_TICKS_PER_MS * 20u);               /* let the LED settle */
     }
@@ -429,7 +435,7 @@ static void scanner_full_capture(unsigned v)
         modify(0xc0d60274u, 0xfffffu, 0x1400u); modify(0xc0d60278u, 0xfffffu, 0x1800u);
     }
     delay_ticks(CLOCK_TICKS_PER_MS * 2u);                     /* ~IRQ18 settle */
-    if (v & 0x02u) afe_operating();                           /* A.4 operating AFE */
+    if (v & (0x02u | CAPTURE_AFE_RUN)) afe_operating();       /* A.4 operating AFE */
     /* Actual DMA registers, not the legacy scalar at SCNIO+0x1dc. */
     if (rd(0xc0d50014u) != R || rd(0xc0d50114u) != R + samples ||
         rd(0xc0d5001cu) != R + window || rd(0xc0d5011cu) != R + window) {
@@ -460,7 +466,7 @@ static void scanner_full_capture(unsigned v)
 
     uint32_t rc = rd(0xc0d60010u), ev0 = rd(0xc0d50010u), ev1 = rd(0xc0d50110u), st = rd(0xc0d60008u);
     apply_seq(scnio_stop, scnio_stop_N);                      /* A.7 stop */
-    if (v & 0x04u) wr(0xc0c85614u, 0u);                       /* lamp off */
+    if ((v & 0x04u) && !(v & CAPTURE_KEEP_POWER)) wr(0xc0c85614u, 0u);   /* lamp off */
 
     const uint16_t *s = (const uint16_t *)(uintptr_t)cap_buf;
     unsigned nz = 0, bad = 0, changed[2] = {0, 0};
@@ -469,12 +475,13 @@ static void scanner_full_capture(unsigned v)
         if ((i & 0x100u) ? (s[i] < 0xb000u) : (s[i] > 0x4000u)) ++bad;
     }
     bool guard = true;
-    for (unsigned i = 0x3000u; i < sizeof(cap_buf); ++i)
-        if (cap_buf[i] != 0xa5u) guard = false;
+    for (unsigned i = 0x3000u / 4u; i < sizeof(cap_buf) / 4u; ++i)   /* word compare */
+        if (((const uint32_t *)(uintptr_t)cap_buf)[i] != 0xa5a5a5a5u) guard = false;
     /* Fixed 80ms drain is the physically tested contract; progress alone is
      * not a DMA fence. Require new data in BOTH segments and intact guard. */
     last_capture_ok = rc != rc0 && (ev0 & 4u) && (ev1 & 4u) &&
                       changed[0] >= samples / 2u - 6u && changed[1] >= samples / 2u - 6u && guard;
+    if (quiet && last_capture_ok) return;
     dbg_puts("  readcnt 0x"); dbg_u32(rc0); dbg_puts("->0x"); dbg_u32(rc);
     dbg_puts(" ldmac ev0=0x"); dbg_u32(ev0); dbg_puts(" ev1=0x"); dbg_u32(ev1);
     dbg_puts(" scnio08=0x"); dbg_u32(st); dbg_putc('\n');
@@ -535,11 +542,16 @@ void scanner_lamp_off(void)
     else { apply_seq(scnio_stop, scnio_stop_N); wr(0xc0c85614u, 0u); }
 }
 
-bool scanner_capture_row(void)
+/* Page row: optical P0 with stock exposure. Scanner power, AFE set-up and the
+ * 20 ms lamp settle happen on a page's first row only; power stays on until
+ * the page ends (scanner_lamp_off). Every row re-arms SCNIO/DMA, runs the AFE
+ * operating step and keeps the physically tested 80 ms drain and checks. */
+bool scanner_capture_row(bool first)
 {
     if (scanner_motor_busy()) return false;
-    scanner_lamp_off();
-    scanner_full_capture(0x46u); /* optical P0 + AFE + power; stock exposure */
+    if (first) scanner_lamp_off();
+    scanner_full_capture(first ? 0x46u | CAPTURE_KEEP_POWER | CAPTURE_QUIET
+                               : 0x40u | CAPTURE_AFE_RUN | CAPTURE_QUIET);
     return last_capture_ok;
 }
 
@@ -552,6 +564,8 @@ void scanner_lamp_poll(void)
         illum_next = time_ms() + 30u;
     }
 }
+
+const uint16_t *scanner_row(void) { return (const uint16_t *)(uintptr_t)cap_buf; }
 
 unsigned scanner_dump(uint8_t *out, unsigned chunk, unsigned max)
 {
