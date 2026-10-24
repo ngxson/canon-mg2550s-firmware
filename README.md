@@ -11,6 +11,7 @@ build and emulator instructions, USB installation, scan commands and limitations
 
 - [Bootloader](bootloader/README.md): flash layout, USB/I²C recovery and installation.
 - [Host tools](tools/README.md): firmware management and ESP32 recovery bridge.
+- [Emulator](emu/README.md): stock-firmware experiments and replacement-firmware tests.
 
 Normal application updates preserve the first 64 KiB containing both recovery
 stages. Validate firmware changes in emulation before flashing.

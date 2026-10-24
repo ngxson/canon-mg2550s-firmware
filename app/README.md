@@ -27,6 +27,8 @@ Physical measurements and emulator coverage are recorded in
 [page-scan evidence](evidence/PAGE_SCAN.md) and [homing evidence](evidence/HOMING.md).
 Emulation uses scripted feedback and synthetic sensor data; physical tests
 establish actual motion and image capture.
+The [emulator guide](../emu/README.md) also covers stock startup, scheduler and
+homing experiments, alongside a single command for the application test suites.
 
 ## Build and validate
 

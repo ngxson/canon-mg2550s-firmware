@@ -9,6 +9,10 @@
 !/tools/esp32/sdkconfig.defaults
 !/tools/esp32/sdkconfig.defaults.*
 
+# Emulator traces and local firmware/EEPROM inputs
+/emu/output/
+/emu/inputs/
+
 # Local scans (raw document data, previews and per-scan logs)
 /scans/
 /app/scans/

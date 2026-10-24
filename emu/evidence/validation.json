@@ -1,0 +1,159 @@
+{
+  "date": "2026-10-24",
+  "environment": {
+    "python": "3.12",
+    "unicorn": "2.1.4",
+    "platform": "Linux arm64 (Docker)"
+  },
+  "hardware_accessed": false,
+  "internal_source_modules_unchanged": 6,
+  "cli_and_state_tests_passed": 8,
+  "startup_matrix_cases_passed": 10,
+  "stock_scenarios_passed": [
+    "startup",
+    "scheduler",
+    "scheduler-no-irq",
+    "scheduler-spurious",
+    "boot",
+    "home",
+    "backoff",
+    "no-completion"
+  ],
+  "stock_firmware_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "home_reference_comparison": {
+    "home": {
+      "ticks": 3500,
+      "instructions": 26049293,
+      "stop_reason": "tick limit at idle",
+      "capture_writes": 3165,
+      "move_selections": [
+        1,
+        25,
+        24,
+        1,
+        25
+      ],
+      "matched_reference_fields": {
+        "result": true,
+        "ticks": true,
+        "completions": true,
+        "extra_timer_irqs": true,
+        "capture_writes": true,
+        "feedback_reads": true,
+        "home_points": true,
+        "mailbox_events": true,
+        "mmio_writes": true,
+        "registers_final": true,
+        "motor_final": true,
+        "dispatches": true
+      },
+      "input_files_unchanged": {
+        "flash": true,
+        "eeprom": true
+      }
+    },
+    "backoff": {
+      "ticks": 888,
+      "instructions": 15237631,
+      "stop_reason": "optical reference stage reached; pixels not modeled",
+      "capture_writes": 1179,
+      "move_selections": [
+        1,
+        25
+      ],
+      "matched_reference_fields": {
+        "result": true,
+        "ticks": true,
+        "completions": true,
+        "extra_timer_irqs": true,
+        "capture_writes": true,
+        "feedback_reads": true,
+        "home_points": true,
+        "mailbox_events": true,
+        "mmio_writes": true,
+        "registers_final": true,
+        "motor_final": true,
+        "dispatches": true,
+        "moves": true,
+        "modeled_inputs": true,
+        "checkpoints": true,
+        "completion_irqs": true
+      },
+      "input_files_unchanged": {
+        "flash": true,
+        "eeprom": true
+      }
+    },
+    "no-completion": {
+      "ticks": 1600,
+      "instructions": 18236297,
+      "stop_reason": "tick limit at idle",
+      "capture_writes": 1892,
+      "move_selections": [
+        1,
+        25
+      ],
+      "matched_reference_fields": {
+        "result": true,
+        "ticks": true,
+        "completions": true,
+        "extra_timer_irqs": true,
+        "capture_writes": true,
+        "feedback_reads": true,
+        "home_points": true,
+        "mailbox_events": true,
+        "mmio_writes": true,
+        "registers_final": true,
+        "motor_final": true,
+        "dispatches": true,
+        "moves": true,
+        "modeled_inputs": true,
+        "checkpoints": true,
+        "completion_irqs": true
+      },
+      "input_files_unchanged": {
+        "flash": true,
+        "eeprom": true
+      }
+    }
+  },
+  "replacement_suites_passed": 8,
+  "replacement_bootloader_cases": 31,
+  "replacement_whole_flash_cases": 21,
+  "replacement_app_suites": [
+    "app",
+    "home",
+    "motor",
+    "buttons",
+    "scanner",
+    "page"
+  ],
+  "firmware_artifacts": {
+    "app/build/application.bin": {
+      "bytes": 31008,
+      "sha256": "28c045e55c74fec907f824c8f5b12d7fb3f3a77993c97cf5ecba11157c97605f"
+    },
+    "bootloader/build/boot_region.bin": {
+      "bytes": 65536,
+      "sha256": "fb5b09443f5717aa81c8675db491a6b86db9f471130506768979a4b9726d9d8e"
+    }
+  },
+  "source_sha256": {
+    "run.py": "005e374e785314a7293de66f30fafd9864074532f6d9430ba2d203021960dfd2",
+    "stock/__init__.py": "a242445c9cd9d3c13cd17482bbe5eb763f6ac090c7e856805d8eb06b04eb5345",
+    "stock/boot.py": "0060bad78925b922cf9ef17b70e6c1bff3a4be7c503cf98c92de411b76915d2c",
+    "stock/feedback.py": "06cc28f81227c1307d4aaff8bf00737909f2ddd8b41bf973425939f9323e9027",
+    "stock/home.py": "e55da813b5cfced5b2568310b090b346660c8adaf3b4484aeaf6a230ca66f667",
+    "stock/inputs.py": "67fc370f4a0f36a5c15c2ac321c29f4c8de4f8e385a0ea79376d848790914d50",
+    "stock/scheduler.py": "408082d04e66d5cde587e6ecc7d6e5e42a429f55d3202c1548b4a50f526fd32e",
+    "stock/startup.py": "50e2b5349b7041d044def058218b7801638c3efcdaa21bafd3e0d0eb124bbb46",
+    "stock/tasks.py": "d6dc25dbf456f9efc7f012f0cea0277da10f05dcaec62c9877c133f406645b25",
+    "tests/test_cli.py": "762fb1918226028ea2f6027b8fd157bd1c5af29208db8117acc24dcf1086e8a8",
+    "tests/test_state.py": "0ba2d4bcc3ddde7edd6517ad5833d574ab7ac6303443a6ce8c9cf5473622dfe8"
+  },
+  "limits": [
+    "Synthetic peripheral inputs; no motor or optical physics.",
+    "Stock backoff stops at optical-reference entry; full optical homing not modeled.",
+    "Device-specific EEPROM was supplied read-only, not distributed."
+  ]
+}
