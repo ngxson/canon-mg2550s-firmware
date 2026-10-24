@@ -46,6 +46,13 @@
 #define APP_REQUEST_PAPER_FEED 0x69u     /* OUT: wValue = mode (0 feed+eject, 1 feed+hold, 2 eject), wIndex = advance counts/64 (0 default) */
 #define APP_REQUEST_PAPER_STATUS 0x6au   /* IN: 12 words, see src/paper_feed.c */
 #define APP_REQUEST_PAPER_MANUAL 0x6bu   /* OUT: wValue 0 stop, 1 reverse (feeder), 2 forward; 10 s auto-stop */
+#define APP_REQUEST_CR_HOME 0x6cu        /* OUT: home the print carriage against the park wall */
+#define APP_REQUEST_CR_MOVE 0x6du        /* OUT: wValue = target counts / 64 from the park wall (left positive), wIndex = cruise counts/s / 100 (0 default) */
+#define APP_REQUEST_CR_STATUS 0x6eu      /* IN: 12 words, see src/carriage.c */
+#define APP_REQUEST_CR_TUNE 0x6fu        /* OUT: wValue = parameter id, wIndex = value (bench tuning) */
+#define APP_REQUEST_PAGE_DRY 0x71u       /* OUT: wValue = bands | cruise/1000 << 8, wIndex = band advance counts/64 (0 default); dry-run page loop */
+#define APP_REQUEST_PAGE_DRY_STATUS 0x72u /* IN: 10 words, see src/page_job.c */
+#define APP_REQUEST_HEAD_ADC 0x80u       /* IN: head thermistor ADC means and samples (read-only) */
 #define APP_REQUEST_BTN 0x70u            /* control-OUT, no data: enable front-panel key probe (logs PANEL+0x28 on change) */
 #define APP_REQUEST_MOTOR_JOG 0x73u     /* control-OUT, wValue=dir(0/1); fixed tiny pulse */
 #define APP_REQUEST_HOME 0x74u          /* control-OUT, no data: bounded mechanical home */
@@ -55,7 +62,6 @@
 #define APP_REQUEST_PAGE_STATUS 0x78u   /* IN: 16 little-endian words */
 #define APP_REQUEST_PAGE_DATA 0x79u     /* IN: wValue chunk, wIndex row */
 #define APP_REQUEST_PAGE_ACK 0x7au      /* OUT: wValue row; advance after full read */
-/* Legacy tuning requests 0x71/0x72 are not supported in this fixed-pulse test. */
 
 /* Scanner (CIS) reverse-engineering support, see src/scanner.c. All bounded;
  * nothing blocks the management loop for long and no flash is written. */
@@ -98,6 +104,7 @@ bool cartridge_request(unsigned heads, unsigned wait_units);
 bool cartridge_busy(void);
 void cartridge_poll(void);
 unsigned cartridge_status(uint8_t *out);
+unsigned head_adc_status(uint8_t *out);   /* 16-sample head thermistor read per head (USB 0x80) */
 unsigned print_mech_dump(uint8_t *out);  /* read-only CR/LF register dump (USB 0x64) */
 bool print_mech_prepare(unsigned variant); /* motor-off counter preparation (USB 0x65) */
 unsigned print_mech_snapshot(uint8_t *out, unsigned chunk); /* read-only GPIO snapshot (USB 0x66) */
@@ -113,6 +120,23 @@ void paper_feed_cancel(void);
 bool paper_feed_busy(void);
 bool paper_feed_holding(void);
 unsigned paper_feed_status(uint8_t *out);
+/* Print carriage position control (src/carriage.c). */
+bool carriage_home_request(void);
+bool carriage_move_request(int32_t x_target, uint32_t cruise_speed);
+void carriage_poll(void);
+void carriage_cancel(void);
+bool carriage_busy(void);
+bool carriage_referenced(void);
+int32_t carriage_position(void);
+unsigned carriage_status(uint8_t *out);
+bool carriage_tune(unsigned id, unsigned value);
+unsigned paper_feed_result(void);
+/* Dry-run page job (src/page_job.c). */
+bool page_job_request(unsigned bands, uint32_t advance, uint32_t left, uint32_t right, uint32_t speed);
+void page_job_poll(void);
+void page_job_cancel(void);
+bool page_job_busy(void);
+unsigned page_job_status(uint8_t *out);
 bool paper_manual_request(unsigned dir);   /* bench: continuous LF run (USB 0x6b) */
 bool paper_manual_toggle(unsigned dir);
 bool paper_manual_running(void);

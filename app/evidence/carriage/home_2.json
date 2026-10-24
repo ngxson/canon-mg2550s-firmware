@@ -1,0 +1,123 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "action": "home",
+  "target": 0,
+  "before": {
+    "state": "idle",
+    "result": "ok",
+    "x": 1152,
+    "reference": 458688,
+    "target": 1024,
+    "speed": 15872,
+    "command": 2000,
+    "ms": 0,
+    "referenced": true,
+    "raw": 459840
+  },
+  "samples": [
+    {
+      "state": "homing",
+      "result": "running",
+      "x": 1152,
+      "reference": 458688,
+      "target": 1024,
+      "speed": 15872,
+      "command": 2000,
+      "ms": 1,
+      "referenced": true,
+      "raw": 459840,
+      "t": 0.0
+    },
+    {
+      "state": "homing",
+      "result": "running",
+      "x": 0,
+      "reference": 458688,
+      "target": 1024,
+      "speed": 15872,
+      "command": 2000,
+      "ms": 58,
+      "referenced": true,
+      "raw": 458688,
+      "t": 0.06
+    },
+    {
+      "state": "homing",
+      "result": "running",
+      "x": 0,
+      "reference": 458688,
+      "target": 1024,
+      "speed": 15872,
+      "command": 2000,
+      "ms": 111,
+      "referenced": true,
+      "raw": 458688,
+      "t": 0.11
+    },
+    {
+      "state": "homing",
+      "result": "running",
+      "x": 0,
+      "reference": 458688,
+      "target": 1024,
+      "speed": 15872,
+      "command": 2000,
+      "ms": 167,
+      "referenced": true,
+      "raw": 458688,
+      "t": 0.17
+    },
+    {
+      "state": "homing",
+      "result": "running",
+      "x": 0,
+      "reference": 458688,
+      "target": 1024,
+      "speed": 15872,
+      "command": 2000,
+      "ms": 221,
+      "referenced": true,
+      "raw": 458688,
+      "t": 0.22
+    },
+    {
+      "state": "homing",
+      "result": "running",
+      "x": 0,
+      "reference": 458688,
+      "target": 1024,
+      "speed": 15872,
+      "command": 2000,
+      "ms": 277,
+      "referenced": true,
+      "raw": 458688,
+      "t": 0.28
+    },
+    {
+      "state": "idle",
+      "result": "ok",
+      "x": 64,
+      "reference": 458688,
+      "target": 1024,
+      "speed": 15872,
+      "command": 2000,
+      "ms": 0,
+      "referenced": true,
+      "raw": 458752,
+      "t": 0.33
+    }
+  ],
+  "firmware_log": "[cr] homing toward the park wall\n[cr] park reference=0x0006ffc0\n[cr] done result=2 x=64 ms=320 stalls=0\n"
+}

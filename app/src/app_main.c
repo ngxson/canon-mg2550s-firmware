@@ -145,7 +145,7 @@ void firmware_main(void)
         /* Long scanner captures and I2C retry loops cannot extend a jog. */
         if (!scanner_motor_busy()) {
             mailbox_poll();
-            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); }
+            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); carriage_poll(); page_job_poll(); }
         }
     }
 }

@@ -21,10 +21,12 @@ No stock executable code is linked into the application.
 - **Cartridge identification:** reads both cartridges' fuse ROM (ID,
   destination code, rank values, level field) through the stock head-interface
   sequence; USB requests 0x62/0x63 and `app/tools/cartridge.py`.
-- **Paper path:** closed-loop feed routine (pickup with bounded retries using
-  the paper-end sensor, measured advance, eject), bounded open-loop pulses for
-  the paper-feed and carriage motors, and a read-only GPIO snapshot/diff tool
-  that located the sensor. Printing itself (head drive) is not implemented.
+- **Paper path and carriage:** closed-loop feed routine (pickup with bounded
+  retries using the paper-end sensor, measured advance, eject), carriage
+  homing and closed-loop moves, and a dry-run page loop that sweeps the
+  carriage band by band over a fed sheet. Printing itself (head drive) is not
+  implemented; see [CARRIAGE.md](evidence/CARRIAGE.md) and
+  [PRINT_MECH.md](evidence/PRINT_MECH.md).
 - **Recovery management and diagnostics:** application USB identity `04a9:12fe`,
   `fwctl` status/reboot support and a USB debug log. USB is serviced during
   motion; I²C management is polled when the motor is idle. Stationary captures
@@ -60,16 +62,16 @@ work, keep the bootloader artifacts matching the installed recovery stages.
 Tests combine `bootloader/build/boot_region.bin` and its symbol manifest with
 the new app package and manifest.
 
-Run all nine scanner, cartridge, mechanism and management checks before flashing:
+Run all eleven scanner, cartridge, mechanism and management checks before flashing:
 
 ```sh
-for check in app home motor buttons scanner page cartridge printregs feed; do
+for check in app home motor buttons scanner page cartridge printregs feed carriage page_job; do
   docker run --rm --network none -v "$PWD:/project:rw" \
     mg2550s-emu "app/tests/validate_${check}.py" || break
 done
 ```
 
-Proceed only after all nine pass. Reports are written under `app/build/`.
+Proceed only after all eleven pass. Reports are written under `app/build/`.
 Tests execute the linked ARM instructions, including boot and recovery, and
 check motion sequencing, capture/transfer failures, Cancel and management
 liveness. No stock dump is needed for these tests. Native execution is also
@@ -158,6 +160,16 @@ Physically drives the paper-feed motor. Pickup retries three times and reports
 Register contract and measurements are in [PRINT_MECH.md](evidence/PRINT_MECH.md).
 The Copy keys are currently bound to bench pulses of the print carriage.
 
+## Move the carriage and run a dry page
+
+```sh
+python3 app/tools/carriage.py home
+python3 app/tools/carriage.py move 50000        # counts from the park wall, left positive
+python3 app/tools/dry_page.py --bands 4         # feed, four sweeps with paper advances, eject
+```
+
+Both physically move the mechanism; the head stays idle.
+
 ## Home and inspect logs
 
 ```sh
@@ -185,6 +197,7 @@ Protocol and controller details are in [HOMING.md](evidence/HOMING.md) and
 | `src/print.c` | Experimental print-data decoder; physical printing is unfinished |
 | `src/cartridge.c` | Cartridge fuse-ROM reader with the stock head-interface sequence (USB 0x62/0x63); see [evidence](evidence/CARTRIDGE.md) |
 | `src/print_mech.c`, `src/paper_feed.c` | CR/LF register dump, bounded motor pulses, GPIO snapshot, closed-loop paper feed; see [evidence](evidence/PRINT_MECH.md) |
+| `src/carriage.c`, `src/page_job.c` | Carriage homing and closed-loop moves; dry-run page loop (feed, sweeps, advances, eject) |
 | `PRINT_TEST_PLAN.md` | Staged physical test plan for the CR/LF print motors and head controller |
 | `tests/`, `tools/`, `evidence/` | Emulator checks, host commands and reviewed results |
 

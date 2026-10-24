@@ -273,6 +273,16 @@ def main():
     report['cases']['management_during_and_after'] = e5.summary()
     print('PASS management_during_and_after', flush=True)
 
+    # 7) head thermistor ADC: byte control writes, 16 halfword samples per head, means.
+    e6 = booted()
+    e6.regs[0xc0c90030] = 1007; e6.regs[0xc0c90028] = 2007; e6.regs[0xc0c90010] = 0x40
+    e6.requests.appendleft(('adc', setup(0xc0, 0x80, 0, 0, 144)))
+    e6.run(lambda x: any(n == 'adc' for _, n, _ in x.responses), resume=True, budget=50000000)
+    w = struct.unpack('<36I', [d for _, n, d in e6.responses if n == 'adc'][-1])
+    assert w[0] == 0x4441484d and w[1] == 1 and w[2] == 1007 and w[3] == 2007 and all(s == 1007 for s in w[4:20]) and all(s == 2007 for s in w[20:36]), w[:4]
+    assert e6.regs.get(0xc0c90000) == 0x91 and e6.regs.get(0xc0c90004) == 2, (e6.regs.get(0xc0c90000), e6.regs.get(0xc0c90004))
+    print('PASS head_adc_read', w[2], w[3])
+
     report['all_assertions_passed'] = True
     (APP / 'build/validation_cartridge.json').write_text(json.dumps(report, indent=2) + '\n')
     print('ALL CARTRIDGE ASSERTIONS PASSED', flush=True)

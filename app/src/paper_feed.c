@@ -48,7 +48,7 @@
 #define EJECT_TIMEOUT_MS 20000u
 #define MARGIN_TIMEOUT_MS 8000u
 
-enum feed_mode { FEED_AND_EJECT = 0, FEED_AND_HOLD = 1, EJECT_ONLY = 2 };
+enum feed_mode { FEED_AND_EJECT = 0, FEED_AND_HOLD = 1, EJECT_ONLY = 2, ADVANCE_ONLY = 3 };
 enum feed_state { FS_IDLE = 0, FS_PICKUP, FS_PAUSE, FS_ADVANCE, FS_EJECT, FS_MARGIN, FS_STOP, FS_HANDOFF, FS_SETTLE, FS_RESET, FS_HOME };
 enum feed_result { FR_NONE = 0, FR_RUNNING, FR_OK, FR_NO_PAPER, FR_TIMEOUT, FR_CANCELLED, FR_REFUSED, FR_JAM };
 
@@ -106,6 +106,7 @@ static void finish(enum feed_result r)
 }
 
 bool paper_feed_busy(void) { return state != FS_IDLE || manual_dir != 0; }
+unsigned paper_feed_result(void) { return result; }   /* 2 = ok, see enum feed_result */
 bool paper_feed_holding(void) { return held; }
 
 /* wValue: bits 0..1 mode, bits 8..15 = first-phase counts / 256 (0 = default).
@@ -113,8 +114,8 @@ bool paper_feed_holding(void) { return held; }
 bool paper_feed_request(unsigned value, unsigned advance_units)
 {
     unsigned m = value & 0xffu;
-    if (m > EJECT_ONLY || state != FS_IDLE || manual_dir) return false;
-    if (scanner_motor_busy() || scan_page_busy() || print_mech_lf_busy()) return false;
+    if (m > ADVANCE_ONLY || state != FS_IDLE || manual_dir) return false;
+    if (scanner_motor_busy() || scan_page_busy() || print_mech_lf_busy() || carriage_busy()) return false;
     if (rd(0xc0c50000u) || rd(LF_C) || rd(0xc0c56000u)) return false;
     if (!ready) {
         if (!scanner_motor_shared_init()) { dbg_puts("[feed] shared setup failed\n"); result = FR_REFUSED; return false; }
@@ -132,18 +133,20 @@ bool paper_feed_request(unsigned value, unsigned advance_units)
     result = FR_RUNNING; t_start = app_clock_ticks(); held = false;
     dbg_puts("[feed] start mode="); dbg_dec(m); dbg_puts(" advance="); dbg_dec(advance_target);
     dbg_puts(" handoff="); dbg_dec(handoff_target); dbg_puts(" phase1="); dbg_dec(phase1_target); dbg_putc('\n');
-    if (mode == EJECT_ONLY) {
+    if (mode == ADVANCE_ONLY) {                        /* forward by advance_target counts, sensor ignored */
+        enter(FS_ADVANCE); drive(LF_FORWARD);
+    } else if (mode == EJECT_ONLY) {
         if (!paper_present()) { result = FR_OK; dbg_puts("[feed] eject: no paper at sensor, margin only\n"); }
         enter(FS_EJECT); drive(LF_FORWARD);
     } else if (paper_present()) {
         dbg_puts("[feed] paper already at sensor, skipping pickup\n");
         enter(FS_ADVANCE); drive(LF_FORWARD);
-    } else if (arm_dirty) {
+    } else if (arm_dirty && mode != ADVANCE_ONLY) {
         attempts = 1; enter(FS_HOME); drive(LF_FORWARD);   /* bring the swing arm to its rest position first */
     } else {
         attempts = 1; enter(FS_PICKUP); drive(LF_PICKUP);
     }
-    arm_dirty = true;                                      /* cleared only by a completed eject */
+    if (mode != ADVANCE_ONLY) arm_dirty = true;             /* cleared only by a completed eject */
     return true;
 }
 
@@ -204,7 +207,7 @@ void paper_feed_poll(void)
         int32_t d = delta(pos_mark, p);
         advance_counts = d > 0 ? (uint32_t)d : 0u;
         if (advance_counts >= advance_target) {
-            if (mode == FEED_AND_HOLD) { held = true; finish(FR_OK); }
+            if (mode == FEED_AND_HOLD || mode == ADVANCE_ONLY) { held = true; finish(FR_OK); }
             else { enter(FS_EJECT); drive(LF_FORWARD); }
         } else if (ms_since(t_state) >= ADVANCE_TIMEOUT_MS) finish(FR_TIMEOUT);
         break;

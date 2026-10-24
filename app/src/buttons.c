@@ -26,11 +26,13 @@ void buttons_poll(void)
     next_sample = now + 1u;
     uint32_t v = rd(KEY_REG);
     /* Stop on the first sample; starting motion requires debounce. */
-    if ((scanner_motor_busy() || scan_page_busy() || paper_feed_busy()) &&
+    if ((scanner_motor_busy() || scan_page_busy() || paper_feed_busy() || carriage_busy() || page_job_busy()) &&
         ((v & KEY_CANCEL) || (v & COPY_KEYS) == COPY_KEYS)) {
+        page_job_cancel();
         scan_page_cancel();
         scanner_motor_cancel();
         paper_feed_cancel();
+        carriage_cancel();
         if (v & KEY_CANCEL) cancel_consumed = true;
     }
     if (!(v & KEY_CANCEL)) cancel_consumed = false;
@@ -50,7 +52,7 @@ void buttons_poll(void)
         if (!cancel_consumed) scanner_lamp_toggle();
         return;
     }
-    if (scan_page_busy() || (paper_feed_busy() && !paper_manual_running())) return;
+    if (scan_page_busy() || carriage_busy() || page_job_busy() || (paper_feed_busy() && !paper_manual_running())) return;
     if ((btn_cand & KEY_CANCEL) || (btn_cand & COPY_KEYS) == COPY_KEYS) return;
     /* Bench only: Copy B/W toggles the paper motor in reverse (pickup/feeder), Copy
      * Colour toggles it forward (transport); 10 s auto-stop. Emulator uses USB 0x6b. */

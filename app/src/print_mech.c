@@ -130,7 +130,7 @@ bool print_mech_lf_request(unsigned value, unsigned ms)
     if (channel > 2u || !ms || ms > (channel == 2u ? 1000u : 2000u) || lf_pending) return false;
     jog_c = bases[channel][0]; jog_p = bases[channel][1];
     if (command > 2600u || command < 1400u) return false;      /* at most +-30 % of neutral */
-    if (scanner_motor_busy() || scan_page_busy() || paper_feed_busy()) return false;
+    if (scanner_motor_busy() || scan_page_busy() || paper_feed_busy() || carriage_busy()) return false;
     if (rd(0xc0c50000u) || rd(LF_C) || rd(0xc0c54000u) || rd(0xc0c56000u)) return false;
     lf_pending_command = command; lf_pending_ms = ms; lf_pending = true;
     lf_result[0] = 0x4a464c4du; lf_result[1] = 1; lf_result[2] = 0;   /* result pending until the pulse ends */

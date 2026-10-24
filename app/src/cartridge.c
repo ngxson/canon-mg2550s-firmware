@@ -355,3 +355,53 @@ unsigned cartridge_status(uint8_t *out)
     }
     return 64;
 }
+
+/* Head thermistor ADC (stock 0xe8ce6, memo section 1i; brief 4 Q3): byte
+ * writes 0xc0c90000 = channel, 0xc0c90004 = 2, 0xc0c90000 = channel | 0x80;
+ * 16 halfword samples per head with the stock delay argument 2 between them;
+ * mean = sum >> 4. Black is channel 0x12 at 0xc0c90030, colour 0x11 at
+ * 0xc0c90028. Raw ADC counts: stock converts them to half-degrees through
+ * fuse-derived calibration not reproduced here. Read-only. */
+#define ADC_CTL 0xc0c90000u
+#define ADC_MODE 0xc0c90004u
+static inline void wr8(uint32_t a, uint8_t v) { *(volatile uint8_t *)(uintptr_t)a = v; }
+static inline uint16_t rd16(uint32_t a) { return *(volatile uint16_t *)(uintptr_t)a; }
+
+static uint32_t adc_mean(uint8_t channel, uint32_t data, uint16_t *samples)
+{
+    uint32_t sum = 0;
+    for (unsigned i = 0; i < 16; ++i) {
+        wr8(ADC_CTL, channel); wr8(ADC_MODE, 2); wr8(ADC_CTL, (uint8_t)(channel | 0x80u));
+        delay_ticks(CLOCK_TICKS_PER_MS * 2u);
+        samples[i] = rd16(data);
+        sum = (sum + samples[i]) & 0xffffu;        /* stock truncates the running sum to 16 bits */
+    }
+    return sum >> 4;
+}
+
+/* USB 0x80 IN: magic, version, black mean, colour mean, 16 black samples, 16 colour samples. */
+/* Stock platform init (0x116c5c, BRIEF_head_supply.md Q2): byte 0x80 to the
+ * ADC block control at 0xc0c90010, then poll until bit 6 is set. Bounded here. */
+static bool adc_block_init(void)
+{
+    static bool done;
+    if (done) return true;
+    wr8(0xc0c90010u, 0x80u);
+    uint32_t t0 = app_clock_ticks();
+    while (!((*(volatile uint8_t *)(uintptr_t)0xc0c90010u) & 0x40u)) {
+        if ((app_clock_ticks() - t0) > CLOCK_TICKS_PER_MS * 50u) { dbg_puts("[head] adc init: bit 6 not set within 50 ms\n"); return false; }
+    }
+    done = true;
+    return true;
+}
+
+unsigned head_adc_status(uint8_t *out)
+{
+    uint16_t bk[16], cl[16];
+    bool init_ok = adc_block_init();
+    uint32_t mbk = adc_mean(0x12u, 0xc0c90030u, bk), mcl = adc_mean(0x11u, 0xc0c90028u, cl);
+    dbg_puts("[head] adc black="); dbg_dec(mbk); dbg_puts(" colour="); dbg_dec(mcl); dbg_putc('\n');
+    put32(out, 0x4441484du); put32(out + 4, init_ok ? 1u : 0x101u); put32(out + 8, mbk); put32(out + 12, mcl);
+    for (unsigned i = 0; i < 16; ++i) { put32(out + 16 + 4 * i, bk[i]); put32(out + 80 + 4 * i, cl[i]); }
+    return 144;
+}

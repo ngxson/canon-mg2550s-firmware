@@ -83,4 +83,7 @@ class CartridgeModel(PrinterModel):
         addr = 0xc0000000 + offset
         if addr in CONN_IN or addr in (SENSE, TRIGGER, 0xc0c291d0):
             return self.head.read(addr)
+        if addr == 0xc0c90010:                       # ADC block control: ready bit 6 once initialised with 0x80
+            v = self.regs.get(addr, 0)
+            return v | 0x40 if v & 0x80 else v
         return super().read(cpu, offset, size, user)

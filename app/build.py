@@ -24,7 +24,7 @@ FLAGS = ['-mcpu=arm946e-s', '-marm', '-Os', '-std=c11', '-ffreestanding',
 
 # Reused unchanged from the bootloader (leaf drivers / entry), plus app sources.
 REUSED = ['src/entry.c', 'src/runtime.c', 'src/panel.c', 'src/integrity.c', 'src/i2c.c', 'src/mailbox.c']
-APP = ['src/usb.c', 'src/service.c', 'src/debug_log.c', 'src/scanner.c', 'src/scanner_motor.c', 'src/motor_control.c', 'src/scan_page.c', 'src/print.c', 'src/cartridge.c', 'src/print_mech.c', 'src/paper_feed.c', 'src/buttons.c', 'src/app_main.c',
+APP = ['src/usb.c', 'src/service.c', 'src/debug_log.c', 'src/scanner.c', 'src/scanner_motor.c', 'src/motor_control.c', 'src/scan_page.c', 'src/print.c', 'src/cartridge.c', 'src/print_mech.c', 'src/paper_feed.c', 'src/carriage.c', 'src/page_job.c', 'src/buttons.c', 'src/app_main.c',
        'src/ippusb.c', 'src/escl.c', 'src/ipp.c', 'src/png.c', 'src/jpeg.c', 'src/divide.c']
 # The eSCL image provider: the scanner for the flashed app; a synthetic chart
 # for the protocol tests (app/tests/validate_escl.py), built into build/dummy.

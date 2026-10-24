@@ -239,7 +239,7 @@ static void setup_request(void)
     } else if(type==0x40 && request==APP_REQUEST_HOME && !value && !index && !length) {
         if(scanner_home_request()) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_MOTOR_STOP && !value && !index && !length) {
-        scan_page_cancel(); scanner_motor_cancel(); paper_feed_cancel(); scanner_lamp_off(); ack();
+        page_job_cancel(); scan_page_cancel(); scanner_motor_cancel(); paper_feed_cancel(); carriage_cancel(); scanner_lamp_off(); ack();
     } else if(type==0xc0 && request==REQUEST_INFO && !value && !index) {
         reply(service_info(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_LOG && !value && !index) {
@@ -290,6 +290,8 @@ static void setup_request(void)
         print_bulk_begin((unsigned)value | ((unsigned)index<<16)); arm_bulk(); ack();
     } else if(type==0x40 && request==APP_REQUEST_CART_READ && !length) {
         if(!scanner_motor_busy() && !scan_page_busy() && cartridge_request(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_HEAD_ADC && !value && !index) {
+        reply(head_adc_status(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_CART_STATUS && !value && !index) {
         reply(cartridge_status(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_PRINT_REGS && !value && !index) {
@@ -305,6 +307,18 @@ static void setup_request(void)
         reply(print_mech_lf_status(control_buffer),length);
     } else if(type==0x40 && request==APP_REQUEST_PAPER_FEED && !length) {
         if(paper_feed_request(value,index)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_PAGE_DRY && !length) {
+        if(page_job_request(value&255u,(uint32_t)index*64u,0,0,(uint32_t)(value>>8)*1000u)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_PAGE_DRY_STATUS && !value && !index) {
+        reply(page_job_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_CR_HOME && !value && !index && !length) {
+        if(carriage_home_request()) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_CR_MOVE && !length) {
+        if(carriage_move_request((int32_t)value*64,(uint32_t)index*100u)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_CR_TUNE && !length) {
+        if(carriage_tune(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_CR_STATUS && !value && !index) {
+        reply(carriage_status(control_buffer),length);
     } else if(type==0x40 && request==APP_REQUEST_PAPER_MANUAL && !index && !length) {
         if(paper_manual_request(value)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_PAPER_STATUS && !value && !index) {

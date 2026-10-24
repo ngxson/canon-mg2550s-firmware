@@ -167,3 +167,21 @@ Follow-up: `read_success_repeat.json` (same app) and `read_default_after_fix.jso
 (app `54e49a13…`, head-block init now default) returned identical words. The
 `--no-headinit` option keeps the no-response state reproducible on a cold
 board. Cold-start confirmation after a power cycle is still to be recorded.
+
+## Head thermistor ADC (2026-10-24, later)
+
+USB `0x80` (`tools/head_temp.py`), implemented from the stock sampler described
+in memo section 1i and brief 4 Q3: byte writes `0xc0c90000 = channel`,
+`0xc0c90004 = 2`, `0xc0c90000 = channel | 0x80`, 16 halfword samples with the
+stock delay argument 2, 16-bit truncated sum, mean = sum >> 4. Black = channel
+0x12 at `0xc0c90030`, colour = 0x11 at `0xc0c90028`.
+
+Without the stock platform step `0xc0c90010 = 0x80` (byte) followed by
+polling bit 6 of the same register (brief 3 answer, `0x116c5c`), every sample
+read 0, with the head interface off or prepared (`head_adc_idle.json`,
+`head_adc_prepared.json`). With that init the block answers
+(`head_adc_init.json`): black 732, colour 732, samples 731..734, at room
+temperature. Raw counts; stock's conversion to half-degrees uses fuse-derived
+calibration (`0x184130/0x184170` LUTs, keys `01010570..573`) not reproduced.
+Both channels reading the same value is consistent with equal temperature but
+not yet proven distinct; warm one cartridge to check.

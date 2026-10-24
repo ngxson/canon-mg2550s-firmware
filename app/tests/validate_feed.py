@@ -133,7 +133,7 @@ def main():
     clean(e5); print('PASS manual_run_switch_stop')
 
     # 5) invalid mode stalls; management reboot still works after feeding
-    e.requests.appendleft(('bad_mode', setup(0x40, 0x69, 3, 0)))
+    e.requests.appendleft(('bad_mode', setup(0x40, 0x69, 4, 0)))
     e.run(lambda x: 'bad_mode' in x.stalls, resume=True)
     before = e.resets
     e.requests.appendleft(('reboot_boot', setup(0x40, 0x41, 1)))

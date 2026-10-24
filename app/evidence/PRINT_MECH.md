@@ -250,3 +250,26 @@ runs and the 18,570-count reset was not enough. A 9.5 s forward run (about
 The routine now homes the arm forward (37,140 counts) whenever its position is
 unknown: at boot, after any aborted pickup or manual reverse; a completed eject
 clears the flag.
+
+### Dry-run page job (2026-10-24, later)
+
+`src/page_job.c` (USB `0x71`/`0x72`, `tools/dry_page.py`, emulated in
+`tests/validate_page_job.py`): home carriage, feed and hold a sheet, per band
+sweep the carriage between the margins (8,000..100,000 counts, alternating
+direction, cruise 40,000 counts/s), advance the paper by the band height
+(forward LF, sensor ignored), eject, re-park. No head activity.
+
+Physical run `page_job/dry_page_4_bands.json`, 4 bands, advance 2,000 counts:
+
+| Phase | Time |
+|---|---|
+| carriage homing | 0.3 s |
+| feed (with swing-arm homing, pickup, alignment) | 11.8 s |
+| each sweep (92,000 counts) | 3.0–3.3 s |
+| each paper advance (2,000 counts) | ~0.5 s |
+| eject (trailing edge + margin) | 7.6 s |
+| park | 0.3 s |
+| total | 34.0 s |
+
+The sheet stayed in the nip throughout; sweeps landed within 200 counts of the
+margins. Everything a page needs except firing is now exercised in one loop.
