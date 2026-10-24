@@ -108,6 +108,7 @@ const char *app_section = "main";
 void app_yield(void)
 {
     if (scanner_motor_busy()) scanner_motor_poll();
+    scanner_line_poll();                 /* one IRQ19 event at most; cheap when idle */
 }
 
 void firmware_main(void)
@@ -132,6 +133,7 @@ void firmware_main(void)
     for (;;) {
         scanner_motor_poll();
         leds_tick();
+        scanner_line_poll();
         usb_poll();
         ippusb_poll();
         app_section = "main";

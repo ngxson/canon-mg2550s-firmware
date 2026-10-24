@@ -494,6 +494,457 @@ static void scanner_full_capture(unsigned v)
 
 void scanner_fullcap_request(unsigned v) { capture2_variant = v; capture2_pending = true; }
 
+/* Diagnostic: N lines with ONE SCNIO/LDMAC setup, as the stock finite path does
+ * (stock finite acquisition path, analysed statically): two LDMAC channels advance
+ * by a 0x1440-byte row stride inside a window of (N+1) rows; one request per
+ * IRQ19 event after a first preamble event; return after N+4 events. Polled
+ * with the motor off and a 400 ms deadline. Exposure (eighths of the P0 window
+ * widths, starts fixed) and AFE gain (R2/R5) are optional knobs. Every event's
+ * time and the per-row statistics go to the debug log; rows via 0x5c. */
+#define BURST_MAX 8u
+#define BURST_ROW 0x1440u
+#define BURST_SEG 0x0a20u
+#define BURST_GUARD 256u
+static uint8_t burst_buf[(BURST_MAX + 1u) * BURST_ROW + BURST_GUARD] ALIGNED;
+static unsigned burst_n, burst_exposure, burst_gain, burst_skip, burst_offset;
+static bool burst_pending;
+
+static bool afe_operating_gain(unsigned gain, unsigned offset)
+{
+    static const uint8_t operating[8] = {0x43u, 0xffu, 0x0du, 0x0cu, 0xffu, 0x0du, 0xbbu, 0xb1u};
+    afe_setup();
+    if (!afe_word(0x0080u)) return false;
+    for (unsigned reg = 0; reg < 8u; ++reg) {
+        uint32_t byte = operating[reg];
+        if (reg == 2u || reg == 5u) byte = (byte & ~0x3fu) | gain;
+        if (reg == 1u || reg == 4u) byte = offset;    /* stock's calibrated offset slot */
+        if (!afe_word((reg << 12) | byte)) return false;
+    }
+    delay_ticks(CLOCK_TICKS_PER_MS * 2u);
+    return true;
+}
+
+/* Hardware observation (2026-10-24, bursts on paper after webhook power
+ * cycles): the FIRST capture setup after chip power-on outputs exact zeros
+ * for every line, whether or not the carriage moved; every later setup, after
+ * a complete power-off of the scanner block, outputs data. The mechanism is
+ * not identified. A throwaway setup once per boot (~0.2 s) replaces the
+ * ~3.5 s re-home retry that every first page used to take. */
+static bool line_primed;
+
+static void burst_stop(void)
+{
+    modify(0xc013002cu, 0u, 2u);
+    wr(0xc0d6000cu, 0u);
+    modify(0xc0d60008u, 0u, 0x80000000u);
+    for (unsigned c = 0; c < 4u; ++c) { uint32_t b = 0xc0d50000u + c * 0x100u; wr(b + 8u, 0u); wr(b, 0u); }
+    wr(0xc0d70000u, 1u); wr(0xc0d70000u, 0u); wr(0xc0d7001cu, 0u); wr(0xc0d70018u, 0u);
+}
+
+static void scanner_burst(void)
+{
+    static const uint32_t start[3] = {0x99u, 0x2dbu, 0x67eu}, end[3] = {0x2abu, 0x64eu, 0x7dfu};
+    const uint32_t R = (uint32_t)(uintptr_t)burst_buf;
+    unsigned n = burst_n, window = (n + 1u) * BURST_ROW;
+    uint32_t times[24]; unsigned raw = 0, q = 0, requests = 0;
+    bool done = false, prepared = false;
+    dbg_puts("[burst] n="); dbg_dec(n); dbg_puts(" exposure="); dbg_dec(burst_exposure);
+    dbg_puts("/8 gain="); dbg_dec(burst_gain); dbg_puts(" offset=0x"); dbg_u32(burst_offset);
+    dbg_puts(" skip="); dbg_dec(burst_skip); dbg_putc('\n');
+    for (unsigned i = 0; i < sizeof(burst_buf) / 4u; ++i) ((uint32_t *)(uintptr_t)burst_buf)[i] = 0xa5a5a5a5u;
+    burst_stop();
+    modify(0xc0133100u, 0u, 0x10u); wr(0xc0133100u, 8u);
+    modify(0xc0133104u, 0u, 0x10u); wr(0xc0133104u, 8u);
+    wr(0xc0c85614u, 1u); delay_ticks(CLOCK_TICKS_PER_MS * 20u);
+    afe_setup();
+    if (!afe_word(0x0004u) || !afe_word(0x2000u)) goto out;
+    delay_ticks(CLOCK_TICKS_PER_MS * 5u);
+    modify(0xc0c8121cu, 0u, 0x300u);
+    for (unsigned c = 0; c < 4u; ++c) { uint32_t b = 0xc0d50000u + c * 0x100u; wr(b + 8u, 0u); wr(b, 0u); wr(b, 1u); }
+    wr(0xc0d70000u, 1u); wr(0xc0d70000u, 0u); wr(0xc0d7001cu, 0u); wr(0xc0d70018u, 0u); wr(0xc0d70004u, 0u);
+    modify(0xc0d60008u, 0u, 0x80000000u);
+    for (unsigned c = 0; c < 2u; ++c) {
+        ldmac_descriptor(c, R + c * BURST_SEG, R, R + window, BURST_SEG);
+        modify(0xc0d50000u + c * 0x100u + 0x28u, 0xffffu, n);
+    }
+    for (unsigned c = 2; c < 4u; ++c) { uint32_t b = 0xc0d50000u + c * 0x100u; wr(b + 8u, 0u); wr(b, 0u); }
+    apply_seq(scnio_p0, scnio_p0_N);
+    if (burst_exposure < 8u)
+        for (unsigned c = 0; c < 3u; ++c) {
+            uint32_t width = (end[c] - start[c]) * burst_exposure / 8u;
+            modify(0xc0d60264u + 8u * c, 0xfffffu, start[c]);
+            modify(0xc0d60268u + 8u * c, 0xfffffu, start[c] + width);
+        }
+    delay_ticks(CLOCK_TICKS_PER_MS * 2u);
+    if (!afe_operating_gain(burst_gain, burst_offset)) goto out;
+    for (unsigned c = 0; c < 2u; ++c) {
+        uint32_t b = 0xc0d50000u + c * 0x100u;
+        if (rd(b + 0x14u) != R + c * BURST_SEG || rd(b + 0x18u) != R || rd(b + 0x1cu) != R + window ||
+            rd(b + 0x20u) != 0x00010a20u || rd(b + 0x28u) != (0x10000u | n)) goto out;
+    }
+    /* Arm table without its final three timing enables; P0 period and d=1. */
+    for (unsigned i = 0; i + 3u < scnio_arm_run_N; ++i) {
+        uint32_t set = scnio_arm_run[i].set;
+        if (scnio_arm_run[i].addr == 0xc0d60138u) set = 0x1a747u;
+        if (scnio_arm_run[i].addr == 0xc0d60130u) set = 0u;
+        modify(scnio_arm_run[i].addr, scnio_arm_run[i].clear, set);
+    }
+    prepared = true;
+    uint32_t rc0 = rd(0xc0d60010u), t0 = app_clock_ticks();
+    modify(0xc0133104u, 0u, 0x10u); modify(0xc0d60158u, 1u, 1u); modify(0xc0130028u, 0u, 2u);
+    uint32_t limit = (400u + 2u * burst_skip) * CLOCK_TICKS_PER_MS;
+    unsigned logged = 0;
+    while (!done && app_clock_ticks() - t0 < limit) {
+        if (!(rd(0xc0130020u) & 2u)) continue;
+        /* Event times: the first few, then those around the first request. */
+        if (logged < ARRAY_SIZE(times) && (raw < 4u || raw + 2u >= burst_skip))
+            times[logged++] = app_clock_ticks() - t0;
+        modify(0xc0d60158u, 1u, 1u);
+        if (raw > burst_skip) {
+            if (q < n) { wr(0xc0d6000cu, 1u); ++requests; }
+            else if (q >= n + 2u) done = true;
+            if (!done) ++q;
+        }
+        ++raw;
+        modify(0xc0133104u, 0u, 0x10u);
+    }
+    uint32_t rc = rd(0xc0d60010u), ev0 = rd(0xc0d50010u), ev1 = rd(0xc0d50110u), st = rd(0xc0d60008u);
+    burst_stop();
+    dbg_puts("[burst] done="); dbg_dec(done); dbg_puts(" raw="); dbg_dec(raw); dbg_puts(" requests="); dbg_dec(requests);
+    dbg_puts(" readcnt "); dbg_u32(rc0); dbg_puts("->"); dbg_u32(rc);
+    dbg_puts(" ev0="); dbg_u32(ev0); dbg_puts(" ev1="); dbg_u32(ev1); dbg_puts(" st="); dbg_u32(st); dbg_putc('\n');
+    dbg_puts("[burst] event us:");
+    for (unsigned i = 0; i < logged; ++i) { dbg_putc(' '); dbg_dec(times[i] / 96u); }
+    dbg_putc('\n');
+    for (unsigned k = 0; k <= n; ++k)
+        for (unsigned c = 0; c < 2u; ++c) {
+            const uint16_t *s = (const uint16_t *)(uintptr_t)(burst_buf + k * BURST_ROW + c * BURST_SEG);
+            unsigned sentinel = 0, clipped = 0, lo = 0xffffu, hi = 0; uint32_t sum = 0;
+            for (unsigned j = 0; j < BURST_SEG / 2u; ++j) {
+                unsigned v = s[j];
+                if (v == 0xa5a5u) { ++sentinel; continue; }
+                if (v == 0xffffu) ++clipped;
+                if (v < lo) lo = v;
+                if (v > hi) hi = v;
+                sum += v;
+            }
+            unsigned valid = BURST_SEG / 2u - sentinel;
+            dbg_puts("[burst] row "); dbg_dec(k); dbg_puts(" ch"); dbg_dec(c);
+            dbg_puts(" sentinel="); dbg_dec(sentinel); dbg_puts(" clipped="); dbg_dec(clipped);
+            dbg_puts(" min="); dbg_dec(valid ? lo : 0); dbg_puts(" max="); dbg_dec(hi);
+            dbg_puts(" mean="); dbg_dec(valid ? sum / valid : 0); dbg_putc('\n');
+        }
+    line_primed = true;                         /* a complete burst primes the front end too */
+    bool guard = true;
+    for (unsigned i = window; i < sizeof(burst_buf); ++i) if (burst_buf[i] != 0xa5u) guard = false;
+    dbg_puts("[burst] guard="); dbg_dec(guard); dbg_putc('\n');
+out:
+    if (!prepared) { burst_stop(); dbg_puts("[burst] setup failed\n"); }
+    wr(0xc0c85614u, 0u);
+}
+
+/* Continuous (moving) line acquisition. One setup per page: AFE, P0 optics,
+ * LDMAC for `rows` lines at the 0x1440 stride into a DRAM buffer above the
+ * app, then SCNIO in moving mode: line period T, spatial pitch, positive
+ * direction. The carriage travels at constant speed (scanner_motor_scan_move);
+ * from the first scan position on, every IRQ19 event requests one line (the
+ * stock normal-scan pattern), and a line counts as complete three events
+ * after its request (the stock finite-path drain). Register sequence and
+ * formulas: static analysis of the stock firmware; AFE offset 0, gain 13 and
+ * exposure 6/8 come from the burst measurements (offset 0xff saturates). */
+#define LINE_BUF 0x20280000u                /* above the app, below the stack */
+#define LINE_BUF_BYTES 0x480000u
+#define LINE_PROBE_MAX 4u                   /* optional stationary probe lines */
+#define LINE_PROBE_DRAIN_MAX 32u
+#define LINE_ROWS_MAX ((LINE_BUF_BYTES - BURST_GUARD) / BURST_ROW - 1u - LINE_PROBE_MAX)   /* + probes + reserved */
+#define LINE_ATTEMPTS 3u
+#define LINE_WARMUP 128u                    /* stationary P0 periods before any request */
+#define LINE_AFE_GAIN 13u
+#define LINE_AFE_OFFSET 0x00u
+#define LINE_EXPOSURE 6u                    /* eighths of the P0 window widths */
+static struct {
+    bool running, done, failed, gate_pending, validated;
+    unsigned rows, requested, q, raw, ready;
+    unsigned probe;                         /* buffer rows before scan line 0 */
+    uint32_t first, started_ms, budget_ms;
+    uint32_t last_latched;
+} line;
+static uint16_t line_request_event[LINE_ROWS_MAX];
+/* Stationary probe experiment (vendor 0x7d): request `probe_lines` lines after
+ * the warm-up, wait `probe_drain` more events, then require the last probe
+ * row to be non-zero before the carriage moves. Default off: on hardware a
+ * single probe line came back as exact zeros on every attempt (2026-10-24)
+ * while the probe-free build scanned, so the zero-output check happens on the
+ * first two moving lines instead (scanner_line_poll). */
+static unsigned probe_lines = 0u, probe_drain = 3u;
+/* Optics experiment (vendor 0x7f): P0 exposure in eighths and AFE gain code. */
+static unsigned line_exposure_eighths = LINE_EXPOSURE, line_gain = LINE_AFE_GAIN;
+
+bool scanner_line_set_afe(unsigned exposure, unsigned gain)
+{
+    if (line.running || line.gate_pending || exposure < 1u || exposure > 8u || gain < 1u || gain > 13u) return false;
+    line_exposure_eighths = exposure; line_gain = gain;
+    dbg_puts("[line] afe exposure="); dbg_dec(exposure); dbg_puts("/8 gain="); dbg_dec(gain); dbg_putc('\n');
+    return true;
+}
+
+unsigned scanner_line_max_rows(void) { return LINE_ROWS_MAX; }
+
+bool scanner_line_probe_config(unsigned lines, unsigned drain)
+{
+    if (line.running || line.gate_pending || lines > LINE_PROBE_MAX || drain > LINE_PROBE_DRAIN_MAX) return false;
+    probe_lines = lines; probe_drain = drain;
+    dbg_puts("[line] probe lines="); dbg_dec(lines); dbg_puts(" drain="); dbg_dec(drain); dbg_putc('\n');
+    return true;
+}
+
+static void line_exposure(unsigned eighths)
+{
+    static const uint32_t start[3] = {0x99u, 0x2dbu, 0x67eu}, end[3] = {0x2abu, 0x64eu, 0x7dfu};
+    for (unsigned c = 0; c < 3u; ++c) {
+        uint32_t width = (end[c] - start[c]) * eighths / 8u;
+        modify(0xc0d60264u + 8u * c, 0xfffffu, start[c]);
+        modify(0xc0d60268u + 8u * c, 0xfffffu, start[c] + width);
+    }
+}
+
+void scanner_line_stop(void)
+{
+    if (line.running || line.gate_pending) {
+        modify(0xc0d6011cu, 1u, 0u);
+        modify(0xc0c57400u, 2u, 0u); wr(0xc0c57108u, 0u); modify(0xc0c57404u, 2u, 0u);
+        wr(0xc0c57140u, 0u);
+        burst_stop();
+    }
+    line.running = line.gate_pending = false;
+    wr(0xc0c85614u, 0u);
+}
+
+static bool row_all_zero(unsigned k);
+static unsigned row_sparse_max(unsigned k);
+
+/* One setup attempt; on success timing runs at the scan period. Buffer rows
+ * 0..P-1 receive the optional stationary probe lines after the warm-up; scan
+ * line k lands in buffer row k + P (P = line.probe, 0 by default). */
+static bool line_setup(unsigned rows, unsigned pitch, unsigned period)
+{
+    const uint32_t R = LINE_BUF;
+    const unsigned P = line.probe, D = probe_drain;
+    uint32_t window = (rows + P + 1u) * BURST_ROW;
+    /* Sentinel only where it is checked: probe rows and the first scan rows
+     * (filling the whole 4.5 MB window costs seconds in uncached DRAM). */
+    for (uint32_t i = 0; i < (P + 4u) * BURST_ROW / 4u; ++i) ((uint32_t *)(uintptr_t)R)[i] = 0xa5a5a5a5u;
+    burst_stop();
+    modify(0xc0133100u, 0u, 0x10u); wr(0xc0133100u, 8u);
+    modify(0xc0133104u, 0u, 0x10u); wr(0xc0133104u, 8u);
+    wr(0xc0c85614u, 1u); delay_ticks(CLOCK_TICKS_PER_MS * 20u);
+    afe_setup();
+    if (!afe_word(0x0004u) || !afe_word(0x2000u)) goto failed;
+    delay_ticks(CLOCK_TICKS_PER_MS * 5u);
+    modify(0xc0c8121cu, 0u, 0x300u);
+    for (unsigned c = 0; c < 4u; ++c) { uint32_t b = 0xc0d50000u + c * 0x100u; wr(b + 8u, 0u); wr(b, 0u); wr(b, 1u); }
+    wr(0xc0d70000u, 1u); wr(0xc0d70000u, 0u); wr(0xc0d7001cu, 0u); wr(0xc0d70018u, 0u); wr(0xc0d70004u, 0u);
+    modify(0xc0d60008u, 0u, 0x80000000u);
+    for (unsigned c = 0; c < 2u; ++c) {
+        ldmac_descriptor(c, R + c * BURST_SEG, R, R + window, BURST_SEG);
+        modify(0xc0d50000u + c * 0x100u + 0x28u, 0xffffu, rows + P);
+    }
+    for (unsigned c = 2; c < 4u; ++c) { uint32_t b = 0xc0d50000u + c * 0x100u; wr(b + 8u, 0u); wr(b, 0u); }
+    apply_seq(scnio_p0, scnio_p0_N);
+    line_exposure(line_exposure_eighths);
+    delay_ticks(CLOCK_TICKS_PER_MS * 2u);
+    if (!afe_operating_gain(line_gain, LINE_AFE_OFFSET)) goto failed;
+    for (unsigned c = 0; c < 2u; ++c) {
+        uint32_t b = 0xc0d50000u + c * 0x100u;
+        if (rd(b + 0x14u) != R + c * BURST_SEG || rd(b + 0x18u) != R || rd(b + 0x1cu) != R + window ||
+            rd(b + 0x20u) != 0x00010a20u || rd(b + 0x28u) != (0x10000u | (rows + P))) goto failed;
+    }
+    for (unsigned i = 0; i + 3u < scnio_arm_run_N; ++i) {
+        uint32_t set = scnio_arm_run[i].set;
+        if (scnio_arm_run[i].addr == 0xc0d60138u) set = 0x1a747u;   /* P0 period for warm-up */
+        if (scnio_arm_run[i].addr == 0xc0d60130u) set = 0u;         /* d = 1 */
+        modify(scnio_arm_run[i].addr, scnio_arm_run[i].clear, set);
+    }
+    /* Warm-up, stationary: the front end outputs zeros for its first tens of
+     * line periods (burst measurements). Run LINE_WARMUP short P0 periods
+     * (~145 ms), acknowledging events without requests, optionally take the
+     * probe lines, then switch to the scan period and leave line timing
+     * running into the travel. */
+    modify(0xc0133104u, 0u, 0x10u); modify(0xc0d60158u, 1u, 1u); modify(0xc0130028u, 0u, 2u);
+    uint32_t t0 = app_clock_ticks();
+    unsigned events = 0, needed = LINE_WARMUP + (P ? P + D : 0u);
+    while (events < needed && app_clock_ticks() - t0 < 500u * CLOCK_TICKS_PER_MS) {
+        if (!(rd(0xc0130020u) & 2u)) continue;
+        modify(0xc0d60158u, 1u, 1u);
+        if (events >= LINE_WARMUP && events < LINE_WARMUP + P) wr(0xc0d6000cu, 1u);   /* a probe line */
+        modify(0xc0133104u, 0u, 0x10u); ++events;
+    }
+    if (events < needed) { dbg_puts("[line] warm-up timeout\n"); goto failed; }
+    if (P) {
+        unsigned peak = row_sparse_max(P - 1u);
+        dbg_puts("[line] probe row "); dbg_dec(P - 1u); dbg_puts(" max="); dbg_dec(peak); dbg_putc('\n');
+        if (!peak) goto failed;
+    }
+    /* Moving mode (stock f6bda/f6c7a), only after the stationary phase: with
+     * the mode bits set and S+0x11c bit0 (set by the position gate) clear, the
+     * engine outputs blank lines. Then the scan period. */
+    modify(0xc0d6011cu, 0x11111113u, 0x11000u);
+    modify(0xc0d60120u, 1u, 0u); modify(0xc0d60124u, 1u, 0u);
+    modify(0xc0d60128u, 0xffu, 0u); modify(0xc0d6012cu, 1u, 0u);
+    modify(0xc0d60134u, 3u, 0u); modify(0xc0d60154u, 0xffffffu, 0u);
+    modify(0xc0d60160u, 0xffffu, pitch - 1u);
+    modify(0xc0d60164u, 0xffu, 0u);
+    modify(0xc0d6015cu, 3u, 0u);
+    modify(0xc0d60138u, 0xffffffu, period - 1u);
+    return true;
+failed:
+    burst_stop(); wr(0xc0c85614u, 0u);
+    return false;
+}
+
+/* Blocking setup (~0.2 s per attempt) with the motor off. */
+bool scanner_line_prepare(unsigned rows, unsigned pitch, unsigned period)
+{
+    if (scanner_motor_busy() || !rows || rows > LINE_ROWS_MAX || pitch < 2u || pitch > 65536u ||
+        period < 2u || period > 0x1000000u) return false;
+    if (!line_primed) {
+        memset(&line, 0, sizeof(line));
+        line.rows = rows;                       /* no probe lines: nothing is read back */
+        dbg_puts("[line] priming setup\n");
+        (void)line_setup(rows, pitch, period);
+        modify(0xc0d6011cu, 1u, 0u); burst_stop(); wr(0xc0c85614u, 0u);
+        line_primed = true;
+        delay_ticks(CLOCK_TICKS_PER_MS * 20u);
+    }
+    for (unsigned attempt = 1; attempt <= LINE_ATTEMPTS; ++attempt) {
+        memset(&line, 0, sizeof(line));
+        line.rows = rows; line.probe = probe_lines;
+        if (line_setup(rows, pitch, period)) return true;
+        dbg_puts("[line] setup attempt "); dbg_dec(attempt); dbg_puts(" failed\n");
+        delay_ticks(CLOCK_TICKS_PER_MS * 20u);
+    }
+    return false;
+}
+
+/* Arm the position gate and the timing enables; call right before travel.
+ * `first` is the absolute position of line 0, `lead` the gate lead distance. */
+bool scanner_line_start(uint32_t first, uint32_t lead, uint32_t budget_ms)
+{
+    const uint32_t P0 = 0xc0c57000u;
+    uint32_t x = rd(P0 + 0x100u);
+    if (first > 0xffffffu || lead > 0xffffu || first < lead || x > 0xffffffu - lead - 20u) return false;
+    line.first = first; line.budget_ms = budget_ms;
+    wr(P0 + 0x14cu, x);                                  /* acquisition position seed */
+    if (x + lead + 20u > first) {
+        modify(0xc0d6011cu, 1u, 1u); wr(P0 + 0x138u, x + lead + 20u);
+    } else {                                             /* one-shot lead comparator */
+        modify(P0 + 0x400u, 2u, 0u); modify(P0 + 0x404u, 2u, 0u);
+        wr(P0 + 0x108u, first - lead);
+        modify(P0 + 0x400u, 0u, 2u);
+        wr(P0 + 0x138u, first);
+        line.gate_pending = true;
+    }
+    wr(P0 + 0x13cu, 0xffffffu); wr(P0 + 0x140u, 1u);
+    line.started_ms = time_ms(); line.running = true;      /* timing runs since prepare */
+    dbg_puts("[line] start rows="); dbg_dec(line.rows); dbg_puts(" first="); dbg_u32(first);
+    dbg_puts(" at="); dbg_u32(x); dbg_puts(line.gate_pending ? " gate\n" : " immediate\n");
+    return true;
+}
+
+/* Sparse check (every 16th word): cheap enough for the motor-polled path. */
+static bool row_all_zero(unsigned k)        /* buffer row, not scan line */
+{
+    const uint32_t *w = (const uint32_t *)(uintptr_t)(LINE_BUF + k * BURST_ROW);
+    for (unsigned i = 0; i < BURST_ROW / 4u; i += 16u) if (w[i]) return false;
+    return true;
+}
+
+/* Largest sample among every 32nd one of a buffer row (sentinel words count). */
+static unsigned row_sparse_max(unsigned k)
+{
+    const uint16_t *s = (const uint16_t *)(uintptr_t)(LINE_BUF + k * BURST_ROW);
+    unsigned peak = 0;
+    for (unsigned i = 0; i < BURST_ROW / 2u; i += 32u) if (s[i] > peak) peak = s[i];
+    return peak;
+}
+
+/* Service the gate comparator and at most one IRQ19 event; never waits. */
+void scanner_line_poll(void)
+{
+    const uint32_t P0 = 0xc0c57000u;
+    if (!line.running) return;
+    if (line.gate_pending && (rd(P0 + 0x404u) & 2u)) {
+        modify(P0 + 0x400u, 2u, 0u); wr(P0 + 0x108u, 0u); modify(P0 + 0x404u, 2u, 0u);
+        modify(0xc0d6011cu, 1u, 1u);
+        line.gate_pending = false;
+    }
+    if ((uint32_t)(time_ms() - line.started_ms) >= line.budget_ms) {
+        dbg_puts("[line] deadline\n"); line.failed = true; scanner_line_stop(); return;
+    }
+    if (!(rd(0xc0130020u) & 2u)) return;
+    uint32_t latched = rd(P0 + 0x14cu);
+    modify(0xc0d60158u, 1u, 1u);
+    if (latched >= line.first || line.requested == line.rows) {
+        if (line.q < line.rows) {
+            wr(0xc0d6000cu, 1u);
+            line_request_event[line.requested++] = (uint16_t)line.raw;
+            if (line.requested <= 2u || !(line.requested & 127u)) {
+                dbg_puts("[line] request "); dbg_dec(line.requested); dbg_puts(" at ");
+                dbg_u32(latched); dbg_putc('\n');
+            }
+        } else if (line.q >= line.rows + 2u) line.done = true;
+        if (!line.done) ++line.q;
+    }
+    ++line.raw;
+    modify(0xc0133104u, 0u, 0x10u);
+    while (line.ready < line.requested &&
+           (line.done || (uint16_t)(line.raw - line_request_event[line.ready]) >= 3u)) ++line.ready;
+    if (line.done) { burst_stop(); line.running = false; dbg_puts("[line] done\n"); }
+    /* The front end sometimes outputs exact zeros for a whole setup; check
+     * the first two lines once, before any line is handed out, so the page can
+     * redo the setup without duplicating output. */
+    if (!line.validated && line.ready >= 2u) {
+        if (row_all_zero(line.probe) && row_all_zero(line.probe + 1u)) {
+            dbg_puts("[line] zero output\n"); line.failed = true; scanner_line_stop(); return;
+        }
+        line.validated = true;
+    }
+}
+
+unsigned scanner_line_ready(void) { return line.validated ? line.ready : 0u; }
+
+/* Diagnostic read of the raw line buffer (vendor 0x5d), in 256-byte chunks. */
+unsigned scanner_line_dump(uint8_t *out, uint32_t chunk, unsigned max)
+{
+    uint32_t offset = chunk * 256u, end = (line.rows + line.probe + 1u) * BURST_ROW;
+    if (line.running || offset >= end) return 0;
+    unsigned n = end - offset < max ? end - offset : max;
+    memcpy(out, (const uint8_t *)(uintptr_t)(LINE_BUF + offset), n);
+    return n;
+}
+bool scanner_line_done(void) { return line.done && line.validated && line.ready == line.rows; }
+bool scanner_line_failed(void) { return line.failed; }
+const uint16_t *scanner_line_row(unsigned k)
+{
+    return k < scanner_line_ready() ? (const uint16_t *)(uintptr_t)(LINE_BUF + (k + line.probe) * BURST_ROW) : NULL;
+}
+
+void scanner_burst_request(unsigned n, unsigned exposure, unsigned gain, unsigned skip, unsigned offset)
+{
+    burst_n = n; burst_exposure = exposure; burst_gain = gain; burst_skip = skip;
+    burst_offset = offset; burst_pending = true;
+}
+
+unsigned scanner_burst_dump(uint8_t *out, unsigned chunk, unsigned max)
+{
+    unsigned offset = chunk * 256u;
+    if (offset >= sizeof(burst_buf)) return 0;
+    unsigned n = sizeof(burst_buf) - offset;
+    if (n > max) n = max;
+    memcpy(out, burst_buf + offset, n);
+    return n;
+}
+
 /* Continuous CIS illumination (motor-free). Reuses the stationary-capture light
  * path (scanner power + AFE + SCNIO arm/run with a long integration) but leaves
  * the engine running and re-triggers integration each poll so the LEDs stay
@@ -581,6 +1032,7 @@ void scanner_poll(void)
 {
     scanner_lamp_poll();   /* sustain continuous illumination if the lamp is on */
     if (capture2_pending) { capture2_pending = false; scanner_full_capture(capture2_variant); }
+    if (burst_pending) { burst_pending = false; scanner_burst(); }
     if (peek_pending) { peek_pending = false; scanner_peek(); }
     if (probe_pending) { probe_pending = false; scanner_probe(); }
     if (bringup_pending) { bringup_pending = false; scanner_bringup(); }

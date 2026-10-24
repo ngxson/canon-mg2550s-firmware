@@ -10,6 +10,7 @@ struct motor_control {
 };
 void motor_control_reset(struct motor_control *s);
 uint32_t motor_control_ramp(uint32_t tick, unsigned backoff);
+uint32_t motor_control_ramp_to(uint32_t tick, uint32_t lo, uint32_t hi, uint32_t n);
 uint32_t motor_control_step(struct motor_control *s, int32_t wanted,
                             int32_t measured, unsigned backoff, unsigned dir);
 uint32_t motor_divide(uint64_t numerator, uint32_t denominator);

@@ -244,6 +244,26 @@ static void setup_request(void)
         reply(service_info(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_LOG && !value && !index) {
         reply(dbg_fill(control_buffer,length>sizeof(control_buffer)?sizeof(control_buffer):length),length);
+    } else if(type==0x40 && request==APP_REQUEST_SCAN_BURST && !length && (value&255)>=1 && (value&255)<=8
+              && ((value>>8)&15)>=1 && ((value>>8)&15)<=8 && (index&255)>=1 && (index&255)<=13
+              && !scanner_motor_busy() && !scan_page_busy()) {
+        unsigned step=value>>12, offset=step>=8?0u:0xffu-0x20u*step;
+        scanner_burst_request(value&255,(value>>8)&15,index&255,(index>>8)*8u,offset); ack();
+    } else if(type==0x40 && request==APP_REQUEST_SCAN_SPEED && !index && !length) {
+        scan_page_set_speed(value*100u); ack();
+    } else if(type==0x40 && request==APP_REQUEST_HOME_SPEED && !index && !length) {
+        if(scanner_motor_set_return_speed(value*100u)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_LINE_AFE && !length) {
+        if(scanner_line_set_afe(value,index)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_LINE_PROBE && !length) {
+        if(scanner_line_probe_config(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_LINE_DUMP) {
+        unsigned n=scanner_line_dump(control_buffer,(uint32_t)index<<16|value,length>sizeof(control_buffer)?sizeof(control_buffer):length);
+        if(n) reply(n,length); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_BURST_DUMP && !index) {
+        reply(scanner_burst_dump(control_buffer,value,length>sizeof(control_buffer)?sizeof(control_buffer):length),length);
+    } else if(type==0x40 && request==APP_REQUEST_PAGE_PARK && !index && !length) {
+        if(scan_page_park((uint32_t)value*256u)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_SCAN_DUMP && !index) {
         reply(scanner_dump(control_buffer,value,length>sizeof(control_buffer)?sizeof(control_buffer):length),length);
     } else if(type==0x40 && request==APP_REQUEST_SCAN && !value && !index && !length) {

@@ -30,6 +30,10 @@
 #define APP_REQUEST_SCAN_DMASETUP 0x58u
 #define APP_REQUEST_SCAN_FULLCAP 0x59u   /* wValue = variant bits */
 #define APP_REQUEST_SCAN_DUMP 0x5au      /* control-IN, wValue = 256-byte chunk index */
+#define APP_REQUEST_SCAN_BURST 0x5bu     /* OUT: wValue = n | exposure_eighths << 8 | offset_step << 12,
+                                            wIndex = gain | skip/8 << 8; AFE R1/R4 = 0xff - 0x20*step */
+#define APP_REQUEST_BURST_DUMP 0x5cu     /* IN: wValue = 256-byte chunk of the burst buffer */
+#define APP_REQUEST_PAGE_PARK 0x7bu      /* OUT: wValue = offset / 256 counts; home, move, stay */
 #define APP_REQUEST_PRINT_TEST 0x60u     /* decode an embedded BJL band, log the result */
 #define APP_REQUEST_PRINT_BEGIN 0x61u    /* control-OUT, wValue|wIndex<<16 = total bytes of BJL stream to follow on bulk OUT */
 #define APP_REQUEST_BTN 0x70u            /* control-OUT, no data: enable front-panel key probe (logs PANEL+0x28 on change) */
@@ -55,6 +59,26 @@ void scanner_ldmac_request(void);   /* arm LDMAC/BUFADM peek + field write-readb
 void scanner_dmasetup_request(void);/* arm LDMAC descriptor programming validation (USB 0x58) */
 void scanner_fullcap_request(unsigned variant); /* arm full stationary capture (USB 0x59, wValue=variant) */
 unsigned scanner_dump(uint8_t *out, unsigned chunk, unsigned max); /* copy capture buffer (USB 0x5a) */
+void scanner_burst_request(unsigned n, unsigned exposure_eighths, unsigned gain, unsigned skip_events,
+                           unsigned afe_offset);
+unsigned scanner_burst_dump(uint8_t *out, unsigned chunk, unsigned max);
+bool scan_page_park(uint32_t offset);
+/* Continuous moving line acquisition (scanner.c). */
+unsigned scanner_line_max_rows(void);
+bool scanner_line_prepare(unsigned rows, unsigned pitch, unsigned period);
+bool scanner_line_start(uint32_t first, uint32_t lead, uint32_t budget_ms);
+void scanner_line_poll(void);
+void scanner_line_stop(void);
+unsigned scanner_line_ready(void);
+bool scanner_line_done(void);
+bool scanner_line_failed(void);
+const uint16_t *scanner_line_row(unsigned row);
+unsigned scanner_line_dump(uint8_t *out, uint32_t chunk, unsigned max);
+bool scanner_line_probe_config(unsigned lines, unsigned drain);   /* experiment: stationary probe lines */
+#define APP_REQUEST_LINE_DUMP 0x5du      /* IN: chunk = wIndex << 16 | wValue of the raw line buffer */
+#define APP_REQUEST_LINE_PROBE 0x7du     /* OUT: wValue = probe lines (0..4), wIndex = drain events (0..32) */
+#define APP_REQUEST_HOME_SPEED 0x7eu     /* OUT: wValue = fast-return cruise / 100 (0 = classic homing) */
+#define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..13) */
 void print_selftest(void);          /* decode an embedded BJL band, emit result to the debug log */
 void print_bulk_begin(unsigned total); /* start a USB bulk print transfer of `total` bytes (USB 0x61) */
 void print_bulk_feed(const uint8_t *data, unsigned len); /* feed received bulk bytes; decodes when complete */
@@ -80,6 +104,13 @@ unsigned scanner_home_result(void);
 uint32_t scanner_motor_position(void);
 uint32_t scanner_motor_reference(void);
 bool scanner_motor_page_move(uint32_t position);
+bool scanner_motor_scan_move(uint32_t endpoint, uint32_t speed);  /* continuous scan travel */
+bool scanner_motor_at_reference(void);  /* idle, referenced and parked at home */
+bool scanner_motor_set_return_speed(unsigned counts_per_s); /* experiment: fast return cruise, 0 or 20000..120000 */
+bool scanner_line_set_afe(unsigned exposure_eighths, unsigned gain); /* experiment: continuous-scan optics */
+bool scan_page_continuous(void);
+void scan_page_set_speed(unsigned counts_per_s);   /* diagnostic: continuous travel speed */
+#define APP_REQUEST_SCAN_SPEED 0x7cu     /* OUT: wValue = continuous speed / 100 (130..300) */
 bool scanner_motor_move_ok(void);
 bool scanner_capture_row(bool first); /* bounded stationary capture; motor must be off */
 void scanner_lamp_off(void);

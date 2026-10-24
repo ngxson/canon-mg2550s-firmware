@@ -34,6 +34,14 @@ uint32_t motor_control_ramp(uint32_t tick, unsigned backoff)
     return lo + motor_divide(v, n*n*n);
 }
 
+/* Same cubic shape, explicit endpoints (continuous scan travel). */
+uint32_t motor_control_ramp_to(uint32_t tick, uint32_t lo, uint32_t hi, uint32_t n)
+{
+    if (tick >= n || hi <= lo) return hi;
+    uint64_t v = (uint64_t)(3u*n - 2u*tick) * (hi-lo) * tick * tick;
+    return lo + motor_divide(v, n*n*n);
+}
+
 uint32_t motor_control_step(struct motor_control *s, int32_t wanted,
                             int32_t measured, unsigned backoff, unsigned dir)
 {

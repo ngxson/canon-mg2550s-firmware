@@ -85,7 +85,7 @@ struct sink { struct jpeg_writer *j; uint8_t *out; unsigned n; };
 
 static void put_byte(struct sink *s, uint8_t byte) { s->out[s->n++] = byte; }
 
-static void put_bits(struct sink *s, uint32_t code, unsigned size)
+static __attribute__((optimize("O2"))) void put_bits(struct sink *s, uint32_t code, unsigned size)
 {
     struct jpeg_writer *j = s->j;
     j->acc = (j->acc << size) | (code & ((1u << size) - 1u));
@@ -106,7 +106,7 @@ static unsigned magnitude_bits(unsigned value)
 }
 
 /* Huffman-code one value: category from the table, then its extra bits. */
-static void put_value(struct sink *s, const struct huffman *h, unsigned symbol_base, int value)
+static __attribute__((optimize("O2"))) void put_value(struct sink *s, const struct huffman *h, unsigned symbol_base, int value)
 {
     unsigned magnitude = (unsigned)(value < 0 ? -value : value), bits = magnitude_bits(magnitude);
     unsigned symbol = symbol_base | bits;
@@ -118,53 +118,74 @@ static void put_value(struct sink *s, const struct huffman *h, unsigned symbol_b
 #define PASS1_BITS 2
 #define DESCALE(x, n) (((x) + (1 << ((n) - 1))) >> (n))
 
-/* Forward DCT of 64 level-shifted samples in place; results are 8x the
- * orthonormal DCT, which the quantiser divides out. */
-static void forward_dct(int *data)
+/* One 8-point LLM pass over a row (stride 1) or column (stride 8); `last`
+ * selects the second pass's descaling. Always inlined with constant
+ * arguments so the -Os build does not compute strided indexes at run time. */
+static inline __attribute__((always_inline)) void dct_pass(int *d, const int stride, const int last)
 {
-    for (int pass = 0; pass < 2; ++pass) {
-        int step = pass ? 8 : 1, next = pass ? 1 : 8;
-        int shift = pass ? CONST_BITS + PASS1_BITS : CONST_BITS - PASS1_BITS;
-        int *d = data;
-        for (int i = 0; i < 8; ++i, d += next) {
-            int tmp0 = d[0] + d[7 * step], tmp7 = d[0] - d[7 * step];
-            int tmp1 = d[step] + d[6 * step], tmp6 = d[step] - d[6 * step];
-            int tmp2 = d[2 * step] + d[5 * step], tmp5 = d[2 * step] - d[5 * step];
-            int tmp3 = d[3 * step] + d[4 * step], tmp4 = d[3 * step] - d[4 * step];
-            int tmp10 = tmp0 + tmp3, tmp13 = tmp0 - tmp3;
-            int tmp11 = tmp1 + tmp2, tmp12 = tmp1 - tmp2;
-            if (pass) {
-                d[0] = DESCALE(tmp10 + tmp11, PASS1_BITS);
-                d[4 * step] = DESCALE(tmp10 - tmp11, PASS1_BITS);
-            } else {
-                d[0] = (tmp10 + tmp11) * (1 << PASS1_BITS);
-                d[4 * step] = (tmp10 - tmp11) * (1 << PASS1_BITS);
-            }
-            int z1 = (tmp12 + tmp13) * 4433;                     /* 0.541196100 */
-            d[2 * step] = DESCALE(z1 + tmp13 * 6270, shift);      /* 0.765366865 */
-            d[6 * step] = DESCALE(z1 - tmp12 * 15137, shift);     /* 1.847759065 */
-            int z3 = tmp4 + tmp6, z4 = tmp5 + tmp7, z5 = (z3 + z4) * 9633;   /* 1.175875602 */
-            int z1o = (tmp4 + tmp7) * -7373, z2 = (tmp5 + tmp6) * -20995;     /* 0.899976223, 2.562915447 */
-            z3 = z3 * -16069 + z5; z4 = z4 * -3196 + z5;                      /* 1.961570560, 0.390180644 */
-            d[7 * step] = DESCALE(tmp4 * 2446 + z1o + z3, shift);  /* 0.298631336 */
-            d[5 * step] = DESCALE(tmp5 * 16819 + z2 + z4, shift);  /* 2.053119869 */
-            d[3 * step] = DESCALE(tmp6 * 25172 + z2 + z3, shift);  /* 3.072711026 */
-            d[step] = DESCALE(tmp7 * 12299 + z1o + z4, shift);     /* 1.501321110 */
-        }
+    const int shift = last ? CONST_BITS + PASS1_BITS : CONST_BITS - PASS1_BITS;
+    int tmp0 = d[0] + d[7 * stride], tmp7 = d[0] - d[7 * stride];
+    int tmp1 = d[stride] + d[6 * stride], tmp6 = d[stride] - d[6 * stride];
+    int tmp2 = d[2 * stride] + d[5 * stride], tmp5 = d[2 * stride] - d[5 * stride];
+    int tmp3 = d[3 * stride] + d[4 * stride], tmp4 = d[3 * stride] - d[4 * stride];
+    int tmp10 = tmp0 + tmp3, tmp13 = tmp0 - tmp3;
+    int tmp11 = tmp1 + tmp2, tmp12 = tmp1 - tmp2;
+    if (last) {
+        d[0] = DESCALE(tmp10 + tmp11, PASS1_BITS);
+        d[4 * stride] = DESCALE(tmp10 - tmp11, PASS1_BITS);
+    } else {
+        d[0] = (tmp10 + tmp11) * (1 << PASS1_BITS);
+        d[4 * stride] = (tmp10 - tmp11) * (1 << PASS1_BITS);
     }
+    int z1 = (tmp12 + tmp13) * 4433;                     /* 0.541196100 */
+    d[2 * stride] = DESCALE(z1 + tmp13 * 6270, shift);    /* 0.765366865 */
+    d[6 * stride] = DESCALE(z1 - tmp12 * 15137, shift);   /* 1.847759065 */
+    int z3 = tmp4 + tmp6, z4 = tmp5 + tmp7, z5 = (z3 + z4) * 9633;   /* 1.175875602 */
+    int z1o = (tmp4 + tmp7) * -7373, z2 = (tmp5 + tmp6) * -20995;     /* 0.899976223, 2.562915447 */
+    z3 = z3 * -16069 + z5; z4 = z4 * -3196 + z5;                      /* 1.961570560, 0.390180644 */
+    d[7 * stride] = DESCALE(tmp4 * 2446 + z1o + z3, shift);  /* 0.298631336 */
+    d[5 * stride] = DESCALE(tmp5 * 16819 + z2 + z4, shift);  /* 2.053119869 */
+    d[3 * stride] = DESCALE(tmp6 * 25172 + z2 + z3, shift);  /* 3.072711026 */
+    d[stride] = DESCALE(tmp7 * 12299 + z1o + z4, shift);     /* 1.501321110 */
 }
 
-static void encode_block(struct sink *s, int *block, unsigned table, int *dc)
+/* Forward DCT of 64 level-shifted samples in place; results are 8x the
+ * orthonormal DCT, which the quantiser divides out. */
+static __attribute__((optimize("O2"))) void forward_dct(int *data)
+{
+    for (int i = 0; i < 8; ++i) dct_pass(data + 8 * i, 1, 0);
+    for (int i = 0; i < 8; ++i) dct_pass(data + i, 8, 1);
+}
+
+static inline __attribute__((always_inline)) unsigned quantize(int v, unsigned table, unsigned at)
+{
+    unsigned q = (unsigned)(v < 0 ? -v : v);
+    return ((q + 4u * quant[table][at]) * reciprocal[table][at]) >> 16;
+}
+
+static __attribute__((optimize("O2"))) void encode_block(struct sink *s, int *block, unsigned table, int *dc)
 {
     int coef[64];
+    /* A uniform block transforms exactly to DC = 64 * value with every AC
+     * coefficient zero (the integer passes round it exactly). Mostly-white
+     * documents are dominated by such blocks. */
+    bool flat = true;
+    for (unsigned k = 1; k < 64u && flat; ++k) flat = block[k] == block[0];
+    if (flat) {
+        int v = block[0] * 64;
+        unsigned q = quantize(v, table, 0);
+        put_value(s, &dc_huff[table], 0, (v < 0 ? -(int)q : (int)q) - *dc);
+        *dc = v < 0 ? -(int)q : (int)q;
+        put_bits(s, ac_huff[table].code[0], ac_huff[table].size[0]);   /* EOB */
+        return;
+    }
     forward_dct(block);
     app_yield();
     for (unsigned k = 0; k < 64u; ++k) {
         if (!(k & 15u)) app_yield();
         unsigned at = zigzag[k];
         int v = block[at];
-        unsigned q = (unsigned)(v < 0 ? -v : v);
-        q = ((q + 4u * quant[table][at]) * reciprocal[table][at]) >> 16;
+        unsigned q = quantize(v, table, at);
         coef[k] = v < 0 ? -(int)q : (int)q;
     }
     put_value(s, &dc_huff[table], 0, coef[0] - *dc);
@@ -244,11 +265,21 @@ void jpeg_row_written(struct jpeg_writer *j) { ++j->strip_rows; }
 
 /* One MCU at column `mcu` of the buffered strip. Edges replicate the last
  * row and column, as the JPEG image is cropped to width x height. */
-static void encode_mcu(struct sink *s)
+static __attribute__((optimize("O2"))) void encode_mcu(struct sink *s)
 {
     struct jpeg_writer *j = s->j;
     int blocks[3][64];
     app_section = "jpeg";
+    if (j->components == 1u && j->strip_rows == 8u && j->mcu * 8u + 8u <= j->width) {
+        for (unsigned y = 0; y < 8u; ++y) {              /* interior grey block */
+            const uint8_t *row = strip[y] + j->mcu * 8u;
+            int *b = blocks[0] + y * 8u;
+            for (unsigned x = 0; x < 8u; ++x) b[x] = row[x] - 128;
+        }
+        app_yield();
+        encode_block(s, blocks[0], 0, &j->dc[0]);
+        return;
+    }
     for (unsigned y = 0; y < 8u; ++y) {
         app_yield();
         const uint8_t *row = strip[y < j->strip_rows ? y : j->strip_rows - 1u];
