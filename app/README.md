@@ -24,9 +24,15 @@ No stock executable code is linked into the application.
 - **Paper path and carriage:** closed-loop feed routine (pickup with bounded
   retries using the paper-end sensor, measured advance, eject), carriage
   homing and closed-loop moves, and a dry-run page loop that sweeps the
-  carriage band by band over a fed sheet. Printing itself (head drive) is not
-  implemented; see [CARRIAGE.md](evidence/CARRIAGE.md) and
-  [PRINT_MECH.md](evidence/PRINT_MECH.md).
+  carriage band by band over a fed sheet; see [CARRIAGE.md](evidence/CARRIAGE.md)
+  and [PRINT_MECH.md](evidence/PRINT_MECH.md).
+- **Stationary black prefire (spit):** the stock prefire work list (two
+  records of 100 pulses on the black lanes, waveform mode 8) translated
+  register for register into C, with the head thermistor read before and
+  after. Confirmed on the printer: the engine completes, heats the black head
+  and put the first ink marks on paper (2026-10-25). Printing a raster (band
+  path, nozzle map) is not implemented. `tools/mark_scan.py` scans a sheet
+  back and measures the marks.
 - **Recovery management and diagnostics:** application USB identity `04a9:12fe`,
   `fwctl` status/reboot support and a USB debug log. USB is serviced during
   motion; I²C management is polled when the motor is idle. Stationary captures
@@ -62,16 +68,16 @@ work, keep the bootloader artifacts matching the installed recovery stages.
 Tests combine `bootloader/build/boot_region.bin` and its symbol manifest with
 the new app package and manifest.
 
-Run all eleven scanner, cartridge, mechanism and management checks before flashing:
+Run all fourteen scanner, cartridge, mechanism, head, tunnel and management checks before flashing:
 
 ```sh
-for check in app home motor buttons scanner page cartridge printregs feed carriage page_job; do
+for check in app home motor buttons scanner page cartridge printregs feed carriage page_job head_fire stamp tunnel; do
   docker run --rm --network none -v "$PWD:/project:rw" \
     mg2550s-emu "app/tests/validate_${check}.py" || break
 done
 ```
 
-Proceed only after all eleven pass. Reports are written under `app/build/`.
+Proceed only after all fourteen pass. Reports are written under `app/build/`.
 Tests execute the linked ARM instructions, including boot and recovery, and
 check motion sequencing, capture/transfer failures, Cancel and management
 liveness. No stock dump is needed for these tests. Native execution is also
@@ -170,6 +176,73 @@ python3 app/tools/dry_page.py --bands 4         # feed, four sweeps with paper a
 
 Both physically move the mechanism; the head stays idle.
 
+## Stationary prefire (spit) on the black head
+
+```sh
+python3 app/tools/head_spit.py --position 6000 --dry-run     # every register write, no arm
+python3 app/tools/head_spit.py --position 6000 --ambient 44  # stock prefire: 2 x 100 pulses, black lanes
+```
+
+Physically fires the black head unless `--dry-run` is given. The tool reads the
+cartridge fuse ROM first (the firmware refuses unless the ranks are black 37 and
+colour 16/7, the ones its waveform tables were computed for), reads the head
+thermistor, homes and moves the carriage to `--position` counts from the park
+wall, runs the stock prefire list, drains the log and parks. `--ambient` is the
+stock temperature selector input in half-degrees C (default 50). `--count`
+reduces the pulses per record (15..100); `--record 1` or `--record 2` runs one
+of the two stock records alone, to attribute marks on paper to a record.
+`--colour` runs the stock colour prefire list instead (work ID 0x25: lanes
+2..7 in two records of 600 pulses, waveform mode 9).
+
+Experiment: `mask_map.py run` prints one sheet with 32 carriage stops per
+row and one record per stop whose two record words (USB 0x83/0x84, fired
+with 0x81 option 0x2000) isolate one bit, to map the words to nozzle groups
+from a single scan-back (`mask_map.py decode`). Carriage moves below 6000
+counts use a short-move mode (kick until motion, fixed rolling effort, stop
+on one counter step); the scripted carriage model has friction and momentum
+so that mode is exercised in `validate_carriage.py`.
+
+Text by stamping (not yet run on the printer): `stamp_print.py "HELLO"`
+plans one entry per pixel column (5x7 font, `tools/stamp_plan.py`), uploads
+them (USB 0x83/0x84 words, 0x85 commit) and runs the firmware's stamp job
+(0x87): the carriage crawls across the text and one black record fires as
+each entry's encoder position is crossed; 0x88 reports fired and missed
+entries. `tests/validate_stamp.py` renders the fires onto a virtual page and
+checks the text; the nozzle map it assumes (eight nozzles per record-word
+bit, cleared bit fires) is the hypothesis the mask-mapping sheet will test. A `timeout` result means the engine
+never reported completion; the firmware then runs the stock cleanup, disarms
+and releases. The register contract and its limits are documented in
+`src/head_fire.c`.
+
+## Scan a printed sheet back and locate the marks
+
+```sh
+python3 app/tools/mark_scan.py --out scans/marks1                 # 75 dpi grey scan via eSCL, then detect
+python3 app/tools/mark_scan.py --out scans/marks2 --reference scans/marks1.json   # offsets versus an earlier scan
+```
+
+Print-then-scan loop for head debugging, in the spirit of the stock head
+alignment: put the ejected sheet face down against the glass corner mark and
+run the tool. It reports each ink mark's centre, size and bounding box in
+millimetres from the glass corner, writes an annotated PNG and a JSON report,
+and with `--reference` the shift of each mark versus a previous scan.
+
+## Register tunnel for hardware-in-the-loop emulation
+
+```sh
+python3 tools/tunnel_proxy.py              # reads only; add --unlock to allow forwarded writes
+docker run --rm -v "$PWD:/project:rw" mg2550s-emu emu/run.py boot --eeprom emu/inputs/eeprom.bin \
+    --tunnel host.docker.internal:7731 --forward c0c80000-c0c88000,c0c8d000-c0c8e000
+```
+
+The stock firmware runs in the emulator while accesses in the forwarded ranges
+are performed on the printer through USB requests 0x90..0x94 (`src/tunnel.c`).
+The firmware allowlists the head blocks, the motor blocks (read only), the
+GPIO/alias banks, the panel (read only) and the ADC; the interrupt controller,
+clocks, flash, USB core and RAM are never reachable, and writes need the unlock
+key the proxy sends only with `--unlock`. Interrupts stay synthetic in the
+emulator because this firmware masks them. See the [emulator guide](../emu/README.md).
+
 ## Home and inspect logs
 
 ```sh
@@ -195,8 +268,10 @@ Protocol and controller details are in [HOMING.md](evidence/HOMING.md) and
 | `src/scanner.c`, `src/scnio_seq.h` | Sensor timing, illumination, DMA and line capture |
 | `src/scan_page.c` | Page sequencing and row ownership |
 | `src/print.c` | Experimental print-data decoder; physical printing is unfinished |
-| `src/cartridge.c` | Cartridge fuse-ROM reader with the stock head-interface sequence (USB 0x62/0x63); see [evidence](evidence/CARTRIDGE.md) |
+| `src/cartridge.c` | Cartridge fuse-ROM reader with the stock head-interface sequence (USB 0x62/0x63), shared head-interface steps and thermistor ADC; see [evidence](evidence/CARTRIDGE.md) |
+| `src/head_fire.c` | Stock prefire lists (black 0x24, colour 0x25; USB 0x81/0x82), custom record words and the crawling stamp job (0x83..0x88); first ink on paper 2026-10-25, see [HEAD_FIRE.md](evidence/HEAD_FIRE.md) |
 | `src/print_mech.c`, `src/paper_feed.c` | CR/LF register dump, bounded motor pulses, GPIO snapshot, closed-loop paper feed; see [evidence](evidence/PRINT_MECH.md) |
+| `src/tunnel.c` | Allowlisted register peek/poke for hardware-in-the-loop emulation (USB 0x90..0x94) |
 | `src/carriage.c`, `src/page_job.c` | Carriage homing and closed-loop moves; dry-run page loop (feed, sweeps, advances, eject) |
 | `PRINT_TEST_PLAN.md` | Staged physical test plan for the CR/LF print motors and head controller |
 | `tests/`, `tools/`, `evidence/` | Emulator checks, host commands and reviewed results |
@@ -211,4 +286,7 @@ Optical origin, shading, white balance, colour reconstruction and sensor geometr
 need calibration. Travel scaling and homing repeatability need broader physical
 testing. The preview aspect ratio is approximate and highlights may clip.
 Scanning currently uses the supplied USB host script; standard scanner-driver
-integration, faster acquisition and physical printing remain unfinished.
+integration, faster acquisition and physical printing remain unfinished. The
+prefire awaits its first physical run; the moving-band print path (resource
+mode 3, band object, carriage windows, column clock) and the nozzle map are
+not recovered yet.

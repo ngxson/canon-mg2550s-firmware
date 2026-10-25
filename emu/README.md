@@ -119,7 +119,32 @@ patched. This is an internal-command experiment; it does not decode a physical
 Copy-button press or a host scan request.
 
 Additional controls: `boot --ready-level 0..4` progressively enables modeled
-USB PHY/core and timer readiness; `home --mode 0` leaves the message unchanged;
+USB PHY/core and timer readiness; `boot --key MASK [--key-tick N --key-ticks M]`
+holds MASK in the panel key register `0xc0c8d028` (the register stock task 72
+polls and the replacement firmware's buttons use) from tick N for M ticks and
+reports what the unmodified firmware does afterwards (new code ranges,
+panel/USB/motor writes, event posts, mailbox receives, next wall) as
+`key_press` in the report; `--key 0x0` is the control run;
+`boot --probe-source S [--probe-tick T]` forces VIC source S once after idle
+(the scheduler's documented discovery mode) and reports the handler, the
+registers it reads and writes, RTOS posts and woken tasks as `probe`;
+`boot --usb [--usb-source S] [--usb-force] [--bjl FILE]` attaches the scripted
+USB host (the replacement suites' model of the same core, `stock/usbhost.py`)
+when stock clears soft-disconnect, enumerates, records the descriptors and
+device ID stock returns as data, parses its bulk endpoints and streams FILE
+to the bulk OUT endpoint; with S the core's pending events are delivered as
+that VIC source; the report's `usb` section lists events, responses and stalls; `--usb-attach T`
+attaches at tick T even though stock keeps soft-disconnect, `--usb-mask V`
+presets the core interrupt mask at that attach, `--usb-force` delivers the
+source regardless of masks, `--usb-variant` selects model variants
+(`setup1`, `outonly`, `nosupdec`); these are experiment assumptions, listed
+in the report;
+`boot --tunnel HOST:PORT [--forward lo-hi,...] [--forward-writes]` forwards
+the listed MMIO ranges to the real board through `tools/tunnel_proxy.py`
+and the replacement firmware's register tunnel (reads by default; writes
+only with the flag and an unlocked proxy); the container then needs
+network access to the host (`host.docker.internal`); `tunnel` in the
+report logs every forwarded access with PC, task and round-trip time; `home --mode 0` leaves the message unchanged;
 `--no-timer4` and `--no-serial-irq` withhold the respective inputs. These home
 controls use stationary feedback. The report lists the assumptions enabled.
 
@@ -224,6 +249,11 @@ recorded separately in [homing](../app/evidence/HOMING.md) and
 | `stock/home.py` | Scanner command input, timer4/serial IRQ and motor trace |
 | `stock/feedback.py` | Explicit scripted seek/backoff and completion controls |
 | `stock/head_interface.py` | Empirical cartridge configuration, selector and sense contract |
+| `stock/keys.py` | Panel key injection after idle and the black-box reaction report |
+| `stock/irqprobe.py` | Forced single-interrupt injection after idle and the handler report |
+| `stock/usbhost.py` | Scripted USB host for the stock trace, ported from the replacement test model |
+| `stock/tunnel.py` | Hardware-in-the-loop forwarding of selected MMIO ranges through the register tunnel |
+| `tests/test_tunnel.py` | Forwarding check against an in-process fake proxy |
 | `tests/test_cli.py` | Input protection, argument validation and runner checks |
 | `tests/test_head_interface.py` | Cartridge configuration failures, readbacks, retention and fixture bits |
 

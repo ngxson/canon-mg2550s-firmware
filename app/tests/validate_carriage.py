@@ -14,31 +14,23 @@ APP = Path(__file__).resolve().parents[1]; BOOT = APP.parent / 'bootloader'
 sys.path.insert(0, str(BOOT / 'tests')); sys.path.insert(0, str(APP / 'tests'))
 from model import setup, checked, TICKS_PER_MS  # noqa: E402
 from model_printer import PrinterModel  # noqa: E402
-
-CR_C, CR_POS = 0xc0c50000, 0xc0c51100
-TRAVEL = 0x1d000
+from model_carriage import CarriageMixin, CR_C, CR_POS, TRAVEL  # noqa: E402
 
 
-class CRModel(PrinterModel):
+class CRModel(CarriageMixin, PrinterModel):
     def __init__(self, *a, frozen=False, **k):
-        super().__init__(*a, **k)
-        self.wall = 0x40000; self.pos = self.wall + 60000; self.frozen = frozen; self.cmds = []
+        super().__init__(*a, **k); self.cr_init(frozen=frozen)
 
     @checked
     def write(self, cpu, offset, size, value, user):
-        a = 0xc0000000 + offset
-        if a == CR_POS: self.wall = value - (self.pos - self.wall); self.pos = value
-        if a == 0xc0c50008 and self.regs.get(CR_C) == 0x102: self.cmds.append(value)
+        self.cr_write(0xc0000000 + offset, value)
         return super().write(cpu, offset, size, value, user)
 
     @checked
     def read(self, cpu, offset, size, user):
         a = 0xc0000000 + offset
-        if a == CR_POS:
-            if self.regs.get(CR_C) == 0x102 and not self.frozen:
-                step = (self.regs.get(0xc0c50008, 2000) - 2000) // 8      # ~75 counts per read at 30 %
-                self.pos = max(self.wall, min(self.wall + TRAVEL, self.pos + step))
-            return (self.pos & 0x7ffff) & ~63
+        r = self.cr_read(a)
+        if r is not None: return r
         if a == 0xc0c82008 and self.stage == 'application':
             self.counter = (self.counter + TICKS_PER_MS // 4) & 0xffffffff   # 0.25 modeled ms per read
             return self.counter & 0x1fffffff
@@ -89,7 +81,7 @@ def main():
 
     # 2) move left to 50000, land within tolerance, never beyond the limits, commands clamped
     command(e, 'move', 0x6d, 50000 // 64, 0); s = wait_idle(e)
-    assert s[3] == 2 and abs(s32(s[4]) - 50000) <= 320, s32(s[4])
+    assert s[3] == 2 and abs(s32(s[4]) - 50000) <= 320, (s[3], s32(s[4]))
     assert e.pos <= e.wall + TRAVEL - 1024, 'crossed the far limit'
     assert all(1200 <= c <= 2800 for c in e.cmds), (min(e.cmds), max(e.cmds))
     clean(e); report['cases']['move_left'] = list(s); print('PASS move_left x=', s32(s[4]))
@@ -110,6 +102,19 @@ def main():
     command(e2, 'move_frozen', 0x6d, 30000 // 64, 0); s = wait_idle(e2)
     assert s[3] == 3, s
     clean(e2); report['cases']['stall'] = list(s); print('PASS stall_detected')
+
+    # 5b) Short moves (stamping): 12 consecutive 1920-count steps from 35000, each must land within
+    #     two counter steps and never stall; the friction model stalls the sweep controller on these.
+    e3 = booted(); command(e3, 'home3', 0x6c); wait_idle(e3)
+    command(e3, 'move_to_start', 0x6d, 35000 // 64, 0); s = wait_idle(e3); assert s[3] == 2, s
+    errs = []
+    for i in range(1, 13):
+        x = 35000 + i * 1920
+        command(e3, 'short%d' % i, 0x6d, x // 64, 0); s = wait_idle(e3)
+        assert s[3] == 2, ('short move failed', i, s)
+        errs.append(s32(s[4]) - x)
+    assert max(abs(v) for v in errs) <= 640, errs      # a constant overshoot of ten steps is tolerable: nothing prints at a stop
+    clean(e3); report['cases']['short_moves'] = {'landing_errors': errs}; print('PASS short_moves errors', errs)
 
     # 6) USB stop during a move
     e2.frozen = False

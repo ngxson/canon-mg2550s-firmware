@@ -1,0 +1,40 @@
+{
+  "image": "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/scans/colour_scan.png",
+  "resolution": 75,
+  "mm_per_px": 0.33866666666666667,
+  "image_mm": [
+    215.7,
+    296.7
+  ],
+  "paper_fraction": 0.965,
+  "marks": [
+    {
+      "x_mm": 97.37,
+      "y_mm": 102.68,
+      "w_mm": 4.06,
+      "h_mm": 8.47,
+      "area_mm2": 31.54,
+      "bbox_px": [
+        282,
+        291,
+        294,
+        316
+      ],
+      "mean_darkness": 0.831
+    },
+    {
+      "x_mm": 45.15,
+      "y_mm": 102.75,
+      "w_mm": 4.06,
+      "h_mm": 8.81,
+      "area_mm2": 31.08,
+      "bbox_px": [
+        128,
+        291,
+        140,
+        317
+      ],
+      "mean_darkness": 0.82
+    }
+  ]
+}

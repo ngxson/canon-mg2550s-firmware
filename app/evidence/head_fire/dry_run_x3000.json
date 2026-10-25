@@ -1,0 +1,36 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "args": {
+    "position": 3000,
+    "count": 0,
+    "ambient": 40,
+    "dry_run": true,
+    "no_park": false,
+    "output": "app/evidence/head_fire/dry_run_x3000.json"
+  },
+  "cartridge": {
+    "black_rank1": 37,
+    "colour_rank1": 16,
+    "colour_rank2": 7,
+    "black_stable": true,
+    "colour_stable": true,
+    "connection": "0x101"
+  },
+  "adc_host": {
+    "black": 750,
+    "colour": 746
+  },
+  "firmware_log": "8 = 0x00000000\n  c012010c = 0x00000000\n  c0120110 = 0x00000000\n  c0120114 = 0x00000000\n  c012011c = 0x00000000\n  c0120124 = 0x00000000\n  c0c840c0 = 0x00000000\n  c0c840c4 = 0x00000000\n  c0c81200 = 0x00000fdf\n  c0c81204 = 0x00001020\n  c0c8121c = 0x00000300\n[scan] capture engine 0xc0d60000:\n  c0d60000 = 0x00000000\n  c0d60008 = 0x00000000\n  c0d60080 = 0x00000000\n  c0d60084 = 0x00000000\n  c0d60130 = 0x00000000\n  c0d6015c = 0x00000000\n  c0d60164 = 0x00000000\n  c0d601c0 = 0x00000000\n  c0d601d4 = 0x00000000\n  c0d601d8 = 0x00000000\n  c0d601dc = 0x00000000\n  c0d601e0 = 0x00000000\n  c0d601e4 = 0x00000000\n  c0d601e8 = 0x00000000\n  c0d601ec = 0x00000000\n  c0d601f0 = 0x00000000\n  c0d601f4 = 0x00000000\n  c0d60294 = 0x00000000\n  c0d602c0 = 0x00000000\n  c0c85614 = 0x00000000\n[scan] peek done\n[http] c0 POST /ipp/print\n[ipp] operation 0x0000000b status 0x00000000\n[http] c0 -> 200\n[http] c1 POST /ipp/faxout\n[http] c1 -> 404\n[http] c1 GET /eSCL/ScannerCapabilities\n[http] c1 -> 200\n[http] c1 POST /\n[ipp] operation 0x0000000b status 0x00000000\n[http] c1 -> 200\n[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200\n[cart] head block before: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00070707 00070707 00070707 0000000b 00000000 00000000 00000000 00000000 0012180b 00000000\n[cart] head block after: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000\n[cart] connection black=1 colour=1\n[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5\n[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0\n[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1\n[cart] head interface left prepared\n[head] adc black=750 colour=746\n[motor] setup c0c41404=00000004\n[motor] setup c0c41408=00000005\n[motor] setup c0c41418=0000000a\n[motor] setup c0c81090=0000003f\n[motor] setup c0c57000=0000200d\n[motor] setup c0c57100=00700000\n[motor] setup c0c57148=00000001\n[motor] setup c0c57308=00000001\n[cr] homing toward the park wall\n[cr] park reference=0x0006ffc0\n[cr] done result=2 x=64 ms=320 stalls=0\n[cr] move x=64 -> 2944 cruise=30000 left\n[cr] t=50 x=384 speed=1984 wanted=10000 cmd=2600\n[cr] t=100 x=832 speed=5952 wanted=10000 cmd=2093\n[cr] t=150 x=1152 speed=7936 wanted=10000 cmd=2100\n[cr] t=200 x=1152 speed=0 wanted=10000 cmd=2133\n[cr] t=250 x=1152 speed=0 wanted=10000 cmd=2183\n[cr] t=300 x=1152 speed=0 wanted=10000 cmd=2233\n[cr] t=350 x=1152 speed=0 wanted=10000 cmd=2283\n[cr] t=400 x=1152 speed=0 wanted=10000 cmd=2333\n[cr] t=450 x=1152 speed=0 wanted=10000 cmd=2383\n[cr] done result=3 x=1152 ms=584 stalls=1\n"
+}

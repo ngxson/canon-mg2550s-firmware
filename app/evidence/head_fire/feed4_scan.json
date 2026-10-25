@@ -1,0 +1,138 @@
+{
+  "image": "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/scans/feed4_scan.png",
+  "resolution": 75,
+  "mm_per_px": 0.33866666666666667,
+  "image_mm": [
+    215.7,
+    296.7
+  ],
+  "paper_fraction": 0.986,
+  "marks": [
+    {
+      "x_mm": 131.6,
+      "y_mm": 27.78,
+      "w_mm": 1.69,
+      "h_mm": 5.76,
+      "area_mm2": 6.65,
+      "bbox_px": [
+        387,
+        75,
+        392,
+        92
+      ],
+      "mean_darkness": 0.924
+    },
+    {
+      "x_mm": 131.7,
+      "y_mm": 32.36,
+      "w_mm": 1.02,
+      "h_mm": 2.03,
+      "area_mm2": 1.03,
+      "bbox_px": [
+        388,
+        93,
+        391,
+        99
+      ],
+      "mean_darkness": 0.888
+    },
+    {
+      "x_mm": 131.63,
+      "y_mm": 37.63,
+      "w_mm": 1.35,
+      "h_mm": 6.77,
+      "area_mm2": 5.85,
+      "bbox_px": [
+        387,
+        100,
+        391,
+        120
+      ],
+      "mean_darkness": 0.907
+    },
+    {
+      "x_mm": 131.7,
+      "y_mm": 44.15,
+      "w_mm": 1.02,
+      "h_mm": 5.08,
+      "area_mm2": 4.59,
+      "bbox_px": [
+        388,
+        124,
+        391,
+        139
+      ],
+      "mean_darkness": 0.914
+    },
+    {
+      "x_mm": 131.63,
+      "y_mm": 52.61,
+      "w_mm": 0.68,
+      "h_mm": 0.68,
+      "area_mm2": 0.34,
+      "bbox_px": [
+        388,
+        155,
+        390,
+        157
+      ],
+      "mean_darkness": 0.498
+    },
+    {
+      "x_mm": 131.73,
+      "y_mm": 55.34,
+      "w_mm": 1.02,
+      "h_mm": 3.05,
+      "area_mm2": 2.52,
+      "bbox_px": [
+        388,
+        159,
+        391,
+        168
+      ],
+      "mean_darkness": 0.857
+    },
+    {
+      "x_mm": 131.89,
+      "y_mm": 101.53,
+      "w_mm": 1.35,
+      "h_mm": 5.08,
+      "area_mm2": 3.44,
+      "bbox_px": [
+        388,
+        294,
+        392,
+        309
+      ],
+      "mean_darkness": 0.902
+    },
+    {
+      "x_mm": 131.88,
+      "y_mm": 112.03,
+      "w_mm": 0.68,
+      "h_mm": 1.02,
+      "area_mm2": 0.57,
+      "bbox_px": [
+        389,
+        330,
+        391,
+        333
+      ],
+      "mean_darkness": 0.942
+    },
+    {
+      "x_mm": 131.97,
+      "y_mm": 113.6,
+      "w_mm": 1.02,
+      "h_mm": 1.35,
+      "area_mm2": 1.03,
+      "bbox_px": [
+        389,
+        334,
+        392,
+        338
+      ],
+      "mean_darkness": 0.915
+    }
+  ]
+}

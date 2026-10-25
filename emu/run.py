@@ -61,6 +61,25 @@ def parser():
             controls.add_argument('--spurious', action='store_true')
         elif name == 'boot':
             sub.add_argument('--ready-level', type=int, choices=range(5), default=4)
+            sub.add_argument('--key', type=lambda v: int(v, 0), default=None,
+                             help='panel key register bits to hold after idle (black-box experiment)')
+            sub.add_argument('--key-tick', type=positive, default=200)
+            sub.add_argument('--key-ticks', type=positive, default=40)
+            sub.add_argument('--key-idle', type=lambda v: int(v, 0), default=0, help='key register bits always present (real board: 0x8)')
+            sub.add_argument('--key-latch', choices=('sticky', 'pressed'), default=None, help='model the 0xc0c8d02c key-event latch (board: 0x48 idle, +0x20 after a press)')
+            sub.add_argument('--probe-source', type=int, default=None, help='force one VIC source once after idle (black-box IRQ discovery)')
+            sub.add_argument('--probe-tick', type=positive, default=300)
+            sub.add_argument('--preset', default='', help='register presets applied before the probe, hex addr=value,...')
+            sub.add_argument('--usb', action='store_true', help='attach the scripted USB host when stock connects')
+            sub.add_argument('--usb-source', type=int, default=None, help='VIC source to inject for pending USB core events')
+            sub.add_argument('--usb-force', action='store_true', help='inject the USB source even if stock has not enabled it or masked the core event')
+            sub.add_argument('--usb-attach', type=positive, default=None, help='tick at which the host attaches even though stock keeps soft-disconnect (experiment)')
+            sub.add_argument('--usb-mask', type=lambda v: int(v, 0), default=None, help='core interrupt mask preset at the forced attach (model assumption)')
+            sub.add_argument('--usb-variant', default='', help='comma-separated model variants: setup1, outonly, nosupdec')
+            sub.add_argument('--bjl', type=Path, default=None, help='file streamed to the bulk OUT endpoint after configuration')
+            sub.add_argument('--tunnel', default=None, help='host:port of tools/tunnel_proxy.py; forwards --forward ranges to the board')
+            sub.add_argument('--forward', default='c0c80000-c0c88000,c0c8d000-c0c8e000', help='comma-separated hex ranges lo-hi to forward')
+            sub.add_argument('--forward-writes', action='store_true', help='also forward writes (the proxy must be unlocked)')
         elif name == 'home':
             sub.add_argument('--feedback', choices=('stationary', 'backoff'), default='stationary')
             sub.add_argument('--no-completion', action='store_true',
@@ -121,6 +140,37 @@ def stock_experiment(args):
         result = emu.exercise(ticks=args.ticks, budget=args.budget,
                               control=args.no_irq, spurious=args.spurious)
         check = lambda: scheduler.verify(result, args.ticks, args.no_irq, args.spurious)
+    elif args.command == 'boot' and args.tunnel:
+        from stock import tunnel
+        host, port = args.tunnel.rsplit(':', 1)
+        proxy = tunnel.Proxy(host, int(port))
+        emu = tunnel.TunnelTrace(proxy=proxy, forward=tunnel.parse_ranges(args.forward), forward_writes=args.forward_writes,
+                                 ready_level=args.ready_level, **inputs).boot()
+        result = emu.run_tunnel(args.ticks, args.budget)
+        check = lambda: None
+    elif args.command == 'boot' and args.usb:
+        from stock import usbhost
+        bjl = args.bjl.read_bytes() if args.bjl else b''
+        emu = usbhost.UsbHost(usb_source=args.usb_source, bjl=bjl, usb_force=args.usb_force, usb_attach=args.usb_attach,
+                              ready_level=args.ready_level, **inputs)
+        emu.usb_mask = args.usb_mask; emu.variant = set(v for v in args.usb_variant.split(',') if v)
+        emu = emu.boot()
+        result = emu.run_usb(args.ticks, args.budget)
+        check = lambda: None
+    elif args.command == 'boot' and args.probe_source is not None:
+        from stock import irqprobe
+        preset = {int(a, 16): int(v, 16) for a, v in (item.split('=') for item in args.preset.split(',') if item)}
+        emu = irqprobe.IrqProbe(probe_source=args.probe_source, probe_tick=args.probe_tick, preset=preset,
+                                ready_level=args.ready_level, **inputs).boot()
+        result = emu.run_probe(max(args.ticks, args.probe_tick + 20), args.budget)
+        check = lambda: None
+    elif args.command == 'boot' and args.key is not None:
+        from stock import keys
+        emu = keys.KeyPress(key_mask=args.key, key_tick=args.key_tick, key_ticks=args.key_ticks, key_idle=args.key_idle,
+                            ready_level=args.ready_level, **inputs).boot()
+        emu.latch_mode = args.key_latch
+        result = emu.run_keys(args.ticks, args.budget)
+        check = lambda: None
     elif args.command == 'boot':
         emu = boot.BootTrace(ready_level=args.ready_level, **inputs).boot()
         result = emu.run_boot(args.ticks, args.budget)

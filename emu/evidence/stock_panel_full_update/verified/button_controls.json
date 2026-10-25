@@ -1,0 +1,74 @@
+{
+  "firmware_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "initial_marker": "00",
+  "initial_latch": 0,
+  "baseline_input": "08",
+  "start_pc": "0x0",
+  "assertions_passed": true,
+  "cases": [
+    {
+      "case": "cancel_held_at_reset_then_release",
+      "mode": 3,
+      "stop_pc": "0x1ac",
+      "panel_reads": 146,
+      "channel0_indicator_pcs": [
+        "0x20001e10"
+      ],
+      "status": "C0",
+      "erase_jobs": 1,
+      "program_jobs": 16,
+      "final_marker": "0x55",
+      "instructions": 7729372
+    },
+    {
+      "case": "cancel_then_power_press_release_then_cancel_release",
+      "mode": 4,
+      "stop_pc": "0x1ac",
+      "panel_reads": 178,
+      "channel0_indicator_pcs": [
+        "0x20001e10"
+      ],
+      "status": "C0",
+      "erase_jobs": 1,
+      "program_jobs": 16,
+      "final_marker": "0x55",
+      "instructions": 7729441
+    },
+    {
+      "case": "both_held_at_initial_check",
+      "mode": 1,
+      "stop_pc": "0x1ac",
+      "panel_reads": 64,
+      "channel0_indicator_pcs": [],
+      "status": null,
+      "erase_jobs": 0,
+      "program_jobs": 0,
+      "final_marker": "0x0",
+      "instructions": 35118
+    },
+    {
+      "case": "power_only_at_initial_check",
+      "mode": 1,
+      "stop_pc": "0x1ac",
+      "panel_reads": 64,
+      "channel0_indicator_pcs": [],
+      "status": null,
+      "erase_jobs": 0,
+      "program_jobs": 0,
+      "final_marker": "0x0",
+      "instructions": 35118
+    },
+    {
+      "case": "no_buttons",
+      "mode": 1,
+      "stop_pc": "0x1ac",
+      "panel_reads": 64,
+      "channel0_indicator_pcs": [],
+      "status": null,
+      "erase_jobs": 0,
+      "program_jobs": 0,
+      "final_marker": "0x0",
+      "instructions": 35118
+    }
+  ]
+}

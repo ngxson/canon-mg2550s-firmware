@@ -239,7 +239,7 @@ static void setup_request(void)
     } else if(type==0x40 && request==APP_REQUEST_HOME && !value && !index && !length) {
         if(scanner_home_request()) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_MOTOR_STOP && !value && !index && !length) {
-        page_job_cancel(); scan_page_cancel(); scanner_motor_cancel(); paper_feed_cancel(); carriage_cancel(); scanner_lamp_off(); ack();
+        stamp_cancel(); page_job_cancel(); scan_page_cancel(); scanner_motor_cancel(); paper_feed_cancel(); carriage_cancel(); scanner_lamp_off(); ack();
     } else if(type==0xc0 && request==REQUEST_INFO && !value && !index) {
         reply(service_info(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_LOG && !value && !index) {
@@ -292,6 +292,31 @@ static void setup_request(void)
         if(!scanner_motor_busy() && !scan_page_busy() && cartridge_request(value,index)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_HEAD_ADC && !value && !index) {
         reply(head_adc_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_HEAD_FIRE && !length) {
+        if(head_fire_request(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_HEAD_FIRE_STATUS && !value && !index) {
+        reply(head_fire_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_TUNNEL_ADDR && !length) {
+        if(tunnel_set_address((uint32_t)value|(uint32_t)index<<16)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_TUNNEL_READ && !value && !index) {
+        unsigned n=tunnel_read(control_buffer,length>sizeof(control_buffer)?sizeof(control_buffer):length);
+        if(n) reply(n,length); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_TUNNEL_WRITE && !length) {
+        if(tunnel_write((uint32_t)value|(uint32_t)index<<16)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_TUNNEL_UNLOCK && !index && !length) {
+        if(tunnel_unlock(value)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_TUNNEL_STATUS && !value && !index) {
+        reply(tunnel_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_STAMP_COMMIT && !length) {
+        if(stamp_commit(value,(uint32_t)index*64u)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_STAMP_CLEAR && !value && !index && !length) {
+        if(stamp_clear()) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_STAMP_RUN && !length) {
+        if(!scanner_motor_busy() && !scan_page_busy() && stamp_run(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_STAMP_STATUS && !value && !index) {
+        reply(stamp_status(control_buffer),length);
+    } else if(type==0x40 && (request==APP_REQUEST_HEAD_WORD_A || request==APP_REQUEST_HEAD_WORD_B) && !length) {
+        if(head_fire_set_word(request-APP_REQUEST_HEAD_WORD_A,(uint32_t)value|(uint32_t)index<<16)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_CART_STATUS && !value && !index) {
         reply(cartridge_status(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_PRINT_REGS && !value && !index) {

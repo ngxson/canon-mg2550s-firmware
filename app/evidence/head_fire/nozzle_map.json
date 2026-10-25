@@ -1,0 +1,9 @@
+{
+  "nozzles_per_bit": 32,
+  "bits_word_a": 10,
+  "bits_word_b": 0,
+  "cleared_fires": true,
+  "bit0_at_trailing_edge": false,
+  "pitch_rows": 1,
+  "_measured": "2026-10-26 interleaved mapping sheet: word A bits 0..9 each fire one 1.43 mm group (32 nozzles at 600 dpi), bit 0 at the leading-edge end; bits 10..31 and word B do nothing on the black lanes"
+}

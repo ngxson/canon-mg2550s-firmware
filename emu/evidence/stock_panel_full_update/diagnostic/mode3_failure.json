@@ -1,0 +1,160 @@
+{
+  "error": "UcError(10)",
+  "mode": 3,
+  "entry": {
+    "mode": 3,
+    "marker": "0x0",
+    "prior_eeprom_writes": [],
+    "flash_unchanged": true
+  },
+  "pc": "0x19fc",
+  "lr": "0x20004625",
+  "sp": "0x207fffe4",
+  "cpsr": "0xdf",
+  "final_flash_sha256": "b1c7abc8b7303e84fbde73ec88de02355cf810848486d30cb9dfe269294ec8b8",
+  "image_sha256": "b1c7abc8b7303e84fbde73ec88de02355cf810848486d30cb9dfe269294ec8b8",
+  "complete_staging_buffer_matches": true,
+  "flash_matches_target": true,
+  "host_final_status": "C0",
+  "final_status_acknowledged": true,
+  "erase_count": 32,
+  "program_count": 512,
+  "return_landings": [
+    "0x1804",
+    "0x1ac",
+    "0x1bc"
+  ],
+  "exit_instruction_tail": [
+    "0x1e0",
+    "0x1e4",
+    "0x1cc",
+    "0x1d0",
+    "0x1d4",
+    "0x1d8",
+    "0x1dc",
+    "0x1e0",
+    "0x1e4",
+    "0x1cc",
+    "0x1d0",
+    "0x1d4",
+    "0x1d8",
+    "0x1dc",
+    "0x1e0",
+    "0x1e4",
+    "0x1cc",
+    "0x1d0",
+    "0x1d4",
+    "0x1d8",
+    "0x1dc",
+    "0x1e0",
+    "0x1e4",
+    "0x1cc",
+    "0x1d0",
+    "0x1d4",
+    "0x1d8",
+    "0x1dc",
+    "0x1e0",
+    "0x1e4",
+    "0x1cc",
+    "0x1d0",
+    "0x1d4",
+    "0x1d8",
+    "0x1dc",
+    "0x1e0",
+    "0x1e4",
+    "0x1e8",
+    "0x1ec",
+    "0x1f0",
+    "0x1f4",
+    "0x1f8",
+    "0x1fc",
+    "0x200",
+    "0x204",
+    "0x208",
+    "0x20c",
+    "0x210",
+    "0x214",
+    "0x218",
+    "0x21c",
+    "0x220",
+    "0x224",
+    "0x228",
+    "0x22c",
+    "0x230",
+    "0x234",
+    "0x20003620",
+    "0x20003624",
+    "0x1882",
+    "0x2000461e",
+    "0x20004620",
+    "0x20004622",
+    "0x19fc"
+  ],
+  "milestones": [
+    {
+      "event": "firmware",
+      "pc": "0x1838",
+      "name": "copy_updater_from_flash"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20003440",
+      "name": "select_update_mode"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x2000351c",
+      "name": "updater_state_machine"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x200057b8",
+      "name": "initialize_usb"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20004280",
+      "name": "handle_bus_reset"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20006830",
+      "name": "handle_enumeration_done"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20005f28",
+      "name": "handle_setup_packet"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20005d34",
+      "name": "set_configuration"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20005a6c",
+      "name": "acknowledge_device_id_status_stage"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x2000329c",
+      "name": "receive_update"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20006bc4",
+      "name": "real_usb_byte_reader"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x20003368",
+      "name": "program_update"
+    },
+    {
+      "event": "firmware",
+      "pc": "0x200030f8",
+      "name": "report_success"
+    }
+  ]
+}

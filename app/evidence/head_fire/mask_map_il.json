@@ -1,0 +1,481 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "count": 100,
+  "ambient": 40,
+  "x0": 35000,
+  "stop_counts": 1920,
+  "row_counts": 1050,
+  "stops": [
+    {
+      "row": "A",
+      "bit": 0,
+      "x": 35000,
+      "word_a": "fffffffe",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 0,
+      "x": 35960,
+      "word_a": "ffffffff",
+      "word_b": "fffffffe"
+    },
+    {
+      "row": "A",
+      "bit": 1,
+      "x": 36920,
+      "word_a": "fffffffd",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 1,
+      "x": 37880,
+      "word_a": "ffffffff",
+      "word_b": "fffffffd"
+    },
+    {
+      "row": "A",
+      "bit": 2,
+      "x": 38840,
+      "word_a": "fffffffb",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 2,
+      "x": 39800,
+      "word_a": "ffffffff",
+      "word_b": "fffffffb"
+    },
+    {
+      "row": "A",
+      "bit": 3,
+      "x": 40760,
+      "word_a": "fffffff7",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 3,
+      "x": 41720,
+      "word_a": "ffffffff",
+      "word_b": "fffffff7"
+    },
+    {
+      "row": "A",
+      "bit": 4,
+      "x": 42680,
+      "word_a": "ffffffef",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 4,
+      "x": 43640,
+      "word_a": "ffffffff",
+      "word_b": "ffffffef"
+    },
+    {
+      "row": "A",
+      "bit": 5,
+      "x": 44600,
+      "word_a": "ffffffdf",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 5,
+      "x": 45560,
+      "word_a": "ffffffff",
+      "word_b": "ffffffdf"
+    },
+    {
+      "row": "A",
+      "bit": 6,
+      "x": 46520,
+      "word_a": "ffffffbf",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 6,
+      "x": 47480,
+      "word_a": "ffffffff",
+      "word_b": "ffffffbf"
+    },
+    {
+      "row": "A",
+      "bit": 7,
+      "x": 48440,
+      "word_a": "ffffff7f",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 7,
+      "x": 49400,
+      "word_a": "ffffffff",
+      "word_b": "ffffff7f"
+    },
+    {
+      "row": "A",
+      "bit": 8,
+      "x": 50360,
+      "word_a": "fffffeff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 8,
+      "x": 51320,
+      "word_a": "ffffffff",
+      "word_b": "fffffeff"
+    },
+    {
+      "row": "A",
+      "bit": 9,
+      "x": 52280,
+      "word_a": "fffffdff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 9,
+      "x": 53240,
+      "word_a": "ffffffff",
+      "word_b": "fffffdff"
+    },
+    {
+      "row": "A",
+      "bit": 10,
+      "x": 54200,
+      "word_a": "fffffbff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 10,
+      "x": 55160,
+      "word_a": "ffffffff",
+      "word_b": "fffffbff"
+    },
+    {
+      "row": "A",
+      "bit": 11,
+      "x": 56120,
+      "word_a": "fffff7ff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 11,
+      "x": 57080,
+      "word_a": "ffffffff",
+      "word_b": "fffff7ff"
+    },
+    {
+      "row": "A",
+      "bit": 12,
+      "x": 58040,
+      "word_a": "ffffefff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 12,
+      "x": 59000,
+      "word_a": "ffffffff",
+      "word_b": "ffffefff"
+    },
+    {
+      "row": "A",
+      "bit": 13,
+      "x": 59960,
+      "word_a": "ffffdfff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 13,
+      "x": 60920,
+      "word_a": "ffffffff",
+      "word_b": "ffffdfff"
+    },
+    {
+      "row": "A",
+      "bit": 14,
+      "x": 61880,
+      "word_a": "ffffbfff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 14,
+      "x": 62840,
+      "word_a": "ffffffff",
+      "word_b": "ffffbfff"
+    },
+    {
+      "row": "A",
+      "bit": 15,
+      "x": 63800,
+      "word_a": "ffff7fff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 15,
+      "x": 64760,
+      "word_a": "ffffffff",
+      "word_b": "ffff7fff"
+    },
+    {
+      "row": "A",
+      "bit": 16,
+      "x": 65720,
+      "word_a": "fffeffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 16,
+      "x": 66680,
+      "word_a": "ffffffff",
+      "word_b": "fffeffff"
+    },
+    {
+      "row": "A",
+      "bit": 17,
+      "x": 67640,
+      "word_a": "fffdffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 17,
+      "x": 68600,
+      "word_a": "ffffffff",
+      "word_b": "fffdffff"
+    },
+    {
+      "row": "A",
+      "bit": 18,
+      "x": 69560,
+      "word_a": "fffbffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 18,
+      "x": 70520,
+      "word_a": "ffffffff",
+      "word_b": "fffbffff"
+    },
+    {
+      "row": "A",
+      "bit": 19,
+      "x": 71480,
+      "word_a": "fff7ffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 19,
+      "x": 72440,
+      "word_a": "ffffffff",
+      "word_b": "fff7ffff"
+    },
+    {
+      "row": "A",
+      "bit": 20,
+      "x": 73400,
+      "word_a": "ffefffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 20,
+      "x": 74360,
+      "word_a": "ffffffff",
+      "word_b": "ffefffff"
+    },
+    {
+      "row": "A",
+      "bit": 21,
+      "x": 75320,
+      "word_a": "ffdfffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 21,
+      "x": 76280,
+      "word_a": "ffffffff",
+      "word_b": "ffdfffff"
+    },
+    {
+      "row": "A",
+      "bit": 22,
+      "x": 77240,
+      "word_a": "ffbfffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 22,
+      "x": 78200,
+      "word_a": "ffffffff",
+      "word_b": "ffbfffff"
+    },
+    {
+      "row": "A",
+      "bit": 23,
+      "x": 79160,
+      "word_a": "ff7fffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 23,
+      "x": 80120,
+      "word_a": "ffffffff",
+      "word_b": "ff7fffff"
+    },
+    {
+      "row": "A",
+      "bit": 24,
+      "x": 81080,
+      "word_a": "feffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 24,
+      "x": 82040,
+      "word_a": "ffffffff",
+      "word_b": "feffffff"
+    },
+    {
+      "row": "A",
+      "bit": 25,
+      "x": 83000,
+      "word_a": "fdffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 25,
+      "x": 83960,
+      "word_a": "ffffffff",
+      "word_b": "fdffffff"
+    },
+    {
+      "row": "A",
+      "bit": 26,
+      "x": 84920,
+      "word_a": "fbffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 26,
+      "x": 85880,
+      "word_a": "ffffffff",
+      "word_b": "fbffffff"
+    },
+    {
+      "row": "A",
+      "bit": 27,
+      "x": 86840,
+      "word_a": "f7ffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 27,
+      "x": 87800,
+      "word_a": "ffffffff",
+      "word_b": "f7ffffff"
+    },
+    {
+      "row": "A",
+      "bit": 28,
+      "x": 88760,
+      "word_a": "efffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 28,
+      "x": 89720,
+      "word_a": "ffffffff",
+      "word_b": "efffffff"
+    },
+    {
+      "row": "A",
+      "bit": 29,
+      "x": 90680,
+      "word_a": "dfffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 29,
+      "x": 91640,
+      "word_a": "ffffffff",
+      "word_b": "dfffffff"
+    },
+    {
+      "row": "A",
+      "bit": 30,
+      "x": 92600,
+      "word_a": "bfffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 30,
+      "x": 93560,
+      "word_a": "ffffffff",
+      "word_b": "bfffffff"
+    },
+    {
+      "row": "A",
+      "bit": 31,
+      "x": 94520,
+      "word_a": "7fffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": "B",
+      "bit": 31,
+      "x": 95480,
+      "word_a": "ffffffff",
+      "word_b": "7fffffff"
+    }
+  ],
+  "jobs": [
+    {
+      "row": "AB",
+      "result": 2,
+      "entries": 64,
+      "fired": 64,
+      "missed": 0,
+      "ms": 8983
+    }
+  ],
+  "firmware_log": "[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200\n[cart] connection black=1 colour=1\n[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5\n[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0\n[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1\n[cart] head interface left prepared\n[cr] homing toward the park wall\n[cr] park reference=0x00070000\n[cr] done result=2 x=0 ms=321 stalls=0\n[motor] setup c0c41404=00000004\n[motor] setup c0c41408=00000005\n[motor] setup c0c41418=0000000a\n[motor] setup c0c81090=0000003f\n[motor] setup c0c57000=0000200d\n[motor] setup c0c57100=00700000\n[motor] setup c0c57148=00000001\n[motor] setup c0c57308=00000001\n[feed] start mode=1 advance=8000 handoff=2048 phase1=2048\n[feed] state=10 pos=0x00070000 paper=0\n[feed] state=8 pos=0x00079114 paper=0\n[feed] state=1 pos=0x0007913b paper=0\n[feed] state=7 pos=0x00077222 paper=1\n[feed] state=8 pos=0x00076a22 paper=1\n[feed] state=3 pos=0x000769ea paper=1\n[feed] done result=2 attempts=1 pickup=10009 advance=8000 eject=0 ms=12670\n[feed] start mode=3 advance=8000 handoff=2048 phase1=2048\n[feed] state=3 pos=0x0007894f paper=1\n[feed] done result=2 attempts=0 pickup=0 advance=8000 eject=0 ms=2003\n[cr] move x=0 -> 33444 cruise=30000 left\n[stamp] job n=64 count=100 crawl=10000 x=34944..95424\n[cr] t=50 x=384 speed=5952 wanted=28229 cmd=2258\n[cr] t=100 x=768 speed=5952 wanted=30000 cmd=2391\n[cr] t=150 x=1408 speed=7936 wanted=30000 cmd=2470\n[cr] t=200 x=2752 speed=31744 wanted=30000 cmd=2508\n[cr] t=250 x=4928 speed=43648 wanted=30000 cmd=2461\n[cr] t=300 x=6464 speed=23808 wanted=30000 cmd=2450\n[cr] t=350 x=7936 speed=31744 wanted=30000 cmd=2463\n[cr] t=400 x=9536 speed=31744 wanted=30000 cmd=2463\n[cr] t=450 x=10944 speed=27776 wanted=30000 cmd=2465\n[cr] t=500 x=11520 speed=7936 wanted=30000 cmd=2541\n[cr] t=550 x=14144 speed=61504 wanted=30000 cmd=2477\n[cr] t=600 x=16768 speed=43648 wanted=30000 cmd=2327\n[cr] t=650 x=17344 speed=9920 wanted=30000 cmd=2406\n[cr] t=700 x=17984 speed=15872 wanted=30000 cmd=2499\n[cr] t=750 x=20096 speed=47616 wanted=30000 cmd=2466\n[cr] t=800 x=22400 speed=41664 wanted=30000 cmd=2378\n[cr] t=850 x=23424 speed=17856 wanted=30000 cmd=2414\n[cr] t=900 x=24640 speed=27776 wanted=30000 cmd=2443\n[cr] t=950 x=26560 speed=39680 wanted=25815 cmd=2379\n[cr] t=1000 x=27328 speed=13888 wanted=22935 cmd=2380\n[cr] t=1050 x=27648 speed=3968 wanted=21735 cmd=2437\n[cr] t=1100 x=28288 speed=17856 wanted=19335 cmd=2476\n[cr] t=1150 x=29696 speed=27776 wanted=14055 cmd=2395\n[cr] t=1200 x=30016 speed=0 wanted=12855 cmd=2402\n[cr] t=1250 x=30272 speed=7936 wanted=11895 cmd=2431\n[cr] t=1300 x=30976 speed=13888 wanted=10000 cmd=2412\n[cr] t=1350 x=31744 speed=15872 wanted=10000 cmd=2411\n[cr] t=1400 x=32320 speed=11904 wanted=10000 cmd=2414\n[cr] t=1450 x=32640 speed=5952 wanted=10000 cmd=2418\n[cr] t=1500 x=32960 speed=7936 wanted=10000 cmd=2416\n[cr] done result=2 x=33280 ms=1816 stalls=0\n[cr] move x=33280 -> 96024 cruise=10000 left\n[cr] t=50 x=33536 speed=5952 wanted=10000 cmd=2081\n[cr] t=100 x=33792 speed=7936 wanted=10000 cmd=2089\n[cr] t=150 x=34048 speed=7936 wanted=10000 cmd=2099\n[cr] t=200 x=34048 speed=0 wanted=10000 cmd=2144\n[cr] t=250 x=34048 speed=0 wanted=10000 cmd=2194\n[cr] t=300 x=34048 speed=0 wanted=10000 cmd=2244\n[cr] t=350 x=34048 speed=0 wanted=10000 cmd=2294\n[cr] t=400 x=34048 speed=0 wanted=10000 cmd=2344\n[cr] t=450 x=34048 speed=0 wanted=10000 cmd=2394\n[cr] t=500 x=34560 speed=13888 wanted=10000 cmd=2405\n[cr] t=550 x=35456 speed=17856 wanted=10000 cmd=2401\n[cr] t=600 x=36288 speed=11904 wanted=10000 cmd=2372\n[cr] t=650 x=36352 speed=0 wanted=10000 cmd=2401\n[cr] t=700 x=36416 speed=1984 wanted=10000 cmd=2449\n[cr] t=750 x=37184 speed=17856 wanted=10000 cmd=2444\n[cr] t=800 x=38272 speed=17856 wanted=10000 cmd=2395\n[cr] t=850 x=38400 speed=0 wanted=10000 cmd=2424\n[cr] t=900 x=38400 speed=0 wanted=10000 cmd=2474\n[cr] t=950 x=38400 speed=0 wanted=10000 cmd=2474\n[cr] t=1000 x=38400 speed=0 wanted=10000 cmd=2474\n[cr] t=1050 x=38400 speed=0 wanted=10000 cmd=2474\n[cr] t=1100 x=38528 speed=3968 wanted=10000 cmd=2471\n[cr] t=1150 x=39424 speed=19840 wanted=10000 cmd=2455\n[cr] t=1200 x=40448 speed=17856 wanted=10000 cmd=2414\n[cr] t=1250 x=40960 speed=9920 wanted=10000 cmd=2420\n[cr] t=1300 x=41280 speed=7936 wanted=10000 cmd=2421\n[cr] t=1350 x=41728 speed=9920 wanted=10000 cmd=2420\n[cr] t=1400 x=41792 speed=0 wanted=10000 cmd=2448\n[cr] t=1450 x=42112 speed=9920 wanted=10000 cmd=2466\n[cr] t=1500 x=43136 speed=21824 wanted=10000 cmd=2433\n[cr] t=1550 x=44096 speed=17856 wanted=10000 cmd=2388\n[cr] t=1600 x=44736 speed=11904 wanted=10000 cmd=2392\n[cr] t=1650 x=45120 speed=7936 wanted=10000 cmd=2394\n[cr] t=1700 x=45760 speed=13888 wanted=10000 cmd=2390\n[cr] t=1750 x=46336 speed=7936 wanted=10000 cmd=2394\n[cr] t=1800 x=46528 speed=1984 wanted=10000 cmd=2408\n[cr] t=1850 x=46784 speed=7936 wanted=10000 cmd=2437\n[cr] t=1900 x=47872 speed=25792 wanted=10000 cmd=2407\n[cr] t=1950 x=48640 speed=9920 wanted=10000 cmd=2376\n[cr] t=2000 x=48704 speed=0 wanted=10000 cmd=2413\n[cr] t=2050 x=49024 speed=7936 wanted=10000 cmd=2433\n[cr] t=2100 x=49856 speed=19840 wanted=10000 cmd=2423\n[cr] t=2150 x=50560 speed=11904 wanted=10000 cmd=2405\n[cr] t=2200 x=51008 speed=7936 wanted=10000 cmd=2407\n[cr] t=2250 x=51072 speed=1984 wanted=10000 cmd=2444\n[cr] t=2300 x=51840 speed=17856 wanted=10000 cmd=2437\n[cr] t=2350 x=52672 speed=15872 wanted=10000 cmd=2410\n[cr] t=2400 x=53120 speed=7936 wanted=10000 cmd=2415\n[cr] t=2450 x=53568 speed=9920 wanted=10000 cmd=2414\n[cr] t=2500 x=54144 speed=9920 wanted=10000 cmd=2414\n[cr] t=2550 x=54656 speed=11904 wanted=10000 cmd=2413\n[cr] t=2600 x=55360 speed=13888 wanted=10000 cmd=2411\n[cr] t=2650 x=56320 speed=19840 wanted=10000 cmd=2384\n[cr] t=2700 x=56704 speed=3968 wanted=10000 cmd=2389\n[cr] t=2750 x=56832 speed=3968 wanted=10000 cmd=2430\n[cr] t=2800 x=57472 speed=13888 wanted=10000 cmd=2422\n[cr] t=2850 x=58432 speed=15872 wanted=10000 cmd=2389\n[cr] t=2900 x=58624 speed=1984 wanted=10000 cmd=2403\n[cr] t=2950 x=58688 speed=0 wanted=10000 cmd=2452\n[cr] t=3000 x=58688 speed=0 wanted=10000 cmd=2474\n[cr] t=3050 x=59328 speed=17856 wanted=10000 cmd=2460\n[cr] t=3100 x=60672 speed=25792 wanted=10000 cmd=2381\n[cr] t=3150 x=61184 speed=5952 wanted=10000 cmd=2375\n[cr] t=3200 x=61184 speed=0 wanted=10000 cmd=2423\n[cr] t=3250 x=61952 speed=19840 wanted=10000 cmd=2418\n[cr] t=3300 x=62784 speed=13888 wanted=10000 cmd=2393\n[cr] t=3350 x=62976 speed=1984 wanted=10000 cmd=2412\n[cr] t=3400 x=63232 speed=5952 wanted=10000 cmd=2420\n[cr] t=3450 x=63872 speed=13888 wanted=10000 cmd=2414\n[cr] t=3500 x=64768 speed=17856 wanted=10000 cmd=2411\n[cr] t=3550 x=65792 speed=17856 wanted=10000 cmd=2367\n[cr] t=3600 x=66304 speed=3968 wanted=10000 cmd=2365\n[cr] t=3650 x=66304 speed=0 wanted=10000 cmd=2415\n[cr] t=3700 x=66816 speed=11904 wanted=10000 cmd=2419\n[cr] t=3750 x=67328 speed=9920 wanted=10000 cmd=2420\n[cr] t=3800 x=68288 speed=21824 wanted=10000 cmd=2398\n[cr] t=3850 x=68672 speed=3968 wanted=10000 cmd=2398\n[cr] t=3900 x=68736 speed=1984 wanted=10000 cmd=2444\n[cr] t=3950 x=69120 speed=7936 wanted=10000 cmd=2439\n[cr] t=4000 x=69568 speed=9920 wanted=10000 cmd=2438\n[cr] t=4050 x=70400 speed=17856 wanted=10000 cmd=2427\n[cr] t=4100 x=71104 speed=13888 wanted=10000 cmd=2429\n[cr] t=4150 x=72064 speed=19840 wanted=10000 cmd=2422\n[cr] t=4200 x=72832 speed=13888 wanted=10000 cmd=2397\n[cr] t=4250 x=73088 speed=1984 wanted=10000 cmd=2409\n[cr] t=4300 x=73280 speed=3968 wanted=10000 cmd=2440\n[cr] t=4350 x=73984 speed=17856 wanted=10000 cmd=2429\n[cr] t=4400 x=75264 speed=25792 wanted=10000 cmd=2375\n[cr] t=4450 x=76160 speed=17856 wanted=10000 cmd=2353\n[cr] t=4500 x=76480 speed=3968 wanted=10000 cmd=2364\n[cr] t=4550 x=76736 speed=5952 wanted=10000 cmd=2392\n[cr] t=4600 x=77056 speed=5952 wanted=10000 cmd=2392\n[cr] t=4650 x=77184 speed=1984 wanted=10000 cmd=2415\n[cr] t=4700 x=77632 speed=13888 wanted=10000 cmd=2433\n[cr] t=4750 x=78912 speed=23808 wanted=10000 cmd=2373\n[cr] t=4800 x=79168 speed=1984 wanted=10000 cmd=2386\n[cr] t=4850 x=79232 speed=1984 wanted=10000 cmd=2436\n[cr] t=4900 x=79744 speed=11904 wanted=10000 cmd=2438\n[cr] t=4950 x=80896 speed=21824 wanted=10000 cmd=2395\n[cr] t=5000 x=81536 speed=9920 wanted=10000 cmd=2385\n[cr] t=5050 x=81664 speed=1984 wanted=10000 cmd=2411\n[cr] t=5100 x=81984 speed=7936 wanted=10000 cmd=2421\n[cr] t=5150 x=82432 speed=5952 wanted=10000 cmd=2423\n[cr] t=5200 x=82624 speed=5952 wanted=10000 cmd=2450\n[cr] t=5250 x=83584 speed=19840 wanted=10000 cmd=2431\n[cr] t=5300 x=84736 speed=23808 wanted=10000 cmd=2378\n[cr] t=5350 x=85440 speed=13888 wanted=10000 cmd=2372\n[cr] t=5400 x=85888 speed=9920 wanted=10000 cmd=2375\n[cr] t=5450 x=86656 speed=17856 wanted=10000 cmd=2369\n[cr] t=5500 x=86976 speed=3968 wanted=10000 cmd=2380\n[cr] t=5550 x=86976 speed=0 wanted=10000 cmd=2427\n[cr] t=5600 x=87424 speed=11904 wanted=10000 cmd=2436\n[cr] t=5650 x=88576 speed=25792 wanted=10000 cmd=2403\n[cr] t=5700 x=89280 speed=9920 wanted=10000 cmd=2384\n[cr] t=5750 x=89344 speed=0 wanted=10000 cmd=2420\n[cr] t=5800 x=89536 speed=5952 wanted=10000 cmd=2453\n[cr] t=5850 x=90496 speed=21824 wanted=10000 cmd=2433\n[cr] t=5900 x=91456 speed=17856 wanted=10000 cmd=2397\n[cr] t=5950 x=91840 speed=7936 wanted=10000 cmd=2404\n[cr] t=6000 x=92288 speed=9920 wanted=10000 cmd=2403\n[cr] t=6050 x=92480 speed=1984 wanted=10000 cmd=2416\n[cr] t=6100 x=92672 speed=5952 wanted=10000 cmd=2455\n[cr] t=6150 x=93568 speed=19840 wanted=10000 cmd=2433\n[cr] t=6200 x=94592 speed=19840 wanted=10000 cmd=2396\n[cr] t=6250 x=95296 speed=11904 wanted=10000 cmd=2388\n[cr] t=6300 x=95680 speed=5952 wanted=10000 cmd=2392\n[cr] done result=2 x=95872 ms=7154 stalls=0\n[stamp] done result=2 fired=64 missed=0 ms=8983\n[head] prefire DRY RUN count=100 ambient/2C=40 bk_sel=3 cl_sel=3 x=95872 record=1\n[head] adc before black=754 colour=752\n[head] readback 002900e5 0014014c 002f0062 001400ae 00020002 00000000 00000063 000003e6 00000000 00000000 00000000 00000000 00000000\n[head] done result=6 records=1 wait_ms=0 ms=574 adc after black=736 colour=737\n[feed] start mode=2 advance=3762 handoff=2048 phase1=2048\n[feed] state=4 pos=0x0007a8b4 paper=1\n[feed] state=5 pos=0x0007b77c paper=0\n[feed] done result=2 attempts=0 pickup=0 advance=0 eject=3784 ms=6120\n[cr] homing toward the park wall\n[cr] park reference=0x0006ffc0\n[cr] done result=2 x=64 ms=867 stalls=0\n"
+}

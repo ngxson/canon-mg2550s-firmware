@@ -1,0 +1,54 @@
+{
+  "image": "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/scans/spit4_scan.png",
+  "resolution": 75,
+  "mm_per_px": 0.33866666666666667,
+  "image_mm": [
+    215.7,
+    296.7
+  ],
+  "paper_fraction": 0.953,
+  "marks": [
+    {
+      "x_mm": 99.91,
+      "y_mm": 13.55,
+      "w_mm": 1.02,
+      "h_mm": 0.34,
+      "area_mm2": 0.34,
+      "bbox_px": [
+        294,
+        40,
+        297,
+        41
+      ],
+      "mean_darkness": 0.804
+    },
+    {
+      "x_mm": 134.34,
+      "y_mm": 100.85,
+      "w_mm": 1.69,
+      "h_mm": 5.08,
+      "area_mm2": 6.08,
+      "bbox_px": [
+        395,
+        292,
+        400,
+        307
+      ],
+      "mean_darkness": 0.918
+    },
+    {
+      "x_mm": 134.4,
+      "y_mm": 112.54,
+      "w_mm": 1.35,
+      "h_mm": 3.05,
+      "area_mm2": 2.98,
+      "bbox_px": [
+        395,
+        328,
+        399,
+        337
+      ],
+      "mean_darkness": 0.9
+    }
+  ]
+}

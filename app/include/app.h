@@ -105,6 +105,47 @@ bool cartridge_busy(void);
 void cartridge_poll(void);
 unsigned cartridge_status(uint8_t *out);
 unsigned head_adc_status(uint8_t *out);   /* 16-sample head thermistor read per head (USB 0x80) */
+uint32_t head_adc_read(unsigned head);    /* one 16-sample mean: 0 black, 1 colour */
+/* Shared head interface (src/cartridge.c): stock block init, prepare, acquire, release, shutdown. */
+void head_block_init(void);
+bool head_if_prepared(void);
+void head_if_prepare(void);
+void head_if_acquire(void);
+void head_if_release(void);
+void head_if_shutdown(void);
+bool cartridge_ranks(unsigned *bk, unsigned *cl1, unsigned *cl2);
+/* Stationary prefire / spit on the black lanes (src/head_fire.c). */
+#define APP_REQUEST_HEAD_FIRE 0x81u      /* OUT: wValue = count (0 = 100) | options (0x100 dry run, 0x200 keep prepared, 0x400 record 1 only, 0x800 record 2 only, 0x1000 colour list ID 0x25 with count in sixths), wIndex = ambient half-degrees C (0 = 50) */
+#define APP_REQUEST_HEAD_FIRE_STATUS 0x82u /* IN: 20 words, see src/head_fire.c */
+#define APP_REQUEST_HEAD_WORD_A 0x83u    /* OUT: wValue | wIndex << 16 = record word for 0xc0c291e0 (experiment, used with 0x81 option 0x2000) */
+#define APP_REQUEST_HEAD_WORD_B 0x84u    /* OUT: same for 0xc0c291e8 */
+bool head_fire_set_word(unsigned which, uint32_t value);
+/* Stamp job: fire entries at carriage positions while crawling (src/head_fire.c). */
+#define APP_REQUEST_STAMP_COMMIT 0x85u   /* OUT: wValue = entry index, wIndex = x / 64; copies the 0x83/0x84 words */
+#define APP_REQUEST_STAMP_CLEAR 0x86u    /* OUT: forget all entries */
+#define APP_REQUEST_STAMP_RUN 0x87u      /* OUT: wValue = count (0 = 15) | options (0x100 dry, 0x200 keep), wIndex = crawl counts/s / 100 */
+#define APP_REQUEST_STAMP_STATUS 0x88u   /* IN: 12 words */
+bool stamp_commit(unsigned index, uint32_t x);
+bool stamp_clear(void);
+bool stamp_run(unsigned value, unsigned crawl_units);
+bool stamp_busy(void);
+void stamp_cancel(void);
+unsigned stamp_status(uint8_t *out);
+/* Register tunnel for hardware-in-the-loop emulation (src/tunnel.c). */
+#define APP_REQUEST_TUNNEL_ADDR 0x90u    /* OUT: wValue | wIndex << 16 = address */
+#define APP_REQUEST_TUNNEL_READ 0x91u    /* IN: up to 256 bytes from the address (allowlisted) */
+#define APP_REQUEST_TUNNEL_WRITE 0x92u   /* OUT: wValue | wIndex << 16 = 32-bit value (unlocked, allowlisted) */
+#define APP_REQUEST_TUNNEL_UNLOCK 0x93u  /* OUT: wValue = key enables writes, anything else locks */
+#define APP_REQUEST_TUNNEL_STATUS 0x94u  /* IN: 7 words */
+bool tunnel_set_address(uint32_t a);
+unsigned tunnel_read(uint8_t *out, unsigned max);
+bool tunnel_write(uint32_t value);
+bool tunnel_unlock(unsigned key);
+unsigned tunnel_status(uint8_t *out);
+bool head_fire_request(unsigned value, unsigned ambient);
+void head_fire_poll(void);
+bool head_fire_busy(void);
+unsigned head_fire_status(uint8_t *out);
 unsigned print_mech_dump(uint8_t *out);  /* read-only CR/LF register dump (USB 0x64) */
 bool print_mech_prepare(unsigned variant); /* motor-off counter preparation (USB 0x65) */
 unsigned print_mech_snapshot(uint8_t *out, unsigned chunk); /* read-only GPIO snapshot (USB 0x66) */

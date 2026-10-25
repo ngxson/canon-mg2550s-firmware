@@ -1,0 +1,36 @@
+{
+  "all_assertions_passed": true,
+  "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "image_sha256": "b1c7abc8b7303e84fbde73ec88de02355cf810848486d30cb9dfe269294ec8b8",
+  "boot_region_sha256": "67fd01b7baf43c7a3c3c770b45b67075e807ccde2c808cfd8d4af08c754d9f9b",
+  "application_sha256": "a2d4e5894d466e140e30bfb5daa0c2d784c668b2de97feb308b6f2ab8e992395",
+  "image_bytes": 2097152,
+  "stream_sha256": "5892a0fec2c4265f4cbb02a003af77196f7b6b8bfdca0d4a3d0851df6c8f1f86",
+  "stream_bytes": 4718676,
+  "initial_eeprom_marker": "00",
+  "initial_boot_latch": 0,
+  "baseline_panel_input": "08",
+  "scope": "Offline stock reset/button/USB full-image update; no hardware access",
+  "modes": [
+    {
+      "mode": 3,
+      "status": "C0",
+      "final_flash_sha256": "b1c7abc8b7303e84fbde73ec88de02355cf810848486d30cb9dfe269294ec8b8",
+      "new_reset_reached": true
+    },
+    {
+      "mode": 4,
+      "status": "C0",
+      "final_flash_sha256": "b1c7abc8b7303e84fbde73ec88de02355cf810848486d30cb9dfe269294ec8b8",
+      "new_reset_reached": true
+    }
+  ],
+  "replacement_cold_boot": true,
+  "app_management_reboot_into_rescue": true,
+  "limits": [
+    "Synthetic peripheral/USB/timer behavior",
+    "ARM I-cache invalidation at 0x1c0 explicitly evicts Unicorn flash translations",
+    "No physical button entry or flash test",
+    "Replacement cold boot is a separate emulator instance"
+  ]
+}

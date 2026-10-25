@@ -1,0 +1,68 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "args": {
+    "position": 60000,
+    "count": 0,
+    "ambient": 40,
+    "dry_run": false,
+    "record": null,
+    "no_park": true,
+    "output": "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/evidence/head_fire/cal_row1_x60000.json"
+  },
+  "cartridge": {
+    "black_rank1": 37,
+    "colour_rank1": 16,
+    "colour_rank2": 7,
+    "black_stable": true,
+    "colour_stable": true,
+    "connection": "0x101"
+  },
+  "adc_host": {
+    "black": 750,
+    "colour": 751
+  },
+  "carriage_at": {
+    "state": 0,
+    "result": "ok",
+    "x": 60160,
+    "referenced": true
+  },
+  "prefire": {
+    "state": 2,
+    "result": "ok",
+    "count": 100,
+    "records_done": 2,
+    "mask": 3,
+    "ambient": 40,
+    "bk_selector": 3,
+    "cl_selector": 3,
+    "adc_before": {
+      "black": 751,
+      "colour": 750
+    },
+    "adc_after": {
+      "black": 728,
+      "colour": 736
+    },
+    "elapsed_ms": 590,
+    "x": 60160,
+    "flags": "0x0",
+    "sequence": 4,
+    "status_end": "0x0",
+    "wait_ms": 16,
+    "host_seconds": 0.59
+  },
+  "firmware_log": "[feed] start mode=3 advance=3968 handoff=2048 phase1=2048\n[feed] state=3 pos=0x0007a8f0 paper=1\n[feed] done result=2 attempts=0 pickup=0 advance=3968 eject=0 ms=1014\n[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200\n[cart] connection black=1 colour=1\n[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5\n[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0\n[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1\n[cart] head interface left prepared\n[head] adc black=750 colour=751\n[cr] move x=99776 -> 59968 cruise=30000 right\n[cr] t=50 x=99456 speed=7936 wanted=28229 cmd=1733\n[cr] t=100 x=99008 speed=13888 wanted=30000 cmd=1600\n[cr] t=150 x=98176 speed=13888 wanted=30000 cmd=1548\n[cr] t=200 x=96704 speed=31744 wanted=30000 cmd=1538\n[cr] t=250 x=94400 speed=45632 wanted=30000 cmd=1585\n[cr] t=300 x=92736 speed=29760 wanted=30000 cmd=1599\n[cr] t=350 x=91584 speed=21824 wanted=30000 cmd=1582\n[cr] t=400 x=90048 speed=31744 wanted=30000 cmd=1581\n[cr] t=450 x=88576 speed=29760 wanted=30000 cmd=1580\n[cr] t=500 x=87168 speed=27776 wanted=30000 cmd=1579\n[cr] t=550 x=85632 speed=31744 wanted=30000 cmd=1581\n[cr] t=600 x=83840 speed=35712 wanted=30000 cmd=1584\n[cr] t=650 x=82112 speed=35712 wanted=30000 cmd=1584\n[cr] t=700 x=80064 speed=41664 wanted=30000 cmd=1622\n[cr] t=750 x=78720 speed=23808 wanted=30000 cmd=1611\n[cr] t=800 x=77760 speed=15872 wanted=30000 cmd=1572\n[cr] t=850 x=76352 speed=29760 wanted=30000 cmd=1561\n[cr] t=900 x=74496 speed=37696 wanted=30000 cmd=1567\n[cr] t=950 x=72704 speed=33728 wanted=30000 cmd=1571\n[cr] t=1000 x=70912 speed=35712 wanted=30000 cmd=1572\n[cr] t=1050 x=68864 speed=39680 wanted=30000 cmd=1614\n[cr] t=1100 x=67392 speed=27776 wanted=27840 cmd=1627\n[cr] t=1150 x=66624 speed=11904 wanted=24960 cmd=1624\n[cr] t=1200 x=65856 speed=17856 wanted=22080 cmd=1613\n[cr] t=1250 x=64960 speed=17856 wanted=18720 cmd=1639\n[cr] t=1300 x=64704 speed=1984 wanted=17760 cmd=1605\n[cr] t=1350 x=64192 speed=13888 wanted=15840 cmd=1591\n[cr] t=1400 x=63360 speed=15872 wanted=12720 cmd=1615\n[cr] t=1450 x=63104 speed=1984 wanted=11760 cmd=1606\n[cr] t=1500 x=62848 speed=7936 wanted=10800 cmd=1588\n[cr] t=1550 x=62144 speed=13888 wanted=10000 cmd=1599\n[cr] t=1600 x=61760 speed=5952 wanted=10000 cmd=1593\n[cr] t=1650 x=61440 speed=7936 wanted=10000 cmd=1595\n[cr] t=1700 x=60736 speed=15872 wanted=10000 cmd=1600\n[cr] done result=2 x=60160 ms=2021 stalls=0\n[head] prefire count=100 ambient/2C=40 bk_sel=3 cl_sel=3 x=60160\n[head] adc before black=751 colour=750\n[head] readback 002900e5 0014014c 002f0062 001400ae 00020002 00000000 00000063 000003e6 00000000 00000000 00000000 00000000 00000000\n[head] done result=2 records=2 wait_ms=16 ms=590 adc after black=728 colour=736\n"
+}

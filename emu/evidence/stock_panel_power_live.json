@@ -1,0 +1,43 @@
+{
+  "started_utc": "2026-10-25T01:16:38.149542+00:00",
+  "info": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "keys": [
+    {
+      "utc": "2026-10-25T01:16:38.543577+00:00",
+      "line": "[btn] 028=0x00000008"
+    },
+    {
+      "utc": "2026-10-25T01:16:59.256129+00:00",
+      "line": "[btn] 028=0x00000048"
+    },
+    {
+      "utc": "2026-10-25T01:17:00.503484+00:00",
+      "line": "[btn] 028=0x00000008"
+    }
+  ],
+  "errors": [],
+  "user_action": "Asked to hold only Power for about one second and release; user replied done.",
+  "interpretation": {
+    "idle": "0x08",
+    "pressed": "0x48",
+    "released": "0x08",
+    "changed_mask": "0x40",
+    "button": "Power / ON",
+    "pressed_bit_value": 1
+  },
+  "scope": "Live replacement-app button register observation; no stock entry test, no firmware/EEPROM write or reset.",
+  "finished_utc": "2026-10-25T01:19:26.826581+00:00",
+  "logger_stop": "Assistant sent SIGINT after the requested Power measurement; finally released USB handle."
+}

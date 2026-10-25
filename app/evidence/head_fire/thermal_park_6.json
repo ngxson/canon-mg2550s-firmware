@@ -1,0 +1,73 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "args": {
+    "position": 0,
+    "count": 0,
+    "ambient": 40,
+    "dry_run": false,
+    "no_park": false,
+    "output": "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/evidence/head_fire/thermal_park_6.json"
+  },
+  "cartridge": {
+    "black_rank1": 37,
+    "colour_rank1": 16,
+    "colour_rank2": 7,
+    "black_stable": true,
+    "colour_stable": true,
+    "connection": "0x101"
+  },
+  "adc_host": {
+    "black": 746,
+    "colour": 751
+  },
+  "carriage_at": {
+    "state": 0,
+    "result": "ok",
+    "x": 64,
+    "referenced": true
+  },
+  "prefire": {
+    "state": 2,
+    "result": "ok",
+    "count": 100,
+    "records_done": 2,
+    "mask": 3,
+    "ambient": 40,
+    "bk_selector": 3,
+    "cl_selector": 3,
+    "adc_before": {
+      "black": 746,
+      "colour": 752
+    },
+    "adc_after": {
+      "black": 723,
+      "colour": 737
+    },
+    "elapsed_ms": 590,
+    "x": 64,
+    "flags": "0x0",
+    "sequence": 6,
+    "status_end": "0x0",
+    "wait_ms": 16,
+    "host_seconds": 0.59
+  },
+  "parked": {
+    "state": 0,
+    "result": "ok",
+    "x": 64,
+    "referenced": true
+  },
+  "firmware_log": "[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200\n[cart] connection black=1 colour=1\n[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5\n[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0\n[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1\n[cart] head interface left prepared\n[head] adc black=746 colour=751\n[head] prefire count=100 ambient/2C=40 bk_sel=3 cl_sel=3 x=64\n[head] adc before black=746 colour=752\n[head] readback 002900e5 0014014c 002f0062 001400ae 00020002 00000000 00000063 000003e6 00000000 00000000 00000000 00000000 00000000\n[head] done result=2 records=2 wait_ms=16 ms=590 adc after black=723 colour=737\n[cr] homing toward the park wall\n[cr] park reference=0x0006ffc0\n[cr] done result=2 x=64 ms=320 stalls=0\n"
+}

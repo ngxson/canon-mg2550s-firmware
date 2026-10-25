@@ -1,0 +1,257 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "count": 100,
+  "ambient": 40,
+  "x0": 35000,
+  "stop_counts": 1920,
+  "row_counts": 1050,
+  "stops": [
+    {
+      "row": 0,
+      "bit": 0,
+      "x": 35000,
+      "word_a": "fffffffe",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 1,
+      "x": 36920,
+      "word_a": "fffffffd",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 2,
+      "x": 38840,
+      "word_a": "fffffffb",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 3,
+      "x": 40760,
+      "word_a": "fffffff7",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 4,
+      "x": 42680,
+      "word_a": "ffffffef",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 5,
+      "x": 44600,
+      "word_a": "ffffffdf",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 6,
+      "x": 46520,
+      "word_a": "ffffffbf",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 7,
+      "x": 48440,
+      "word_a": "ffffff7f",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 8,
+      "x": 50360,
+      "word_a": "fffffeff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 9,
+      "x": 52280,
+      "word_a": "fffffdff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 10,
+      "x": 54200,
+      "word_a": "fffffbff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 11,
+      "x": 56120,
+      "word_a": "fffff7ff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 12,
+      "x": 58040,
+      "word_a": "ffffefff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 13,
+      "x": 59960,
+      "word_a": "ffffdfff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 14,
+      "x": 61880,
+      "word_a": "ffffbfff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 15,
+      "x": 63800,
+      "word_a": "ffff7fff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 16,
+      "x": 65720,
+      "word_a": "fffeffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 17,
+      "x": 67640,
+      "word_a": "fffdffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 18,
+      "x": 69560,
+      "word_a": "fffbffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 19,
+      "x": 71480,
+      "word_a": "fff7ffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 20,
+      "x": 73400,
+      "word_a": "ffefffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 21,
+      "x": 75320,
+      "word_a": "ffdfffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 22,
+      "x": 77240,
+      "word_a": "ffbfffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 23,
+      "x": 79160,
+      "word_a": "ff7fffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 24,
+      "x": 81080,
+      "word_a": "feffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 25,
+      "x": 83000,
+      "word_a": "fdffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 26,
+      "x": 84920,
+      "word_a": "fbffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 27,
+      "x": 86840,
+      "word_a": "f7ffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 28,
+      "x": 88760,
+      "word_a": "efffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 29,
+      "x": 90680,
+      "word_a": "dfffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 30,
+      "x": 92600,
+      "word_a": "bfffffff",
+      "word_b": "ffffffff"
+    },
+    {
+      "row": 0,
+      "bit": 31,
+      "x": 94520,
+      "word_a": "7fffffff",
+      "word_b": "ffffffff"
+    }
+  ],
+  "jobs": [
+    {
+      "row": 0,
+      "result": 2,
+      "entries": 32,
+      "fired": 17,
+      "missed": 15,
+      "ms": 5768
+    }
+  ],
+  "firmware_log": "our=toggle transport (LF forward); Cancel=stop\n[home] stock PI seek + verified backoff + repeat seek; mechanical reference\n[page] USB stop-and-capture page scan; returns home; Cancel=stop\n[escl] eSCL over IPP-USB (interfaces 2-3)\n[cart] USB 0x62 reads cartridge fuse ROM (read-only); 0x63 status\n[head] USB 0x81 stationary black prefire (stock ID24 list); 0x82 status\n[scan] serial controller 0xc0120000:\n  c0120000 = 0x00000000\n  c0120004 = 0x00000000\n  c0120008 = 0x00000000\n  c012000c = 0x00000000\n  c0120010 = 0x00000000\n  c012001c = 0x00000000\n  c0120024 = 0x00000000\n  c0120100 = 0x00000000\n  c0120104 = 0x00000000\n  c0120108 = 0x00000000\n  c012010c = 0x00000000\n  c0120110 = 0x00000000\n  c0120114 = 0x00000000\n  c012011c = 0x00000000\n  c0120124 = 0x00000000\n  c0c840c0 = 0x00000000\n  c0c840c4 = 0x00000000\n  c0c81200 = 0x00000fdf\n  c0c81204 = 0x00001020\n  c0c8121c = 0x00000300\n[scan] capture engine 0xc0d60000:\n  c0d60000 = 0x00000000\n  c0d60008 = 0x00000000\n  c0d60080 = 0x00000000\n  c0d60084 = 0x00000000\n  c0d60130 = 0x00000000\n  c0d6015c = 0x00000000\n  c0d60164 = 0x00000000\n  c0d601c0 = 0x00000000\n  c0d601d4 = 0x00000000\n  c0d601d8 = 0x00000000\n  c0d601dc = 0x00000000\n  c0d601e0 = 0x00000000\n  c0d601e4 = 0x00000000\n  c0d601e8 = 0x00000000\n  c0d601ec = 0x00000000\n  c0d601f0 = 0x00000000\n  c0d601f4 = 0x00000000\n  c0d60294 = 0x00000000\n  c0d602c0 = 0x00000000\n  c0c85614 = 0x00000000\n[scan] peek done\n[http] c0 POST /ipp/print\n[ipp] operation 0x0000000b status 0x00000000\n[http] c0 -> 200\n[http] c1 POST /ipp/faxout\n[http] c1 -> 404\n[http] c1 GET /eSCL/ScannerCapabilities\n[http] c1 -> 200\n[motor] setup c0c41404=00000004\n[motor] setup c0c41408=00000005\n[motor] setup c0c41418=0000000a\n[motor] setup c0c81090=0000003f\n[motor] setup c0c57000=0000200d\n[motor] setup c0c57100=00700000\n[motor] setup c0c57148=00000001\n[motor] setup c0c57308=00000001\n[cr] homing toward the park wall\n[http] c1 POST /\n[ipp] operation 0x0000000b status 0x00000000\n[http] c1 -> 200\n[cr] park reference=0x0005ac80\n[cr] done result=2 x=64 ms=835 stalls=0\n[cr] move x=64 -> 34944 cruise=30000 left\n[cr] t=50 x=448 speed=3968 wanted=28229 cmd=2257\n[cr] t=100 x=896 speed=5952 wanted=30000 cmd=2388\n[cr] t=150 x=1792 speed=15872 wanted=30000 cmd=2445\n[cr] t=200 x=3008 speed=25792 wanted=30000 cmd=2476\n[cr] t=250 x=4992 speed=41664 wanted=30000 cmd=2446\n[cr] t=300 x=6528 speed=23808 wanted=30000 cmd=2433\n[cr] t=350 x=7744 speed=27776 wanted=30000 cmd=2464\n[cr] t=400 x=9280 speed=29760 wanted=30000 cmd=2463\n[cr] t=450 x=10752 speed=27776 wanted=30000 cmd=2464\n[cr] t=500 x=11456 speed=9920 wanted=30000 cmd=2522\n[cr] t=550 x=13248 speed=49600 wanted=30000 cmd=2541\n[cr] t=600 x=16576 speed=63488 wanted=30000 cmd=2333\n[cr] t=650 x=17408 speed=7936 wanted=30000 cmd=2363\n[cr] t=700 x=17728 speed=9920 wanted=30000 cmd=2505\n[cr] t=750 x=19840 speed=49600 wanted=30000 cmd=2481\n[cr] t=800 x=22336 speed=45632 wanted=30000 cmd=2372\n[cr] t=850 x=23296 speed=15872 wanted=30000 cmd=2408\n[cr] t=900 x=24448 speed=23808 wanted=30000 cmd=2445\n[cr] t=950 x=26240 speed=37696 wanted=30000 cmd=2433\n[cr] t=1000 x=27968 speed=33728 wanted=26160 cmd=2397\n[cr] t=1050 x=28544 speed=3968 wanted=24000 cmd=2423\n[cr] t=1100 x=29056 speed=13888 wanted=22080 cmd=2484\n[cr] t=1150 x=30720 speed=31744 wanted=15840 cmd=2377\n[cr] t=1200 x=31040 speed=1984 wanted=14640 cmd=2389\n[cr] t=1250 x=31296 speed=7936 wanted=13680 cmd=2417\n[cr] t=1300 x=31808 speed=7936 wanted=11760 cmd=2403\n[cr] t=1350 x=31872 speed=1984 wanted=11520 cmd=2441\n[cr] t=1400 x=32640 speed=17856 wanted=10000 cmd=2422\n[cr] t=1450 x=33344 speed=15872 wanted=10000 cmd=2424\n[cr] t=1500 x=34496 speed=21824 wanted=10000 cmd=2377\n[cr] done result=2 x=34752 ms=1773 stalls=0\n[cr] move x=34752 -> 36864 cruise=30000 short left\n[cr] done result=3 x=35712 ms=521 stalls=1\n[cr] move x=35712 -> 38784 cruise=30000 short left\n[cr] done result=3 x=35968 ms=448 stalls=1\n[cr] move x=35968 -> 40704 cruise=30000 short left\n[cr] done result=3 x=36288 ms=456 stalls=1\n[cr] homing toward the park wall\n[cr] park reference=0x0005ac80\n[cr] done result=2 x=64 ms=487 stalls=0\n[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200\n[cart] head block before: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00070707 00070707 00070707 0000000b 00000000 00000000 00000000 00000000 0012180b 00000000\n[cart] head block after: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000\n[cart] connection black=1 colour=1\n[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5\n[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0\n[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1\n[cart] head interface left prepared\n[cr] homing toward the park wall\n[cr] park reference=0x0005acc0\n[cr] done result=2 x=0 ms=321 stalls=0\n[cr] move x=0 -> 33444 cruise=30000 left\n[stamp] job n=32 count=100 crawl=10000 x=34944..94464\n[cr] t=50 x=384 speed=5952 wanted=28229 cmd=2258\n[cr] t=100 x=832 speed=7936 wanted=30000 cmd=2388\n[cr] t=150 x=1536 speed=11904 wanted=30000 cmd=2459\n[cr] t=200 x=2816 speed=27776 wanted=30000 cmd=2494\n[cr] t=250 x=4928 speed=41664 wanted=30000 cmd=2457\n[cr] t=300 x=6464 speed=23808 wanted=30000 cmd=2445\n[cr] t=350 x=7808 speed=29760 wanted=30000 cmd=2461\n[cr] t=400 x=9472 speed=31744 wanted=30000 cmd=2460\n[cr] t=450 x=10944 speed=27776 wanted=30000 cmd=2462\n[cr] t=500 x=11392 speed=5952 wanted=30000 cmd=2553\n[cr] t=550 x=13824 speed=63488 wanted=30000 cmd=2520\n[cr] t=600 x=17024 speed=55552 wanted=30000 cmd=2295\n[cr] t=650 x=17408 speed=0 wanted=30000 cmd=2389\n[cr] t=700 x=17920 speed=15872 wanted=30000 cmd=2511\n[cr] t=750 x=20288 speed=53568 wanted=30000 cmd=2458\n[cr] t=800 x=22528 speed=39680 wanted=30000 cmd=2365\n[cr] t=850 x=23296 speed=13888 wanted=30000 cmd=2434\n[cr] t=900 x=24832 speed=33728 wanted=30000 cmd=2441\n[cr] t=950 x=26752 speed=37696 wanted=25095 cmd=2358\n[cr] t=1000 x=27328 speed=9920 wanted=22935 cmd=2383\n[cr] t=1050 x=27648 speed=3968 wanted=21735 cmd=2437\n[cr] t=1100 x=28288 speed=17856 wanted=19335 cmd=2468\n[cr] t=1150 x=29632 speed=25792 wanted=14295 cmd=2391\n[cr] t=1200 x=29824 speed=0 wanted=13575 cmd=2410\n[cr] t=1250 x=30016 speed=5952 wanted=12855 cmd=2444\n[cr] t=1300 x=30848 speed=15872 wanted=10000 cmd=2416\n[cr] t=1350 x=31680 speed=17856 wanted=10000 cmd=2414\n[cr] t=1400 x=32512 speed=17856 wanted=10000 cmd=2414\n[cr] t=1450 x=33088 speed=11904 wanted=10000 cmd=2419\n[cr] done result=2 x=33280 ms=1737 stalls=0\n[cr] move x=33280 -> 95064 cruise=10000 left\n[cr] t=50 x=33536 speed=5952 wanted=10000 cmd=2080\n[cr] t=100 x=33728 speed=5952 wanted=10000 cmd=2089\n[cr] t=150 x=33984 speed=5952 wanted=10000 cmd=2098\n[cr] t=200 x=33984 speed=0 wanted=10000 cmd=2147\n[cr] t=250 x=33984 speed=0 wanted=10000 cmd=2197\n[cr] t=300 x=33984 speed=0 wanted=10000 cmd=2247\n[cr] t=350 x=33984 speed=0 wanted=10000 cmd=2297\n[cr] t=400 x=33984 speed=0 wanted=10000 cmd=2347\n[cr] t=450 x=33984 speed=0 wanted=10000 cmd=2397\n[cr] t=500 x=34432 speed=11904 wanted=10000 cmd=2413\n[cr] t=550 x=35520 speed=23808 wanted=10000 cmd=2376\n[cr] t=600 x=36096 speed=5952 wanted=10000 cmd=2363\n[cr] t=650 x=36096 speed=0 wanted=10000 cmd=2408\n[cr] t=700 x=36480 speed=7936 wanted=10000 cmd=2417\n[cr] t=750 x=36864 speed=5952 wanted=10000 cmd=2419\n[cr] t=800 x=37568 speed=15872 wanted=10000 cmd=2412\n[cr] t=850 x=38016 speed=5952 wanted=10000 cmd=2419\n[cr] t=900 x=38144 speed=1984 wanted=10000 cmd=2456\n[cr] t=950 x=38720 speed=11904 wanted=10000 cmd=2449\n[cr] t=1000 x=39552 speed=17856 wanted=10000 cmd=2444\n[cr] t=1050 x=40256 speed=9920 wanted=10000 cmd=2422\n[cr] t=1100 x=40640 speed=7936 wanted=10000 cmd=2423\n[cr] t=1150 x=40832 speed=1984 wanted=10000 cmd=2436\n[cr] t=1200 x=41152 speed=7936 wanted=10000 cmd=2460\n[cr] t=1250 x=42112 speed=19840 wanted=10000 cmd=2428\n[cr] t=1300 x=42752 speed=9920 wanted=10000 cmd=2423\n[cr] t=1350 x=43008 speed=3968 wanted=10000 cmd=2428\n[cr] t=1400 x=43648 speed=13888 wanted=10000 cmd=2420\n[cr] t=1450 x=44480 speed=15872 wanted=10000 cmd=2419\n[cr] t=1500 x=45568 speed=21824 wanted=10000 cmd=2379\n[cr] t=1550 x=46208 speed=7936 wanted=10000 cmd=2360\n[cr] t=1600 x=46208 speed=0 wanted=10000 cmd=2406\n[cr] t=1650 x=46656 speed=9920 wanted=10000 cmd=2413\n[cr] t=1700 x=47168 speed=11904 wanted=10000 cmd=2412\n[cr] t=1750 x=48192 speed=21824 wanted=10000 cmd=2378\n[cr] t=1800 x=48448 speed=1984 wanted=10000 cmd=2388\n[cr] t=1850 x=48576 speed=1984 wanted=10000 cmd=2431\n[cr] t=1900 x=49152 speed=9920 wanted=10000 cmd=2425\n[cr] t=1950 x=50112 speed=21824 wanted=10000 cmd=2404\n[cr] t=2000 x=50560 speed=7936 wanted=10000 cmd=2405\n[cr] t=2050 x=50944 speed=5952 wanted=10000 cmd=2407\n[cr] t=2100 x=51072 speed=1984 wanted=10000 cmd=2440\n[cr] t=2150 x=51712 speed=15872 wanted=10000 cmd=2438\n[cr] t=2200 x=52672 speed=17856 wanted=10000 cmd=2400\n[cr] t=2250 x=52992 speed=3968 wanted=10000 cmd=2410\n[cr] t=2300 x=53248 speed=5952 wanted=10000 cmd=2435\n[cr] t=2350 x=54208 speed=19840 wanted=10000 cmd=2410\n[cr] t=2400 x=55040 speed=15872 wanted=10000 cmd=2397\n[cr] t=2450 x=55744 speed=15872 wanted=10000 cmd=2397\n[cr] t=2500 x=56448 speed=9920 wanted=10000 cmd=2383\n[cr] t=2550 x=56576 speed=1984 wanted=10000 cmd=2402\n[cr] t=2600 x=56768 speed=5952 wanted=10000 cmd=2439\n[cr] t=2650 x=57728 speed=21824 wanted=10000 cmd=2417\n[cr] t=2700 x=58624 speed=11904 wanted=10000 cmd=2384\n[cr] t=2750 x=58688 speed=0 wanted=10000 cmd=2420\n[cr] t=2800 x=58688 speed=0 wanted=10000 cmd=2470\n[cr] t=2850 x=58688 speed=0 wanted=10000 cmd=2474\n[cr] t=2900 x=58688 speed=0 wanted=10000 cmd=2474\n[cr] t=2950 x=59328 speed=17856 wanted=10000 cmd=2460\n[cr] t=3000 x=60800 speed=27776 wanted=10000 cmd=2370\n[cr] t=3050 x=61056 speed=0 wanted=10000 cmd=2382\n[cr] t=3100 x=61120 speed=1984 wanted=10000 cmd=2430\n[cr] t=3150 x=61824 speed=17856 wanted=10000 cmd=2425\n[cr] t=3200 x=62848 speed=17856 wanted=10000 cmd=2383\n[cr] t=3250 x=62976 speed=1984 wanted=10000 cmd=2414\n[cr] t=3300 x=63232 speed=5952 wanted=10000 cmd=2425\n[cr] t=3350 x=64000 speed=17856 wanted=10000 cmd=2416\n[cr] t=3400 x=64960 speed=17856 wanted=10000 cmd=2382\n[cr] t=3450 x=65664 speed=13888 wanted=10000 cmd=2384\n[cr] t=3500 x=66432 speed=13888 wanted=10000 cmd=2379\n[cr] done result=4 x=66624 ms=4020 stalls=0\n[stamp] done result=2 fired=17 missed=15 ms=5768\n[head] prefire DRY RUN count=100 ambient/2C=40 bk_sel=3 cl_sel=3 x=66624 record=1\n[head] adc before black=757 colour=754\n[head] readback 002900e5 0014014c 002f0062 001400ae 00020002 00000000 00000063 000003e6 00000000 00000000 00000000 00000000 00000000\n[head] done result=6 records=1 wait_ms=0 ms=557 adc after black=739 colour=739\n"
+}

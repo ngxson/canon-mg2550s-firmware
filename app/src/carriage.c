@@ -28,13 +28,22 @@
 #define HOME_COMMAND 1400u           /* 30 % toward the wall */
 #define HOME_STALL_MS 150u
 #define HOME_TIMEOUT_MS 3000u
-#define MOVE_TIMEOUT_MS 4000u
+#define MOVE_TIMEOUT_MIN_MS 4000u    /* a move may take twice its nominal time plus this */
 #define STALL_MS 400u
 #define SPEED_WINDOW_MAX 64u
 #define CRUISE_DEFAULT 30000u        /* counts/s */
 /* Runtime-tunable controller parameters (USB 0x6f), defaults below. */
 static struct { uint32_t kff_div, kp_div, ki_div, integral_max, brake_max, floor_speed, decel_counts, kick, kick_ticks, window; } tune =
     { 150u, 1200u, 8000u, 400u, 0u, 10000u, 8000u, 600u, 150u, 32u };   /* bench grid 2026-10-24, set F */
+/* Short moves (stamping, stop-and-fire): a bench run on 2026-10-25 of 32 moves of
+ * 1920 counts stalled 7 times with the sweep controller above: once the kick
+ * ended, the PI effort for a 10 k counts/s target was a few per cent, below
+ * what keeps the carriage rolling, so it stopped and the stall timer fired.
+ * Short moves therefore drive at a fixed rolling effort after the kick and
+ * stop on a one-step tolerance; the sweep controller is untouched. */
+#define SHORT_MOVE_MAX 6000u         /* counts; below this the short-move mode is used */
+#define SHORT_EFFORT 360u            /* 18 %: between the 15 % that keeps rolling and the 30 % unseat */
+#define SHORT_TOLERANCE 64u          /* one counter step */
 #define CRUISE_MAX 90000u
 #define RAMP_TICKS 60u
 #define DONE_TOLERANCE 192u
@@ -48,13 +57,14 @@ static enum cr_result result;
 static bool ready, referenced;
 static uint32_t reference;                   /* counter value at the park wall */
 static int32_t target, start_x;
-static uint32_t cruise, t_start, t_tick, last_change, moves, stalls;
+static uint32_t cruise, t_start, t_tick, last_change, moves, stalls, move_timeout_ms;
 static uint32_t ticks;
 static int32_t history[SPEED_WINDOW_MAX + 1]; /* positions of the last ticks */
 static unsigned hist_i;
 static int32_t last_x, speed, command_out;
 static unsigned direction;                   /* 1 = right (toward wall, counts down), 0 = left */
 static int32_t integral;
+static bool short_move;
 
 /* Signed division without libgcc: this build links no compiler runtime. */
 static int32_t sdiv(int32_t a, uint32_t b)
@@ -126,17 +136,19 @@ bool carriage_move_request(int32_t x_target, uint32_t cruise_speed)
     cruise = cruise_speed ? cruise_speed : CRUISE_DEFAULT;
     if (cruise > CRUISE_MAX) cruise = CRUISE_MAX;
     target = x_target; start_x = x_now();
-    if (target == start_x || ((target > start_x ? target - start_x : start_x - target) <= (int32_t)DONE_TOLERANCE)) {
-        result = CRR_OK; return true;
-    }
+    uint32_t distance = (uint32_t)(target > start_x ? target - start_x : start_x - target);
+    short_move = distance <= SHORT_MOVE_MAX;
+    if (distance <= (short_move ? SHORT_TOLERANCE : DONE_TOLERANCE)) { result = CRR_OK; return true; }
     direction = target < start_x ? 1u : 0u;
+    /* Slow crawls over the whole sheet (the stamp job) take far longer than a sweep. */
+    move_timeout_ms = MOVE_TIMEOUT_MIN_MS + 2u * motor_divide(distance * 1000u, cruise);
     integral = 0;
     for (unsigned i = 0; i <= SPEED_WINDOW_MAX; ++i) history[i] = start_x;
     hist_i = 0; ticks = 0; speed = 0; stalls = 0; ++moves;
     result = CRR_RUNNING; state = CR_MOVING; t_start = t_tick = last_change = app_clock_ticks();
     last_x = start_x;
     dbg_puts("[cr] move x="); dbg_dec((uint32_t)start_x); dbg_puts(" -> "); dbg_dec((uint32_t)target);
-    dbg_puts(" cruise="); dbg_dec(cruise); dbg_puts(direction ? " right\n" : " left\n");
+    dbg_puts(" cruise="); dbg_dec(cruise); dbg_puts(short_move ? " short" : ""); dbg_puts(direction ? " right\n" : " left\n");
     wr(CR_C + 8u, NEUTRAL); wr(CR_C, 0x102u);          /* first command comes from the first tick */
     return true;
 }
@@ -161,10 +173,19 @@ static void move_tick(void)
     if (speed < 0) speed = 0;
     if (x != last_x) { last_change = app_clock_ticks(); last_x = x; }
     int32_t remaining = direction ? x - target : target - x;
-    if (remaining <= (int32_t)DONE_TOLERANCE) { state = CR_SETTLE; t_tick = app_clock_ticks(); wr(CR_C + 8u, NEUTRAL); return; }
+    int32_t tolerance = short_move ? (int32_t)SHORT_TOLERANCE : (int32_t)DONE_TOLERANCE;
+    if (remaining <= tolerance) { state = CR_SETTLE; t_tick = app_clock_ticks(); wr(CR_C + 8u, NEUTRAL); return; }
     if (x < -(int32_t)LIMIT_MARGIN || x > (int32_t)TRAVEL) { finish(CRR_LIMIT); return; }
     if (ms_since(last_change) >= STALL_MS) { ++stalls; finish(CRR_STALL); return; }
-    if (ms_since(t_start) >= MOVE_TIMEOUT_MS) { finish(CRR_TIMEOUT); return; }
+    if (ms_since(t_start) >= move_timeout_ms) { finish(CRR_TIMEOUT); return; }
+    if (short_move) {
+        /* Kick until the counter moves, then a fixed rolling effort to the stop. */
+        int32_t effort = (x == start_x && ticks <= tune.kick_ticks) ? (int32_t)tune.kick : (int32_t)SHORT_EFFORT;
+        uint32_t cmd = direction ? (uint32_t)((int32_t)NEUTRAL - effort) : (uint32_t)((int32_t)NEUTRAL + effort);
+        command_out = (int32_t)cmd;
+        wr(CR_C + 8u, cmd);
+        return;
+    }
     uint32_t wanted = motor_control_ramp_to(ticks - 1u, tune.floor_speed, cruise, RAMP_TICKS);
     if ((uint32_t)remaining < tune.decel_counts) {
         uint32_t cap = motor_divide((uint64_t)cruise * (uint32_t)remaining, tune.decel_counts);

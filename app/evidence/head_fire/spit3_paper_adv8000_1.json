@@ -1,0 +1,67 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "args": {
+    "position": 60000,
+    "count": 0,
+    "ambient": 40,
+    "dry_run": false,
+    "no_park": true,
+    "output": "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/evidence/head_fire/spit3_paper_adv8000_1.json"
+  },
+  "cartridge": {
+    "black_rank1": 37,
+    "colour_rank1": 16,
+    "colour_rank2": 7,
+    "black_stable": true,
+    "colour_stable": true,
+    "connection": "0x101"
+  },
+  "adc_host": {
+    "black": 755,
+    "colour": 753
+  },
+  "carriage_at": {
+    "state": 0,
+    "result": "ok",
+    "x": 59776,
+    "referenced": true
+  },
+  "prefire": {
+    "state": 2,
+    "result": "ok",
+    "count": 100,
+    "records_done": 2,
+    "mask": 3,
+    "ambient": 40,
+    "bk_selector": 3,
+    "cl_selector": 3,
+    "adc_before": {
+      "black": 755,
+      "colour": 752
+    },
+    "adc_after": {
+      "black": 731,
+      "colour": 737
+    },
+    "elapsed_ms": 590,
+    "x": 59776,
+    "flags": "0x0",
+    "sequence": 1,
+    "status_end": "0x0",
+    "wait_ms": 16,
+    "host_seconds": 0.59
+  },
+  "firmware_log": "[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200\n[cart] head block before: 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00000000 00070707 00070707 00070707 0000000b 00000000 00000000 00000000 00000000 0012180b 00000000\n[cart] head block after: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000\n[cart] connection black=1 colour=1\n[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5\n[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0\n[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1\n[cart] head interface left prepared\n[head] adc black=755 colour=753\n[motor] setup c0c41404=00000004\n[motor] setup c0c41408=00000005\n[motor] setup c0c41418=0000000a\n[motor] setup c0c81090=0000003f\n[motor] setup c0c57000=0000200d\n[motor] setup c0c57100=00700000\n[motor] setup c0c57148=00000001\n[motor] setup c0c57308=00000001\n[cr] homing toward the park wall\n[cr] park reference=0x0006ffc0\n[cr] done result=2 x=64 ms=320 stalls=0\n[cr] move x=64 -> 59968 cruise=30000 left\n[cr] t=50 x=384 speed=1984 wanted=28229 cmd=2600\n[cr] t=100 x=832 speed=0 wanted=30000 cmd=2600\n[cr] t=150 x=1856 speed=17856 wanted=30000 cmd=2446\n[cr] t=200 x=2752 speed=17856 wanted=30000 cmd=2496\n[cr] t=250 x=4480 speed=37696 wanted=30000 cmd=2493\n[cr] t=300 x=6400 speed=35712 wanted=30000 cmd=2458\n[cr] t=350 x=7872 speed=29760 wanted=30000 cmd=2462\n[cr] t=400 x=9536 speed=33728 wanted=30000 cmd=2459\n[cr] t=450 x=11008 speed=27776 wanted=30000 cmd=2463\n[cr] t=500 x=11584 speed=7936 wanted=30000 cmd=2540\n[cr] t=550 x=14144 speed=59520 wanted=30000 cmd=2479\n[cr] t=600 x=16832 speed=45632 wanted=30000 cmd=2321\n[cr] t=650 x=17344 speed=5952 wanted=30000 cmd=2403\n[cr] t=700 x=18112 speed=17856 wanted=30000 cmd=2492\n[cr] t=750 x=20224 speed=47616 wanted=30000 cmd=2457\n[cr] t=800 x=22400 speed=39680 wanted=30000 cmd=2380\n[cr] t=850 x=23424 speed=17856 wanted=30000 cmd=2417\n[cr] t=900 x=24832 speed=31744 wanted=30000 cmd=2428\n[cr] t=950 x=26688 speed=37696 wanted=30000 cmd=2417\n[cr] t=1000 x=28288 speed=31744 wanted=30000 cmd=2422\n[cr] t=1050 x=29504 speed=23808 wanted=30000 cmd=2436\n[cr] t=1100 x=30784 speed=25792 wanted=30000 cmd=2435\n[cr] t=1150 x=32384 speed=33728 wanted=30000 cmd=2429\n[cr] t=1200 x=33984 speed=33728 wanted=30000 cmd=2429\n[cr] t=1250 x=36032 speed=43648 wanted=30000 cmd=2402\n[cr] t=1300 x=37760 speed=29760 wanted=30000 cmd=2386\n[cr] t=1350 x=38528 speed=11904 wanted=30000 cmd=2442\n[cr] t=1400 x=39808 speed=29760 wanted=30000 cmd=2489\n[cr] t=1450 x=42176 speed=47616 wanted=30000 cmd=2416\n[cr] t=1500 x=43712 speed=25792 wanted=30000 cmd=2402\n[cr] t=1550 x=44864 speed=21824 wanted=30000 cmd=2426\n[cr] t=1600 x=46592 speed=37696 wanted=30000 cmd=2417\n[cr] t=1650 x=48384 speed=35712 wanted=30000 cmd=2419\n[cr] t=1700 x=50048 speed=33728 wanted=30000 cmd=2420\n[cr] t=1750 x=51712 speed=31744 wanted=30000 cmd=2422\n[cr] t=1800 x=53248 speed=29760 wanted=25200 cmd=2388\n[cr] t=1850 x=54080 speed=15872 wanted=22080 cmd=2375\n[cr] t=1900 x=54336 speed=5952 wanted=21120 cmd=2437\n[cr] t=1950 x=55552 speed=27776 wanted=16560 cmd=2393\n[cr] t=2000 x=56512 speed=11904 wanted=12960 cmd=2336\n[cr] t=2050 x=56512 speed=0 wanted=12960 cmd=2386\n[cr] t=2100 x=56832 speed=7936 wanted=11760 cmd=2405\n[cr] t=2150 x=57344 speed=9920 wanted=10000 cmd=2390\n[cr] t=2200 x=58048 speed=13888 wanted=10000 cmd=2387\n[cr] t=2250 x=58240 speed=1984 wanted=10000 cmd=2412\n[cr] t=2300 x=58624 speed=9920 wanted=10000 cmd=2419\n[cr] t=2350 x=59072 speed=9920 wanted=10000 cmd=2419\n[cr] t=2400 x=59456 speed=7936 wanted=10000 cmd=2420\n[cr] done result=2 x=59776 ms=2759 stalls=0\n[head] prefire count=100 ambient/2C=40 bk_sel=3 cl_sel=3 x=59776\n[head] adc before black=755 colour=752\n[head] readback 002900e5 0014014c 002f0062 001400ae 00020002 00000000 00000063 000003e6 00000000 00000000 00000000 00000000 00000000\n[head] done result=2 records=2 wait_ms=16 ms=590 adc after black=731 colour=737\n"
+}

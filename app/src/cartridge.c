@@ -274,6 +274,52 @@ static void log_head(unsigned head, const struct head_result *r)
     dbg_putc('\n');
 }
 
+/* Shared head-interface entry points for the other head modules (head_fire.c).
+ * They are the stock sequences above, unchanged; the fuse selector/pair
+ * clears inside acquire() are mode-4 extras that are harmless for the other
+ * owners (both registers are already zero outside a fuse transaction). */
+void head_block_init(void)
+{
+    if (head_initialized) return;
+    log_cfg3("[cart] head block before:");
+    for (unsigned i = 0; i < ARRAY_SIZE(head_cfg3); ++i) wr(head_cfg3[i][0], head_cfg3[i][1]);
+    for (unsigned i = 0; i < ARRAY_SIZE(head_cfg); ++i) wr(head_cfg[i][0], head_cfg[i][1]);
+    for (unsigned i = 0; i < ARRAY_SIZE(head_cfg2); ++i) wr(head_cfg2[i][0], head_cfg2[i][1]);
+    log_cfg3("[cart] head block after:");
+    head_initialized = true;
+}
+
+bool head_if_prepared(void) { return prepared; }
+
+/* Connection test and cold preparation, once; leaves the stock ready state.
+ * Callers run head_block_init() first (cartridge.c keeps an experiment option
+ * that deliberately skips it). */
+void head_if_prepare(void)
+{
+    if (prepared) return;
+    connection = connection_test();
+    dbg_puts("[cart] connection black="); dbg_dec(connection & 0xffu);
+    dbg_puts(" colour="); dbg_dec(connection >> 8); dbg_putc('\n');
+    cold_prepare();
+}
+
+void head_if_acquire(void) { acquire(); }
+void head_if_release(void) { release(); }
+void head_if_shutdown(void) { if (prepared) shutdown(); }
+
+/* Ranks from the last complete, stable read of both heads: black rank1,
+ * colour rank1 and rank2 (stock PK*RANK* fields). False if not available. */
+bool cartridge_ranks(unsigned *bk, unsigned *cl1, unsigned *cl2)
+{
+    if (state != 2 || heads_done != 3) return false;
+    if (result[0].low != result[0].low_repeat || result[1].low != result[1].low_repeat) return false;
+    if (result[0].low == 0xffffffffu || result[1].low == 0xffffffffu) return false;
+    *bk = (result[0].low >> 11) & 63u;
+    *cl1 = (result[1].low >> 11) & 31u;
+    *cl2 = (result[1].low >> 16) & 15u;
+    return true;
+}
+
 bool cartridge_request(unsigned value, unsigned wait_units)
 {
     unsigned heads = value & 0xffu, options = value & ~0xffu;
@@ -296,21 +342,9 @@ void cartridge_poll(void)
     dbg_puts(" wait_us="); dbg_dec(pending_wait * 10u);
     dbg_puts(" options=0x"); dbg_u32(pending_options); dbg_putc('\n');
     bool power = !(pending_options & CART_OPT_RAW);
-    if (power && !head_initialized && !(pending_options & CART_OPT_NO_HEADINIT)) {
-        log_cfg3("[cart] head block before:");
-        for (unsigned i = 0; i < ARRAY_SIZE(head_cfg3); ++i) wr(head_cfg3[i][0], head_cfg3[i][1]);
-        for (unsigned i = 0; i < ARRAY_SIZE(head_cfg); ++i) wr(head_cfg[i][0], head_cfg[i][1]);
-        for (unsigned i = 0; i < ARRAY_SIZE(head_cfg2); ++i) wr(head_cfg2[i][0], head_cfg2[i][1]);
-        log_cfg3("[cart] head block after:");
-        head_initialized = true;
-    }
+    if (power && !(pending_options & CART_OPT_NO_HEADINIT)) head_block_init();
     if (power) {
-        if (!prepared) {
-            connection = connection_test();
-            dbg_puts("[cart] connection black="); dbg_dec(connection & 0xffu);
-            dbg_puts(" colour="); dbg_dec(connection >> 8); dbg_putc('\n');
-            cold_prepare();
-        }
+        head_if_prepare();
         acquire();
         dbg_puts("[cart] head ctl 84604/54/64="); dbg_dec(rd(HEAD_CTL_ACQ));
         dbg_putc('/'); dbg_dec(rd(HEAD_CTL_COLD)); dbg_putc('/'); dbg_dec(rd(HEAD_CTL_RES));
@@ -393,6 +427,14 @@ static bool adc_block_init(void)
     }
     done = true;
     return true;
+}
+
+/* One 16-sample mean for head 0 (black, channel 0x12) or 1 (colour, 0x11). */
+uint32_t head_adc_read(unsigned head)
+{
+    uint16_t samples[16];
+    adc_block_init();
+    return head ? adc_mean(0x11u, 0xc0c90028u, samples) : adc_mean(0x12u, 0xc0c90030u, samples);
 }
 
 unsigned head_adc_status(uint8_t *out)

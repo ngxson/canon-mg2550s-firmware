@@ -41,3 +41,16 @@ Remaining roughness comes from the 64-count counter granularity in the speed
 estimate; the stock servo uses the hardware period capture instead. Timing
 constants (1 ms tick) are from the app clock, not from the stock timer units.
 No head firing is involved anywhere in this module.
+
+## Short moves (2026-10-26, build a2d4e589)
+
+Watched test after a power cycle: home ok, long move to 35000 lands at 34752,
+then three short moves of 1920 counts in the short-move mode (kick until the
+counter moves, then a fixed 18 % effort, one-step tolerance) all **stalled**:
+landed 35712, 35968, 36288 (short by 1208, 2872, 4472 counts), 450 to 520 ms
+each, with an odd noise, no damage. An 18 % command does not keep the
+carriage rolling from standstill mid-travel; the earlier "15 % keeps it
+rolling" observation was at speed. Short stops are therefore not used: the
+stamp job fires while crawling under the sweep controller, and the mapping
+sheet uses the same job. Short-move tuning (a higher sustained effort with a
+position-based cut) remains open.
