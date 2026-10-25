@@ -1,0 +1,6 @@
+{
+  "utc": "2026-10-25T17:28:38.786951+00:00",
+  "operation": "USB bus reset only; no CPU reset, power cycle, or new flash transfer",
+  "usb_reset_error": "[Errno 60] Operation timed out",
+  "management_error": "No responsive bootloader USB device; use I2C or reset if firmware is stuck"
+}

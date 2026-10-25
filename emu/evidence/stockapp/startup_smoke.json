@@ -1,0 +1,262 @@
+{
+  "manifest": {
+    "status": "OFFLINE startup smoke: returns before panel/USB startup; physical recovery prerequisite",
+    "startup_smoke": true,
+    "shim_symbols": {
+      "mg_boot_vector_api": "0x40",
+      "smoke_svc": "0x10210",
+      "caught_svc": "0x10254",
+      "smoke_undef": "0x1025c",
+      "smoke_pabort": "0x1026c",
+      "smoke_dabort": "0x1027c",
+      "smoke_reserved": "0x1028c",
+      "smoke_fiq": "0x1029c",
+      "smoke_rescue": "0x102ac",
+      "stockapp_register": "0x102cc",
+      "stockapp_prepare_rescue": "0x103ac",
+      "shim_entry": "0x200200f0",
+      "registration_failed": "0x2002012c",
+      "__stockapp_register_veneer": "0x20020158",
+      "__smoke_rescue_veneer": "0x20020160"
+    },
+    "smoke_stop_patch": {
+      "address": "0x135768",
+      "original": "0c4910b5",
+      "replacement": "fedffee7"
+    },
+    "registered_vectors": true,
+    "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+    "protected_prefix_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+    "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+    "candidate_sha256": "92cace5ad083dd8d4132a06789fe5a8c0e027bc5cfc7eb7238e5b4567340c631",
+    "package_sha256": "9d2c2b91f9f1d55720df4f3e9a8b6e4e468288889c1e895e38b1575a4dff4238",
+    "payload_length": 2031584,
+    "payload_ram_end": "0x2020ffe0",
+    "shim_flash": "0x10110",
+    "shim_ram": "0x200200f0",
+    "shim_bytes": 860,
+    "helper_veneer_patches": [
+      {
+        "pc": "0x1509c8",
+        "original_target": "0x10000",
+        "target": "0x10d00"
+      }
+    ],
+    "stock_dependencies": [
+      "stock runtime, RTOS, handlers and device drivers",
+      "stock short delay helpers copied into app-slot padding"
+    ],
+    "source_sha256": {
+      "emu/stockapp/build.py": "482180db4789cda6a05f47ad1179bea4c6274c5ca65eae32c15b57536cf5a171",
+      "app/stockapp/smoke/entry.S": "f076b998aa43cd3a0ad78e23e4fc2bcdca3133d00333bc4cb58932c03e34ad7f",
+      "app/stockapp/smoke/control.c": "2c1b5822b7cca90a57a14fb319fd1f9257c8346be10cb5f2c31e3b8164cc5c25",
+      "app/stockapp/smoke/shim.ld": "2e70393cbee72188fdd1341f216ebd0aa74a19a1760fb7897d0f9d78e057fde3",
+      "bootloader/include/vectors.h": "1c675298f52de31b488cfc59559e9c48f6d5366d5e281928090a69ff205d2c91"
+    }
+  },
+  "validation": {
+    "status": "Offline only; independent physical recovery still required",
+    "cases": {
+      "startup_to_rescue": {
+        "reason": "0xfe",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0xfe",
+          "0xffffff01",
+          "0x13576a",
+          "0x30"
+        ],
+        "svcs": 879,
+        "panel_reached": true,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "real_reset_into_held_usb_rescue": {
+        "passed": true,
+        "info": [
+          1464223565,
+          2,
+          1,
+          13,
+          0,
+          128,
+          65536,
+          2031616
+        ],
+        "record_survived": true,
+        "flash_unchanged": true
+      },
+      "arm_svc_7": {
+        "reason": "0x7",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x7",
+          "0xfffffff8",
+          "0x207f0004",
+          "0x10"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "arm_svc_8": {
+        "reason": "0x8",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x8",
+          "0xfffffff7",
+          "0x207f0004",
+          "0x10"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "thumb_svc_7": {
+        "reason": "0x7",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x7",
+          "0xfffffff8",
+          "0x207f0002",
+          "0x30"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "thumb_svc_8": {
+        "reason": "0x8",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x8",
+          "0xfffffff7",
+          "0x207f0002",
+          "0x30"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "undef": {
+        "reason": "0x11",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x11",
+          "0xffffffee",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "pabort": {
+        "reason": "0x12",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x12",
+          "0xffffffed",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "dabort": {
+        "reason": "0x13",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x13",
+          "0xffffffec",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "reserved": {
+        "reason": "0x14",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x14",
+          "0xffffffeb",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "fiq": {
+        "reason": "0x15",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x15",
+          "0xffffffea",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      }
+    },
+    "package_sha256": "9d2c2b91f9f1d55720df4f3e9a8b6e4e468288889c1e895e38b1575a4dff4238",
+    "all_assertions_passed": true
+  },
+  "physical_upload_performed": true,
+  "physical_result": "planned_stop_confirmed_boot_unchanged_original_app_restored",
+  "physical_evidence": "physical_smoke/README.md"
+}

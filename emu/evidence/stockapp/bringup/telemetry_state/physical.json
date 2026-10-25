@@ -1,0 +1,26 @@
+{
+  "package_sha256": "de8f1f0bb9dc8fcefcbea02b16f78a1536383e9f0d0e3f6a6c4f2dab1fdc489a",
+  "checkpoint": null,
+  "result": "error",
+  "events": [
+    {
+      "utc": "2026-10-25T20:03:39.470607+00:00",
+      "event": "starting_app",
+      "product": "MG2550s Bootloader",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    }
+  ],
+  "error": "SDA/SCL wiring was not verified: WIRING FAILED SDA4 SCL5 PROOF=NONE FLOATING"
+}

@@ -1,0 +1,61 @@
+{
+  "image_bytes": 2097152,
+  "image_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "packet_sha256": "e3093f59727d24a8406101e004c4108cd47886d5d689088b8b7b29bd55798e28",
+  "bytes_transferred": 2097184,
+  "status_changes": [
+    {
+      "layout_version": 2,
+      "mode": "bootloader",
+      "held": true,
+      "busy": true,
+      "app_valid": false,
+      "dangerous_write": true,
+      "reboot_blocked": false,
+      "remaining_ms": 0,
+      "status": "80",
+      "application_flash": "0x10000",
+      "application_capacity": 2031616
+    },
+    {
+      "layout_version": 2,
+      "mode": "bootloader",
+      "held": true,
+      "busy": true,
+      "app_valid": false,
+      "dangerous_write": true,
+      "reboot_blocked": true,
+      "remaining_ms": 0,
+      "status": "80",
+      "application_flash": "0x10000",
+      "application_capacity": 2031616
+    },
+    {
+      "layout_version": 2,
+      "mode": "bootloader",
+      "held": true,
+      "busy": false,
+      "app_valid": false,
+      "dangerous_write": true,
+      "reboot_blocked": false,
+      "remaining_ms": 0,
+      "status": "C0",
+      "application_flash": "0x10000",
+      "application_capacity": 2031616
+    }
+  ],
+  "result": "full_flash_readback_verified",
+  "before": {
+    "layout_version": 2,
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  }
+}

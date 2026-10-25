@@ -1,0 +1,49 @@
+{
+  "image_bytes": 2097152,
+  "image_sha256": "8701d5ac9b52afef966bab588632ad28bc5c70380bffcb3819918d764ace94a3",
+  "packet_sha256": "ef8c0f60931cbb08ecd87a9dc7e2e958ca6d37fca353e88b0a89465d057ed924",
+  "bytes_transferred": 2097184,
+  "status_changes": [
+    {
+      "layout_version": 2,
+      "mode": "bootloader",
+      "held": true,
+      "busy": true,
+      "app_valid": false,
+      "dangerous_write": true,
+      "reboot_blocked": false,
+      "remaining_ms": 0,
+      "status": "80",
+      "application_flash": "0x10000",
+      "application_capacity": 2031616
+    },
+    {
+      "layout_version": 2,
+      "mode": "bootloader",
+      "held": true,
+      "busy": true,
+      "app_valid": false,
+      "dangerous_write": true,
+      "reboot_blocked": true,
+      "remaining_ms": 0,
+      "status": "80",
+      "application_flash": "0x10000",
+      "application_capacity": 2031616
+    }
+  ],
+  "result": "error",
+  "before": {
+    "layout_version": 2,
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "error": "[Errno 60] Operation timed out"
+}

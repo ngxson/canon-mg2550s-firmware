@@ -1,0 +1,18 @@
+{
+  "utc": "2026-10-25T18:15:26.526549+00:00",
+  "type": "read_only_post_stock_timeout",
+  "info": {
+    "layout_version": 2,
+    "mode": "bootloader",
+    "held": true,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": true,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "product": "MG2550s Bootloader"
+}

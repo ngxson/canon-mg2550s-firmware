@@ -1,0 +1,137 @@
+{
+  "status": "Running stock experiment with guarded restart/update and stock USB management path",
+  "startup_smoke": false,
+  "runtime": true,
+  "runtime_patches": [
+    {
+      "address": "0x126b2",
+      "original": "1400069a",
+      "replacement": "fdf725ff",
+      "purpose": "Stock USB request 0x30007 enters held rescue before queuing or EEPROM latch writes"
+    },
+    {
+      "address": "0x154146",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x154162",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x15417e",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x11004",
+      "original": "190000eb",
+      "replacement": "080000ef",
+      "purpose": "Direct native app restart entry also enters our held rescue"
+    },
+    {
+      "address": "0x11020",
+      "original": "7dcc03fa",
+      "replacement": "0000a0e1",
+      "purpose": "Our MGAP and bootloader checks replace the incompatible native first-64-KiB checksum"
+    },
+    {
+      "address": "0x113f16",
+      "original": "10b50400",
+      "replacement": "01207047",
+      "purpose": "Observation mode reports a wake request at the standby eligibility check, using the native abort-standby branch before clocks and IRQs change"
+    },
+    {
+      "address": "0x12c7e2",
+      "original": "15490020896a",
+      "replacement": "e3f69dfe0020",
+      "purpose": "Read real panel keys with one startup Power pulse, then replay displaced r0=0; stock handles debounce and power-on"
+    },
+    {
+      "address": "0x51bf6",
+      "original": "fff7d1fe",
+      "replacement": "bef721fd",
+      "purpose": "Recognize read-only telemetry in vendor SETUP dispatch; other requests retain native lookup and all transfers use stock EP0"
+    }
+  ],
+  "native_cpu": false,
+  "native_startup": true,
+  "checkpoint": null,
+  "irq_snapshot": 2048,
+  "stay_awake": true,
+  "irq_snapshot_record_version": 2,
+  "auto_power": true,
+  "telemetry": true,
+  "shim_symbols": {
+    "mg_boot_vector_api": "0x40",
+    "stockapp_irq": "0x10210",
+    "irq_snapshot": "0x10230",
+    "smoke_svc": "0x10248",
+    "caught_svc": "0x10294",
+    "smoke_undef": "0x1029c",
+    "smoke_pabort": "0x102ac",
+    "smoke_dabort": "0x102bc",
+    "smoke_reserved": "0x102cc",
+    "smoke_fiq": "0x102dc",
+    "smoke_rescue": "0x102ec",
+    "stockapp_irq_due": "0x1030c",
+    "stockapp_register": "0x1032c",
+    "stockapp_prepare_rescue": "0x10414",
+    "stockapp_event_hook": "0x10500",
+    "management_rescue": "0x10518",
+    "stockapp_power_key": "0x10520",
+    "stockapp_management_event": "0x1053c",
+    "stockapp_telemetry": "0x10554",
+    "stockapp_telemetry_hook": "0x1063c",
+    "passthrough": "0x10660",
+    "stockapp_power_sample": "0x10674",
+    "stockapp_native_startup": "0x106a4",
+    "info": "0x106e0",
+    "regions": "0x10710",
+    "shim_entry": "0x200200f0",
+    "registration_failed": "0x20020134",
+    "__stockapp_register_veneer": "0x20020160",
+    "__smoke_rescue_veneer": "0x20020168",
+    "__stockapp_native_startup_veneer": "0x20020170"
+  },
+  "smoke_stop_patch": null,
+  "registered_vectors": true,
+  "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "protected_prefix_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+  "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+  "candidate_sha256": "f78651171740ff7682fbba5139f637b70a7bb9110ee9ba315cb20a2dccf69e6a",
+  "package_sha256": "de8f1f0bb9dc8fcefcbea02b16f78a1536383e9f0d0e3f6a6c4f2dab1fdc489a",
+  "payload_length": 2031584,
+  "payload_ram_end": "0x2020ffe0",
+  "shim_flash": "0x10110",
+  "shim_ram": "0x200200f0",
+  "shim_bytes": 1568,
+  "helper_veneer_patches": [
+    {
+      "pc": "0x1509c8",
+      "original_target": "0x10000",
+      "target": "0x10d00"
+    }
+  ],
+  "stock_dependencies": [
+    "stock runtime, RTOS, handlers and device drivers",
+    "stock short delay helpers copied into app-slot padding"
+  ],
+  "source_sha256": {
+    "emu/stockapp/build.py": "001163a47071465242079210cac422e4d57f178c8514bb565717ba92a7fbf14a",
+    "app/stockapp/smoke/entry.S": "bfc8786f51378abae620d1e55ae365c15d0d6dab118a1f2607664599cb038b8c",
+    "app/stockapp/smoke/control.c": "cbe618e6b00729996f896d9665babe743e028ce938869525fadb5b723a19d1b6",
+    "app/stockapp/smoke/shim.ld": "2e70393cbee72188fdd1341f216ebd0aa74a19a1760fb7897d0f9d78e057fde3",
+    "bootloader/include/vectors.h": "1c675298f52de31b488cfc59559e9c48f6d5366d5e281928090a69ff205d2c91",
+    "app/stockapp/runtime/hook.S": "9e010812007ee245c25bb620c96ba4031d9611c18f6d9ce626734a8eafeafc92",
+    "app/stockapp/runtime/management.c": "b741f81ab2d611e2670dad40fe66b80699e73773410de1e10f82c3d28e26cddf",
+    "app/stockapp/runtime/telemetry.c": "eed03fe1d27cb77ea4801501d5c5691768fc5f1c031a196e1fcab3fb3432b4df",
+    "app/stockapp/runtime/telemetry_hook.S": "8f34f75b64559385e3671ece0763940140f51515d892abf8dead24ca63a95db3",
+    "app/stockapp/runtime/auto_power.c": "65d9a2e9bc977c82e82127fecae25ae306f3b9afe68b83433e909d5dd38894f9",
+    "app/stockapp/runtime/native_startup.c": "2f9a94f80375fca0c7671912ed0dcb56351070758fe4daf426498fa40bcca339"
+  }
+}

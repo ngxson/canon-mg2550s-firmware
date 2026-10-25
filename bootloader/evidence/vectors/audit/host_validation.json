@@ -1,0 +1,33 @@
+{
+  "all_assertions_passed": true,
+  "cases": {
+    "install": {
+      "passed": true,
+      "reboots": [
+        1,
+        2
+      ],
+      "result": "audit_app_installed"
+    },
+    "read": {
+      "passed": true,
+      "reboots": [],
+      "result": "boot_region_read_and_compared"
+    },
+    "restore": {
+      "passed": true,
+      "reboots": [
+        1,
+        2
+      ],
+      "result": "original_app_restored"
+    },
+    "install_failed_update": {
+      "passed": true,
+      "reboots": [
+        1
+      ],
+      "result": "error"
+    }
+  }
+}

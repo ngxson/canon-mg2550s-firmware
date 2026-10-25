@@ -1,0 +1,1087 @@
+{
+  "status": "Installed: complete boot region read twice and verified; original app restored. Independent I2C recovery and exception forwarding remain physically unverified.",
+  "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+  "boot_region_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+  "install_image_sha256": "8701d5ac9b52afef966bab588632ad28bc5c70380bffcb3819918d764ace94a3",
+  "reproducible": true,
+  "bootloader_suites": {
+    "validation.json": {
+      "cases": 31,
+      "names": [
+        "five_second_window_then_distinct_application",
+        "stay_full_speed",
+        "stay_high_speed_coalesced",
+        "demo_four_led_sequence_usb_reboot_to_power_blink",
+        "invalid_application_stays_in_rescue",
+        "no_usb_host_still_launches_app",
+        "usb_application_update_header_last",
+        "reject_bad_usb_crc",
+        "partial_usb_upload_times_out_before_erase",
+        "stage0_ignores_main_image_bootloader_accepts_i2c",
+        "flash_readback_error",
+        "power_loss_before_header_commit_stays_rescue",
+        "i2c_recovery_after_power_loss",
+        "usb_acknowledged_reboot_to_application",
+        "main_app_usb_reboot_to_held_bootloader",
+        "main_app_i2c_offer_reboots_and_updates_without_usb_command",
+        "i2c_reboot_to_application",
+        "no_reboot_before_status_ack",
+        "reject_begin_length_0",
+        "reject_begin_length_31",
+        "reject_begin_length_2031617",
+        "reject_valid_crc_wrong_load_address",
+        "reject_reboot_and_second_upload_while_busy",
+        "i2c_does_not_interleave_with_owned_usb_transfer",
+        "corrupt_i2c_offer_cannot_modify_flash",
+        "reject_128k_layout_package_without_erasing",
+        "application_crosses_64k_boundary_preserving_boot_region",
+        "stage0_recovers_second_stage_using_4k_erase",
+        "stage0_rejects_legacy_maintenance_package",
+        "stage0_rejects_oversize_maintenance_package",
+        "stage0_recovers_after_interrupted_second_stage_update"
+      ],
+      "sha256": "a8e13aa24c3faf574d5ce6c29fc0fbc60df3411ee3fc2864de629ec9dccad5fe"
+    },
+    "dangerous_validation.json": {
+      "cases": 21,
+      "names": [
+        "whole_flash_then_usb_reboot_high_speed",
+        "whole_flash_then_usb_reboot_full_speed",
+        "reject_raw_length_0",
+        "reject_raw_length_32",
+        "reject_raw_length_2097152",
+        "reject_raw_length_2097183",
+        "reject_raw_length_2097185",
+        "reject_raw_magic",
+        "reject_raw_version",
+        "reject_raw_image_size",
+        "reject_raw_address",
+        "reject_raw_acknowledgement",
+        "reject_raw_reserved",
+        "reject_raw_header_crc",
+        "reject_raw_payload_crc",
+        "raw_partial_upload_times_out_without_erasing",
+        "demo_cannot_accept_raw_write",
+        "failed_raw_write_blocks_reboot_and_normal_updates",
+        "explicit_retry_from_ram_recovers_after_raw_failure",
+        "early_interruption_leaves_original_boot_block",
+        "interruption_during_boot_commit_requires_external_recovery"
+      ],
+      "sha256": "0d21488332821ae759d1a3b1126931656902ef02ecc45d45540836fd465c7bbc"
+    },
+    "vectors_validation.json": {
+      "cases": 42,
+      "names": [
+        "all_seven_flash_handlers_sp_mod8_0",
+        "all_seven_flash_handlers_sp_mod8_4",
+        "all_seven_ram_handlers_sp_mod8_0",
+        "all_seven_ram_handlers_sp_mod8_4",
+        "all_zero_handlers_use_fault",
+        "reject_target_boot_flash",
+        "reject_target_boot_ram",
+        "reject_target_thumb",
+        "reject_target_halfword",
+        "reject_target_mmio",
+        "reject_target_outside_flash",
+        "reject_target_past_payload",
+        "reject_target_past_ram_payload",
+        "reject_target_wraparound",
+        "reject_target_header",
+        "reject_table_null",
+        "reject_table_unaligned",
+        "reject_table_mmio",
+        "reject_table_ram_edge",
+        "reject_table_sram_edge",
+        "reject_table_flash_edge",
+        "reject_caller_irq_enabled",
+        "reject_caller_fiq_enabled",
+        "reject_caller_user",
+        "reject_corrupt_magic",
+        "reject_corrupt_magic_inverse",
+        "reject_corrupt_version",
+        "reject_corrupt_target",
+        "reject_corrupt_inverse",
+        "dispatch_rechecks_target_bounds",
+        "reject_header_length_zero",
+        "reject_header_length_unaligned",
+        "reject_header_length_overflow",
+        "reject_header_magic",
+        "reject_header_version",
+        "reject_header_load",
+        "reject_header_entry",
+        "reject_header_flags",
+        "clear_disables_and_wipes",
+        "reset_disarms_valid_app",
+        "reset_disarms_invalid_app_rescue",
+        "current_source_app_boot_and_management_reboot"
+      ],
+      "sha256": "8fc3a17a9c5a8275e92299f272d208330a3bacd09d9958483deda113a2a69103"
+    },
+    "migration_validation.json": {
+      "cases": 3,
+      "names": [
+        "baseline_writer_installs_candidate",
+        "software_restart_into_current_application",
+        "normal_update_and_app_restart"
+      ],
+      "sha256": "e5a8578b3538005de9cf7e26709ed174ff826619d4ef709a899ed7b653738a76"
+    }
+  },
+  "stock": {
+    "startup": {
+      "passed": true,
+      "pc": "0x135768",
+      "stop": "panel component startup reached",
+      "svcs": 878,
+      "raw_report_sha256": "e11c275091126c86213529bcba8c9903e8bcd6d057681b3e263afb1bd532d138",
+      "registration_intact": null,
+      "loader_handoff": null
+    },
+    "boot": {
+      "passed": true,
+      "pc": "0x104da2",
+      "stop": "tick limit at idle",
+      "svcs": 24249,
+      "raw_report_sha256": "02b2c11f8f312552edaeb6ad9215efa417cdba1b135210e5ae4843c27f6c396a",
+      "registration_intact": null,
+      "loader_handoff": null,
+      "matched_records": {
+        "transfers": 100,
+        "context_restores": 4559,
+        "mmio_writes": 15735,
+        "motor_writes": 106
+      },
+      "ticks": 1000,
+      "irqs": 2412
+    },
+    "home": {
+      "passed": true,
+      "pc": "0xf4c2c",
+      "stop": "optical reference stage reached; pixels not modeled",
+      "svcs": 24141,
+      "raw_report_sha256": "dedef65544792d043696bf9bd769ff8ecccfa9c82564b3ef8978cfff247cd186",
+      "registration_intact": null,
+      "loader_handoff": null,
+      "matched_records": {
+        "transfers": 100,
+        "context_restores": 4955,
+        "moves": 2,
+        "modeled_inputs": 199,
+        "mmio_writes": 17984,
+        "motor_writes": 1167,
+        "capture_writes": 1179
+      },
+      "ticks": 888,
+      "irqs": 2914
+    },
+    "reset-startup": {
+      "passed": true,
+      "pc": "0x135768",
+      "stop": "panel component startup reached",
+      "svcs": 878,
+      "raw_report_sha256": "735fe195133e5f5c84374288ee0cbf60aae1413d7a414996acdea04b21dfc55d",
+      "registration_intact": null,
+      "loader_handoff": {
+        "cpsr": "0x600000d3",
+        "sp": "0x207fef90",
+        "pc": "0x20020000",
+        "payload_bytes": 2031584,
+        "stored_mmio_registers": 253,
+        "reset_summary": {
+          "identities": [
+            "0x176d"
+          ],
+          "entered": [
+            "0x20010000",
+            "0x20020000"
+          ],
+          "resets": 1,
+          "erases": [],
+          "erase_sizes": [],
+          "programs": [],
+          "i2c_results": [],
+          "i2c_addresses": [
+            66
+          ],
+          "led_frames": 303,
+          "led_pattern_samples": {
+            "stage0": [
+              [
+                0,
+                16,
+                0,
+                0
+              ]
+            ],
+            "bootloader": [
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "application": []
+          },
+          "protected_prefix_bytes": 65536,
+          "protected_prefix_unchanged": true,
+          "main_app_unchanged_during_maintenance": null
+        },
+        "limit": "Peripheral behavioral model changes at app entry; RAM aliases and cache timing remain unmodeled"
+      }
+    },
+    "reset-boot": {
+      "passed": true,
+      "pc": "0x104da2",
+      "stop": "tick limit at idle",
+      "svcs": 24249,
+      "raw_report_sha256": "d803c683b90f68d11e20ee6be619172151fc04668a85335d5a5445fdb5a4e89d",
+      "registration_intact": true,
+      "loader_handoff": {
+        "cpsr": "0x600000d3",
+        "sp": "0x207fef90",
+        "pc": "0x20020000",
+        "payload_bytes": 2031584,
+        "stored_mmio_registers": 253,
+        "reset_summary": {
+          "identities": [
+            "0x176d"
+          ],
+          "entered": [
+            "0x20010000",
+            "0x20020000"
+          ],
+          "resets": 1,
+          "erases": [],
+          "erase_sizes": [],
+          "programs": [],
+          "i2c_results": [],
+          "i2c_addresses": [
+            66
+          ],
+          "led_frames": 303,
+          "led_pattern_samples": {
+            "stage0": [
+              [
+                0,
+                16,
+                0,
+                0
+              ]
+            ],
+            "bootloader": [
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "application": []
+          },
+          "protected_prefix_bytes": 65536,
+          "protected_prefix_unchanged": true,
+          "main_app_unchanged_during_maintenance": null
+        },
+        "limit": "Peripheral behavioral model changes at app entry; RAM aliases and cache timing remain unmodeled"
+      },
+      "matched_records": {
+        "transfers": 100,
+        "context_restores": 4559
+      },
+      "ticks": 1000,
+      "irqs": 2412,
+      "mmio_diff_keys": [
+        "pc",
+        "address",
+        "value",
+        "size",
+        "task",
+        "tick",
+        "phase"
+      ],
+      "mmio_differences": [
+        {
+          "change": "delete",
+          "native": [
+            [
+              "0x109ef2",
+              "0xc0101324",
+              "0x1",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109ef8",
+              "0xc0140500",
+              "0x80000000",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109f0a",
+              "0xc0101324",
+              "0x0",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109f12",
+              "0xc0101224",
+              "0x5",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109f1a",
+              "0xc0101324",
+              "0x1",
+              4,
+              null,
+              0,
+              "boot"
+            ]
+          ],
+          "from_reset": []
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x49a72",
+              "0xc07f0194",
+              "0x0",
+              4,
+              1,
+              64,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x49a72",
+              "0xc07f0194",
+              "0x1",
+              4,
+              1,
+              64,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0xfffffffd",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0x2",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0xffffffff",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0xfffffffd",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0x2",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0xffffffff",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115b18",
+              "0xc0140108",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ],
+            [
+              "0x115b1c",
+              "0xc0140114",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115b18",
+              "0xc0140108",
+              "0xb3b0",
+              4,
+              8,
+              110,
+              "ticks"
+            ],
+            [
+              "0x115b1c",
+              "0xc0140114",
+              "0x3",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "delete",
+          "native": [
+            [
+              "0x109e6e",
+              "0xc0140114",
+              "0x2",
+              4,
+              23,
+              357,
+              "ticks"
+            ],
+            [
+              "0x109e72",
+              "0xc0140114",
+              "0x3",
+              4,
+              23,
+              357,
+              "ticks"
+            ]
+          ],
+          "from_reset": []
+        }
+      ],
+      "motor_controller_writes_identical": true
+    },
+    "reset-home": {
+      "passed": true,
+      "pc": "0xf4c2c",
+      "stop": "optical reference stage reached; pixels not modeled",
+      "svcs": 24141,
+      "raw_report_sha256": "3fdd48033796e017a03fd8d1b9d4a2bc5c2c8583409cb05f79d85f375164420a",
+      "registration_intact": true,
+      "loader_handoff": {
+        "cpsr": "0x600000d3",
+        "sp": "0x207fef90",
+        "pc": "0x20020000",
+        "payload_bytes": 2031584,
+        "stored_mmio_registers": 253,
+        "reset_summary": {
+          "identities": [
+            "0x176d"
+          ],
+          "entered": [
+            "0x20010000",
+            "0x20020000"
+          ],
+          "resets": 1,
+          "erases": [],
+          "erase_sizes": [],
+          "programs": [],
+          "i2c_results": [],
+          "i2c_addresses": [
+            66
+          ],
+          "led_frames": 303,
+          "led_pattern_samples": {
+            "stage0": [
+              [
+                0,
+                16,
+                0,
+                0
+              ]
+            ],
+            "bootloader": [
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                16,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ]
+            ],
+            "application": []
+          },
+          "protected_prefix_bytes": 65536,
+          "protected_prefix_unchanged": true,
+          "main_app_unchanged_during_maintenance": null
+        },
+        "limit": "Peripheral behavioral model changes at app entry; RAM aliases and cache timing remain unmodeled"
+      },
+      "matched_records": {
+        "transfers": 100,
+        "context_restores": 4955,
+        "moves": 2,
+        "modeled_inputs": 199
+      },
+      "ticks": 888,
+      "irqs": 2914,
+      "mmio_diff_keys": [
+        "pc",
+        "address",
+        "value",
+        "size",
+        "task",
+        "tick",
+        "phase"
+      ],
+      "mmio_differences": [
+        {
+          "change": "delete",
+          "native": [
+            [
+              "0x109ef2",
+              "0xc0101324",
+              "0x1",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109ef8",
+              "0xc0140500",
+              "0x80000000",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109f0a",
+              "0xc0101324",
+              "0x0",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109f12",
+              "0xc0101224",
+              "0x5",
+              4,
+              null,
+              0,
+              "boot"
+            ],
+            [
+              "0x109f1a",
+              "0xc0101324",
+              "0x1",
+              4,
+              null,
+              0,
+              "boot"
+            ]
+          ],
+          "from_reset": []
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x49a72",
+              "0xc07f0194",
+              "0x0",
+              4,
+              1,
+              64,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x49a72",
+              "0xc07f0194",
+              "0x1",
+              4,
+              1,
+              64,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0xfffffffd",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0x2",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0xffffffff",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ace",
+              "0xc0101200",
+              "0xfffffffd",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0x2",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115ade",
+              "0xc0101200",
+              "0xffffffff",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "replace",
+          "native": [
+            [
+              "0x115b18",
+              "0xc0140108",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ],
+            [
+              "0x115b1c",
+              "0xc0140114",
+              "0x0",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ],
+          "from_reset": [
+            [
+              "0x115b18",
+              "0xc0140108",
+              "0xb3b0",
+              4,
+              8,
+              110,
+              "ticks"
+            ],
+            [
+              "0x115b1c",
+              "0xc0140114",
+              "0x3",
+              4,
+              8,
+              110,
+              "ticks"
+            ]
+          ]
+        },
+        {
+          "change": "delete",
+          "native": [
+            [
+              "0x109ef2",
+              "0xc0101320",
+              "0x1",
+              4,
+              43,
+              157,
+              "ticks"
+            ],
+            [
+              "0x109ef8",
+              "0xc0140400",
+              "0x80000000",
+              4,
+              43,
+              157,
+              "ticks"
+            ],
+            [
+              "0x109f0a",
+              "0xc0101320",
+              "0x0",
+              4,
+              43,
+              157,
+              "ticks"
+            ],
+            [
+              "0x109f12",
+              "0xc0101220",
+              "0x5",
+              4,
+              43,
+              157,
+              "ticks"
+            ],
+            [
+              "0x109f1a",
+              "0xc0101320",
+              "0x1",
+              4,
+              43,
+              157,
+              "ticks"
+            ]
+          ],
+          "from_reset": []
+        },
+        {
+          "change": "delete",
+          "native": [
+            [
+              "0x109e6e",
+              "0xc0140114",
+              "0x2",
+              4,
+              23,
+              357,
+              "ticks"
+            ],
+            [
+              "0x109e72",
+              "0xc0140114",
+              "0x3",
+              4,
+              23,
+              357,
+              "ticks"
+            ]
+          ],
+          "from_reset": []
+        }
+      ],
+      "motor_controller_writes_identical": true
+    }
+  },
+  "source_sha256": {
+    "app/stockapp/README.md": "0b676fecec208e4760a7e12ea163b4ca18dda85a434cb098a051a97117669070",
+    "app/stockapp/entry.S": "a6e54e42c3ca76aabb63633164cd112a66cadfbae6254cf1880e222f45252c26",
+    "app/stockapp/register.c": "279879f83dcd65b688c359932205bbd5221783b97ad78c8d983efd44bffa8e96",
+    "app/stockapp/shim.ld": "2f707d96fef3883b2d0e7da0a17f3a2064aeb12cea016696d99c8a2b67c886c5",
+    "bootloader/tests/measure_update_latency.py": "d2710f0281e1dda5efbc8654241f0c52748f2d1a38e2e5d1e7907b094d6bab15",
+    "bootloader/tests/model.py": "52444023225b1d4b71d71d9567548fb1663efe78076f027f462b8a9f08dfc2a0",
+    "bootloader/tests/rehearse_install.py": "f311d15f636c2cbbcb5c47685c3ec5f774465097cf06bdd7439b94139f0cd788",
+    "bootloader/tests/report_vectors.py": "ab4848fad60369e80ab0c1ce7e281e293098548ca41f094bde1c99c22fd9fa16",
+    "bootloader/tests/validate.py": "f93cf5aef6d21551d4da34301cfb96cc19a091be9da06d729e67f039e277dcb1",
+    "bootloader/tests/validate_dangerous.py": "bcb94583be63b647ba7af8af923eec42cedd4913b22b3af2675687eb23776890",
+    "bootloader/tests/validate_vectors.py": "ff1c57d335127e187abbbad9ec91e1bb23f47b7e44a234f6de5b6fa7e8aaa272",
+    "emu/stock/__init__.py": "a242445c9cd9d3c13cd17482bbe5eb763f6ac090c7e856805d8eb06b04eb5345",
+    "emu/stock/boot.py": "0060bad78925b922cf9ef17b70e6c1bff3a4be7c503cf98c92de411b76915d2c",
+    "emu/stock/feedback.py": "06cc28f81227c1307d4aaff8bf00737909f2ddd8b41bf973425939f9323e9027",
+    "emu/stock/head_interface.py": "7cce7a22e1559a8c61e9ecc678b82969d3975810a25282f39adc9fbdb265ff2c",
+    "emu/stock/home.py": "e55da813b5cfced5b2568310b090b346660c8adaf3b4484aeaf6a230ca66f667",
+    "emu/stock/inputs.py": "67fc370f4a0f36a5c15c2ac321c29f4c8de4f8e385a0ea79376d848790914d50",
+    "emu/stock/irqprobe.py": "ef24a6c9a9049338cf1f9c70045644fbaa1dd4de983af9fe887811698fbd5adf",
+    "emu/stock/keys.py": "490a2403531a4f56ded6fdb360e05ce7f992ad5137ac50c6b066ae47ca72452e",
+    "emu/stock/scheduler.py": "408082d04e66d5cde587e6ecc7d6e5e42a429f55d3202c1548b4a50f526fd32e",
+    "emu/stock/startup.py": "50e2b5349b7041d044def058218b7801638c3efcdaa21bafd3e0d0eb124bbb46",
+    "emu/stock/tasks.py": "d6dc25dbf456f9efc7f012f0cea0277da10f05dcaec62c9877c133f406645b25",
+    "emu/stock/tunnel.py": "01e080aa4be7031449bab91ba85a1da492b4626855ed10c8d2f289aa75787a14",
+    "emu/stock/usbhost.py": "466f0657955b7d3c826137d7335099de6ff0be0e2ffadc2578e825273802f173",
+    "emu/stockapp/build.py": "60b9a446726196861aa83f0fba20dd64792ab51c9b56a7f767271c30b2cc9dcd",
+    "emu/stockapp/probe.py": "80e40d6247b65a6112a9da57c957035d2abc420973ff8b0d442d28c1c5832556",
+    "emu/stockapp/summarize.py": "cfc107ffc14e1c70902df832a1322ffe1d54ee632e69ae5828533776f5be8baf",
+    "emu/stockapp/validate_loader.py": "48b3fe76715f491d8d92b4bd737298e58f61f474f44b16b3427279e8bf90f962"
+  },
+  "bootloader_checks": 97,
+  "install_application_sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a",
+  "all_assertions_passed": true,
+  "physical_verification": {
+    "boot_read_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+    "read_report_sha256": "8dd739ee08332f8712ca400d42c5dff88f91ddd086e184cf266b896997e9d08b",
+    "restore_report_sha256": "64ae6f1b38a66f0e01cb0eac84d0c7a16a2041d25930f3820c2bc07253b56c60",
+    "original_app_restored": true,
+    "record": "vectors/PHYSICAL.md"
+  }
+}

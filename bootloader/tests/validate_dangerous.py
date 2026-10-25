@@ -7,7 +7,7 @@ from pathlib import Path
 import struct
 import sys
 import zlib
-from model import Model, ROOT, setup
+from model import Model, ROOT, BUILD, setup
 
 sys.path.insert(0, str(ROOT.parent/'tools'))
 from fwctl import dangerous_packet
@@ -26,7 +26,7 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--stock', type=Path, help='Optional restoration fixture; never a build input')
     args = parser.parse_args()
-    image = (ROOT/'build/factory.bin').read_bytes()
+    image = (BUILD/'factory.bin').read_bytes()
     # Exercise every flash address, including non-FF bytes at the far end.
     target = image[:-4096] + bytes(range(256))*16
     data = packet(target)
@@ -109,7 +109,7 @@ def main():
         report['stock_sha256']=hashlib.sha256(stock).hexdigest()
 
     report['all_assertions_passed']=True
-    (ROOT/'build/dangerous_validation.json').write_text(json.dumps(report,indent=2)+'\n')
+    (BUILD/'dangerous_validation.json').write_text(json.dumps(report,indent=2)+'\n')
 
 
 if __name__=='__main__': main()

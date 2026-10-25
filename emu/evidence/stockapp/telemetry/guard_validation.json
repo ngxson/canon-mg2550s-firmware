@@ -1,0 +1,109 @@
+{
+  "package_sha256": "380b98ca115955b8a19d410979a42374b219ced94eb03f5c7c715f28f787461e",
+  "cases": {
+    "0x154146": {
+      "reason": "0x7",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0x7",
+        "0xfffffff8",
+        "0x154148",
+        "0x30"
+      ],
+      "flash_unchanged": true,
+      "spi_writes": 0
+    },
+    "0x154162": {
+      "reason": "0x7",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0x7",
+        "0xfffffff8",
+        "0x154164",
+        "0x30"
+      ],
+      "flash_unchanged": true,
+      "spi_writes": 0
+    },
+    "0x15417e": {
+      "reason": "0x7",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0x7",
+        "0xfffffff8",
+        "0x154180",
+        "0x30"
+      ],
+      "flash_unchanged": true,
+      "spi_writes": 0
+    },
+    "0x11004": {
+      "reason": "0x8",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0x8",
+        "0xfffffff7",
+        "0x11008",
+        "0x10"
+      ],
+      "flash_unchanged": true,
+      "spi_writes": 0
+    },
+    "unrelated_event": {
+      "returned_to_stock": true,
+      "flash_unchanged": true
+    },
+    "bjl": {
+      "reason": "0xfd",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0xfd",
+        "0xffffff02",
+        "0x10476",
+        "0x20000030"
+      ],
+      "flash_unchanged": true,
+      "spi_writes": 0,
+      "input_fixture": "Actual parser with modeled FIFO; not USB electrical delivery",
+      "held_rescue_after_real_reset": true
+    },
+    "xml": {
+      "reason": "0xfd",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0xfd",
+        "0xffffff02",
+        "0x10476",
+        "0x20000030"
+      ],
+      "flash_unchanged": true,
+      "spi_writes": 0,
+      "input_fixture": "Actual parser with modeled FIFO; not USB electrical delivery",
+      "held_rescue_after_real_reset": true
+    },
+    "protected_upload": {
+      "bytes": 2031616,
+      "boot_unchanged": true,
+      "header_last": true
+    }
+  },
+  "passed": true
+}

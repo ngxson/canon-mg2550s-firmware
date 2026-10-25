@@ -1,6 +1,8 @@
 ENTRY(vectors)
 SECTIONS {
     .vectors 0 : { KEEP(*(.vectors)) }
+    .vector_api 0x40 : { KEEP(*(.vector_api)) }
+    ASSERT(SIZEOF(.vector_api)==24,"exception ABI table size changed")
     .reset 0x100 : { KEEP(*(.reset)) }
     ASSERT(SIZEOF(.reset)<=0x8c,"reset overlaps compatibility entry")
     .warm_recovery 0x18c : { KEEP(*(.warm_recovery)) }

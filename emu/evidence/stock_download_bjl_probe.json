@@ -1,0 +1,155 @@
+{
+  "firmware_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "fixture": "Call stock BJL component 0x1fbe8 at idle tick 200 with synthetic object and modeled input FIFO; no USB delivery",
+  "payload": "BJLSTART\n@FROMUPMODE\nBJLEND\n",
+  "input_bytes_consumed": 28,
+  "event": "0x30007",
+  "fixture_returned": true,
+  "error": null,
+  "stop_reason": "tick limit at idle",
+  "pc": "0x104da2",
+  "instructions": 13690186,
+  "ticks": 1600,
+  "audit": [
+    {
+      "pc": "0x1fe8c",
+      "name": "BJL parsed command",
+      "command": "0x501"
+    },
+    {
+      "pc": "0x126b0",
+      "name": "application request producer",
+      "registers": [
+        "0x18032c7c",
+        "0x3",
+        "0x0",
+        "0x30007"
+      ],
+      "tick": 200,
+      "task": 72
+    },
+    {
+      "name": "fixture return",
+      "result": "0x1"
+    }
+  ],
+  "power_parameters": "010002000e",
+  "parameter_writes": [
+    {
+      "pc": "0x11a3c",
+      "address": "0x187904a8",
+      "size": 4,
+      "value": "0x0",
+      "tick": 0
+    },
+    {
+      "pc": "0x11a3c",
+      "address": "0x187904ac",
+      "size": 4,
+      "value": "0x0",
+      "tick": 0
+    },
+    {
+      "pc": "0x1137fa",
+      "address": "0x187904a8",
+      "size": 1,
+      "value": "0x1",
+      "tick": 0
+    },
+    {
+      "pc": "0x1137fc",
+      "address": "0x187904a9",
+      "size": 1,
+      "value": "0x0",
+      "tick": 0
+    },
+    {
+      "pc": "0x113800",
+      "address": "0x187904aa",
+      "size": 1,
+      "value": "0x2",
+      "tick": 0
+    },
+    {
+      "pc": "0x113804",
+      "address": "0x187904ab",
+      "size": 1,
+      "value": "0x0",
+      "tick": 0
+    },
+    {
+      "pc": "0x14f294",
+      "address": "0x187904a8",
+      "size": 4,
+      "value": "0x20001",
+      "tick": 110
+    },
+    {
+      "pc": "0x14f2ac",
+      "address": "0x187904ac",
+      "size": 1,
+      "value": "0xe",
+      "tick": 110
+    }
+  ],
+  "next_wall": null,
+  "flash_unchanged": true,
+  "assumptions": [
+    {
+      "level": 0,
+      "mechanism": "Inherited startup",
+      "values": "Post-bootloader stacks; scanner response 0x40 after 3 polls; 0xc0c90010 bit 6 set; timer1 early power delays expire immediately; timer5 reset bit31 clear; 0xc0b2001c and 0xc0b20118 busy bit0 clear.",
+      "evidence": "startup.py, scheduler.py; tasks.py",
+      "enabled": true
+    },
+    {
+      "level": 0,
+      "mechanism": "Inherited EEPROM/VIC/tick",
+      "values": "Caller-supplied 24C08 image FIFO; status bit0 complete, bit6 FIFO empty; source52 after one idle tick; source56 idle-boundary timer ticks; single source arbitration, group pending and enable set/clear aliases.",
+      "evidence": "tasks.py, 0x1114b2..0x11154a, 0x11188a..0x1118d6",
+      "enabled": true
+    },
+    {
+      "level": 0,
+      "mechanism": "Unmodeled peripherals",
+      "values": "Last write or zero. No panel key, USB packet/enumeration, encoder movement, or motor-completion input is supplied. Modeled EEPROM writes are retained in RAM only; input files are never written.",
+      "evidence": "All MMIO reads/writes and EEPROM transactions recorded.",
+      "enabled": true
+    },
+    {
+      "level": 1,
+      "mechanism": "USB PHY ready",
+      "values": "0xc0c88024 reads OR 0x100",
+      "evidence": "0x49aa0..0x49aa4: shift bit8 into sign, BMI exits poll.",
+      "enabled": true
+    },
+    {
+      "level": 2,
+      "mechanism": "USB core ready",
+      "values": "0xc0780010 reads OR 0x80000000",
+      "evidence": "0x49abe..0x49ac2: negative read exits second readiness poll.",
+      "enabled": true
+    },
+    {
+      "level": 3,
+      "mechanism": "Timer reset completion",
+      "values": "0xc0140000 + 0x100*channel, channel0..7: read bit31 clear. Newly exercised channels2/7; inherited channels1/5 already clear.",
+      "evidence": "Generic channel map 0x109dbc..0x109df4; reset polls 0x109eb4..0x109ebc and 0x109ef8..0x109f00.",
+      "enabled": true
+    },
+    {
+      "level": 4,
+      "mechanism": "Additional timer IRQs",
+      "values": "Channel1 -> source1/group0/mask0x1 (bit0); channel7 -> source96/group11/mask0x40. One IRQ per later scheduler tick while control bit0 and stock VIC enable are set. Source latch bit0x10 clears through inherited model. Coarse, not calibrated.",
+      "evidence": "0xc2f98..0xc2fca; 0xdbf0c..0xdbf44; 0xe2448..0xe2492, table0x1872a0, 0xe24de..0xe254e.",
+      "enabled": true
+    },
+    {
+      "level": 4,
+      "mechanism": "Timer1 control read refinement",
+      "values": "0xc0140100: generic timer API reads last control with bit31 clear; early power delay callers retain inherited immediate expiry.",
+      "evidence": "0x109dfe, 0x109e10, 0x109ec8 versus 0x115abe..0x115bb2.",
+      "enabled": true
+    }
+  ]
+}

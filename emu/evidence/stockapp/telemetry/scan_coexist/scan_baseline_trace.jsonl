@@ -1,0 +1,1204 @@
+{"utc": "2026-10-25T20:40:01.697954+00:00", "monotonic_ns": 1743620919366041, "event": "usb_open", "role": "scan", "vid": "04a9", "pid": "176d", "bcd_device": 517, "interface": 0, "input": 136, "output": 7, "packet_size": 512}
+{"utc": "2026-10-25T20:40:01.698181+00:00", "monotonic_ns": 1743620919445541, "event": "scan_xml", "operation": "StartJob"}
+{"utc": "2026-10-25T20:40:01.699117+00:00", "monotonic_ns": 1743620920382125, "event": "usb_out", "bytes": 288, "elapsed_ns": 918125}
+{"utc": "2026-10-25T20:40:01.732909+00:00", "monotonic_ns": 1743620954190666, "event": "usb_in", "bytes": 365, "elapsed_ns": 33757792}
+{"utc": "2026-10-25T20:40:01.733030+00:00", "monotonic_ns": 1743620954298750, "event": "scan_xml", "operation": "ModeShift"}
+{"utc": "2026-10-25T20:40:01.737161+00:00", "monotonic_ns": 1743620958432041, "event": "usb_out", "bytes": 390, "elapsed_ns": 3975958}
+{"utc": "2026-10-25T20:40:01.746919+00:00", "monotonic_ns": 1743620968193208, "event": "usb_in", "bytes": 510, "elapsed_ns": 9699584}
+{"utc": "2026-10-25T20:40:01.746980+00:00", "monotonic_ns": 1743620968248958, "event": "scan_command", "code": "db20", "out_bytes": 16, "in_bytes": 8}
+{"utc": "2026-10-25T20:40:01.752450+00:00", "monotonic_ns": 1743620973719250, "event": "usb_out", "bytes": 16, "elapsed_ns": 5431667}
+{"utc": "2026-10-25T20:40:01.756758+00:00", "monotonic_ns": 1743620978034916, "event": "usb_in", "bytes": 8, "elapsed_ns": 4256000}
+{"utc": "2026-10-25T20:40:01.756982+00:00", "monotonic_ns": 1743620978248375, "event": "scan_command", "code": "ee20", "out_bytes": 2072, "in_bytes": 8}
+{"utc": "2026-10-25T20:40:01.762640+00:00", "monotonic_ns": 1743620983911500, "event": "usb_out", "bytes": 2072, "elapsed_ns": 5613042}
+{"utc": "2026-10-25T20:40:01.765997+00:00", "monotonic_ns": 1743620987265416, "event": "usb_in", "bytes": 8, "elapsed_ns": 3280084}
+{"utc": "2026-10-25T20:40:01.766178+00:00", "monotonic_ns": 1743620987443458, "event": "scan_command", "code": "ee20", "out_bytes": 2072, "in_bytes": 8}
+{"utc": "2026-10-25T20:40:01.771939+00:00", "monotonic_ns": 1743620993231541, "event": "usb_out", "bytes": 2072, "elapsed_ns": 5736083}
+{"utc": "2026-10-25T20:40:01.775321+00:00", "monotonic_ns": 1743620996589875, "event": "usb_in", "bytes": 8, "elapsed_ns": 3274750}
+{"utc": "2026-10-25T20:40:01.775487+00:00", "monotonic_ns": 1743620996750541, "event": "scan_command", "code": "ee20", "out_bytes": 2072, "in_bytes": 8}
+{"utc": "2026-10-25T20:40:01.781084+00:00", "monotonic_ns": 1743621002353625, "event": "usb_out", "bytes": 2072, "elapsed_ns": 5578375}
+{"utc": "2026-10-25T20:40:01.784527+00:00", "monotonic_ns": 1743621005796666, "event": "usb_in", "bytes": 8, "elapsed_ns": 3377416}
+{"utc": "2026-10-25T20:40:01.784586+00:00", "monotonic_ns": 1743621005849083, "event": "scan_command", "code": "d820", "out_bytes": 72, "in_bytes": 8}
+{"utc": "2026-10-25T20:40:01.786389+00:00", "monotonic_ns": 1743621007655458, "event": "usb_out", "bytes": 72, "elapsed_ns": 1788291}
+{"utc": "2026-10-25T20:40:01.790842+00:00", "monotonic_ns": 1743621012111791, "event": "usb_in", "bytes": 8, "elapsed_ns": 4420125}
+{"utc": "2026-10-25T20:40:01.790952+00:00", "monotonic_ns": 1743621012221916, "event": "scan_command", "code": "d920", "out_bytes": 16, "in_bytes": 8}
+{"utc": "2026-10-25T20:40:01.792639+00:00", "monotonic_ns": 1743621013904958, "event": "usb_out", "bytes": 16, "elapsed_ns": 1660458}
+{"utc": "2026-10-25T20:40:01.796155+00:00", "monotonic_ns": 1743621017421208, "event": "usb_in", "bytes": 8, "elapsed_ns": 3476041}
+{"utc": "2026-10-25T20:40:01.796207+00:00", "monotonic_ns": 1743621017470375, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:01.797946+00:00", "monotonic_ns": 1743621019211166, "event": "usb_out", "bytes": 16, "elapsed_ns": 1728125}
+{"utc": "2026-10-25T20:40:01.800829+00:00", "monotonic_ns": 1743621022093791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2859083}
+{"utc": "2026-10-25T20:40:02.055884+00:00", "monotonic_ns": 1743621277151791, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:02.056620+00:00", "monotonic_ns": 1743621277883041, "event": "usb_out", "bytes": 16, "elapsed_ns": 683333}
+{"utc": "2026-10-25T20:40:02.059504+00:00", "monotonic_ns": 1743621280765791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2866459}
+{"utc": "2026-10-25T20:40:02.312717+00:00", "monotonic_ns": 1743621533991375, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:02.313811+00:00", "monotonic_ns": 1743621535087250, "event": "usb_out", "bytes": 16, "elapsed_ns": 979833}
+{"utc": "2026-10-25T20:40:02.315794+00:00", "monotonic_ns": 1743621537064750, "event": "usb_in", "bytes": 16, "elapsed_ns": 1891041}
+{"utc": "2026-10-25T20:40:02.570327+00:00", "monotonic_ns": 1743621791599458, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:02.571120+00:00", "monotonic_ns": 1743621792386208, "event": "usb_out", "bytes": 16, "elapsed_ns": 705208}
+{"utc": "2026-10-25T20:40:02.574137+00:00", "monotonic_ns": 1743621795407125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2947708}
+{"utc": "2026-10-25T20:40:02.829266+00:00", "monotonic_ns": 1743622050527875, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:02.829978+00:00", "monotonic_ns": 1743622051234666, "event": "usb_out", "bytes": 16, "elapsed_ns": 674375}
+{"utc": "2026-10-25T20:40:02.832807+00:00", "monotonic_ns": 1743622054066083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2801333}
+{"utc": "2026-10-25T20:40:03.084043+00:00", "monotonic_ns": 1743622305313000, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:03.084899+00:00", "monotonic_ns": 1743622306162125, "event": "usb_out", "bytes": 16, "elapsed_ns": 762917}
+{"utc": "2026-10-25T20:40:03.087203+00:00", "monotonic_ns": 1743622308467000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2226583}
+{"utc": "2026-10-25T20:40:03.338708+00:00", "monotonic_ns": 1743622559974166, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:03.339413+00:00", "monotonic_ns": 1743622560672458, "event": "usb_out", "bytes": 16, "elapsed_ns": 611709}
+{"utc": "2026-10-25T20:40:03.341751+00:00", "monotonic_ns": 1743622563009583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2276541}
+{"utc": "2026-10-25T20:40:03.596856+00:00", "monotonic_ns": 1743622818119750, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:03.597901+00:00", "monotonic_ns": 1743622819155125, "event": "usb_out", "bytes": 16, "elapsed_ns": 953792}
+{"utc": "2026-10-25T20:40:03.600411+00:00", "monotonic_ns": 1743622821668500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2466417}
+{"utc": "2026-10-25T20:40:03.853683+00:00", "monotonic_ns": 1743623074947208, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:03.854514+00:00", "monotonic_ns": 1743623075769208, "event": "usb_out", "bytes": 16, "elapsed_ns": 749209}
+{"utc": "2026-10-25T20:40:03.857149+00:00", "monotonic_ns": 1743623078402500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2584041}
+{"utc": "2026-10-25T20:40:04.112241+00:00", "monotonic_ns": 1743623333498708, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:04.112932+00:00", "monotonic_ns": 1743623334183458, "event": "usb_out", "bytes": 16, "elapsed_ns": 616291}
+{"utc": "2026-10-25T20:40:04.115292+00:00", "monotonic_ns": 1743623336543625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2283291}
+{"utc": "2026-10-25T20:40:04.370395+00:00", "monotonic_ns": 1743623591655583, "event": "scan_command", "code": "da20", "out_bytes": 16, "in_bytes": 16}
+{"utc": "2026-10-25T20:40:04.371166+00:00", "monotonic_ns": 1743623592419416, "event": "usb_out", "bytes": 16, "elapsed_ns": 655916}
+{"utc": "2026-10-25T20:40:04.373083+00:00", "monotonic_ns": 1743623594331500, "event": "usb_in", "bytes": 16, "elapsed_ns": 1852041}
+{"utc": "2026-10-25T20:40:05.374081+00:00", "monotonic_ns": 1743624595334041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.374881+00:00", "monotonic_ns": 1743624596127333, "event": "usb_out", "bytes": 16, "elapsed_ns": 658625}
+{"utc": "2026-10-25T20:40:05.377302+00:00", "monotonic_ns": 1743624598542208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2327500}
+{"utc": "2026-10-25T20:40:05.387922+00:00", "monotonic_ns": 1743624609170625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.389295+00:00", "monotonic_ns": 1743624610541833, "event": "usb_out", "bytes": 16, "elapsed_ns": 1280250}
+{"utc": "2026-10-25T20:40:05.391665+00:00", "monotonic_ns": 1743624612904208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2293875}
+{"utc": "2026-10-25T20:40:05.402703+00:00", "monotonic_ns": 1743624623947541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.403811+00:00", "monotonic_ns": 1743624625052583, "event": "usb_out", "bytes": 16, "elapsed_ns": 1046250}
+{"utc": "2026-10-25T20:40:05.406358+00:00", "monotonic_ns": 1743624627597083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2512167}
+{"utc": "2026-10-25T20:40:05.418908+00:00", "monotonic_ns": 1743624640148291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.419521+00:00", "monotonic_ns": 1743624640759041, "event": "usb_out", "bytes": 16, "elapsed_ns": 571167}
+{"utc": "2026-10-25T20:40:05.422345+00:00", "monotonic_ns": 1743624643583666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2797875}
+{"utc": "2026-10-25T20:40:05.432818+00:00", "monotonic_ns": 1743624654063333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.433877+00:00", "monotonic_ns": 1743624655119416, "event": "usb_out", "bytes": 16, "elapsed_ns": 993959}
+{"utc": "2026-10-25T20:40:05.436727+00:00", "monotonic_ns": 1743624657965666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2795167}
+{"utc": "2026-10-25T20:40:05.447016+00:00", "monotonic_ns": 1743624668264083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.447729+00:00", "monotonic_ns": 1743624668969041, "event": "usb_out", "bytes": 16, "elapsed_ns": 634083}
+{"utc": "2026-10-25T20:40:05.451295+00:00", "monotonic_ns": 1743624672539500, "event": "usb_in", "bytes": 16, "elapsed_ns": 3525500}
+{"utc": "2026-10-25T20:40:05.461754+00:00", "monotonic_ns": 1743624683000291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.462420+00:00", "monotonic_ns": 1743624683658708, "event": "usb_out", "bytes": 16, "elapsed_ns": 592917}
+{"utc": "2026-10-25T20:40:05.465832+00:00", "monotonic_ns": 1743624687070625, "event": "usb_in", "bytes": 16, "elapsed_ns": 3384000}
+{"utc": "2026-10-25T20:40:05.478380+00:00", "monotonic_ns": 1743624699617958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.479647+00:00", "monotonic_ns": 1743624700884541, "event": "usb_out", "bytes": 16, "elapsed_ns": 1237083}
+{"utc": "2026-10-25T20:40:05.482362+00:00", "monotonic_ns": 1743624703606083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2686834}
+{"utc": "2026-10-25T20:40:05.494628+00:00", "monotonic_ns": 1743624715869458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.495406+00:00", "monotonic_ns": 1743624716646625, "event": "usb_out", "bytes": 16, "elapsed_ns": 732750}
+{"utc": "2026-10-25T20:40:05.497868+00:00", "monotonic_ns": 1743624719106458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2419750}
+{"utc": "2026-10-25T20:40:05.508235+00:00", "monotonic_ns": 1743624729481208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.509386+00:00", "monotonic_ns": 1743624730624125, "event": "usb_out", "bytes": 16, "elapsed_ns": 1071625}
+{"utc": "2026-10-25T20:40:05.511386+00:00", "monotonic_ns": 1743624732624291, "event": "usb_in", "bytes": 16, "elapsed_ns": 1971500}
+{"utc": "2026-10-25T20:40:05.521757+00:00", "monotonic_ns": 1743624742994416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.522310+00:00", "monotonic_ns": 1743624743548416, "event": "usb_out", "bytes": 16, "elapsed_ns": 524917}
+{"utc": "2026-10-25T20:40:05.525088+00:00", "monotonic_ns": 1743624746325625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2728417}
+{"utc": "2026-10-25T20:40:05.535355+00:00", "monotonic_ns": 1743624756597125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.536005+00:00", "monotonic_ns": 1743624757244125, "event": "usb_out", "bytes": 16, "elapsed_ns": 600042}
+{"utc": "2026-10-25T20:40:05.538969+00:00", "monotonic_ns": 1743624760211208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2926292}
+{"utc": "2026-10-25T20:40:05.551546+00:00", "monotonic_ns": 1743624772786833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.552540+00:00", "monotonic_ns": 1743624773774833, "event": "usb_out", "bytes": 16, "elapsed_ns": 947542}
+{"utc": "2026-10-25T20:40:05.555046+00:00", "monotonic_ns": 1743624776280875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2492958}
+{"utc": "2026-10-25T20:40:05.566133+00:00", "monotonic_ns": 1743624787370166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.567009+00:00", "monotonic_ns": 1743624788246333, "event": "usb_out", "bytes": 16, "elapsed_ns": 852958}
+{"utc": "2026-10-25T20:40:05.570090+00:00", "monotonic_ns": 1743624791333416, "event": "usb_in", "bytes": 16, "elapsed_ns": 3058792}
+{"utc": "2026-10-25T20:40:05.581437+00:00", "monotonic_ns": 1743624802679625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.582089+00:00", "monotonic_ns": 1743624803329916, "event": "usb_out", "bytes": 16, "elapsed_ns": 592792}
+{"utc": "2026-10-25T20:40:05.585053+00:00", "monotonic_ns": 1743624806291208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2919500}
+{"utc": "2026-10-25T20:40:05.597596+00:00", "monotonic_ns": 1743624818833208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.598675+00:00", "monotonic_ns": 1743624819910375, "event": "usb_out", "bytes": 16, "elapsed_ns": 1051917}
+{"utc": "2026-10-25T20:40:05.601654+00:00", "monotonic_ns": 1743624822890041, "event": "usb_in", "bytes": 16, "elapsed_ns": 2962250}
+{"utc": "2026-10-25T20:40:05.613372+00:00", "monotonic_ns": 1743624834615833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.614020+00:00", "monotonic_ns": 1743624835258000, "event": "usb_out", "bytes": 16, "elapsed_ns": 587625}
+{"utc": "2026-10-25T20:40:05.616898+00:00", "monotonic_ns": 1743624838135625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2842333}
+{"utc": "2026-10-25T20:40:05.629457+00:00", "monotonic_ns": 1743624850701375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.630488+00:00", "monotonic_ns": 1743624851727375, "event": "usb_out", "bytes": 16, "elapsed_ns": 975541}
+{"utc": "2026-10-25T20:40:05.632814+00:00", "monotonic_ns": 1743624854051041, "event": "usb_in", "bytes": 16, "elapsed_ns": 2286416}
+{"utc": "2026-10-25T20:40:05.645363+00:00", "monotonic_ns": 1743624866604041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.646041+00:00", "monotonic_ns": 1743624867282125, "event": "usb_out", "bytes": 16, "elapsed_ns": 622834}
+{"utc": "2026-10-25T20:40:05.648794+00:00", "monotonic_ns": 1743624870032125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2699125}
+{"utc": "2026-10-25T20:40:05.661355+00:00", "monotonic_ns": 1743624882593041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.661986+00:00", "monotonic_ns": 1743624883223250, "event": "usb_out", "bytes": 16, "elapsed_ns": 590833}
+{"utc": "2026-10-25T20:40:05.665363+00:00", "monotonic_ns": 1743624886604583, "event": "usb_in", "bytes": 16, "elapsed_ns": 3345667}
+{"utc": "2026-10-25T20:40:05.677942+00:00", "monotonic_ns": 1743624899182291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.679564+00:00", "monotonic_ns": 1743624900801333, "event": "usb_out", "bytes": 16, "elapsed_ns": 1558125}
+{"utc": "2026-10-25T20:40:05.681819+00:00", "monotonic_ns": 1743624903055625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2221667}
+{"utc": "2026-10-25T20:40:05.694403+00:00", "monotonic_ns": 1743624915645875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.695025+00:00", "monotonic_ns": 1743624916260791, "event": "usb_out", "bytes": 16, "elapsed_ns": 571208}
+{"utc": "2026-10-25T20:40:05.697426+00:00", "monotonic_ns": 1743624918662000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2377292}
+{"utc": "2026-10-25T20:40:05.708560+00:00", "monotonic_ns": 1743624929802083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.709319+00:00", "monotonic_ns": 1743624930556000, "event": "usb_out", "bytes": 16, "elapsed_ns": 702083}
+{"utc": "2026-10-25T20:40:05.711631+00:00", "monotonic_ns": 1743624932866416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2283500}
+{"utc": "2026-10-25T20:40:05.722380+00:00", "monotonic_ns": 1743624943621625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.723016+00:00", "monotonic_ns": 1743624944254125, "event": "usb_out", "bytes": 16, "elapsed_ns": 578750}
+{"utc": "2026-10-25T20:40:05.725854+00:00", "monotonic_ns": 1743624947090875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2801708}
+{"utc": "2026-10-25T20:40:05.738404+00:00", "monotonic_ns": 1743624959641750, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.739069+00:00", "monotonic_ns": 1743624960304666, "event": "usb_out", "bytes": 16, "elapsed_ns": 631334}
+{"utc": "2026-10-25T20:40:05.741785+00:00", "monotonic_ns": 1743624963021333, "event": "usb_in", "bytes": 16, "elapsed_ns": 2689750}
+{"utc": "2026-10-25T20:40:05.752731+00:00", "monotonic_ns": 1743624973967708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.753813+00:00", "monotonic_ns": 1743624975050333, "event": "usb_out", "bytes": 16, "elapsed_ns": 1049750}
+{"utc": "2026-10-25T20:40:05.756578+00:00", "monotonic_ns": 1743624977813708, "event": "usb_in", "bytes": 16, "elapsed_ns": 2735375}
+{"utc": "2026-10-25T20:40:05.768297+00:00", "monotonic_ns": 1743624989540666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.769027+00:00", "monotonic_ns": 1743624990263791, "event": "usb_out", "bytes": 16, "elapsed_ns": 660208}
+{"utc": "2026-10-25T20:40:05.771785+00:00", "monotonic_ns": 1743624993019583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2728667}
+{"utc": "2026-10-25T20:40:05.782137+00:00", "monotonic_ns": 1743625003375333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.782693+00:00", "monotonic_ns": 1743625003928250, "event": "usb_out", "bytes": 16, "elapsed_ns": 521417}
+{"utc": "2026-10-25T20:40:05.785955+00:00", "monotonic_ns": 1743625007195791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3236375}
+{"utc": "2026-10-25T20:40:05.798531+00:00", "monotonic_ns": 1743625019768333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.799250+00:00", "monotonic_ns": 1743625020483416, "event": "usb_out", "bytes": 16, "elapsed_ns": 680500}
+{"utc": "2026-10-25T20:40:05.801923+00:00", "monotonic_ns": 1743625023157375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2658625}
+{"utc": "2026-10-25T20:40:05.814454+00:00", "monotonic_ns": 1743625035687041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.815008+00:00", "monotonic_ns": 1743625036241583, "event": "usb_out", "bytes": 16, "elapsed_ns": 539584}
+{"utc": "2026-10-25T20:40:05.817471+00:00", "monotonic_ns": 1743625038713125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2444208}
+{"utc": "2026-10-25T20:40:05.828939+00:00", "monotonic_ns": 1743625050182875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.829660+00:00", "monotonic_ns": 1743625050897958, "event": "usb_out", "bytes": 16, "elapsed_ns": 657416}
+{"utc": "2026-10-25T20:40:05.831946+00:00", "monotonic_ns": 1743625053182875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2245292}
+{"utc": "2026-10-25T20:40:05.842919+00:00", "monotonic_ns": 1743625064157416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.844357+00:00", "monotonic_ns": 1743625065595166, "event": "usb_out", "bytes": 16, "elapsed_ns": 1392958}
+{"utc": "2026-10-25T20:40:05.846690+00:00", "monotonic_ns": 1743625067928666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2261250}
+{"utc": "2026-10-25T20:40:05.859256+00:00", "monotonic_ns": 1743625080493000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.859914+00:00", "monotonic_ns": 1743625081151416, "event": "usb_out", "bytes": 16, "elapsed_ns": 612041}
+{"utc": "2026-10-25T20:40:05.862285+00:00", "monotonic_ns": 1743625083522708, "event": "usb_in", "bytes": 16, "elapsed_ns": 2326959}
+{"utc": "2026-10-25T20:40:05.874187+00:00", "monotonic_ns": 1743625095427125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.874834+00:00", "monotonic_ns": 1743625096070416, "event": "usb_out", "bytes": 16, "elapsed_ns": 586458}
+{"utc": "2026-10-25T20:40:05.877529+00:00", "monotonic_ns": 1743625098764291, "event": "usb_in", "bytes": 16, "elapsed_ns": 2660458}
+{"utc": "2026-10-25T20:40:05.889982+00:00", "monotonic_ns": 1743625111228666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.890669+00:00", "monotonic_ns": 1743625111904333, "event": "usb_out", "bytes": 16, "elapsed_ns": 600208}
+{"utc": "2026-10-25T20:40:05.893866+00:00", "monotonic_ns": 1743625115100750, "event": "usb_in", "bytes": 16, "elapsed_ns": 3169209}
+{"utc": "2026-10-25T20:40:05.904155+00:00", "monotonic_ns": 1743625125391833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.904774+00:00", "monotonic_ns": 1743625126010041, "event": "usb_out", "bytes": 16, "elapsed_ns": 580750}
+{"utc": "2026-10-25T20:40:05.907513+00:00", "monotonic_ns": 1743625128747791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2702250}
+{"utc": "2026-10-25T20:40:05.920056+00:00", "monotonic_ns": 1743625141291833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.920965+00:00", "monotonic_ns": 1743625142199791, "event": "usb_out", "bytes": 16, "elapsed_ns": 871584}
+{"utc": "2026-10-25T20:40:05.923789+00:00", "monotonic_ns": 1743625145026000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2793625}
+{"utc": "2026-10-25T20:40:05.935134+00:00", "monotonic_ns": 1743625156376708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.935877+00:00", "monotonic_ns": 1743625157111708, "event": "usb_out", "bytes": 16, "elapsed_ns": 683042}
+{"utc": "2026-10-25T20:40:05.938773+00:00", "monotonic_ns": 1743625160006916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2872166}
+{"utc": "2026-10-25T20:40:05.950578+00:00", "monotonic_ns": 1743625171814333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.951317+00:00", "monotonic_ns": 1743625172551666, "event": "usb_out", "bytes": 16, "elapsed_ns": 698500}
+{"utc": "2026-10-25T20:40:05.954024+00:00", "monotonic_ns": 1743625175261625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2674250}
+{"utc": "2026-10-25T20:40:05.966178+00:00", "monotonic_ns": 1743625187416791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.966820+00:00", "monotonic_ns": 1743625188054083, "event": "usb_out", "bytes": 16, "elapsed_ns": 591375}
+{"utc": "2026-10-25T20:40:05.970015+00:00", "monotonic_ns": 1743625191252458, "event": "usb_in", "bytes": 16, "elapsed_ns": 3163916}
+{"utc": "2026-10-25T20:40:05.980364+00:00", "monotonic_ns": 1743625201613375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.981233+00:00", "monotonic_ns": 1743625202469583, "event": "usb_out", "bytes": 16, "elapsed_ns": 773083}
+{"utc": "2026-10-25T20:40:05.984389+00:00", "monotonic_ns": 1743625205625916, "event": "usb_in", "bytes": 16, "elapsed_ns": 3112958}
+{"utc": "2026-10-25T20:40:05.994895+00:00", "monotonic_ns": 1743625216138125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:05.995634+00:00", "monotonic_ns": 1743625216868916, "event": "usb_out", "bytes": 16, "elapsed_ns": 646458}
+{"utc": "2026-10-25T20:40:05.998041+00:00", "monotonic_ns": 1743625219274875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2370708}
+{"utc": "2026-10-25T20:40:06.009787+00:00", "monotonic_ns": 1743625231028583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.010543+00:00", "monotonic_ns": 1743625231778041, "event": "usb_out", "bytes": 16, "elapsed_ns": 683625}
+{"utc": "2026-10-25T20:40:06.013746+00:00", "monotonic_ns": 1743625234989208, "event": "usb_in", "bytes": 16, "elapsed_ns": 3164792}
+{"utc": "2026-10-25T20:40:06.024630+00:00", "monotonic_ns": 1743625245873375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.025453+00:00", "monotonic_ns": 1743625246687791, "event": "usb_out", "bytes": 16, "elapsed_ns": 753500}
+{"utc": "2026-10-25T20:40:06.028063+00:00", "monotonic_ns": 1743625249300083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2569000}
+{"utc": "2026-10-25T20:40:06.039264+00:00", "monotonic_ns": 1743625260505666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.039904+00:00", "monotonic_ns": 1743625261141041, "event": "usb_out", "bytes": 16, "elapsed_ns": 569875}
+{"utc": "2026-10-25T20:40:06.042664+00:00", "monotonic_ns": 1743625263901458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2719083}
+{"utc": "2026-10-25T20:40:06.053234+00:00", "monotonic_ns": 1743625274476250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.054052+00:00", "monotonic_ns": 1743625275293500, "event": "usb_out", "bytes": 16, "elapsed_ns": 735459}
+{"utc": "2026-10-25T20:40:06.056991+00:00", "monotonic_ns": 1743625278227916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2866292}
+{"utc": "2026-10-25T20:40:06.068959+00:00", "monotonic_ns": 1743625290198916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.069688+00:00", "monotonic_ns": 1743625290922458, "event": "usb_out", "bytes": 16, "elapsed_ns": 660416}
+{"utc": "2026-10-25T20:40:06.072630+00:00", "monotonic_ns": 1743625293870791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2904458}
+{"utc": "2026-10-25T20:40:06.085221+00:00", "monotonic_ns": 1743625306462125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.086368+00:00", "monotonic_ns": 1743625307603583, "event": "usb_out", "bytes": 16, "elapsed_ns": 1081083}
+{"utc": "2026-10-25T20:40:06.089420+00:00", "monotonic_ns": 1743625310658625, "event": "usb_in", "bytes": 16, "elapsed_ns": 3013459}
+{"utc": "2026-10-25T20:40:06.100048+00:00", "monotonic_ns": 1743625321287708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.100778+00:00", "monotonic_ns": 1743625322013166, "event": "usb_out", "bytes": 16, "elapsed_ns": 669625}
+{"utc": "2026-10-25T20:40:06.102683+00:00", "monotonic_ns": 1743625323916125, "event": "usb_in", "bytes": 16, "elapsed_ns": 1868167}
+{"utc": "2026-10-25T20:40:06.115246+00:00", "monotonic_ns": 1743625336488125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.115903+00:00", "monotonic_ns": 1743625337138000, "event": "usb_out", "bytes": 16, "elapsed_ns": 594750}
+{"utc": "2026-10-25T20:40:06.117854+00:00", "monotonic_ns": 1743625339093500, "event": "usb_in", "bytes": 16, "elapsed_ns": 1908125}
+{"utc": "2026-10-25T20:40:06.130441+00:00", "monotonic_ns": 1743625351680583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.131057+00:00", "monotonic_ns": 1743625352291000, "event": "usb_out", "bytes": 16, "elapsed_ns": 563375}
+{"utc": "2026-10-25T20:40:06.132986+00:00", "monotonic_ns": 1743625354219625, "event": "usb_in", "bytes": 16, "elapsed_ns": 1895792}
+{"utc": "2026-10-25T20:40:06.143848+00:00", "monotonic_ns": 1743625365083416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.144452+00:00", "monotonic_ns": 1743625365684250, "event": "usb_out", "bytes": 16, "elapsed_ns": 559916}
+{"utc": "2026-10-25T20:40:06.146343+00:00", "monotonic_ns": 1743625367576250, "event": "usb_in", "bytes": 16, "elapsed_ns": 1864834}
+{"utc": "2026-10-25T20:40:06.158850+00:00", "monotonic_ns": 1743625380092041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.159550+00:00", "monotonic_ns": 1743625380784041, "event": "usb_out", "bytes": 16, "elapsed_ns": 591666}
+{"utc": "2026-10-25T20:40:06.161512+00:00", "monotonic_ns": 1743625382744250, "event": "usb_in", "bytes": 16, "elapsed_ns": 1924958}
+{"utc": "2026-10-25T20:40:06.174052+00:00", "monotonic_ns": 1743625395286041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.174643+00:00", "monotonic_ns": 1743625395878208, "event": "usb_out", "bytes": 16, "elapsed_ns": 554792}
+{"utc": "2026-10-25T20:40:06.176598+00:00", "monotonic_ns": 1743625397832166, "event": "usb_in", "bytes": 16, "elapsed_ns": 1913417}
+{"utc": "2026-10-25T20:40:06.189150+00:00", "monotonic_ns": 1743625410384333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.189894+00:00", "monotonic_ns": 1743625411129291, "event": "usb_out", "bytes": 16, "elapsed_ns": 703792}
+{"utc": "2026-10-25T20:40:06.192702+00:00", "monotonic_ns": 1743625413935750, "event": "usb_in", "bytes": 16, "elapsed_ns": 2767792}
+{"utc": "2026-10-25T20:40:06.202872+00:00", "monotonic_ns": 1743625424115500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.204079+00:00", "monotonic_ns": 1743625425313875, "event": "usb_out", "bytes": 16, "elapsed_ns": 1114875}
+{"utc": "2026-10-25T20:40:06.206442+00:00", "monotonic_ns": 1743625427677125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2321875}
+{"utc": "2026-10-25T20:40:06.216517+00:00", "monotonic_ns": 1743625437757375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.217301+00:00", "monotonic_ns": 1743625438535375, "event": "usb_out", "bytes": 16, "elapsed_ns": 714250}
+{"utc": "2026-10-25T20:40:06.220285+00:00", "monotonic_ns": 1743625441517916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2943250}
+{"utc": "2026-10-25T20:40:06.232815+00:00", "monotonic_ns": 1743625454050875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.233988+00:00", "monotonic_ns": 1743625455220416, "event": "usb_out", "bytes": 16, "elapsed_ns": 1124875}
+{"utc": "2026-10-25T20:40:06.236833+00:00", "monotonic_ns": 1743625458064666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2813208}
+{"utc": "2026-10-25T20:40:06.248324+00:00", "monotonic_ns": 1743625469565125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.249206+00:00", "monotonic_ns": 1743625470441000, "event": "usb_out", "bytes": 16, "elapsed_ns": 820417}
+{"utc": "2026-10-25T20:40:06.252071+00:00", "monotonic_ns": 1743625473304958, "event": "usb_in", "bytes": 16, "elapsed_ns": 2825125}
+{"utc": "2026-10-25T20:40:06.264623+00:00", "monotonic_ns": 1743625485859041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.265686+00:00", "monotonic_ns": 1743625486918375, "event": "usb_out", "bytes": 16, "elapsed_ns": 1010375}
+{"utc": "2026-10-25T20:40:06.267991+00:00", "monotonic_ns": 1743625489222875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2273417}
+{"utc": "2026-10-25T20:40:06.278588+00:00", "monotonic_ns": 1743625499826458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.279216+00:00", "monotonic_ns": 1743625500449875, "event": "usb_out", "bytes": 16, "elapsed_ns": 565542}
+{"utc": "2026-10-25T20:40:06.281888+00:00", "monotonic_ns": 1743625503119875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2641666}
+{"utc": "2026-10-25T20:40:06.292519+00:00", "monotonic_ns": 1743625513759166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.293725+00:00", "monotonic_ns": 1743625514956791, "event": "usb_out", "bytes": 16, "elapsed_ns": 1134500}
+{"utc": "2026-10-25T20:40:06.296441+00:00", "monotonic_ns": 1743625517674291, "event": "usb_in", "bytes": 16, "elapsed_ns": 2685250}
+{"utc": "2026-10-25T20:40:06.308665+00:00", "monotonic_ns": 1743625529896916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.309567+00:00", "monotonic_ns": 1743625530807166, "event": "usb_out", "bytes": 16, "elapsed_ns": 866833}
+{"utc": "2026-10-25T20:40:06.311906+00:00", "monotonic_ns": 1743625533136541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2260667}
+{"utc": "2026-10-25T20:40:06.324448+00:00", "monotonic_ns": 1743625545684500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.325083+00:00", "monotonic_ns": 1743625546317375, "event": "usb_out", "bytes": 16, "elapsed_ns": 575500}
+{"utc": "2026-10-25T20:40:06.327333+00:00", "monotonic_ns": 1743625548568250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2207709}
+{"utc": "2026-10-25T20:40:06.339912+00:00", "monotonic_ns": 1743625561148125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.340645+00:00", "monotonic_ns": 1743625561879541, "event": "usb_out", "bytes": 16, "elapsed_ns": 683375}
+{"utc": "2026-10-25T20:40:06.343927+00:00", "monotonic_ns": 1743625565159833, "event": "usb_in", "bytes": 16, "elapsed_ns": 3238875}
+{"utc": "2026-10-25T20:40:06.354994+00:00", "monotonic_ns": 1743625576231458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.355739+00:00", "monotonic_ns": 1743625576971916, "event": "usb_out", "bytes": 16, "elapsed_ns": 684917}
+{"utc": "2026-10-25T20:40:06.358951+00:00", "monotonic_ns": 1743625580183791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3178375}
+{"utc": "2026-10-25T20:40:06.369894+00:00", "monotonic_ns": 1743625591129666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.370518+00:00", "monotonic_ns": 1743625591750375, "event": "usb_out", "bytes": 16, "elapsed_ns": 568917}
+{"utc": "2026-10-25T20:40:06.373772+00:00", "monotonic_ns": 1743625595004541, "event": "usb_in", "bytes": 16, "elapsed_ns": 3221834}
+{"utc": "2026-10-25T20:40:06.386322+00:00", "monotonic_ns": 1743625607555500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.387038+00:00", "monotonic_ns": 1743625608274416, "event": "usb_out", "bytes": 16, "elapsed_ns": 673958}
+{"utc": "2026-10-25T20:40:06.390350+00:00", "monotonic_ns": 1743625611581625, "event": "usb_in", "bytes": 16, "elapsed_ns": 3257083}
+{"utc": "2026-10-25T20:40:06.400706+00:00", "monotonic_ns": 1743625621942833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.401482+00:00", "monotonic_ns": 1743625622714958, "event": "usb_out", "bytes": 16, "elapsed_ns": 716208}
+{"utc": "2026-10-25T20:40:06.404449+00:00", "monotonic_ns": 1743625625679833, "event": "usb_in", "bytes": 16, "elapsed_ns": 2935958}
+{"utc": "2026-10-25T20:40:06.415256+00:00", "monotonic_ns": 1743625636493041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.416167+00:00", "monotonic_ns": 1743625637400708, "event": "usb_out", "bytes": 16, "elapsed_ns": 846500}
+{"utc": "2026-10-25T20:40:06.419170+00:00", "monotonic_ns": 1743625640404625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2960584}
+{"utc": "2026-10-25T20:40:06.431114+00:00", "monotonic_ns": 1743625652349583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.431750+00:00", "monotonic_ns": 1743625652983833, "event": "usb_out", "bytes": 16, "elapsed_ns": 580041}
+{"utc": "2026-10-25T20:40:06.434114+00:00", "monotonic_ns": 1743625655345666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2326666}
+{"utc": "2026-10-25T20:40:06.444558+00:00", "monotonic_ns": 1743625665791041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.445136+00:00", "monotonic_ns": 1743625666367666, "event": "usb_out", "bytes": 16, "elapsed_ns": 540250}
+{"utc": "2026-10-25T20:40:06.447057+00:00", "monotonic_ns": 1743625668287791, "event": "usb_in", "bytes": 16, "elapsed_ns": 1892833}
+{"utc": "2026-10-25T20:40:06.459121+00:00", "monotonic_ns": 1743625680362291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.459812+00:00", "monotonic_ns": 1743625681050166, "event": "usb_out", "bytes": 16, "elapsed_ns": 601167}
+{"utc": "2026-10-25T20:40:06.461716+00:00", "monotonic_ns": 1743625682953875, "event": "usb_in", "bytes": 16, "elapsed_ns": 1856292}
+{"utc": "2026-10-25T20:40:06.474359+00:00", "monotonic_ns": 1743625695597083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.475031+00:00", "monotonic_ns": 1743625696265708, "event": "usb_out", "bytes": 16, "elapsed_ns": 598958}
+{"utc": "2026-10-25T20:40:06.476951+00:00", "monotonic_ns": 1743625698183333, "event": "usb_in", "bytes": 16, "elapsed_ns": 1868000}
+{"utc": "2026-10-25T20:40:06.489505+00:00", "monotonic_ns": 1743625710736416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.490084+00:00", "monotonic_ns": 1743625711313916, "event": "usb_out", "bytes": 16, "elapsed_ns": 544125}
+{"utc": "2026-10-25T20:40:06.492014+00:00", "monotonic_ns": 1743625713248250, "event": "usb_in", "bytes": 16, "elapsed_ns": 1898917}
+{"utc": "2026-10-25T20:40:06.504592+00:00", "monotonic_ns": 1743625725829875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.505264+00:00", "monotonic_ns": 1743625726493666, "event": "usb_out", "bytes": 16, "elapsed_ns": 597292}
+{"utc": "2026-10-25T20:40:06.507170+00:00", "monotonic_ns": 1743625728408291, "event": "usb_in", "bytes": 16, "elapsed_ns": 1878542}
+{"utc": "2026-10-25T20:40:06.518373+00:00", "monotonic_ns": 1743625739612166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.519014+00:00", "monotonic_ns": 1743625740249958, "event": "usb_out", "bytes": 16, "elapsed_ns": 566333}
+{"utc": "2026-10-25T20:40:06.520878+00:00", "monotonic_ns": 1743625742108375, "event": "usb_in", "bytes": 16, "elapsed_ns": 1808792}
+{"utc": "2026-10-25T20:40:06.533126+00:00", "monotonic_ns": 1743625754361000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.533963+00:00", "monotonic_ns": 1743625755196541, "event": "usb_out", "bytes": 16, "elapsed_ns": 779959}
+{"utc": "2026-10-25T20:40:06.535889+00:00", "monotonic_ns": 1743625757119500, "event": "usb_in", "bytes": 16, "elapsed_ns": 1878750}
+{"utc": "2026-10-25T20:40:06.548441+00:00", "monotonic_ns": 1743625769673125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.549018+00:00", "monotonic_ns": 1743625770248166, "event": "usb_out", "bytes": 16, "elapsed_ns": 535125}
+{"utc": "2026-10-25T20:40:06.550950+00:00", "monotonic_ns": 1743625772180416, "event": "usb_in", "bytes": 16, "elapsed_ns": 1904625}
+{"utc": "2026-10-25T20:40:06.562071+00:00", "monotonic_ns": 1743625783306916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.562690+00:00", "monotonic_ns": 1743625783920000, "event": "usb_out", "bytes": 16, "elapsed_ns": 562042}
+{"utc": "2026-10-25T20:40:06.564998+00:00", "monotonic_ns": 1743625786227125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2281500}
+{"utc": "2026-10-25T20:40:06.577547+00:00", "monotonic_ns": 1743625798781125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.578152+00:00", "monotonic_ns": 1743625799381416, "event": "usb_out", "bytes": 16, "elapsed_ns": 556333}
+{"utc": "2026-10-25T20:40:06.580960+00:00", "monotonic_ns": 1743625802195166, "event": "usb_in", "bytes": 16, "elapsed_ns": 2780500}
+{"utc": "2026-10-25T20:40:06.592217+00:00", "monotonic_ns": 1743625813462916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.592946+00:00", "monotonic_ns": 1743625814179166, "event": "usb_out", "bytes": 16, "elapsed_ns": 615500}
+{"utc": "2026-10-25T20:40:06.595675+00:00", "monotonic_ns": 1743625816912458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2677917}
+{"utc": "2026-10-25T20:40:06.607790+00:00", "monotonic_ns": 1743625829029583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.608931+00:00", "monotonic_ns": 1743625830161875, "event": "usb_out", "bytes": 16, "elapsed_ns": 1060041}
+{"utc": "2026-10-25T20:40:06.611197+00:00", "monotonic_ns": 1743625832426791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2228708}
+{"utc": "2026-10-25T20:40:06.623766+00:00", "monotonic_ns": 1743625845004458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.624578+00:00", "monotonic_ns": 1743625845808000, "event": "usb_out", "bytes": 16, "elapsed_ns": 712083}
+{"utc": "2026-10-25T20:40:06.626517+00:00", "monotonic_ns": 1743625847748208, "event": "usb_in", "bytes": 16, "elapsed_ns": 1904042}
+{"utc": "2026-10-25T20:40:06.637639+00:00", "monotonic_ns": 1743625858869291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.638864+00:00", "monotonic_ns": 1743625860094000, "event": "usb_out", "bytes": 16, "elapsed_ns": 1188666}
+{"utc": "2026-10-25T20:40:06.640956+00:00", "monotonic_ns": 1743625862184500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2058208}
+{"utc": "2026-10-25T20:40:06.651301+00:00", "monotonic_ns": 1743625872543416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.652027+00:00", "monotonic_ns": 1743625873263125, "event": "usb_out", "bytes": 16, "elapsed_ns": 625667}
+{"utc": "2026-10-25T20:40:06.654699+00:00", "monotonic_ns": 1743625875932458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2606208}
+{"utc": "2026-10-25T20:40:06.666165+00:00", "monotonic_ns": 1743625887502958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.666908+00:00", "monotonic_ns": 1743625888136666, "event": "usb_out", "bytes": 16, "elapsed_ns": 572084}
+{"utc": "2026-10-25T20:40:06.669935+00:00", "monotonic_ns": 1743625891290208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2998458}
+{"utc": "2026-10-25T20:40:06.680890+00:00", "monotonic_ns": 1743625902128833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.681553+00:00", "monotonic_ns": 1743625902783125, "event": "usb_out", "bytes": 16, "elapsed_ns": 580708}
+{"utc": "2026-10-25T20:40:06.684371+00:00", "monotonic_ns": 1743625905603208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2778792}
+{"utc": "2026-10-25T20:40:06.696960+00:00", "monotonic_ns": 1743625918193666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.697593+00:00", "monotonic_ns": 1743625918825500, "event": "usb_out", "bytes": 16, "elapsed_ns": 543125}
+{"utc": "2026-10-25T20:40:06.700049+00:00", "monotonic_ns": 1743625921283750, "event": "usb_in", "bytes": 16, "elapsed_ns": 2411625}
+{"utc": "2026-10-25T20:40:06.712649+00:00", "monotonic_ns": 1743625933885791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.713633+00:00", "monotonic_ns": 1743625934861916, "event": "usb_out", "bytes": 16, "elapsed_ns": 915542}
+{"utc": "2026-10-25T20:40:06.715589+00:00", "monotonic_ns": 1743625936818083, "event": "usb_in", "bytes": 16, "elapsed_ns": 1922417}
+{"utc": "2026-10-25T20:40:06.728160+00:00", "monotonic_ns": 1743625949399208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.729062+00:00", "monotonic_ns": 1743625950290958, "event": "usb_out", "bytes": 16, "elapsed_ns": 816292}
+{"utc": "2026-10-25T20:40:06.731368+00:00", "monotonic_ns": 1743625952595541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2278584}
+{"utc": "2026-10-25T20:40:06.741591+00:00", "monotonic_ns": 1743625962828833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.742224+00:00", "monotonic_ns": 1743625963451541, "event": "usb_out", "bytes": 16, "elapsed_ns": 555708}
+{"utc": "2026-10-25T20:40:06.744914+00:00", "monotonic_ns": 1743625966142583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2666083}
+{"utc": "2026-10-25T20:40:06.757464+00:00", "monotonic_ns": 1743625978697000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.758081+00:00", "monotonic_ns": 1743625979311666, "event": "usb_out", "bytes": 16, "elapsed_ns": 555875}
+{"utc": "2026-10-25T20:40:06.760859+00:00", "monotonic_ns": 1743625982087541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2738125}
+{"utc": "2026-10-25T20:40:06.772402+00:00", "monotonic_ns": 1743625993633875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.772969+00:00", "monotonic_ns": 1743625994194958, "event": "usb_out", "bytes": 16, "elapsed_ns": 514917}
+{"utc": "2026-10-25T20:40:06.775705+00:00", "monotonic_ns": 1743625996936250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2716792}
+{"utc": "2026-10-25T20:40:06.788293+00:00", "monotonic_ns": 1743626009525375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.789332+00:00", "monotonic_ns": 1743626010558416, "event": "usb_out", "bytes": 16, "elapsed_ns": 977958}
+{"utc": "2026-10-25T20:40:06.791296+00:00", "monotonic_ns": 1743626012524416, "event": "usb_in", "bytes": 16, "elapsed_ns": 1941416}
+{"utc": "2026-10-25T20:40:06.802637+00:00", "monotonic_ns": 1743626023870708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.803899+00:00", "monotonic_ns": 1743626025125916, "event": "usb_out", "bytes": 16, "elapsed_ns": 1205375}
+{"utc": "2026-10-25T20:40:06.805870+00:00", "monotonic_ns": 1743626027101666, "event": "usb_in", "bytes": 16, "elapsed_ns": 1945375}
+{"utc": "2026-10-25T20:40:06.818410+00:00", "monotonic_ns": 1743626039644125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.819030+00:00", "monotonic_ns": 1743626040259375, "event": "usb_out", "bytes": 16, "elapsed_ns": 551625}
+{"utc": "2026-10-25T20:40:06.820943+00:00", "monotonic_ns": 1743626042173833, "event": "usb_in", "bytes": 16, "elapsed_ns": 1871125}
+{"utc": "2026-10-25T20:40:06.832118+00:00", "monotonic_ns": 1743626053346541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.832977+00:00", "monotonic_ns": 1743626054204500, "event": "usb_out", "bytes": 16, "elapsed_ns": 817083}
+{"utc": "2026-10-25T20:40:06.835316+00:00", "monotonic_ns": 1743626056544500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2312667}
+{"utc": "2026-10-25T20:40:06.847868+00:00", "monotonic_ns": 1743626069098375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.848889+00:00", "monotonic_ns": 1743626070117875, "event": "usb_out", "bytes": 16, "elapsed_ns": 973333}
+{"utc": "2026-10-25T20:40:06.850824+00:00", "monotonic_ns": 1743626072052875, "event": "usb_in", "bytes": 16, "elapsed_ns": 1901792}
+{"utc": "2026-10-25T20:40:06.862553+00:00", "monotonic_ns": 1743626083793625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.863536+00:00", "monotonic_ns": 1743626084763875, "event": "usb_out", "bytes": 16, "elapsed_ns": 910792}
+{"utc": "2026-10-25T20:40:06.865540+00:00", "monotonic_ns": 1743626086771000, "event": "usb_in", "bytes": 16, "elapsed_ns": 1972250}
+{"utc": "2026-10-25T20:40:06.878093+00:00", "monotonic_ns": 1743626099329125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.879024+00:00", "monotonic_ns": 1743626100251625, "event": "usb_out", "bytes": 16, "elapsed_ns": 853333}
+{"utc": "2026-10-25T20:40:06.881290+00:00", "monotonic_ns": 1743626102521500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2225250}
+{"utc": "2026-10-25T20:40:06.893864+00:00", "monotonic_ns": 1743626115104791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.894598+00:00", "monotonic_ns": 1743626115827125, "event": "usb_out", "bytes": 16, "elapsed_ns": 656625}
+{"utc": "2026-10-25T20:40:06.897385+00:00", "monotonic_ns": 1743626118611500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2750334}
+{"utc": "2026-10-25T20:40:06.907861+00:00", "monotonic_ns": 1743626129097083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.909182+00:00", "monotonic_ns": 1743626130409166, "event": "usb_out", "bytes": 16, "elapsed_ns": 1242792}
+{"utc": "2026-10-25T20:40:06.911885+00:00", "monotonic_ns": 1743626133112958, "event": "usb_in", "bytes": 16, "elapsed_ns": 2674500}
+{"utc": "2026-10-25T20:40:06.923291+00:00", "monotonic_ns": 1743626144528000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.923977+00:00", "monotonic_ns": 1743626145203916, "event": "usb_out", "bytes": 16, "elapsed_ns": 604041}
+{"utc": "2026-10-25T20:40:06.926900+00:00", "monotonic_ns": 1743626148130583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2894250}
+{"utc": "2026-10-25T20:40:06.938481+00:00", "monotonic_ns": 1743626159714500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.939588+00:00", "monotonic_ns": 1743626160817750, "event": "usb_out", "bytes": 16, "elapsed_ns": 1022625}
+{"utc": "2026-10-25T20:40:06.941899+00:00", "monotonic_ns": 1743626163126083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2265708}
+{"utc": "2026-10-25T20:40:06.952773+00:00", "monotonic_ns": 1743626174006625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.954350+00:00", "monotonic_ns": 1743626175578583, "event": "usb_out", "bytes": 16, "elapsed_ns": 1513375}
+{"utc": "2026-10-25T20:40:06.956695+00:00", "monotonic_ns": 1743626177921583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2297375}
+{"utc": "2026-10-25T20:40:06.969255+00:00", "monotonic_ns": 1743626190487666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.969896+00:00", "monotonic_ns": 1743626191122666, "event": "usb_out", "bytes": 16, "elapsed_ns": 583167}
+{"utc": "2026-10-25T20:40:06.972420+00:00", "monotonic_ns": 1743626193648666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2494167}
+{"utc": "2026-10-25T20:40:06.982829+00:00", "monotonic_ns": 1743626204063208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.983857+00:00", "monotonic_ns": 1743626205083500, "event": "usb_out", "bytes": 16, "elapsed_ns": 964500}
+{"utc": "2026-10-25T20:40:06.985798+00:00", "monotonic_ns": 1743626207022583, "event": "usb_in", "bytes": 16, "elapsed_ns": 1915917}
+{"utc": "2026-10-25T20:40:06.998343+00:00", "monotonic_ns": 1743626219574083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:06.999013+00:00", "monotonic_ns": 1743626220241000, "event": "usb_out", "bytes": 16, "elapsed_ns": 611333}
+{"utc": "2026-10-25T20:40:07.000933+00:00", "monotonic_ns": 1743626222158375, "event": "usb_in", "bytes": 16, "elapsed_ns": 1878667}
+{"utc": "2026-10-25T20:40:07.013480+00:00", "monotonic_ns": 1743626234711333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.014082+00:00", "monotonic_ns": 1743626235306833, "event": "usb_out", "bytes": 16, "elapsed_ns": 542042}
+{"utc": "2026-10-25T20:40:07.016012+00:00", "monotonic_ns": 1743626237238750, "event": "usb_in", "bytes": 16, "elapsed_ns": 1898125}
+{"utc": "2026-10-25T20:40:07.028576+00:00", "monotonic_ns": 1743626249810333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.029883+00:00", "monotonic_ns": 1743626251107958, "event": "usb_out", "bytes": 16, "elapsed_ns": 1240792}
+{"utc": "2026-10-25T20:40:07.032412+00:00", "monotonic_ns": 1743626253638041, "event": "usb_in", "bytes": 16, "elapsed_ns": 2507708}
+{"utc": "2026-10-25T20:40:07.044171+00:00", "monotonic_ns": 1743626265405666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.044852+00:00", "monotonic_ns": 1743626266077875, "event": "usb_out", "bytes": 16, "elapsed_ns": 609541}
+{"utc": "2026-10-25T20:40:07.047253+00:00", "monotonic_ns": 1743626268481000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2372042}
+{"utc": "2026-10-25T20:40:07.059818+00:00", "monotonic_ns": 1743626281049916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.060845+00:00", "monotonic_ns": 1743626282070500, "event": "usb_out", "bytes": 16, "elapsed_ns": 970750}
+{"utc": "2026-10-25T20:40:07.062821+00:00", "monotonic_ns": 1743626284049750, "event": "usb_in", "bytes": 16, "elapsed_ns": 1945917}
+{"utc": "2026-10-25T20:40:07.075389+00:00", "monotonic_ns": 1743626296621833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.076275+00:00", "monotonic_ns": 1743626297502250, "event": "usb_out", "bytes": 16, "elapsed_ns": 823417}
+{"utc": "2026-10-25T20:40:07.080751+00:00", "monotonic_ns": 1743626301981500, "event": "usb_in", "bytes": 16, "elapsed_ns": 4436333}
+{"utc": "2026-10-25T20:40:07.091795+00:00", "monotonic_ns": 1743626313025291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.092389+00:00", "monotonic_ns": 1743626313614666, "event": "usb_out", "bytes": 16, "elapsed_ns": 550041}
+{"utc": "2026-10-25T20:40:07.095745+00:00", "monotonic_ns": 1743626316974666, "event": "usb_in", "bytes": 16, "elapsed_ns": 3319416}
+{"utc": "2026-10-25T20:40:07.108315+00:00", "monotonic_ns": 1743626329545416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.109605+00:00", "monotonic_ns": 1743626330831291, "event": "usb_out", "bytes": 16, "elapsed_ns": 1228917}
+{"utc": "2026-10-25T20:40:07.112089+00:00", "monotonic_ns": 1743626333316791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2453500}
+{"utc": "2026-10-25T20:40:07.122383+00:00", "monotonic_ns": 1743626343612791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.123084+00:00", "monotonic_ns": 1743626344308291, "event": "usb_out", "bytes": 16, "elapsed_ns": 653125}
+{"utc": "2026-10-25T20:40:07.126402+00:00", "monotonic_ns": 1743626347633916, "event": "usb_in", "bytes": 16, "elapsed_ns": 3296583}
+{"utc": "2026-10-25T20:40:07.138737+00:00", "monotonic_ns": 1743626359967083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.139481+00:00", "monotonic_ns": 1743626360705458, "event": "usb_out", "bytes": 16, "elapsed_ns": 689042}
+{"utc": "2026-10-25T20:40:07.141815+00:00", "monotonic_ns": 1743626363041916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2310583}
+{"utc": "2026-10-25T20:40:07.154382+00:00", "monotonic_ns": 1743626375617666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.155167+00:00", "monotonic_ns": 1743626376392916, "event": "usb_out", "bytes": 16, "elapsed_ns": 700417}
+{"utc": "2026-10-25T20:40:07.157744+00:00", "monotonic_ns": 1743626378971125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2542625}
+{"utc": "2026-10-25T20:40:07.170306+00:00", "monotonic_ns": 1743626391535375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.170904+00:00", "monotonic_ns": 1743626392129000, "event": "usb_out", "bytes": 16, "elapsed_ns": 547084}
+{"utc": "2026-10-25T20:40:07.174232+00:00", "monotonic_ns": 1743626395456791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3304042}
+{"utc": "2026-10-25T20:40:07.186788+00:00", "monotonic_ns": 1743626408018291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.187492+00:00", "monotonic_ns": 1743626408722250, "event": "usb_out", "bytes": 16, "elapsed_ns": 635875}
+{"utc": "2026-10-25T20:40:07.190454+00:00", "monotonic_ns": 1743626411681333, "event": "usb_in", "bytes": 16, "elapsed_ns": 2902208}
+{"utc": "2026-10-25T20:40:07.201474+00:00", "monotonic_ns": 1743626422706000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.202246+00:00", "monotonic_ns": 1743626423472666, "event": "usb_out", "bytes": 16, "elapsed_ns": 697500}
+{"utc": "2026-10-25T20:40:07.205084+00:00", "monotonic_ns": 1743626426319416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2801916}
+{"utc": "2026-10-25T20:40:07.217682+00:00", "monotonic_ns": 1743626438913166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.218854+00:00", "monotonic_ns": 1743626440081708, "event": "usb_out", "bytes": 16, "elapsed_ns": 1108459}
+{"utc": "2026-10-25T20:40:07.221641+00:00", "monotonic_ns": 1743626442865958, "event": "usb_in", "bytes": 16, "elapsed_ns": 2745041}
+{"utc": "2026-10-25T20:40:07.232296+00:00", "monotonic_ns": 1743626453526958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.233088+00:00", "monotonic_ns": 1743626454316458, "event": "usb_out", "bytes": 16, "elapsed_ns": 727166}
+{"utc": "2026-10-25T20:40:07.236270+00:00", "monotonic_ns": 1743626457496333, "event": "usb_in", "bytes": 16, "elapsed_ns": 3132292}
+{"utc": "2026-10-25T20:40:07.246898+00:00", "monotonic_ns": 1743626468126125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.247552+00:00", "monotonic_ns": 1743626468777666, "event": "usb_out", "bytes": 16, "elapsed_ns": 599916}
+{"utc": "2026-10-25T20:40:07.250885+00:00", "monotonic_ns": 1743626472110958, "event": "usb_in", "bytes": 16, "elapsed_ns": 3300875}
+{"utc": "2026-10-25T20:40:07.262688+00:00", "monotonic_ns": 1743626483913625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.263716+00:00", "monotonic_ns": 1743626484937708, "event": "usb_out", "bytes": 16, "elapsed_ns": 990750}
+{"utc": "2026-10-25T20:40:07.266530+00:00", "monotonic_ns": 1743626487756000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2801584}
+{"utc": "2026-10-25T20:40:07.277640+00:00", "monotonic_ns": 1743626498866333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.279269+00:00", "monotonic_ns": 1743626500498750, "event": "usb_out", "bytes": 16, "elapsed_ns": 1579375}
+{"utc": "2026-10-25T20:40:07.281781+00:00", "monotonic_ns": 1743626503005541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2456625}
+{"utc": "2026-10-25T20:40:07.294088+00:00", "monotonic_ns": 1743626515316500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.294753+00:00", "monotonic_ns": 1743626515979041, "event": "usb_out", "bytes": 16, "elapsed_ns": 605917}
+{"utc": "2026-10-25T20:40:07.297314+00:00", "monotonic_ns": 1743626518548875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2524166}
+{"utc": "2026-10-25T20:40:07.309867+00:00", "monotonic_ns": 1743626531092458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.310501+00:00", "monotonic_ns": 1743626531724666, "event": "usb_out", "bytes": 16, "elapsed_ns": 584250}
+{"utc": "2026-10-25T20:40:07.313716+00:00", "monotonic_ns": 1743626534937666, "event": "usb_in", "bytes": 16, "elapsed_ns": 3188333}
+{"utc": "2026-10-25T20:40:07.324206+00:00", "monotonic_ns": 1743626545432833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.324778+00:00", "monotonic_ns": 1743626545999583, "event": "usb_out", "bytes": 16, "elapsed_ns": 527750}
+{"utc": "2026-10-25T20:40:07.326740+00:00", "monotonic_ns": 1743626547961583, "event": "usb_in", "bytes": 16, "elapsed_ns": 1948833}
+{"utc": "2026-10-25T20:40:07.338468+00:00", "monotonic_ns": 1743626559697958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.339106+00:00", "monotonic_ns": 1743626560331541, "event": "usb_out", "bytes": 16, "elapsed_ns": 570792}
+{"utc": "2026-10-25T20:40:07.341030+00:00", "monotonic_ns": 1743626562254166, "event": "usb_in", "bytes": 16, "elapsed_ns": 1887167}
+{"utc": "2026-10-25T20:40:07.353584+00:00", "monotonic_ns": 1743626574811458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.354244+00:00", "monotonic_ns": 1743626575473708, "event": "usb_out", "bytes": 16, "elapsed_ns": 600916}
+{"utc": "2026-10-25T20:40:07.356160+00:00", "monotonic_ns": 1743626577386958, "event": "usb_in", "bytes": 16, "elapsed_ns": 1847250}
+{"utc": "2026-10-25T20:40:07.368733+00:00", "monotonic_ns": 1743626589965000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.369720+00:00", "monotonic_ns": 1743626590945208, "event": "usb_out", "bytes": 16, "elapsed_ns": 914708}
+{"utc": "2026-10-25T20:40:07.374069+00:00", "monotonic_ns": 1743626595302250, "event": "usb_in", "bytes": 16, "elapsed_ns": 4293458}
+{"utc": "2026-10-25T20:40:07.386674+00:00", "monotonic_ns": 1743626607908041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.387372+00:00", "monotonic_ns": 1743626608600916, "event": "usb_out", "bytes": 16, "elapsed_ns": 627542}
+{"utc": "2026-10-25T20:40:07.391055+00:00", "monotonic_ns": 1743626612283125, "event": "usb_in", "bytes": 16, "elapsed_ns": 3637667}
+{"utc": "2026-10-25T20:40:07.402151+00:00", "monotonic_ns": 1743626623381083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.402963+00:00", "monotonic_ns": 1743626624188458, "event": "usb_out", "bytes": 16, "elapsed_ns": 744875}
+{"utc": "2026-10-25T20:40:07.406269+00:00", "monotonic_ns": 1743626627499666, "event": "usb_in", "bytes": 16, "elapsed_ns": 3268083}
+{"utc": "2026-10-25T20:40:07.418838+00:00", "monotonic_ns": 1743626640066125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.419974+00:00", "monotonic_ns": 1743626641198125, "event": "usb_out", "bytes": 16, "elapsed_ns": 1056459}
+{"utc": "2026-10-25T20:40:07.422382+00:00", "monotonic_ns": 1743626643609500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2365292}
+{"utc": "2026-10-25T20:40:07.433087+00:00", "monotonic_ns": 1743626654318250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.434432+00:00", "monotonic_ns": 1743626655656000, "event": "usb_out", "bytes": 16, "elapsed_ns": 1278833}
+{"utc": "2026-10-25T20:40:07.437040+00:00", "monotonic_ns": 1743626658263416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2576875}
+{"utc": "2026-10-25T20:40:07.447097+00:00", "monotonic_ns": 1743626668326541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.447773+00:00", "monotonic_ns": 1743626668996875, "event": "usb_out", "bytes": 16, "elapsed_ns": 613459}
+{"utc": "2026-10-25T20:40:07.451227+00:00", "monotonic_ns": 1743626672450250, "event": "usb_in", "bytes": 16, "elapsed_ns": 3419584}
+{"utc": "2026-10-25T20:40:07.463093+00:00", "monotonic_ns": 1743626684322583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.464206+00:00", "monotonic_ns": 1743626685431333, "event": "usb_out", "bytes": 16, "elapsed_ns": 1048792}
+{"utc": "2026-10-25T20:40:07.466486+00:00", "monotonic_ns": 1743626687708875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2241709}
+{"utc": "2026-10-25T20:40:07.479042+00:00", "monotonic_ns": 1743626700270833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.479682+00:00", "monotonic_ns": 1743626700907916, "event": "usb_out", "bytes": 16, "elapsed_ns": 576000}
+{"utc": "2026-10-25T20:40:07.482167+00:00", "monotonic_ns": 1743626703391583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2419333}
+{"utc": "2026-10-25T20:40:07.494405+00:00", "monotonic_ns": 1743626715641541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.495471+00:00", "monotonic_ns": 1743626716699208, "event": "usb_out", "bytes": 16, "elapsed_ns": 963541}
+{"utc": "2026-10-25T20:40:07.498681+00:00", "monotonic_ns": 1743626719907416, "event": "usb_in", "bytes": 16, "elapsed_ns": 3149750}
+{"utc": "2026-10-25T20:40:07.511286+00:00", "monotonic_ns": 1743626732523125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.512234+00:00", "monotonic_ns": 1743626733455958, "event": "usb_out", "bytes": 16, "elapsed_ns": 862292}
+{"utc": "2026-10-25T20:40:07.515116+00:00", "monotonic_ns": 1743626736338625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2856708}
+{"utc": "2026-10-25T20:40:07.527675+00:00", "monotonic_ns": 1743626748906375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.529138+00:00", "monotonic_ns": 1743626750365291, "event": "usb_out", "bytes": 16, "elapsed_ns": 1385916}
+{"utc": "2026-10-25T20:40:07.532006+00:00", "monotonic_ns": 1743626753229416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2803750}
+{"utc": "2026-10-25T20:40:07.544570+00:00", "monotonic_ns": 1743626765795583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.545317+00:00", "monotonic_ns": 1743626766537833, "event": "usb_out", "bytes": 16, "elapsed_ns": 700125}
+{"utc": "2026-10-25T20:40:07.548016+00:00", "monotonic_ns": 1743626769237458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2677333}
+{"utc": "2026-10-25T20:40:07.560557+00:00", "monotonic_ns": 1743626781784041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.561277+00:00", "monotonic_ns": 1743626782500041, "event": "usb_out", "bytes": 16, "elapsed_ns": 667500}
+{"utc": "2026-10-25T20:40:07.564217+00:00", "monotonic_ns": 1743626785440833, "event": "usb_in", "bytes": 16, "elapsed_ns": 2906625}
+{"utc": "2026-10-25T20:40:07.574476+00:00", "monotonic_ns": 1743626795707416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.575288+00:00", "monotonic_ns": 1743626796512416, "event": "usb_out", "bytes": 16, "elapsed_ns": 725792}
+{"utc": "2026-10-25T20:40:07.577615+00:00", "monotonic_ns": 1743626798839416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2271125}
+{"utc": "2026-10-25T20:40:07.588553+00:00", "monotonic_ns": 1743626809776041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.589657+00:00", "monotonic_ns": 1743626810877083, "event": "usb_out", "bytes": 16, "elapsed_ns": 1064125}
+{"utc": "2026-10-25T20:40:07.592075+00:00", "monotonic_ns": 1743626813297041, "event": "usb_in", "bytes": 16, "elapsed_ns": 2399125}
+{"utc": "2026-10-25T20:40:07.603170+00:00", "monotonic_ns": 1743626824396166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.604426+00:00", "monotonic_ns": 1743626825650708, "event": "usb_out", "bytes": 16, "elapsed_ns": 1187542}
+{"utc": "2026-10-25T20:40:07.606708+00:00", "monotonic_ns": 1743626827928666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2243083}
+{"utc": "2026-10-25T20:40:07.619250+00:00", "monotonic_ns": 1743626840476500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.619975+00:00", "monotonic_ns": 1743626841195750, "event": "usb_out", "bytes": 16, "elapsed_ns": 666625}
+{"utc": "2026-10-25T20:40:07.622386+00:00", "monotonic_ns": 1743626843609291, "event": "usb_in", "bytes": 16, "elapsed_ns": 2386375}
+{"utc": "2026-10-25T20:40:07.634907+00:00", "monotonic_ns": 1743626856133166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.635552+00:00", "monotonic_ns": 1743626856773083, "event": "usb_out", "bytes": 16, "elapsed_ns": 584541}
+{"utc": "2026-10-25T20:40:07.638994+00:00", "monotonic_ns": 1743626860216208, "event": "usb_in", "bytes": 16, "elapsed_ns": 3418834}
+{"utc": "2026-10-25T20:40:07.649839+00:00", "monotonic_ns": 1743626871061916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.650446+00:00", "monotonic_ns": 1743626871667250, "event": "usb_out", "bytes": 16, "elapsed_ns": 559208}
+{"utc": "2026-10-25T20:40:07.653724+00:00", "monotonic_ns": 1743626874944583, "event": "usb_in", "bytes": 16, "elapsed_ns": 3249625}
+{"utc": "2026-10-25T20:40:07.666169+00:00", "monotonic_ns": 1743626887396375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.667247+00:00", "monotonic_ns": 1743626888468541, "event": "usb_out", "bytes": 16, "elapsed_ns": 1011416}
+{"utc": "2026-10-25T20:40:07.670331+00:00", "monotonic_ns": 1743626891551125, "event": "usb_in", "bytes": 16, "elapsed_ns": 3056791}
+{"utc": "2026-10-25T20:40:07.682825+00:00", "monotonic_ns": 1743626904049458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.684053+00:00", "monotonic_ns": 1743626905273791, "event": "usb_out", "bytes": 16, "elapsed_ns": 1181833}
+{"utc": "2026-10-25T20:40:07.686996+00:00", "monotonic_ns": 1743626908216750, "event": "usb_in", "bytes": 16, "elapsed_ns": 2917709}
+{"utc": "2026-10-25T20:40:07.698541+00:00", "monotonic_ns": 1743626919764083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.699335+00:00", "monotonic_ns": 1743626920558333, "event": "usb_out", "bytes": 16, "elapsed_ns": 752833}
+{"utc": "2026-10-25T20:40:07.702282+00:00", "monotonic_ns": 1743626923503666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2905083}
+{"utc": "2026-10-25T20:40:07.714838+00:00", "monotonic_ns": 1743626936059458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.715719+00:00", "monotonic_ns": 1743626936940916, "event": "usb_out", "bytes": 16, "elapsed_ns": 849042}
+{"utc": "2026-10-25T20:40:07.718612+00:00", "monotonic_ns": 1743626939832708, "event": "usb_in", "bytes": 16, "elapsed_ns": 2864000}
+{"utc": "2026-10-25T20:40:07.730068+00:00", "monotonic_ns": 1743626951293166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.730725+00:00", "monotonic_ns": 1743626951949208, "event": "usb_out", "bytes": 16, "elapsed_ns": 603708}
+{"utc": "2026-10-25T20:40:07.733620+00:00", "monotonic_ns": 1743626954843083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2847709}
+{"utc": "2026-10-25T20:40:07.746174+00:00", "monotonic_ns": 1743626967396041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.747024+00:00", "monotonic_ns": 1743626968244958, "event": "usb_out", "bytes": 16, "elapsed_ns": 791041}
+{"utc": "2026-10-25T20:40:07.750541+00:00", "monotonic_ns": 1743626971762916, "event": "usb_in", "bytes": 16, "elapsed_ns": 3488583}
+{"utc": "2026-10-25T20:40:07.763028+00:00", "monotonic_ns": 1743626984248958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.764466+00:00", "monotonic_ns": 1743626985690208, "event": "usb_out", "bytes": 16, "elapsed_ns": 1407000}
+{"utc": "2026-10-25T20:40:07.766749+00:00", "monotonic_ns": 1743626987970083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2241167}
+{"utc": "2026-10-25T20:40:07.777812+00:00", "monotonic_ns": 1743626999034791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.779401+00:00", "monotonic_ns": 1743627000623000, "event": "usb_out", "bytes": 16, "elapsed_ns": 1543333}
+{"utc": "2026-10-25T20:40:07.781951+00:00", "monotonic_ns": 1743627003172583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2518250}
+{"utc": "2026-10-25T20:40:07.794503+00:00", "monotonic_ns": 1743627015728333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.795226+00:00", "monotonic_ns": 1743627016445791, "event": "usb_out", "bytes": 16, "elapsed_ns": 664875}
+{"utc": "2026-10-25T20:40:07.798161+00:00", "monotonic_ns": 1743627019386375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2907416}
+{"utc": "2026-10-25T20:40:07.810726+00:00", "monotonic_ns": 1743627031949083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.811324+00:00", "monotonic_ns": 1743627032543083, "event": "usb_out", "bytes": 16, "elapsed_ns": 557042}
+{"utc": "2026-10-25T20:40:07.814655+00:00", "monotonic_ns": 1743627035874625, "event": "usb_in", "bytes": 16, "elapsed_ns": 3310833}
+{"utc": "2026-10-25T20:40:07.827193+00:00", "monotonic_ns": 1743627048412916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.827889+00:00", "monotonic_ns": 1743627049107333, "event": "usb_out", "bytes": 16, "elapsed_ns": 669084}
+{"utc": "2026-10-25T20:40:07.831060+00:00", "monotonic_ns": 1743627052278833, "event": "usb_in", "bytes": 16, "elapsed_ns": 3153292}
+{"utc": "2026-10-25T20:40:07.843593+00:00", "monotonic_ns": 1743627064813000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.844287+00:00", "monotonic_ns": 1743627065507708, "event": "usb_out", "bytes": 16, "elapsed_ns": 665208}
+{"utc": "2026-10-25T20:40:07.847196+00:00", "monotonic_ns": 1743627068415458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2883459}
+{"utc": "2026-10-25T20:40:07.857656+00:00", "monotonic_ns": 1743627078881958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.858701+00:00", "monotonic_ns": 1743627079920416, "event": "usb_out", "bytes": 16, "elapsed_ns": 983292}
+{"utc": "2026-10-25T20:40:07.861770+00:00", "monotonic_ns": 1743627082989708, "event": "usb_in", "bytes": 16, "elapsed_ns": 3043125}
+{"utc": "2026-10-25T20:40:07.873335+00:00", "monotonic_ns": 1743627094558166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.874082+00:00", "monotonic_ns": 1743627095300416, "event": "usb_out", "bytes": 16, "elapsed_ns": 706917}
+{"utc": "2026-10-25T20:40:07.876923+00:00", "monotonic_ns": 1743627098140416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2822334}
+{"utc": "2026-10-25T20:40:07.889467+00:00", "monotonic_ns": 1743627110689500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.890567+00:00", "monotonic_ns": 1743627111787333, "event": "usb_out", "bytes": 16, "elapsed_ns": 1056709}
+{"utc": "2026-10-25T20:40:07.892987+00:00", "monotonic_ns": 1743627114207166, "event": "usb_in", "bytes": 16, "elapsed_ns": 2395375}
+{"utc": "2026-10-25T20:40:07.904191+00:00", "monotonic_ns": 1743627125418541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.905120+00:00", "monotonic_ns": 1743627126340083, "event": "usb_out", "bytes": 16, "elapsed_ns": 856166}
+{"utc": "2026-10-25T20:40:07.907568+00:00", "monotonic_ns": 1743627128786958, "event": "usb_in", "bytes": 16, "elapsed_ns": 2422667}
+{"utc": "2026-10-25T20:40:07.920108+00:00", "monotonic_ns": 1743627141327291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.920931+00:00", "monotonic_ns": 1743627142149041, "event": "usb_out", "bytes": 16, "elapsed_ns": 796333}
+{"utc": "2026-10-25T20:40:07.924394+00:00", "monotonic_ns": 1743627145618458, "event": "usb_in", "bytes": 16, "elapsed_ns": 3435584}
+{"utc": "2026-10-25T20:40:07.935284+00:00", "monotonic_ns": 1743627156515500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.935948+00:00", "monotonic_ns": 1743627157167833, "event": "usb_out", "bytes": 16, "elapsed_ns": 594334}
+{"utc": "2026-10-25T20:40:07.937999+00:00", "monotonic_ns": 1743627159222041, "event": "usb_in", "bytes": 16, "elapsed_ns": 2024167}
+{"utc": "2026-10-25T20:40:07.950213+00:00", "monotonic_ns": 1743627171437958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.950866+00:00", "monotonic_ns": 1743627172087708, "event": "usb_out", "bytes": 16, "elapsed_ns": 591792}
+{"utc": "2026-10-25T20:40:07.953611+00:00", "monotonic_ns": 1743627174832333, "event": "usb_in", "bytes": 16, "elapsed_ns": 2701291}
+{"utc": "2026-10-25T20:40:07.964797+00:00", "monotonic_ns": 1743627186018833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.965453+00:00", "monotonic_ns": 1743627186673541, "event": "usb_out", "bytes": 16, "elapsed_ns": 610875}
+{"utc": "2026-10-25T20:40:07.967711+00:00", "monotonic_ns": 1743627188929875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2227125}
+{"utc": "2026-10-25T20:40:07.978399+00:00", "monotonic_ns": 1743627199618583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.979185+00:00", "monotonic_ns": 1743627200403916, "event": "usb_out", "bytes": 16, "elapsed_ns": 755750}
+{"utc": "2026-10-25T20:40:07.981105+00:00", "monotonic_ns": 1743627202323458, "event": "usb_in", "bytes": 16, "elapsed_ns": 1890042}
+{"utc": "2026-10-25T20:40:07.993650+00:00", "monotonic_ns": 1743627214869458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:07.994413+00:00", "monotonic_ns": 1743627215637291, "event": "usb_out", "bytes": 16, "elapsed_ns": 726458}
+{"utc": "2026-10-25T20:40:07.997259+00:00", "monotonic_ns": 1743627218477541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2792250}
+{"utc": "2026-10-25T20:40:08.007882+00:00", "monotonic_ns": 1743627229104833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.009223+00:00", "monotonic_ns": 1743627230442625, "event": "usb_out", "bytes": 16, "elapsed_ns": 1291667}
+{"utc": "2026-10-25T20:40:08.012083+00:00", "monotonic_ns": 1743627233301291, "event": "usb_in", "bytes": 16, "elapsed_ns": 2829541}
+{"utc": "2026-10-25T20:40:08.023687+00:00", "monotonic_ns": 1743627244906916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.024410+00:00", "monotonic_ns": 1743627245631458, "event": "usb_out", "bytes": 16, "elapsed_ns": 684459}
+{"utc": "2026-10-25T20:40:08.027250+00:00", "monotonic_ns": 1743627248470500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2796458}
+{"utc": "2026-10-25T20:40:08.039412+00:00", "monotonic_ns": 1743627260641708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.040513+00:00", "monotonic_ns": 1743627261733500, "event": "usb_out", "bytes": 16, "elapsed_ns": 1013916}
+{"utc": "2026-10-25T20:40:08.042850+00:00", "monotonic_ns": 1743627264069208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2295875}
+{"utc": "2026-10-25T20:40:08.053760+00:00", "monotonic_ns": 1743627274981500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.054483+00:00", "monotonic_ns": 1743627275706708, "event": "usb_out", "bytes": 16, "elapsed_ns": 674042}
+{"utc": "2026-10-25T20:40:08.057263+00:00", "monotonic_ns": 1743627278481875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2722958}
+{"utc": "2026-10-25T20:40:08.069383+00:00", "monotonic_ns": 1743627290606958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.070109+00:00", "monotonic_ns": 1743627291329541, "event": "usb_out", "bytes": 16, "elapsed_ns": 675167}
+{"utc": "2026-10-25T20:40:08.072389+00:00", "monotonic_ns": 1743627293607500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2233583}
+{"utc": "2026-10-25T20:40:08.082637+00:00", "monotonic_ns": 1743627303858875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.084166+00:00", "monotonic_ns": 1743627305385041, "event": "usb_out", "bytes": 16, "elapsed_ns": 1476375}
+{"utc": "2026-10-25T20:40:08.086513+00:00", "monotonic_ns": 1743627307730250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2318500}
+{"utc": "2026-10-25T20:40:08.097803+00:00", "monotonic_ns": 1743627319024916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.099425+00:00", "monotonic_ns": 1743627320645250, "event": "usb_out", "bytes": 16, "elapsed_ns": 1571500}
+{"utc": "2026-10-25T20:40:08.101688+00:00", "monotonic_ns": 1743627322909416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2215875}
+{"utc": "2026-10-25T20:40:08.114251+00:00", "monotonic_ns": 1743627335473625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.114907+00:00", "monotonic_ns": 1743627336126375, "event": "usb_out", "bytes": 16, "elapsed_ns": 602708}
+{"utc": "2026-10-25T20:40:08.117332+00:00", "monotonic_ns": 1743627338549791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2392917}
+{"utc": "2026-10-25T20:40:08.129875+00:00", "monotonic_ns": 1743627351095333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.130441+00:00", "monotonic_ns": 1743627351657416, "event": "usb_out", "bytes": 16, "elapsed_ns": 532708}
+{"utc": "2026-10-25T20:40:08.133679+00:00", "monotonic_ns": 1743627354900291, "event": "usb_in", "bytes": 16, "elapsed_ns": 3217375}
+{"utc": "2026-10-25T20:40:08.145643+00:00", "monotonic_ns": 1743627366872208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.146452+00:00", "monotonic_ns": 1743627367675916, "event": "usb_out", "bytes": 16, "elapsed_ns": 715708}
+{"utc": "2026-10-25T20:40:08.149614+00:00", "monotonic_ns": 1743627370833375, "event": "usb_in", "bytes": 16, "elapsed_ns": 3100541}
+{"utc": "2026-10-25T20:40:08.160216+00:00", "monotonic_ns": 1743627381440708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.160893+00:00", "monotonic_ns": 1743627382114833, "event": "usb_out", "bytes": 16, "elapsed_ns": 608542}
+{"utc": "2026-10-25T20:40:08.164130+00:00", "monotonic_ns": 1743627385348916, "event": "usb_in", "bytes": 16, "elapsed_ns": 3185709}
+{"utc": "2026-10-25T20:40:08.176006+00:00", "monotonic_ns": 1743627397225625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.176668+00:00", "monotonic_ns": 1743627397887166, "event": "usb_out", "bytes": 16, "elapsed_ns": 621458}
+{"utc": "2026-10-25T20:40:08.179552+00:00", "monotonic_ns": 1743627400770125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2840500}
+{"utc": "2026-10-25T20:40:08.191615+00:00", "monotonic_ns": 1743627412833333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.192290+00:00", "monotonic_ns": 1743627413507333, "event": "usb_out", "bytes": 16, "elapsed_ns": 642500}
+{"utc": "2026-10-25T20:40:08.195152+00:00", "monotonic_ns": 1743627416368750, "event": "usb_in", "bytes": 16, "elapsed_ns": 2834958}
+{"utc": "2026-10-25T20:40:08.205452+00:00", "monotonic_ns": 1743627426673750, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.206229+00:00", "monotonic_ns": 1743627427451250, "event": "usb_out", "bytes": 16, "elapsed_ns": 721417}
+{"utc": "2026-10-25T20:40:08.208892+00:00", "monotonic_ns": 1743627430111208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2606959}
+{"utc": "2026-10-25T20:40:08.219586+00:00", "monotonic_ns": 1743627440814833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.220393+00:00", "monotonic_ns": 1743627441614375, "event": "usb_out", "bytes": 16, "elapsed_ns": 713792}
+{"utc": "2026-10-25T20:40:08.222707+00:00", "monotonic_ns": 1743627443933791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2261833}
+{"utc": "2026-10-25T20:40:08.235318+00:00", "monotonic_ns": 1743627456538000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.236066+00:00", "monotonic_ns": 1743627457282000, "event": "usb_out", "bytes": 16, "elapsed_ns": 697625}
+{"utc": "2026-10-25T20:40:08.238723+00:00", "monotonic_ns": 1743627459939625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2631125}
+{"utc": "2026-10-25T20:40:08.249755+00:00", "monotonic_ns": 1743627470982166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.250454+00:00", "monotonic_ns": 1743627471672750, "event": "usb_out", "bytes": 16, "elapsed_ns": 615583}
+{"utc": "2026-10-25T20:40:08.252715+00:00", "monotonic_ns": 1743627473931875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2223500}
+{"utc": "2026-10-25T20:40:08.265223+00:00", "monotonic_ns": 1743627486448083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.265905+00:00", "monotonic_ns": 1743627487122500, "event": "usb_out", "bytes": 16, "elapsed_ns": 621333}
+{"utc": "2026-10-25T20:40:08.269160+00:00", "monotonic_ns": 1743627490383416, "event": "usb_in", "bytes": 16, "elapsed_ns": 3220208}
+{"utc": "2026-10-25T20:40:08.280339+00:00", "monotonic_ns": 1743627501564125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.281102+00:00", "monotonic_ns": 1743627502319083, "event": "usb_out", "bytes": 16, "elapsed_ns": 684583}
+{"utc": "2026-10-25T20:40:08.284265+00:00", "monotonic_ns": 1743627505482750, "event": "usb_in", "bytes": 16, "elapsed_ns": 3133250}
+{"utc": "2026-10-25T20:40:08.295670+00:00", "monotonic_ns": 1743627516892083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.296374+00:00", "monotonic_ns": 1743627517590291, "event": "usb_out", "bytes": 16, "elapsed_ns": 645875}
+{"utc": "2026-10-25T20:40:08.299577+00:00", "monotonic_ns": 1743627520794208, "event": "usb_in", "bytes": 16, "elapsed_ns": 3176458}
+{"utc": "2026-10-25T20:40:08.311050+00:00", "monotonic_ns": 1743627532271333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.312137+00:00", "monotonic_ns": 1743627533354291, "event": "usb_out", "bytes": 16, "elapsed_ns": 1027083}
+{"utc": "2026-10-25T20:40:08.314867+00:00", "monotonic_ns": 1743627536084791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2694959}
+{"utc": "2026-10-25T20:40:08.325711+00:00", "monotonic_ns": 1743627546942000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.326771+00:00", "monotonic_ns": 1743627547989333, "event": "usb_out", "bytes": 16, "elapsed_ns": 960875}
+{"utc": "2026-10-25T20:40:08.329695+00:00", "monotonic_ns": 1743627550916166, "event": "usb_in", "bytes": 16, "elapsed_ns": 2884375}
+{"utc": "2026-10-25T20:40:08.341241+00:00", "monotonic_ns": 1743627562466875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.342079+00:00", "monotonic_ns": 1743627563296666, "event": "usb_out", "bytes": 16, "elapsed_ns": 748584}
+{"utc": "2026-10-25T20:40:08.344776+00:00", "monotonic_ns": 1743627565993416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2656625}
+{"utc": "2026-10-25T20:40:08.357301+00:00", "monotonic_ns": 1743627578532041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.358160+00:00", "monotonic_ns": 1743627579377375, "event": "usb_out", "bytes": 16, "elapsed_ns": 763334}
+{"utc": "2026-10-25T20:40:08.361466+00:00", "monotonic_ns": 1743627582684000, "event": "usb_in", "bytes": 16, "elapsed_ns": 3266584}
+{"utc": "2026-10-25T20:40:08.374052+00:00", "monotonic_ns": 1743627595284541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.375271+00:00", "monotonic_ns": 1743627596489708, "event": "usb_out", "bytes": 16, "elapsed_ns": 1101500}
+{"utc": "2026-10-25T20:40:08.377535+00:00", "monotonic_ns": 1743627598751208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2221917}
+{"utc": "2026-10-25T20:40:08.390088+00:00", "monotonic_ns": 1743627611308541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.390738+00:00", "monotonic_ns": 1743627611953333, "event": "usb_out", "bytes": 16, "elapsed_ns": 593292}
+{"utc": "2026-10-25T20:40:08.393588+00:00", "monotonic_ns": 1743627614803375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2822541}
+{"utc": "2026-10-25T20:40:08.406130+00:00", "monotonic_ns": 1743627627346291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.406710+00:00", "monotonic_ns": 1743627627925333, "event": "usb_out", "bytes": 16, "elapsed_ns": 547125}
+{"utc": "2026-10-25T20:40:08.409865+00:00", "monotonic_ns": 1743627631083583, "event": "usb_in", "bytes": 16, "elapsed_ns": 3129500}
+{"utc": "2026-10-25T20:40:08.420323+00:00", "monotonic_ns": 1743627641546500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.421087+00:00", "monotonic_ns": 1743627642303250, "event": "usb_out", "bytes": 16, "elapsed_ns": 692125}
+{"utc": "2026-10-25T20:40:08.424222+00:00", "monotonic_ns": 1743627645437833, "event": "usb_in", "bytes": 16, "elapsed_ns": 3104000}
+{"utc": "2026-10-25T20:40:08.436123+00:00", "monotonic_ns": 1743627657346583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.436790+00:00", "monotonic_ns": 1743627658007750, "event": "usb_out", "bytes": 16, "elapsed_ns": 592917}
+{"utc": "2026-10-25T20:40:08.440215+00:00", "monotonic_ns": 1743627661432416, "event": "usb_in", "bytes": 16, "elapsed_ns": 3383209}
+{"utc": "2026-10-25T20:40:08.452780+00:00", "monotonic_ns": 1743627674005041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.453859+00:00", "monotonic_ns": 1743627675076500, "event": "usb_out", "bytes": 16, "elapsed_ns": 991333}
+{"utc": "2026-10-25T20:40:08.456361+00:00", "monotonic_ns": 1743627677585625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2453834}
+{"utc": "2026-10-25T20:40:08.468971+00:00", "monotonic_ns": 1743627690197916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.469629+00:00", "monotonic_ns": 1743627690845625, "event": "usb_out", "bytes": 16, "elapsed_ns": 582209}
+{"utc": "2026-10-25T20:40:08.472389+00:00", "monotonic_ns": 1743627693604916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2721583}
+{"utc": "2026-10-25T20:40:08.482833+00:00", "monotonic_ns": 1743627704054083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.483838+00:00", "monotonic_ns": 1743627705052500, "event": "usb_out", "bytes": 16, "elapsed_ns": 942792}
+{"utc": "2026-10-25T20:40:08.486782+00:00", "monotonic_ns": 1743627707996416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2919583}
+{"utc": "2026-10-25T20:40:08.499331+00:00", "monotonic_ns": 1743627720550458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.500088+00:00", "monotonic_ns": 1743627721302375, "event": "usb_out", "bytes": 16, "elapsed_ns": 702125}
+{"utc": "2026-10-25T20:40:08.502800+00:00", "monotonic_ns": 1743627724014625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2691334}
+{"utc": "2026-10-25T20:40:08.514544+00:00", "monotonic_ns": 1743627735764208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.515775+00:00", "monotonic_ns": 1743627736990583, "event": "usb_out", "bytes": 16, "elapsed_ns": 1173416}
+{"utc": "2026-10-25T20:40:08.517944+00:00", "monotonic_ns": 1743627739158916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2141084}
+{"utc": "2026-10-25T20:40:08.528353+00:00", "monotonic_ns": 1743627749571375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.529055+00:00", "monotonic_ns": 1743627750271083, "event": "usb_out", "bytes": 16, "elapsed_ns": 645250}
+{"utc": "2026-10-25T20:40:08.531341+00:00", "monotonic_ns": 1743627752556458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2230208}
+{"utc": "2026-10-25T20:40:08.543778+00:00", "monotonic_ns": 1743627764995750, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.544366+00:00", "monotonic_ns": 1743627765580291, "event": "usb_out", "bytes": 16, "elapsed_ns": 540458}
+{"utc": "2026-10-25T20:40:08.546632+00:00", "monotonic_ns": 1743627767845250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2242292}
+{"utc": "2026-10-25T20:40:08.557830+00:00", "monotonic_ns": 1743627779052000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.558825+00:00", "monotonic_ns": 1743627780037208, "event": "usb_out", "bytes": 16, "elapsed_ns": 931083}
+{"utc": "2026-10-25T20:40:08.561084+00:00", "monotonic_ns": 1743627782297250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2244542}
+{"utc": "2026-10-25T20:40:08.572186+00:00", "monotonic_ns": 1743627793408583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.572800+00:00", "monotonic_ns": 1743627794012416, "event": "usb_out", "bytes": 16, "elapsed_ns": 548834}
+{"utc": "2026-10-25T20:40:08.576037+00:00", "monotonic_ns": 1743627797252333, "event": "usb_in", "bytes": 16, "elapsed_ns": 3220292}
+{"utc": "2026-10-25T20:40:08.587429+00:00", "monotonic_ns": 1743627808652416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.589011+00:00", "monotonic_ns": 1743627810226541, "event": "usb_out", "bytes": 16, "elapsed_ns": 1498958}
+{"utc": "2026-10-25T20:40:08.591708+00:00", "monotonic_ns": 1743627812926458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2659875}
+{"utc": "2026-10-25T20:40:08.603032+00:00", "monotonic_ns": 1743627824260500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.603987+00:00", "monotonic_ns": 1743627825200791, "event": "usb_out", "bytes": 16, "elapsed_ns": 884417}
+{"utc": "2026-10-25T20:40:08.606523+00:00", "monotonic_ns": 1743627827740041, "event": "usb_in", "bytes": 16, "elapsed_ns": 2503417}
+{"utc": "2026-10-25T20:40:08.617789+00:00", "monotonic_ns": 1743627839010416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.619007+00:00", "monotonic_ns": 1743627840219958, "event": "usb_out", "bytes": 16, "elapsed_ns": 1149959}
+{"utc": "2026-10-25T20:40:08.621550+00:00", "monotonic_ns": 1743627842762625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2519084}
+{"utc": "2026-10-25T20:40:08.632833+00:00", "monotonic_ns": 1743627854053958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.633947+00:00", "monotonic_ns": 1743627855160791, "event": "usb_out", "bytes": 16, "elapsed_ns": 1047500}
+{"utc": "2026-10-25T20:40:08.636427+00:00", "monotonic_ns": 1743627857638958, "event": "usb_in", "bytes": 16, "elapsed_ns": 2453542}
+{"utc": "2026-10-25T20:40:08.648360+00:00", "monotonic_ns": 1743627869581041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.649083+00:00", "monotonic_ns": 1743627870297625, "event": "usb_out", "bytes": 16, "elapsed_ns": 669500}
+{"utc": "2026-10-25T20:40:08.651875+00:00", "monotonic_ns": 1743627873088208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2763625}
+{"utc": "2026-10-25T20:40:08.664420+00:00", "monotonic_ns": 1743627885638041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.665050+00:00", "monotonic_ns": 1743627886262083, "event": "usb_out", "bytes": 16, "elapsed_ns": 575375}
+{"utc": "2026-10-25T20:40:08.667827+00:00", "monotonic_ns": 1743627889043416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2757000}
+{"utc": "2026-10-25T20:40:08.678677+00:00", "monotonic_ns": 1743627899894958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.679416+00:00", "monotonic_ns": 1743627900629250, "event": "usb_out", "bytes": 16, "elapsed_ns": 683542}
+{"utc": "2026-10-25T20:40:08.682081+00:00", "monotonic_ns": 1743627903294708, "event": "usb_in", "bytes": 16, "elapsed_ns": 2634959}
+{"utc": "2026-10-25T20:40:08.693288+00:00", "monotonic_ns": 1743627914508083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.694010+00:00", "monotonic_ns": 1743627915223125, "event": "usb_out", "bytes": 16, "elapsed_ns": 659209}
+{"utc": "2026-10-25T20:40:08.696821+00:00", "monotonic_ns": 1743627918034000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2789167}
+{"utc": "2026-10-25T20:40:08.709370+00:00", "monotonic_ns": 1743627930587250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.710068+00:00", "monotonic_ns": 1743627931279958, "event": "usb_out", "bytes": 16, "elapsed_ns": 651166}
+{"utc": "2026-10-25T20:40:08.712494+00:00", "monotonic_ns": 1743627933707291, "event": "usb_in", "bytes": 16, "elapsed_ns": 2407375}
+{"utc": "2026-10-25T20:40:08.723461+00:00", "monotonic_ns": 1743627944682708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.724524+00:00", "monotonic_ns": 1743627945737291, "event": "usb_out", "bytes": 16, "elapsed_ns": 988833}
+{"utc": "2026-10-25T20:40:08.726828+00:00", "monotonic_ns": 1743627948040416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2278375}
+{"utc": "2026-10-25T20:40:08.739375+00:00", "monotonic_ns": 1743627960592250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.740024+00:00", "monotonic_ns": 1743627961237166, "event": "usb_out", "bytes": 16, "elapsed_ns": 598958}
+{"utc": "2026-10-25T20:40:08.742472+00:00", "monotonic_ns": 1743627963684666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2417750}
+{"utc": "2026-10-25T20:40:08.755038+00:00", "monotonic_ns": 1743627976259916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.755740+00:00", "monotonic_ns": 1743627976956000, "event": "usb_out", "bytes": 16, "elapsed_ns": 627167}
+{"utc": "2026-10-25T20:40:08.758887+00:00", "monotonic_ns": 1743627980101333, "event": "usb_in", "bytes": 16, "elapsed_ns": 3104667}
+{"utc": "2026-10-25T20:40:08.769245+00:00", "monotonic_ns": 1743627990461916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.769889+00:00", "monotonic_ns": 1743627991101916, "event": "usb_out", "bytes": 16, "elapsed_ns": 578083}
+{"utc": "2026-10-25T20:40:08.772314+00:00", "monotonic_ns": 1743627993529083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2397958}
+{"utc": "2026-10-25T20:40:08.784878+00:00", "monotonic_ns": 1743628006097875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.785648+00:00", "monotonic_ns": 1743628006863833, "event": "usb_out", "bytes": 16, "elapsed_ns": 701916}
+{"utc": "2026-10-25T20:40:08.789095+00:00", "monotonic_ns": 1743628010310291, "event": "usb_in", "bytes": 16, "elapsed_ns": 3401375}
+{"utc": "2026-10-25T20:40:08.799766+00:00", "monotonic_ns": 1743628020980625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.800468+00:00", "monotonic_ns": 1743628021678250, "event": "usb_out", "bytes": 16, "elapsed_ns": 656958}
+{"utc": "2026-10-25T20:40:08.803849+00:00", "monotonic_ns": 1743628025065708, "event": "usb_in", "bytes": 16, "elapsed_ns": 3364542}
+{"utc": "2026-10-25T20:40:08.815857+00:00", "monotonic_ns": 1743628037076083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.816792+00:00", "monotonic_ns": 1743628038008166, "event": "usb_out", "bytes": 16, "elapsed_ns": 862875}
+{"utc": "2026-10-25T20:40:08.819235+00:00", "monotonic_ns": 1743628040452750, "event": "usb_in", "bytes": 16, "elapsed_ns": 2395459}
+{"utc": "2026-10-25T20:40:08.830909+00:00", "monotonic_ns": 1743628052136791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.831605+00:00", "monotonic_ns": 1743628052820000, "event": "usb_out", "bytes": 16, "elapsed_ns": 593250}
+{"utc": "2026-10-25T20:40:08.833973+00:00", "monotonic_ns": 1743628055187000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2323708}
+{"utc": "2026-10-25T20:40:08.845144+00:00", "monotonic_ns": 1743628066363916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.845865+00:00", "monotonic_ns": 1743628067081375, "event": "usb_out", "bytes": 16, "elapsed_ns": 633625}
+{"utc": "2026-10-25T20:40:08.847805+00:00", "monotonic_ns": 1743628069025625, "event": "usb_in", "bytes": 16, "elapsed_ns": 1891958}
+{"utc": "2026-10-25T20:40:08.860421+00:00", "monotonic_ns": 1743628081639291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.861088+00:00", "monotonic_ns": 1743628082302708, "event": "usb_out", "bytes": 16, "elapsed_ns": 600625}
+{"utc": "2026-10-25T20:40:08.863036+00:00", "monotonic_ns": 1743628084250833, "event": "usb_in", "bytes": 16, "elapsed_ns": 1907041}
+{"utc": "2026-10-25T20:40:08.875607+00:00", "monotonic_ns": 1743628096821041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.876248+00:00", "monotonic_ns": 1743628097465625, "event": "usb_out", "bytes": 16, "elapsed_ns": 590459}
+{"utc": "2026-10-25T20:40:08.879792+00:00", "monotonic_ns": 1743628101005458, "event": "usb_in", "bytes": 16, "elapsed_ns": 3487833}
+{"utc": "2026-10-25T20:40:08.892346+00:00", "monotonic_ns": 1743628113559916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.893026+00:00", "monotonic_ns": 1743628114240416, "event": "usb_out", "bytes": 16, "elapsed_ns": 634791}
+{"utc": "2026-10-25T20:40:08.895881+00:00", "monotonic_ns": 1743628117094916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2816542}
+{"utc": "2026-10-25T20:40:08.907827+00:00", "monotonic_ns": 1743628129043125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.910255+00:00", "monotonic_ns": 1743628131469083, "event": "usb_out", "bytes": 16, "elapsed_ns": 2370292}
+{"utc": "2026-10-25T20:40:08.914756+00:00", "monotonic_ns": 1743628135968541, "event": "usb_in", "bytes": 16, "elapsed_ns": 4459792}
+{"utc": "2026-10-25T20:40:08.925821+00:00", "monotonic_ns": 1743628147037083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.927067+00:00", "monotonic_ns": 1743628148279166, "event": "usb_out", "bytes": 16, "elapsed_ns": 1193208}
+{"utc": "2026-10-25T20:40:08.934224+00:00", "monotonic_ns": 1743628155441000, "event": "usb_in", "bytes": 16, "elapsed_ns": 7122625}
+{"utc": "2026-10-25T20:40:08.946808+00:00", "monotonic_ns": 1743628168035750, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.949246+00:00", "monotonic_ns": 1743628170459125, "event": "usb_out", "bytes": 16, "elapsed_ns": 2359667}
+{"utc": "2026-10-25T20:40:08.953831+00:00", "monotonic_ns": 1743628175056541, "event": "usb_in", "bytes": 16, "elapsed_ns": 4538334}
+{"utc": "2026-10-25T20:40:08.966322+00:00", "monotonic_ns": 1743628187546250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.967233+00:00", "monotonic_ns": 1743628188450791, "event": "usb_out", "bytes": 16, "elapsed_ns": 814375}
+{"utc": "2026-10-25T20:40:08.970376+00:00", "monotonic_ns": 1743628191591791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3081708}
+{"utc": "2026-10-25T20:40:08.981890+00:00", "monotonic_ns": 1743628203110166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.982702+00:00", "monotonic_ns": 1743628203915916, "event": "usb_out", "bytes": 16, "elapsed_ns": 735083}
+{"utc": "2026-10-25T20:40:08.985612+00:00", "monotonic_ns": 1743628206823083, "event": "usb_in", "bytes": 16, "elapsed_ns": 2871709}
+{"utc": "2026-10-25T20:40:08.996063+00:00", "monotonic_ns": 1743628217281250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:08.996830+00:00", "monotonic_ns": 1743628218042916, "event": "usb_out", "bytes": 16, "elapsed_ns": 704875}
+{"utc": "2026-10-25T20:40:08.999843+00:00", "monotonic_ns": 1743628221055375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2971125}
+{"utc": "2026-10-25T20:40:09.012405+00:00", "monotonic_ns": 1743628233627750, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.013083+00:00", "monotonic_ns": 1743628234293333, "event": "usb_out", "bytes": 16, "elapsed_ns": 584125}
+{"utc": "2026-10-25T20:40:09.016376+00:00", "monotonic_ns": 1743628237588125, "event": "usb_in", "bytes": 16, "elapsed_ns": 3271042}
+{"utc": "2026-10-25T20:40:09.028937+00:00", "monotonic_ns": 1743628250151833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.030012+00:00", "monotonic_ns": 1743628251224833, "event": "usb_out", "bytes": 16, "elapsed_ns": 1027750}
+{"utc": "2026-10-25T20:40:09.032366+00:00", "monotonic_ns": 1743628253576250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2320417}
+{"utc": "2026-10-25T20:40:09.044920+00:00", "monotonic_ns": 1743628266134333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.045676+00:00", "monotonic_ns": 1743628266886916, "event": "usb_out", "bytes": 16, "elapsed_ns": 707000}
+{"utc": "2026-10-25T20:40:09.047989+00:00", "monotonic_ns": 1743628269200583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2285666}
+{"utc": "2026-10-25T20:40:09.059312+00:00", "monotonic_ns": 1743628280535375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.059998+00:00", "monotonic_ns": 1743628281209791, "event": "usb_out", "bytes": 16, "elapsed_ns": 606708}
+{"utc": "2026-10-25T20:40:09.062354+00:00", "monotonic_ns": 1743628283565416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2324584}
+{"utc": "2026-10-25T20:40:09.074491+00:00", "monotonic_ns": 1743628295710791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.075146+00:00", "monotonic_ns": 1743628296356333, "event": "usb_out", "bytes": 16, "elapsed_ns": 592708}
+{"utc": "2026-10-25T20:40:09.077655+00:00", "monotonic_ns": 1743628298866458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2485917}
+{"utc": "2026-10-25T20:40:09.088809+00:00", "monotonic_ns": 1743628310027541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.089448+00:00", "monotonic_ns": 1743628310659000, "event": "usb_out", "bytes": 16, "elapsed_ns": 568292}
+{"utc": "2026-10-25T20:40:09.091898+00:00", "monotonic_ns": 1743628313108958, "event": "usb_in", "bytes": 16, "elapsed_ns": 2424708}
+{"utc": "2026-10-25T20:40:09.102411+00:00", "monotonic_ns": 1743628323626583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.103019+00:00", "monotonic_ns": 1743628324230208, "event": "usb_out", "bytes": 16, "elapsed_ns": 547167}
+{"utc": "2026-10-25T20:40:09.105853+00:00", "monotonic_ns": 1743628327065916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2800000}
+{"utc": "2026-10-25T20:40:09.116236+00:00", "monotonic_ns": 1743628337453333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.117320+00:00", "monotonic_ns": 1743628338531708, "event": "usb_out", "bytes": 16, "elapsed_ns": 1018625}
+{"utc": "2026-10-25T20:40:09.120278+00:00", "monotonic_ns": 1743628341488708, "event": "usb_in", "bytes": 16, "elapsed_ns": 2922167}
+{"utc": "2026-10-25T20:40:09.131012+00:00", "monotonic_ns": 1743628352224416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.132048+00:00", "monotonic_ns": 1743628353258416, "event": "usb_out", "bytes": 16, "elapsed_ns": 983541}
+{"utc": "2026-10-25T20:40:09.134983+00:00", "monotonic_ns": 1743628356198125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2902500}
+{"utc": "2026-10-25T20:40:09.147578+00:00", "monotonic_ns": 1743628368793083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.148776+00:00", "monotonic_ns": 1743628369986416, "event": "usb_out", "bytes": 16, "elapsed_ns": 1137250}
+{"utc": "2026-10-25T20:40:09.151709+00:00", "monotonic_ns": 1743628372924708, "event": "usb_in", "bytes": 16, "elapsed_ns": 2894833}
+{"utc": "2026-10-25T20:40:09.163828+00:00", "monotonic_ns": 1743628385049375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.164573+00:00", "monotonic_ns": 1743628385782208, "event": "usb_out", "bytes": 16, "elapsed_ns": 671417}
+{"utc": "2026-10-25T20:40:09.167202+00:00", "monotonic_ns": 1743628388412000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2607042}
+{"utc": "2026-10-25T20:40:09.179758+00:00", "monotonic_ns": 1743628400983375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.180648+00:00", "monotonic_ns": 1743628401859541, "event": "usb_out", "bytes": 16, "elapsed_ns": 810209}
+{"utc": "2026-10-25T20:40:09.182897+00:00", "monotonic_ns": 1743628404106375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2214958}
+{"utc": "2026-10-25T20:40:09.195446+00:00", "monotonic_ns": 1743628416658666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.196100+00:00", "monotonic_ns": 1743628417311666, "event": "usb_out", "bytes": 16, "elapsed_ns": 607417}
+{"utc": "2026-10-25T20:40:09.198879+00:00", "monotonic_ns": 1743628420090500, "event": "usb_in", "bytes": 16, "elapsed_ns": 2737542}
+{"utc": "2026-10-25T20:40:09.210545+00:00", "monotonic_ns": 1743628431765416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.211255+00:00", "monotonic_ns": 1743628432473416, "event": "usb_out", "bytes": 16, "elapsed_ns": 626292}
+{"utc": "2026-10-25T20:40:09.214778+00:00", "monotonic_ns": 1743628435991083, "event": "usb_in", "bytes": 16, "elapsed_ns": 3482042}
+{"utc": "2026-10-25T20:40:09.227347+00:00", "monotonic_ns": 1743628448561333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.228018+00:00", "monotonic_ns": 1743628449227625, "event": "usb_out", "bytes": 16, "elapsed_ns": 615375}
+{"utc": "2026-10-25T20:40:09.231658+00:00", "monotonic_ns": 1743628452870583, "event": "usb_in", "bytes": 16, "elapsed_ns": 3607750}
+{"utc": "2026-10-25T20:40:09.244233+00:00", "monotonic_ns": 1743628465448291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.244877+00:00", "monotonic_ns": 1743628466085666, "event": "usb_out", "bytes": 16, "elapsed_ns": 582959}
+{"utc": "2026-10-25T20:40:09.246785+00:00", "monotonic_ns": 1743628467994583, "event": "usb_in", "bytes": 16, "elapsed_ns": 1885667}
+{"utc": "2026-10-25T20:40:09.258884+00:00", "monotonic_ns": 1743628480111000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.259583+00:00", "monotonic_ns": 1743628480794041, "event": "usb_out", "bytes": 16, "elapsed_ns": 595459}
+{"utc": "2026-10-25T20:40:09.261494+00:00", "monotonic_ns": 1743628482706666, "event": "usb_in", "bytes": 16, "elapsed_ns": 1869584}
+{"utc": "2026-10-25T20:40:09.272666+00:00", "monotonic_ns": 1743628493885250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.273675+00:00", "monotonic_ns": 1743628494886458, "event": "usb_out", "bytes": 16, "elapsed_ns": 914333}
+{"utc": "2026-10-25T20:40:09.275608+00:00", "monotonic_ns": 1743628496817000, "event": "usb_in", "bytes": 16, "elapsed_ns": 1892375}
+{"utc": "2026-10-25T20:40:09.286211+00:00", "monotonic_ns": 1743628507430666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.287468+00:00", "monotonic_ns": 1743628508679750, "event": "usb_out", "bytes": 16, "elapsed_ns": 1190875}
+{"utc": "2026-10-25T20:40:09.290613+00:00", "monotonic_ns": 1743628511827791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3097458}
+{"utc": "2026-10-25T20:40:09.303139+00:00", "monotonic_ns": 1743628524357250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.303954+00:00", "monotonic_ns": 1743628525165041, "event": "usb_out", "bytes": 16, "elapsed_ns": 730417}
+{"utc": "2026-10-25T20:40:09.306900+00:00", "monotonic_ns": 1743628528111458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2899375}
+{"utc": "2026-10-25T20:40:09.319245+00:00", "monotonic_ns": 1743628540463000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.319894+00:00", "monotonic_ns": 1743628541102500, "event": "usb_out", "bytes": 16, "elapsed_ns": 576708}
+{"utc": "2026-10-25T20:40:09.322735+00:00", "monotonic_ns": 1743628543944791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2814625}
+{"utc": "2026-10-25T20:40:09.332855+00:00", "monotonic_ns": 1743628554069250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.333912+00:00", "monotonic_ns": 1743628555122416, "event": "usb_out", "bytes": 16, "elapsed_ns": 991750}
+{"utc": "2026-10-25T20:40:09.336881+00:00", "monotonic_ns": 1743628558088000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2929625}
+{"utc": "2026-10-25T20:40:09.348432+00:00", "monotonic_ns": 1743628569645708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.349256+00:00", "monotonic_ns": 1743628570469916, "event": "usb_out", "bytes": 16, "elapsed_ns": 766917}
+{"utc": "2026-10-25T20:40:09.351994+00:00", "monotonic_ns": 1743628573203708, "event": "usb_in", "bytes": 16, "elapsed_ns": 2692459}
+{"utc": "2026-10-25T20:40:09.362441+00:00", "monotonic_ns": 1743628583653583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.363524+00:00", "monotonic_ns": 1743628584733791, "event": "usb_out", "bytes": 16, "elapsed_ns": 1035750}
+{"utc": "2026-10-25T20:40:09.366423+00:00", "monotonic_ns": 1743628587639791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2857208}
+{"utc": "2026-10-25T20:40:09.377560+00:00", "monotonic_ns": 1743628598771541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.378990+00:00", "monotonic_ns": 1743628600199625, "event": "usb_out", "bytes": 16, "elapsed_ns": 1381750}
+{"utc": "2026-10-25T20:40:09.381837+00:00", "monotonic_ns": 1743628603046625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2813625}
+{"utc": "2026-10-25T20:40:09.393027+00:00", "monotonic_ns": 1743628614247416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.394488+00:00", "monotonic_ns": 1743628615699875, "event": "usb_out", "bytes": 16, "elapsed_ns": 1374833}
+{"utc": "2026-10-25T20:40:09.396956+00:00", "monotonic_ns": 1743628618165458, "event": "usb_in", "bytes": 16, "elapsed_ns": 2399833}
+{"utc": "2026-10-25T20:40:09.407746+00:00", "monotonic_ns": 1743628628961500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.409168+00:00", "monotonic_ns": 1743628630375000, "event": "usb_out", "bytes": 16, "elapsed_ns": 1358875}
+{"utc": "2026-10-25T20:40:09.411706+00:00", "monotonic_ns": 1743628632914666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2512625}
+{"utc": "2026-10-25T20:40:09.423590+00:00", "monotonic_ns": 1743628644805666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.424557+00:00", "monotonic_ns": 1743628645766750, "event": "usb_out", "bytes": 16, "elapsed_ns": 890917}
+{"utc": "2026-10-25T20:40:09.426857+00:00", "monotonic_ns": 1743628648066375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2266917}
+{"utc": "2026-10-25T20:40:09.438484+00:00", "monotonic_ns": 1743628659699000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.439259+00:00", "monotonic_ns": 1743628660470375, "event": "usb_out", "bytes": 16, "elapsed_ns": 707250}
+{"utc": "2026-10-25T20:40:09.441656+00:00", "monotonic_ns": 1743628662865583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2345792}
+{"utc": "2026-10-25T20:40:09.452277+00:00", "monotonic_ns": 1743628673498125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.453019+00:00", "monotonic_ns": 1743628674230166, "event": "usb_out", "bytes": 16, "elapsed_ns": 650583}
+{"utc": "2026-10-25T20:40:09.456176+00:00", "monotonic_ns": 1743628677387916, "event": "usb_in", "bytes": 16, "elapsed_ns": 3107625}
+{"utc": "2026-10-25T20:40:09.468779+00:00", "monotonic_ns": 1743628689994958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.469556+00:00", "monotonic_ns": 1743628690764750, "event": "usb_out", "bytes": 16, "elapsed_ns": 688625}
+{"utc": "2026-10-25T20:40:09.472512+00:00", "monotonic_ns": 1743628693720291, "event": "usb_in", "bytes": 16, "elapsed_ns": 2925459}
+{"utc": "2026-10-25T20:40:09.485075+00:00", "monotonic_ns": 1743628706294083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.486400+00:00", "monotonic_ns": 1743628707614083, "event": "usb_out", "bytes": 16, "elapsed_ns": 1234458}
+{"utc": "2026-10-25T20:40:09.489861+00:00", "monotonic_ns": 1743628711072750, "event": "usb_in", "bytes": 16, "elapsed_ns": 3394750}
+{"utc": "2026-10-25T20:40:09.501530+00:00", "monotonic_ns": 1743628722742708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.502328+00:00", "monotonic_ns": 1743628723537416, "event": "usb_out", "bytes": 16, "elapsed_ns": 714750}
+{"utc": "2026-10-25T20:40:09.506745+00:00", "monotonic_ns": 1743628727953708, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4377042}
+{"utc": "2026-10-25T20:40:09.506793+00:00", "monotonic_ns": 1743628727999000, "event": "scan_row", "row": 0}
+{"utc": "2026-10-25T20:40:09.507161+00:00", "monotonic_ns": 1743628728367458, "event": "usb_in", "bytes": 8192, "elapsed_ns": 267458}
+{"utc": "2026-10-25T20:40:09.507566+00:00", "monotonic_ns": 1743628728771541, "event": "usb_in", "bytes": 16, "elapsed_ns": 344750}
+{"utc": "2026-10-25T20:40:09.507582+00:00", "monotonic_ns": 1743628728786250, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.511374+00:00", "monotonic_ns": 1743628732581458, "event": "usb_out", "bytes": 16, "elapsed_ns": 3777333}
+{"utc": "2026-10-25T20:40:09.514426+00:00", "monotonic_ns": 1743628735641583, "event": "usb_in", "bytes": 16, "elapsed_ns": 3017125}
+{"utc": "2026-10-25T20:40:09.526540+00:00", "monotonic_ns": 1743628747756416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.527366+00:00", "monotonic_ns": 1743628748575125, "event": "usb_out", "bytes": 16, "elapsed_ns": 747250}
+{"utc": "2026-10-25T20:40:09.532702+00:00", "monotonic_ns": 1743628753917166, "event": "usb_in", "bytes": 8192, "elapsed_ns": 5292875}
+{"utc": "2026-10-25T20:40:09.533238+00:00", "monotonic_ns": 1743628754444666, "event": "usb_in", "bytes": 8192, "elapsed_ns": 350792}
+{"utc": "2026-10-25T20:40:09.534565+00:00", "monotonic_ns": 1743628755771375, "event": "usb_in", "bytes": 16, "elapsed_ns": 1271459}
+{"utc": "2026-10-25T20:40:09.534584+00:00", "monotonic_ns": 1743628755789083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.537167+00:00", "monotonic_ns": 1743628758375791, "event": "usb_out", "bytes": 16, "elapsed_ns": 2564250}
+{"utc": "2026-10-25T20:40:09.540675+00:00", "monotonic_ns": 1743628761884083, "event": "usb_in", "bytes": 16, "elapsed_ns": 3465792}
+{"utc": "2026-10-25T20:40:09.553229+00:00", "monotonic_ns": 1743628774436500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.554398+00:00", "monotonic_ns": 1743628775604750, "event": "usb_out", "bytes": 16, "elapsed_ns": 1133958}
+{"utc": "2026-10-25T20:40:09.556886+00:00", "monotonic_ns": 1743628778092416, "event": "usb_in", "bytes": 16, "elapsed_ns": 2465417}
+{"utc": "2026-10-25T20:40:09.567512+00:00", "monotonic_ns": 1743628788722541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.569365+00:00", "monotonic_ns": 1743628790573875, "event": "usb_out", "bytes": 16, "elapsed_ns": 1803667}
+{"utc": "2026-10-25T20:40:09.572219+00:00", "monotonic_ns": 1743628793435916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2811167}
+{"utc": "2026-10-25T20:40:09.584818+00:00", "monotonic_ns": 1743628806029833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.585523+00:00", "monotonic_ns": 1743628806732500, "event": "usb_out", "bytes": 16, "elapsed_ns": 651875}
+{"utc": "2026-10-25T20:40:09.590443+00:00", "monotonic_ns": 1743628811657083, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4873625}
+{"utc": "2026-10-25T20:40:09.590878+00:00", "monotonic_ns": 1743628812084666, "event": "usb_in", "bytes": 8192, "elapsed_ns": 312917}
+{"utc": "2026-10-25T20:40:09.591400+00:00", "monotonic_ns": 1743628812607000, "event": "usb_in", "bytes": 16, "elapsed_ns": 448875}
+{"utc": "2026-10-25T20:40:09.591431+00:00", "monotonic_ns": 1743628812637291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.594900+00:00", "monotonic_ns": 1743628816108208, "event": "usb_out", "bytes": 16, "elapsed_ns": 3442208}
+{"utc": "2026-10-25T20:40:09.597889+00:00", "monotonic_ns": 1743628819107625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2948042}
+{"utc": "2026-10-25T20:40:09.609890+00:00", "monotonic_ns": 1743628831101166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.610694+00:00", "monotonic_ns": 1743628831899625, "event": "usb_out", "bytes": 16, "elapsed_ns": 747708}
+{"utc": "2026-10-25T20:40:09.614574+00:00", "monotonic_ns": 1743628835781791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3854583}
+{"utc": "2026-10-25T20:40:09.627135+00:00", "monotonic_ns": 1743628848344916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.627900+00:00", "monotonic_ns": 1743628849106541, "event": "usb_out", "bytes": 16, "elapsed_ns": 713833}
+{"utc": "2026-10-25T20:40:09.631659+00:00", "monotonic_ns": 1743628852871291, "event": "usb_in", "bytes": 16, "elapsed_ns": 3725333}
+{"utc": "2026-10-25T20:40:09.643542+00:00", "monotonic_ns": 1743628864754500, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.644376+00:00", "monotonic_ns": 1743628865585791, "event": "usb_out", "bytes": 16, "elapsed_ns": 767500}
+{"utc": "2026-10-25T20:40:09.647340+00:00", "monotonic_ns": 1743628868550125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2912667}
+{"utc": "2026-10-25T20:40:09.659116+00:00", "monotonic_ns": 1743628880331041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.659772+00:00", "monotonic_ns": 1743628880978250, "event": "usb_out", "bytes": 16, "elapsed_ns": 580209}
+{"utc": "2026-10-25T20:40:09.664399+00:00", "monotonic_ns": 1743628885609000, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4599416}
+{"utc": "2026-10-25T20:40:09.664790+00:00", "monotonic_ns": 1743628885997541, "event": "usb_in", "bytes": 8192, "elapsed_ns": 280334}
+{"utc": "2026-10-25T20:40:09.665804+00:00", "monotonic_ns": 1743628887010041, "event": "usb_in", "bytes": 16, "elapsed_ns": 940792}
+{"utc": "2026-10-25T20:40:09.665837+00:00", "monotonic_ns": 1743628887042416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.668783+00:00", "monotonic_ns": 1743628889987333, "event": "usb_out", "bytes": 16, "elapsed_ns": 2916833}
+{"utc": "2026-10-25T20:40:09.671925+00:00", "monotonic_ns": 1743628893131375, "event": "usb_in", "bytes": 16, "elapsed_ns": 3125541}
+{"utc": "2026-10-25T20:40:09.684485+00:00", "monotonic_ns": 1743628905695208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.685244+00:00", "monotonic_ns": 1743628906452416, "event": "usb_out", "bytes": 16, "elapsed_ns": 702791}
+{"utc": "2026-10-25T20:40:09.687717+00:00", "monotonic_ns": 1743628908925541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2431166}
+{"utc": "2026-10-25T20:40:09.698304+00:00", "monotonic_ns": 1743628919520125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.699544+00:00", "monotonic_ns": 1743628920750541, "event": "usb_out", "bytes": 16, "elapsed_ns": 1154250}
+{"utc": "2026-10-25T20:40:09.703111+00:00", "monotonic_ns": 1743628924314833, "event": "usb_in", "bytes": 8192, "elapsed_ns": 3537125}
+{"utc": "2026-10-25T20:40:09.703441+00:00", "monotonic_ns": 1743628924648958, "event": "usb_in", "bytes": 8192, "elapsed_ns": 259667}
+{"utc": "2026-10-25T20:40:09.704779+00:00", "monotonic_ns": 1743628925989541, "event": "usb_in", "bytes": 16, "elapsed_ns": 1254500}
+{"utc": "2026-10-25T20:40:09.704838+00:00", "monotonic_ns": 1743628926042708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.707488+00:00", "monotonic_ns": 1743628928698041, "event": "usb_out", "bytes": 16, "elapsed_ns": 2625375}
+{"utc": "2026-10-25T20:40:09.711000+00:00", "monotonic_ns": 1743628932210791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3451208}
+{"utc": "2026-10-25T20:40:09.721475+00:00", "monotonic_ns": 1743628942683000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.722213+00:00", "monotonic_ns": 1743628943418416, "event": "usb_out", "bytes": 16, "elapsed_ns": 694459}
+{"utc": "2026-10-25T20:40:09.725581+00:00", "monotonic_ns": 1743628946787791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3334500}
+{"utc": "2026-10-25T20:40:09.738136+00:00", "monotonic_ns": 1743628959346666, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.739171+00:00", "monotonic_ns": 1743628960376041, "event": "usb_out", "bytes": 16, "elapsed_ns": 978250}
+{"utc": "2026-10-25T20:40:09.743123+00:00", "monotonic_ns": 1743628964327291, "event": "usb_in", "bytes": 8192, "elapsed_ns": 3929416}
+{"utc": "2026-10-25T20:40:09.743469+00:00", "monotonic_ns": 1743628964674583, "event": "usb_in", "bytes": 8192, "elapsed_ns": 276417}
+{"utc": "2026-10-25T20:40:09.744332+00:00", "monotonic_ns": 1743628965537458, "event": "usb_in", "bytes": 16, "elapsed_ns": 805792}
+{"utc": "2026-10-25T20:40:09.744357+00:00", "monotonic_ns": 1743628965561750, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.746965+00:00", "monotonic_ns": 1743628968177416, "event": "usb_out", "bytes": 16, "elapsed_ns": 2583958}
+{"utc": "2026-10-25T20:40:09.750656+00:00", "monotonic_ns": 1743628971862916, "event": "usb_in", "bytes": 16, "elapsed_ns": 3642875}
+{"utc": "2026-10-25T20:40:09.763217+00:00", "monotonic_ns": 1743628984427041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.763964+00:00", "monotonic_ns": 1743628985169708, "event": "usb_out", "bytes": 16, "elapsed_ns": 686125}
+{"utc": "2026-10-25T20:40:09.766606+00:00", "monotonic_ns": 1743628987815375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2610167}
+{"utc": "2026-10-25T20:40:09.779181+00:00", "monotonic_ns": 1743629000391000, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.779795+00:00", "monotonic_ns": 1743629001000208, "event": "usb_out", "bytes": 16, "elapsed_ns": 556583}
+{"utc": "2026-10-25T20:40:09.782862+00:00", "monotonic_ns": 1743629004074666, "event": "usb_in", "bytes": 16, "elapsed_ns": 3038625}
+{"utc": "2026-10-25T20:40:09.793848+00:00", "monotonic_ns": 1743629015062583, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.794566+00:00", "monotonic_ns": 1743629015775083, "event": "usb_out", "bytes": 16, "elapsed_ns": 648125}
+{"utc": "2026-10-25T20:40:09.797578+00:00", "monotonic_ns": 1743629018788666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2966125}
+{"utc": "2026-10-25T20:40:09.809585+00:00", "monotonic_ns": 1743629030806791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.810861+00:00", "monotonic_ns": 1743629032067750, "event": "usb_out", "bytes": 16, "elapsed_ns": 1177667}
+{"utc": "2026-10-25T20:40:09.813915+00:00", "monotonic_ns": 1743629035124083, "event": "usb_in", "bytes": 16, "elapsed_ns": 3015083}
+{"utc": "2026-10-25T20:40:09.824051+00:00", "monotonic_ns": 1743629045265708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.824741+00:00", "monotonic_ns": 1743629045949916, "event": "usb_out", "bytes": 16, "elapsed_ns": 616083}
+{"utc": "2026-10-25T20:40:09.829427+00:00", "monotonic_ns": 1743629050634250, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4643417}
+{"utc": "2026-10-25T20:40:09.829800+00:00", "monotonic_ns": 1743629051006916, "event": "usb_in", "bytes": 8192, "elapsed_ns": 287166}
+{"utc": "2026-10-25T20:40:09.829849+00:00", "monotonic_ns": 1743629051053166, "event": "scan_row", "row": 100}
+{"utc": "2026-10-25T20:40:09.830540+00:00", "monotonic_ns": 1743629051743250, "event": "usb_in", "bytes": 16, "elapsed_ns": 652875}
+{"utc": "2026-10-25T20:40:09.830560+00:00", "monotonic_ns": 1743629051762333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.833660+00:00", "monotonic_ns": 1743629054862833, "event": "usb_out", "bytes": 16, "elapsed_ns": 3083292}
+{"utc": "2026-10-25T20:40:09.836681+00:00", "monotonic_ns": 1743629057884708, "event": "usb_in", "bytes": 16, "elapsed_ns": 3003750}
+{"utc": "2026-10-25T20:40:09.847724+00:00", "monotonic_ns": 1743629068938458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.849576+00:00", "monotonic_ns": 1743629070786500, "event": "usb_out", "bytes": 16, "elapsed_ns": 1788125}
+{"utc": "2026-10-25T20:40:09.852232+00:00", "monotonic_ns": 1743629073437750, "event": "usb_in", "bytes": 16, "elapsed_ns": 2599166}
+{"utc": "2026-10-25T20:40:09.862822+00:00", "monotonic_ns": 1743629084032333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.864424+00:00", "monotonic_ns": 1743629085630458, "event": "usb_out", "bytes": 16, "elapsed_ns": 1542708}
+{"utc": "2026-10-25T20:40:09.867993+00:00", "monotonic_ns": 1743629089196500, "event": "usb_in", "bytes": 8192, "elapsed_ns": 3531916}
+{"utc": "2026-10-25T20:40:09.868344+00:00", "monotonic_ns": 1743629089547750, "event": "usb_in", "bytes": 8192, "elapsed_ns": 278500}
+{"utc": "2026-10-25T20:40:09.869714+00:00", "monotonic_ns": 1743629090917791, "event": "usb_in", "bytes": 16, "elapsed_ns": 1320833}
+{"utc": "2026-10-25T20:40:09.869740+00:00", "monotonic_ns": 1743629090943541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.872523+00:00", "monotonic_ns": 1743629093733666, "event": "usb_out", "bytes": 16, "elapsed_ns": 2746875}
+{"utc": "2026-10-25T20:40:09.875670+00:00", "monotonic_ns": 1743629096874875, "event": "usb_in", "bytes": 16, "elapsed_ns": 3085709}
+{"utc": "2026-10-25T20:40:09.887043+00:00", "monotonic_ns": 1743629108253458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.887700+00:00", "monotonic_ns": 1743629108903833, "event": "usb_out", "bytes": 16, "elapsed_ns": 598083}
+{"utc": "2026-10-25T20:40:09.891438+00:00", "monotonic_ns": 1743629112649875, "event": "usb_in", "bytes": 16, "elapsed_ns": 3702500}
+{"utc": "2026-10-25T20:40:09.902673+00:00", "monotonic_ns": 1743629123882333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.903997+00:00", "monotonic_ns": 1743629125205250, "event": "usb_out", "bytes": 16, "elapsed_ns": 1265542}
+{"utc": "2026-10-25T20:40:09.908153+00:00", "monotonic_ns": 1743629129362541, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4079750}
+{"utc": "2026-10-25T20:40:09.908505+00:00", "monotonic_ns": 1743629129708000, "event": "usb_in", "bytes": 8192, "elapsed_ns": 245125}
+{"utc": "2026-10-25T20:40:09.909319+00:00", "monotonic_ns": 1743629130524041, "event": "usb_in", "bytes": 16, "elapsed_ns": 770584}
+{"utc": "2026-10-25T20:40:09.909354+00:00", "monotonic_ns": 1743629130557291, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.912471+00:00", "monotonic_ns": 1743629133675958, "event": "usb_out", "bytes": 16, "elapsed_ns": 3089417}
+{"utc": "2026-10-25T20:40:09.915565+00:00", "monotonic_ns": 1743629136772541, "event": "usb_in", "bytes": 16, "elapsed_ns": 3058000}
+{"utc": "2026-10-25T20:40:09.928146+00:00", "monotonic_ns": 1743629149356916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.929316+00:00", "monotonic_ns": 1743629150520041, "event": "usb_out", "bytes": 16, "elapsed_ns": 1107375}
+{"utc": "2026-10-25T20:40:09.932375+00:00", "monotonic_ns": 1743629153584000, "event": "usb_in", "bytes": 16, "elapsed_ns": 3030250}
+{"utc": "2026-10-25T20:40:09.944945+00:00", "monotonic_ns": 1743629166150833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.945627+00:00", "monotonic_ns": 1743629166833000, "event": "usb_out", "bytes": 16, "elapsed_ns": 640459}
+{"utc": "2026-10-25T20:40:09.950128+00:00", "monotonic_ns": 1743629171334958, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4463125}
+{"utc": "2026-10-25T20:40:09.950503+00:00", "monotonic_ns": 1743629171707291, "event": "usb_in", "bytes": 8192, "elapsed_ns": 288583}
+{"utc": "2026-10-25T20:40:09.950881+00:00", "monotonic_ns": 1743629172084958, "event": "usb_in", "bytes": 16, "elapsed_ns": 288708}
+{"utc": "2026-10-25T20:40:09.950909+00:00", "monotonic_ns": 1743629172111208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.954572+00:00", "monotonic_ns": 1743629175775500, "event": "usb_out", "bytes": 16, "elapsed_ns": 3641667}
+{"utc": "2026-10-25T20:40:09.957599+00:00", "monotonic_ns": 1743629178802958, "event": "usb_in", "bytes": 16, "elapsed_ns": 3004208}
+{"utc": "2026-10-25T20:40:09.969910+00:00", "monotonic_ns": 1743629191117041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.970894+00:00", "monotonic_ns": 1743629192107750, "event": "usb_out", "bytes": 16, "elapsed_ns": 937625}
+{"utc": "2026-10-25T20:40:09.973993+00:00", "monotonic_ns": 1743629195201750, "event": "usb_in", "bytes": 16, "elapsed_ns": 3039792}
+{"utc": "2026-10-25T20:40:09.986564+00:00", "monotonic_ns": 1743629207769708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:09.987354+00:00", "monotonic_ns": 1743629208560041, "event": "usb_out", "bytes": 16, "elapsed_ns": 747584}
+{"utc": "2026-10-25T20:40:09.991154+00:00", "monotonic_ns": 1743629212359041, "event": "usb_in", "bytes": 16, "elapsed_ns": 3762708}
+{"utc": "2026-10-25T20:40:10.003239+00:00", "monotonic_ns": 1743629224441541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.004180+00:00", "monotonic_ns": 1743629225382333, "event": "usb_out", "bytes": 16, "elapsed_ns": 915041}
+{"utc": "2026-10-25T20:40:10.007153+00:00", "monotonic_ns": 1743629228359916, "event": "usb_in", "bytes": 16, "elapsed_ns": 2950792}
+{"utc": "2026-10-25T20:40:10.018300+00:00", "monotonic_ns": 1743629239513541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.019652+00:00", "monotonic_ns": 1743629240858000, "event": "usb_out", "bytes": 16, "elapsed_ns": 1283000}
+{"utc": "2026-10-25T20:40:10.022341+00:00", "monotonic_ns": 1743629243557000, "event": "usb_in", "bytes": 16, "elapsed_ns": 2638833}
+{"utc": "2026-10-25T20:40:10.032558+00:00", "monotonic_ns": 1743629253776083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.034264+00:00", "monotonic_ns": 1743629255472500, "event": "usb_out", "bytes": 16, "elapsed_ns": 1603541}
+{"utc": "2026-10-25T20:40:10.037889+00:00", "monotonic_ns": 1743629259095500, "event": "usb_in", "bytes": 8192, "elapsed_ns": 3573791}
+{"utc": "2026-10-25T20:40:10.038351+00:00", "monotonic_ns": 1743629259554291, "event": "usb_in", "bytes": 8192, "elapsed_ns": 313083}
+{"utc": "2026-10-25T20:40:10.039492+00:00", "monotonic_ns": 1743629260698583, "event": "usb_in", "bytes": 16, "elapsed_ns": 1066250}
+{"utc": "2026-10-25T20:40:10.039543+00:00", "monotonic_ns": 1743629260745833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.042416+00:00", "monotonic_ns": 1743629263626666, "event": "usb_out", "bytes": 16, "elapsed_ns": 2838916}
+{"utc": "2026-10-25T20:40:10.045793+00:00", "monotonic_ns": 1743629266998583, "event": "usb_in", "bytes": 16, "elapsed_ns": 3308875}
+{"utc": "2026-10-25T20:40:10.058002+00:00", "monotonic_ns": 1743629279220625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.059266+00:00", "monotonic_ns": 1743629280472875, "event": "usb_out", "bytes": 16, "elapsed_ns": 1173416}
+{"utc": "2026-10-25T20:40:10.061532+00:00", "monotonic_ns": 1743629282735375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2219792}
+{"utc": "2026-10-25T20:40:10.074091+00:00", "monotonic_ns": 1743629295303416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.074818+00:00", "monotonic_ns": 1743629296023541, "event": "usb_out", "bytes": 16, "elapsed_ns": 645625}
+{"utc": "2026-10-25T20:40:10.079816+00:00", "monotonic_ns": 1743629301019250, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4953583}
+{"utc": "2026-10-25T20:40:10.080125+00:00", "monotonic_ns": 1743629301326208, "event": "usb_in", "bytes": 8192, "elapsed_ns": 248875}
+{"utc": "2026-10-25T20:40:10.080548+00:00", "monotonic_ns": 1743629301750708, "event": "usb_in", "bytes": 16, "elapsed_ns": 389375}
+{"utc": "2026-10-25T20:40:10.080576+00:00", "monotonic_ns": 1743629301776833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.084243+00:00", "monotonic_ns": 1743629305451875, "event": "usb_out", "bytes": 16, "elapsed_ns": 3644916}
+{"utc": "2026-10-25T20:40:10.087282+00:00", "monotonic_ns": 1743629308486583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2978000}
+{"utc": "2026-10-25T20:40:10.098675+00:00", "monotonic_ns": 1743629319891125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.099540+00:00", "monotonic_ns": 1743629320744416, "event": "usb_out", "bytes": 16, "elapsed_ns": 766875}
+{"utc": "2026-10-25T20:40:10.102498+00:00", "monotonic_ns": 1743629323700958, "event": "usb_in", "bytes": 16, "elapsed_ns": 2897083}
+{"utc": "2026-10-25T20:40:10.113512+00:00", "monotonic_ns": 1743629334725125, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.114398+00:00", "monotonic_ns": 1743629335605125, "event": "usb_out", "bytes": 16, "elapsed_ns": 790042}
+{"utc": "2026-10-25T20:40:10.118891+00:00", "monotonic_ns": 1743629340095166, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4438917}
+{"utc": "2026-10-25T20:40:10.119284+00:00", "monotonic_ns": 1743629340487458, "event": "usb_in", "bytes": 8192, "elapsed_ns": 289417}
+{"utc": "2026-10-25T20:40:10.119347+00:00", "monotonic_ns": 1743629340548750, "event": "scan_row", "row": 200}
+{"utc": "2026-10-25T20:40:10.119667+00:00", "monotonic_ns": 1743629340867333, "event": "usb_in", "bytes": 16, "elapsed_ns": 295417}
+{"utc": "2026-10-25T20:40:10.119683+00:00", "monotonic_ns": 1743629340883625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.122727+00:00", "monotonic_ns": 1743629343934000, "event": "usb_out", "bytes": 16, "elapsed_ns": 3024458}
+{"utc": "2026-10-25T20:40:10.126202+00:00", "monotonic_ns": 1743629347406875, "event": "usb_in", "bytes": 16, "elapsed_ns": 3418166}
+{"utc": "2026-10-25T20:40:10.137357+00:00", "monotonic_ns": 1743629358564208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.138690+00:00", "monotonic_ns": 1743629359893791, "event": "usb_out", "bytes": 16, "elapsed_ns": 1276833}
+{"utc": "2026-10-25T20:40:10.141863+00:00", "monotonic_ns": 1743629363065250, "event": "usb_in", "bytes": 16, "elapsed_ns": 3138458}
+{"utc": "2026-10-25T20:40:10.152680+00:00", "monotonic_ns": 1743629373890833, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.153876+00:00", "monotonic_ns": 1743629375082666, "event": "usb_out", "bytes": 16, "elapsed_ns": 1119625}
+{"utc": "2026-10-25T20:40:10.156917+00:00", "monotonic_ns": 1743629378123375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2981458}
+{"utc": "2026-10-25T20:40:10.169486+00:00", "monotonic_ns": 1743629390692375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.170222+00:00", "monotonic_ns": 1743629391424958, "event": "usb_out", "bytes": 16, "elapsed_ns": 687375}
+{"utc": "2026-10-25T20:40:10.172757+00:00", "monotonic_ns": 1743629393975333, "event": "usb_in", "bytes": 16, "elapsed_ns": 2496791}
+{"utc": "2026-10-25T20:40:10.183325+00:00", "monotonic_ns": 1743629404538041, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.184517+00:00", "monotonic_ns": 1743629405722083, "event": "usb_out", "bytes": 16, "elapsed_ns": 1105792}
+{"utc": "2026-10-25T20:40:10.186998+00:00", "monotonic_ns": 1743629408203375, "event": "usb_in", "bytes": 16, "elapsed_ns": 2437791}
+{"utc": "2026-10-25T20:40:10.197545+00:00", "monotonic_ns": 1743629418751875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.199177+00:00", "monotonic_ns": 1743629420381208, "event": "usb_out", "bytes": 16, "elapsed_ns": 1576875}
+{"utc": "2026-10-25T20:40:10.202931+00:00", "monotonic_ns": 1743629424136875, "event": "usb_in", "bytes": 8192, "elapsed_ns": 3710666}
+{"utc": "2026-10-25T20:40:10.203318+00:00", "monotonic_ns": 1743629424520041, "event": "usb_in", "bytes": 8192, "elapsed_ns": 275875}
+{"utc": "2026-10-25T20:40:10.204608+00:00", "monotonic_ns": 1743629425809708, "event": "usb_in", "bytes": 16, "elapsed_ns": 1219458}
+{"utc": "2026-10-25T20:40:10.204635+00:00", "monotonic_ns": 1743629425835625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.207340+00:00", "monotonic_ns": 1743629428541375, "event": "usb_out", "bytes": 16, "elapsed_ns": 2686334}
+{"utc": "2026-10-25T20:40:10.210886+00:00", "monotonic_ns": 1743629432089208, "event": "usb_in", "bytes": 16, "elapsed_ns": 3525708}
+{"utc": "2026-10-25T20:40:10.221423+00:00", "monotonic_ns": 1743629442633375, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.222178+00:00", "monotonic_ns": 1743629443380833, "event": "usb_out", "bytes": 16, "elapsed_ns": 687459}
+{"utc": "2026-10-25T20:40:10.225584+00:00", "monotonic_ns": 1743629446787791, "event": "usb_in", "bytes": 16, "elapsed_ns": 3364042}
+{"utc": "2026-10-25T20:40:10.236046+00:00", "monotonic_ns": 1743629457259166, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.236733+00:00", "monotonic_ns": 1743629457934208, "event": "usb_out", "bytes": 16, "elapsed_ns": 595333}
+{"utc": "2026-10-25T20:40:10.241400+00:00", "monotonic_ns": 1743629462603250, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4626792}
+{"utc": "2026-10-25T20:40:10.241745+00:00", "monotonic_ns": 1743629462946708, "event": "usb_in", "bytes": 8192, "elapsed_ns": 278375}
+{"utc": "2026-10-25T20:40:10.242597+00:00", "monotonic_ns": 1743629463796708, "event": "usb_in", "bytes": 16, "elapsed_ns": 786625}
+{"utc": "2026-10-25T20:40:10.242613+00:00", "monotonic_ns": 1743629463812541, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.245840+00:00", "monotonic_ns": 1743629467040583, "event": "usb_out", "bytes": 16, "elapsed_ns": 3211834}
+{"utc": "2026-10-25T20:40:10.249324+00:00", "monotonic_ns": 1743629470530625, "event": "usb_in", "bytes": 16, "elapsed_ns": 3456500}
+{"utc": "2026-10-25T20:40:10.261901+00:00", "monotonic_ns": 1743629483106875, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.262617+00:00", "monotonic_ns": 1743629483817333, "event": "usb_out", "bytes": 16, "elapsed_ns": 656417}
+{"utc": "2026-10-25T20:40:10.265699+00:00", "monotonic_ns": 1743629486906000, "event": "usb_in", "bytes": 16, "elapsed_ns": 3056083}
+{"utc": "2026-10-25T20:40:10.278287+00:00", "monotonic_ns": 1743629499495333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.279399+00:00", "monotonic_ns": 1743629500602791, "event": "usb_out", "bytes": 16, "elapsed_ns": 1046541}
+{"utc": "2026-10-25T20:40:10.283977+00:00", "monotonic_ns": 1743629505186125, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4531375}
+{"utc": "2026-10-25T20:40:10.284430+00:00", "monotonic_ns": 1743629505631916, "event": "usb_in", "bytes": 8192, "elapsed_ns": 320333}
+{"utc": "2026-10-25T20:40:10.284862+00:00", "monotonic_ns": 1743629506070291, "event": "usb_in", "bytes": 16, "elapsed_ns": 350250}
+{"utc": "2026-10-25T20:40:10.284899+00:00", "monotonic_ns": 1743629506099791, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.287908+00:00", "monotonic_ns": 1743629509108000, "event": "usb_out", "bytes": 16, "elapsed_ns": 2984458}
+{"utc": "2026-10-25T20:40:10.291790+00:00", "monotonic_ns": 1743629512992833, "event": "usb_in", "bytes": 16, "elapsed_ns": 3860708}
+{"utc": "2026-10-25T20:40:10.302805+00:00", "monotonic_ns": 1743629524008208, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.303995+00:00", "monotonic_ns": 1743629525196250, "event": "usb_out", "bytes": 16, "elapsed_ns": 1152125}
+{"utc": "2026-10-25T20:40:10.307144+00:00", "monotonic_ns": 1743629528343583, "event": "usb_in", "bytes": 16, "elapsed_ns": 3124833}
+{"utc": "2026-10-25T20:40:10.317883+00:00", "monotonic_ns": 1743629539089625, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.319222+00:00", "monotonic_ns": 1743629540423458, "event": "usb_out", "bytes": 16, "elapsed_ns": 1277833}
+{"utc": "2026-10-25T20:40:10.323751+00:00", "monotonic_ns": 1743629544955166, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4499166}
+{"utc": "2026-10-25T20:40:10.324107+00:00", "monotonic_ns": 1743629545306708, "event": "usb_in", "bytes": 8192, "elapsed_ns": 277542}
+{"utc": "2026-10-25T20:40:10.325237+00:00", "monotonic_ns": 1743629546437625, "event": "usb_in", "bytes": 16, "elapsed_ns": 1087208}
+{"utc": "2026-10-25T20:40:10.325264+00:00", "monotonic_ns": 1743629546464458, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.327902+00:00", "monotonic_ns": 1743629549101041, "event": "usb_out", "bytes": 16, "elapsed_ns": 2615875}
+{"utc": "2026-10-25T20:40:10.331653+00:00", "monotonic_ns": 1743629552853666, "event": "usb_in", "bytes": 16, "elapsed_ns": 3737042}
+{"utc": "2026-10-25T20:40:10.344203+00:00", "monotonic_ns": 1743629565403708, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.344945+00:00", "monotonic_ns": 1743629566143500, "event": "usb_out", "bytes": 16, "elapsed_ns": 715750}
+{"utc": "2026-10-25T20:40:10.347412+00:00", "monotonic_ns": 1743629568611666, "event": "usb_in", "bytes": 16, "elapsed_ns": 2452041}
+{"utc": "2026-10-25T20:40:10.357854+00:00", "monotonic_ns": 1743629579060333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.359619+00:00", "monotonic_ns": 1743629580819708, "event": "usb_out", "bytes": 16, "elapsed_ns": 1710625}
+{"utc": "2026-10-25T20:40:10.361964+00:00", "monotonic_ns": 1743629583164541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2318083}
+{"utc": "2026-10-25T20:40:10.374499+00:00", "monotonic_ns": 1743629595702958, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.375232+00:00", "monotonic_ns": 1743629596433750, "event": "usb_out", "bytes": 16, "elapsed_ns": 687417}
+{"utc": "2026-10-25T20:40:10.378695+00:00", "monotonic_ns": 1743629599897416, "event": "usb_in", "bytes": 16, "elapsed_ns": 3428958}
+{"utc": "2026-10-25T20:40:10.391262+00:00", "monotonic_ns": 1743629612465333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.391866+00:00", "monotonic_ns": 1743629613068833, "event": "usb_out", "bytes": 16, "elapsed_ns": 560458}
+{"utc": "2026-10-25T20:40:10.395366+00:00", "monotonic_ns": 1743629616567541, "event": "usb_in", "bytes": 16, "elapsed_ns": 3464417}
+{"utc": "2026-10-25T20:40:10.407057+00:00", "monotonic_ns": 1743629628259416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.407825+00:00", "monotonic_ns": 1743629629031541, "event": "usb_out", "bytes": 16, "elapsed_ns": 729292}
+{"utc": "2026-10-25T20:40:10.412640+00:00", "monotonic_ns": 1743629633840583, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4758292}
+{"utc": "2026-10-25T20:40:10.413021+00:00", "monotonic_ns": 1743629634221375, "event": "usb_in", "bytes": 8192, "elapsed_ns": 302834}
+{"utc": "2026-10-25T20:40:10.414277+00:00", "monotonic_ns": 1743629635482000, "event": "usb_in", "bytes": 16, "elapsed_ns": 1192667}
+{"utc": "2026-10-25T20:40:10.414329+00:00", "monotonic_ns": 1743629635529916, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.417159+00:00", "monotonic_ns": 1743629638358875, "event": "usb_out", "bytes": 16, "elapsed_ns": 2799417}
+{"utc": "2026-10-25T20:40:10.420367+00:00", "monotonic_ns": 1743629641567541, "event": "usb_in", "bytes": 16, "elapsed_ns": 3179708}
+{"utc": "2026-10-25T20:40:10.430436+00:00", "monotonic_ns": 1743629651642083, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.431657+00:00", "monotonic_ns": 1743629652857958, "event": "usb_out", "bytes": 16, "elapsed_ns": 1157583}
+{"utc": "2026-10-25T20:40:10.434790+00:00", "monotonic_ns": 1743629655996875, "event": "usb_in", "bytes": 16, "elapsed_ns": 3093833}
+{"utc": "2026-10-25T20:40:10.445910+00:00", "monotonic_ns": 1743629667117333, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.446613+00:00", "monotonic_ns": 1743629667813125, "event": "usb_out", "bytes": 16, "elapsed_ns": 636084}
+{"utc": "2026-10-25T20:40:10.451145+00:00", "monotonic_ns": 1743629672344041, "event": "usb_in", "bytes": 8192, "elapsed_ns": 4505000}
+{"utc": "2026-10-25T20:40:10.451477+00:00", "monotonic_ns": 1743629672675125, "event": "usb_in", "bytes": 8192, "elapsed_ns": 264666}
+{"utc": "2026-10-25T20:40:10.451976+00:00", "monotonic_ns": 1743629673174250, "event": "usb_in", "bytes": 16, "elapsed_ns": 462792}
+{"utc": "2026-10-25T20:40:10.451997+00:00", "monotonic_ns": 1743629673195416, "event": "scan_image_request", "maximum": 524288}
+{"utc": "2026-10-25T20:40:10.455832+00:00", "monotonic_ns": 1743629677032041, "event": "usb_out", "bytes": 16, "elapsed_ns": 3816792}
+{"utc": "2026-10-25T20:40:10.459009+00:00", "monotonic_ns": 1743629680211791, "event": "usb_in", "bytes": 240, "elapsed_ns": 3134791}
+{"utc": "2026-10-25T20:40:10.459070+00:00", "monotonic_ns": 1743629680268125, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.462811+00:00", "monotonic_ns": 1743629684015125, "event": "usb_out", "bytes": 16, "elapsed_ns": 3719000}
+{"utc": "2026-10-25T20:40:10.466442+00:00", "monotonic_ns": 1743629687648291, "event": "usb_in", "bytes": 16, "elapsed_ns": 3566875}
+{"utc": "2026-10-25T20:40:10.477296+00:00", "monotonic_ns": 1743629698509750, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.477998+00:00", "monotonic_ns": 1743629699200666, "event": "usb_out", "bytes": 16, "elapsed_ns": 609750}
+{"utc": "2026-10-25T20:40:10.481011+00:00", "monotonic_ns": 1743629702214125, "event": "usb_in", "bytes": 16, "elapsed_ns": 2967917}
+{"utc": "2026-10-25T20:40:10.491177+00:00", "monotonic_ns": 1743629712390875, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.491871+00:00", "monotonic_ns": 1743629713071416, "event": "usb_out", "bytes": 16, "elapsed_ns": 598250}
+{"utc": "2026-10-25T20:40:10.495365+00:00", "monotonic_ns": 1743629716567458, "event": "usb_in", "bytes": 16, "elapsed_ns": 3457959}
+{"utc": "2026-10-25T20:40:10.507948+00:00", "monotonic_ns": 1743629729160500, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.509334+00:00", "monotonic_ns": 1743629730537750, "event": "usb_out", "bytes": 16, "elapsed_ns": 1283209}
+{"utc": "2026-10-25T20:40:10.511359+00:00", "monotonic_ns": 1743629732560875, "event": "usb_in", "bytes": 16, "elapsed_ns": 1970625}
+{"utc": "2026-10-25T20:40:10.523078+00:00", "monotonic_ns": 1743629744281875, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.524384+00:00", "monotonic_ns": 1743629745585875, "event": "usb_out", "bytes": 16, "elapsed_ns": 1241417}
+{"utc": "2026-10-25T20:40:10.526672+00:00", "monotonic_ns": 1743629747872041, "event": "usb_in", "bytes": 16, "elapsed_ns": 2248250}
+{"utc": "2026-10-25T20:40:10.539235+00:00", "monotonic_ns": 1743629760440750, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.539906+00:00", "monotonic_ns": 1743629761109750, "event": "usb_out", "bytes": 16, "elapsed_ns": 599667}
+{"utc": "2026-10-25T20:40:10.541822+00:00", "monotonic_ns": 1743629763021583, "event": "usb_in", "bytes": 16, "elapsed_ns": 1865750}
+{"utc": "2026-10-25T20:40:10.554374+00:00", "monotonic_ns": 1743629775577708, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.555038+00:00", "monotonic_ns": 1743629776243375, "event": "usb_out", "bytes": 16, "elapsed_ns": 604083}
+{"utc": "2026-10-25T20:40:10.556974+00:00", "monotonic_ns": 1743629778175500, "event": "usb_in", "bytes": 16, "elapsed_ns": 1872959}
+{"utc": "2026-10-25T20:40:10.569539+00:00", "monotonic_ns": 1743629790742875, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.570177+00:00", "monotonic_ns": 1743629791375750, "event": "usb_out", "bytes": 16, "elapsed_ns": 584833}
+{"utc": "2026-10-25T20:40:10.572405+00:00", "monotonic_ns": 1743629793606583, "event": "usb_in", "bytes": 16, "elapsed_ns": 2194583}
+{"utc": "2026-10-25T20:40:10.584057+00:00", "monotonic_ns": 1743629805269833, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.584758+00:00", "monotonic_ns": 1743629805959166, "event": "usb_out", "bytes": 16, "elapsed_ns": 608416}
+{"utc": "2026-10-25T20:40:10.587062+00:00", "monotonic_ns": 1743629808260625, "event": "usb_in", "bytes": 16, "elapsed_ns": 2264291}
+{"utc": "2026-10-25T20:40:10.597745+00:00", "monotonic_ns": 1743629818955041, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.598885+00:00", "monotonic_ns": 1743629820092416, "event": "usb_out", "bytes": 16, "elapsed_ns": 1049041}
+{"utc": "2026-10-25T20:40:10.600785+00:00", "monotonic_ns": 1743629821984708, "event": "usb_in", "bytes": 16, "elapsed_ns": 1832500}
+{"utc": "2026-10-25T20:40:10.613202+00:00", "monotonic_ns": 1743629834412541, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.613904+00:00", "monotonic_ns": 1743629835102791, "event": "usb_out", "bytes": 16, "elapsed_ns": 615208}
+{"utc": "2026-10-25T20:40:10.616199+00:00", "monotonic_ns": 1743629837398750, "event": "usb_in", "bytes": 16, "elapsed_ns": 2263792}
+{"utc": "2026-10-25T20:40:10.627434+00:00", "monotonic_ns": 1743629848645208, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.628106+00:00", "monotonic_ns": 1743629849305250, "event": "usb_out", "bytes": 16, "elapsed_ns": 586000}
+{"utc": "2026-10-25T20:40:10.630896+00:00", "monotonic_ns": 1743629852098875, "event": "usb_in", "bytes": 16, "elapsed_ns": 2755542}
+{"utc": "2026-10-25T20:40:10.641920+00:00", "monotonic_ns": 1743629863130000, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.642598+00:00", "monotonic_ns": 1743629863797875, "event": "usb_out", "bytes": 16, "elapsed_ns": 587292}
+{"utc": "2026-10-25T20:40:10.645334+00:00", "monotonic_ns": 1743629866536250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2699084}
+{"utc": "2026-10-25T20:40:10.657904+00:00", "monotonic_ns": 1743629879109375, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.658962+00:00", "monotonic_ns": 1743629880164541, "event": "usb_out", "bytes": 16, "elapsed_ns": 991333}
+{"utc": "2026-10-25T20:40:10.661216+00:00", "monotonic_ns": 1743629882418250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2197292}
+{"utc": "2026-10-25T20:40:10.673739+00:00", "monotonic_ns": 1743629894972791, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.674503+00:00", "monotonic_ns": 1743629895704166, "event": "usb_out", "bytes": 16, "elapsed_ns": 630916}
+{"utc": "2026-10-25T20:40:10.676448+00:00", "monotonic_ns": 1743629897648833, "event": "usb_in", "bytes": 16, "elapsed_ns": 1883167}
+{"utc": "2026-10-25T20:40:10.689029+00:00", "monotonic_ns": 1743629910234458, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.689689+00:00", "monotonic_ns": 1743629910889333, "event": "usb_out", "bytes": 16, "elapsed_ns": 588584}
+{"utc": "2026-10-25T20:40:10.691586+00:00", "monotonic_ns": 1743629912784000, "event": "usb_in", "bytes": 16, "elapsed_ns": 1846292}
+{"utc": "2026-10-25T20:40:10.704004+00:00", "monotonic_ns": 1743629925217083, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.704735+00:00", "monotonic_ns": 1743629925933458, "event": "usb_out", "bytes": 16, "elapsed_ns": 611625}
+{"utc": "2026-10-25T20:40:10.706683+00:00", "monotonic_ns": 1743629927881625, "event": "usb_in", "bytes": 16, "elapsed_ns": 1922958}
+{"utc": "2026-10-25T20:40:10.716757+00:00", "monotonic_ns": 1743629937959875, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.717672+00:00", "monotonic_ns": 1743629938870416, "event": "usb_out", "bytes": 16, "elapsed_ns": 862042}
+{"utc": "2026-10-25T20:40:10.720141+00:00", "monotonic_ns": 1743629941341166, "event": "usb_in", "bytes": 16, "elapsed_ns": 2431208}
+{"utc": "2026-10-25T20:40:10.732476+00:00", "monotonic_ns": 1743629953684416, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.733103+00:00", "monotonic_ns": 1743629954302541, "event": "usb_out", "bytes": 16, "elapsed_ns": 549125}
+{"utc": "2026-10-25T20:40:10.735682+00:00", "monotonic_ns": 1743629956881791, "event": "usb_in", "bytes": 16, "elapsed_ns": 2544667}
+{"utc": "2026-10-25T20:40:10.746245+00:00", "monotonic_ns": 1743629967447416, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.747013+00:00", "monotonic_ns": 1743629968209583, "event": "usb_out", "bytes": 16, "elapsed_ns": 711334}
+{"utc": "2026-10-25T20:40:10.749378+00:00", "monotonic_ns": 1743629970579250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2340292}
+{"utc": "2026-10-25T20:40:10.759836+00:00", "monotonic_ns": 1743629981039375, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.760420+00:00", "monotonic_ns": 1743629981616500, "event": "usb_out", "bytes": 16, "elapsed_ns": 524541}
+{"utc": "2026-10-25T20:40:10.762732+00:00", "monotonic_ns": 1743629983931291, "event": "usb_in", "bytes": 16, "elapsed_ns": 2289500}
+{"utc": "2026-10-25T20:40:10.774327+00:00", "monotonic_ns": 1743629995534041, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.775017+00:00", "monotonic_ns": 1743629996215833, "event": "usb_out", "bytes": 16, "elapsed_ns": 610458}
+{"utc": "2026-10-25T20:40:10.777278+00:00", "monotonic_ns": 1743629998475541, "event": "usb_in", "bytes": 16, "elapsed_ns": 2224167}
+{"utc": "2026-10-25T20:40:10.788161+00:00", "monotonic_ns": 1743630009367750, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.789016+00:00", "monotonic_ns": 1743630010213166, "event": "usb_out", "bytes": 16, "elapsed_ns": 772792}
+{"utc": "2026-10-25T20:40:10.791385+00:00", "monotonic_ns": 1743630012590208, "event": "usb_in", "bytes": 16, "elapsed_ns": 2334375}
+{"utc": "2026-10-25T20:40:10.801952+00:00", "monotonic_ns": 1743630023159000, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.805522+00:00", "monotonic_ns": 1743630026721000, "event": "usb_out", "bytes": 16, "elapsed_ns": 3487125}
+{"utc": "2026-10-25T20:40:10.813680+00:00", "monotonic_ns": 1743630034878708, "event": "usb_in", "bytes": 16, "elapsed_ns": 8116417}
+{"utc": "2026-10-25T20:40:10.824503+00:00", "monotonic_ns": 1743630045707750, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.825171+00:00", "monotonic_ns": 1743630046369000, "event": "usb_out", "bytes": 16, "elapsed_ns": 603416}
+{"utc": "2026-10-25T20:40:10.827732+00:00", "monotonic_ns": 1743630048930833, "event": "usb_in", "bytes": 16, "elapsed_ns": 2530792}
+{"utc": "2026-10-25T20:40:10.838040+00:00", "monotonic_ns": 1743630059243708, "event": "scan_image_request", "maximum": 32}
+{"utc": "2026-10-25T20:40:10.839650+00:00", "monotonic_ns": 1743630060849041, "event": "usb_out", "bytes": 16, "elapsed_ns": 1547542}
+{"utc": "2026-10-25T20:40:10.842231+00:00", "monotonic_ns": 1743630063428250, "event": "usb_in", "bytes": 16, "elapsed_ns": 2541666}
+{"utc": "2026-10-25T20:40:10.853746+00:00", "monotonic_ns": 1743630074947041, "event": "scan_image_complete", "rows": 295, "raw_bytes": 311520}
+{"utc": "2026-10-25T20:40:10.853806+00:00", "monotonic_ns": 1743630075002416, "event": "scan_command", "code": "ef20", "out_bytes": 16, "in_bytes": 8}
+{"utc": "2026-10-25T20:40:10.854419+00:00", "monotonic_ns": 1743630075617166, "event": "usb_out", "bytes": 16, "elapsed_ns": 586208}
+{"utc": "2026-10-25T20:40:10.857141+00:00", "monotonic_ns": 1743630078344166, "event": "usb_in", "bytes": 8, "elapsed_ns": 2687417}
+{"utc": "2026-10-25T20:40:10.857208+00:00", "monotonic_ns": 1743630078406291, "event": "scan_xml", "operation": "EndJob"}
+{"utc": "2026-10-25T20:40:10.860776+00:00", "monotonic_ns": 1743630081973291, "event": "usb_out", "bytes": 262, "elapsed_ns": 3534750}
+{"utc": "2026-10-25T20:40:10.870615+00:00", "monotonic_ns": 1743630091814333, "event": "usb_in", "bytes": 363, "elapsed_ns": 9803792}

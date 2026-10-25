@@ -1,0 +1,59 @@
+{
+  "utc": "2026-10-25T17:58:57.259399+00:00",
+  "purpose": "Read ESP32 bridge application identity; no flash writes and no printer commands",
+  "initial_pins": {
+    "gpio_output_enable": "0x0",
+    "pins": {
+      "4": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      },
+      "5": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      }
+    }
+  },
+  "stub_pins": {
+    "gpio_output_enable": "0x0",
+    "pins": {
+      "4": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      },
+      "5": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      }
+    }
+  },
+  "application_sha256": "55a096b3844477b654f5be30b8baf00e375fae3481313d55d95ea93a2d34f4f8",
+  "bytes_read": 214544,
+  "matches_original_bridge": true,
+  "matches_layout2_bridge": false,
+  "final_pins": {
+    "gpio_output_enable": "0x0",
+    "pins": {
+      "4": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      },
+      "5": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      }
+    }
+  }
+}

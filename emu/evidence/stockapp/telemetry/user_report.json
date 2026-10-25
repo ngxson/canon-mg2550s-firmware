@@ -1,0 +1,8 @@
+{
+  "source": "user report",
+  "scan": true,
+  "print": true,
+  "host_project": "/Users/ngxson/work/hobby-printer-esp32",
+  "quote": "ok I tried scan and print using ../hobby-printer-esp32 and it works",
+  "limit": "User confirmed function; assistant did not inspect page content or collect scan/print traces."
+}

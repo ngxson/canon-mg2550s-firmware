@@ -1,0 +1,355 @@
+{"utc": "2026-10-25T21:15:34.169031+00:00", "monotonic_ns": 1745753392043166, "event": "usb_open", "role": "print", "vid": "04a9", "pid": "176d", "bcd_device": 517, "interface": 1, "input": 130, "output": 1, "packet_size": 512}
+{"utc": "2026-10-25T21:15:34.169371+00:00", "monotonic_ns": 1745753392263083, "event": "print_command", "operation": "StartJob"}
+{"utc": "2026-10-25T21:15:34.170009+00:00", "monotonic_ns": 1745753392901083, "event": "usb_in", "bytes": 512, "elapsed_ns": 750000}
+{"utc": "2026-10-25T21:15:34.170116+00:00", "monotonic_ns": 1745753393006750, "event": "usb_in", "bytes": 447, "elapsed_ns": 82791}
+{"utc": "2026-10-25T21:15:34.170146+00:00", "monotonic_ns": 1745753393036250, "event": "printer_status", "status": "idle", "status_detail": "MarkerSupplyAttention", "BST": "04", "DJS": "NO", "DBS": "NO", "DOC": "4,00,NO", "HRC": "PE", "CTK": "CL,LOW,/,BK,SETZ", "PID": "00,00,00"}
+{"utc": "2026-10-25T21:15:34.193072+00:00", "monotonic_ns": 1745753415963500, "event": "usb_out", "bytes": 289, "elapsed_ns": 23657875, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:34.425780+00:00", "monotonic_ns": 1745753648673583, "event": "usb_in", "bytes": 366, "elapsed_ns": 574583}
+{"utc": "2026-10-25T21:15:34.425840+00:00", "monotonic_ns": 1745753648730041, "event": "print_ack", "operation": "StartJob"}
+{"utc": "2026-10-25T21:15:34.425851+00:00", "monotonic_ns": 1745753648740291, "event": "print_command", "operation": "ModeShift"}
+{"utc": "2026-10-25T21:15:34.425990+00:00", "monotonic_ns": 1745753648882416, "event": "usb_out", "bytes": 391, "elapsed_ns": 96250, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:34.681935+00:00", "monotonic_ns": 1745753904834541, "event": "usb_in", "bytes": 512, "elapsed_ns": 1053500}
+{"utc": "2026-10-25T21:15:34.682127+00:00", "monotonic_ns": 1745753905022791, "event": "usb_in", "bytes": 69, "elapsed_ns": 122416}
+{"utc": "2026-10-25T21:15:34.682224+00:00", "monotonic_ns": 1745753905115666, "event": "print_ack", "operation": "ModeShift"}
+{"utc": "2026-10-25T21:15:34.682262+00:00", "monotonic_ns": 1745753905152500, "event": "print_raster_start", "dpi": 600, "paper": "A4"}
+{"utc": "2026-10-25T21:15:34.691281+00:00", "monotonic_ns": 1745753914172708, "event": "usb_out", "bytes": 16384, "elapsed_ns": 898791, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:34.706713+00:00", "monotonic_ns": 1745753929604291, "event": "usb_out", "bytes": 16384, "elapsed_ns": 1217792, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:34.904815+00:00", "monotonic_ns": 1745754127710916, "event": "usb_out", "bytes": 16384, "elapsed_ns": 180324834, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:34.938130+00:00", "monotonic_ns": 1745754161022625, "event": "usb_in", "bytes": 512, "elapsed_ns": 853625}
+{"utc": "2026-10-25T21:15:34.938282+00:00", "monotonic_ns": 1745754161170291, "event": "usb_in", "bytes": 512, "elapsed_ns": 107833}
+{"utc": "2026-10-25T21:15:34.938398+00:00", "monotonic_ns": 1745754161288041, "event": "usb_in", "bytes": 76, "elapsed_ns": 85875}
+{"utc": "2026-10-25T21:15:34.938483+00:00", "monotonic_ns": 1745754161371500, "event": "printer_status", "status": "processing", "status_detail": "MarkerSupplyAttention", "BST": "84", "DJS": "LD", "DBS": "NO", "DOC": "5,01,NO", "HRC": "PE", "CTK": "CL,LOW,/,BK,SETZ", "PID": "02,01,00"}
+{"utc": "2026-10-25T21:15:34.973221+00:00", "monotonic_ns": 1745754196111666, "event": "usb_out", "bytes": 16384, "elapsed_ns": 26109875, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:35.194724+00:00", "monotonic_ns": 1745754417614375, "event": "usb_in", "bytes": 512, "elapsed_ns": 1111333}
+{"utc": "2026-10-25T21:15:35.194840+00:00", "monotonic_ns": 1745754417727916, "event": "usb_in", "bytes": 512, "elapsed_ns": 81625}
+{"utc": "2026-10-25T21:15:35.194939+00:00", "monotonic_ns": 1745754417828500, "event": "usb_in", "bytes": 76, "elapsed_ns": 80291}
+{"utc": "2026-10-25T21:15:35.210294+00:00", "monotonic_ns": 1745754433182625, "event": "usb_out", "bytes": 16384, "elapsed_ns": 196639291, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:35.448435+00:00", "monotonic_ns": 1745754671327000, "event": "usb_in", "bytes": 512, "elapsed_ns": 798083}
+{"utc": "2026-10-25T21:15:35.448611+00:00", "monotonic_ns": 1745754671499916, "event": "usb_in", "bytes": 512, "elapsed_ns": 115125}
+{"utc": "2026-10-25T21:15:35.448734+00:00", "monotonic_ns": 1745754671621041, "event": "usb_in", "bytes": 76, "elapsed_ns": 98791}
+{"utc": "2026-10-25T21:15:35.704482+00:00", "monotonic_ns": 1745754927379208, "event": "usb_in", "bytes": 512, "elapsed_ns": 670250}
+{"utc": "2026-10-25T21:15:35.704701+00:00", "monotonic_ns": 1745754927589666, "event": "usb_in", "bytes": 512, "elapsed_ns": 143917}
+{"utc": "2026-10-25T21:15:35.704832+00:00", "monotonic_ns": 1745754927723916, "event": "usb_in", "bytes": 76, "elapsed_ns": 96583}
+{"utc": "2026-10-25T21:15:35.957689+00:00", "monotonic_ns": 1745755180587583, "event": "usb_in", "bytes": 512, "elapsed_ns": 1502000}
+{"utc": "2026-10-25T21:15:35.957936+00:00", "monotonic_ns": 1745755180825791, "event": "usb_in", "bytes": 512, "elapsed_ns": 150500}
+{"utc": "2026-10-25T21:15:35.958110+00:00", "monotonic_ns": 1745755181005083, "event": "usb_in", "bytes": 76, "elapsed_ns": 124458}
+{"utc": "2026-10-25T21:15:35.958226+00:00", "monotonic_ns": 1745755181114833, "event": "printer_status", "status": "processing", "status_detail": "MarkerSupplyAttention", "BST": "84", "DJS": "PR", "DBS": "NO", "DOC": "5,01,NO", "HRC": "PE", "CTK": "CL,LOW,/,BK,SETZ", "PID": "01,01,00"}
+{"utc": "2026-10-25T21:15:35.981150+00:00", "monotonic_ns": 1745755204042833, "event": "usb_out", "bytes": 16384, "elapsed_ns": 730360875, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:36.210086+00:00", "monotonic_ns": 1745755432984500, "event": "usb_in", "bytes": 512, "elapsed_ns": 761667}
+{"utc": "2026-10-25T21:15:36.210332+00:00", "monotonic_ns": 1745755433221708, "event": "usb_in", "bytes": 512, "elapsed_ns": 152458}
+{"utc": "2026-10-25T21:15:36.210494+00:00", "monotonic_ns": 1745755433380583, "event": "usb_in", "bytes": 76, "elapsed_ns": 115542}
+{"utc": "2026-10-25T21:15:36.465877+00:00", "monotonic_ns": 1745755688776791, "event": "usb_in", "bytes": 512, "elapsed_ns": 1534083}
+{"utc": "2026-10-25T21:15:36.466146+00:00", "monotonic_ns": 1745755689033166, "event": "usb_in", "bytes": 512, "elapsed_ns": 167250}
+{"utc": "2026-10-25T21:15:36.466315+00:00", "monotonic_ns": 1745755689207208, "event": "usb_in", "bytes": 76, "elapsed_ns": 120833}
+{"utc": "2026-10-25T21:15:36.599486+00:00", "monotonic_ns": 1745755822385333, "event": "usb_out", "bytes": 16384, "elapsed_ns": 586426250, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:36.722820+00:00", "monotonic_ns": 1745755945712125, "event": "usb_in", "bytes": 512, "elapsed_ns": 1348625}
+{"utc": "2026-10-25T21:15:36.722994+00:00", "monotonic_ns": 1745755945881791, "event": "usb_in", "bytes": 512, "elapsed_ns": 108125}
+{"utc": "2026-10-25T21:15:36.723127+00:00", "monotonic_ns": 1745755946011333, "event": "usb_in", "bytes": 76, "elapsed_ns": 93250}
+{"utc": "2026-10-25T21:15:36.977795+00:00", "monotonic_ns": 1745756200688375, "event": "usb_in", "bytes": 512, "elapsed_ns": 707750}
+{"utc": "2026-10-25T21:15:36.978025+00:00", "monotonic_ns": 1745756200915791, "event": "usb_in", "bytes": 512, "elapsed_ns": 133250}
+{"utc": "2026-10-25T21:15:36.978226+00:00", "monotonic_ns": 1745756201111375, "event": "usb_in", "bytes": 76, "elapsed_ns": 133458}
+{"utc": "2026-10-25T21:15:37.106684+00:00", "monotonic_ns": 1745756329572375, "event": "usb_out", "bytes": 16384, "elapsed_ns": 475611875, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:37.229995+00:00", "monotonic_ns": 1745756452879958, "event": "usb_in", "bytes": 512, "elapsed_ns": 874042}
+{"utc": "2026-10-25T21:15:37.230128+00:00", "monotonic_ns": 1745756453010791, "event": "usb_in", "bytes": 512, "elapsed_ns": 91625}
+{"utc": "2026-10-25T21:15:37.230247+00:00", "monotonic_ns": 1745756453127958, "event": "usb_in", "bytes": 76, "elapsed_ns": 94542}
+{"utc": "2026-10-25T21:15:37.484463+00:00", "monotonic_ns": 1745756707347166, "event": "usb_in", "bytes": 512, "elapsed_ns": 629458}
+{"utc": "2026-10-25T21:15:37.484614+00:00", "monotonic_ns": 1745756707493958, "event": "usb_in", "bytes": 512, "elapsed_ns": 106750}
+{"utc": "2026-10-25T21:15:37.484708+00:00", "monotonic_ns": 1745756707587291, "event": "usb_in", "bytes": 76, "elapsed_ns": 80250}
+{"utc": "2026-10-25T21:15:37.738914+00:00", "monotonic_ns": 1745756961803208, "event": "usb_in", "bytes": 512, "elapsed_ns": 2122417}
+{"utc": "2026-10-25T21:15:37.739114+00:00", "monotonic_ns": 1745756961997708, "event": "usb_in", "bytes": 512, "elapsed_ns": 122167}
+{"utc": "2026-10-25T21:15:37.739253+00:00", "monotonic_ns": 1745756962134125, "event": "usb_in", "bytes": 76, "elapsed_ns": 96083}
+{"utc": "2026-10-25T21:15:37.990223+00:00", "monotonic_ns": 1745757213116166, "event": "usb_in", "bytes": 512, "elapsed_ns": 797750}
+{"utc": "2026-10-25T21:15:37.990500+00:00", "monotonic_ns": 1745757213382666, "event": "usb_in", "bytes": 512, "elapsed_ns": 172166}
+{"utc": "2026-10-25T21:15:37.990682+00:00", "monotonic_ns": 1745757213570208, "event": "usb_in", "bytes": 76, "elapsed_ns": 129583}
+{"utc": "2026-10-25T21:15:38.243986+00:00", "monotonic_ns": 1745757466879250, "event": "usb_in", "bytes": 512, "elapsed_ns": 692459}
+{"utc": "2026-10-25T21:15:38.244309+00:00", "monotonic_ns": 1745757467191375, "event": "usb_in", "bytes": 512, "elapsed_ns": 207750}
+{"utc": "2026-10-25T21:15:38.244509+00:00", "monotonic_ns": 1745757467396083, "event": "usb_in", "bytes": 76, "elapsed_ns": 142916}
+{"utc": "2026-10-25T21:15:38.255124+00:00", "monotonic_ns": 1745757478014333, "event": "usb_out", "bytes": 12800, "elapsed_ns": 1121335875, "partial": true, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:38.499436+00:00", "monotonic_ns": 1745757722323083, "event": "usb_in", "bytes": 512, "elapsed_ns": 672750}
+{"utc": "2026-10-25T21:15:38.499647+00:00", "monotonic_ns": 1745757722527333, "event": "usb_in", "bytes": 512, "elapsed_ns": 127000}
+{"utc": "2026-10-25T21:15:38.499784+00:00", "monotonic_ns": 1745757722666750, "event": "usb_in", "bytes": 76, "elapsed_ns": 96250}
+{"utc": "2026-10-25T21:15:38.752529+00:00", "monotonic_ns": 1745757975415541, "event": "usb_in", "bytes": 512, "elapsed_ns": 907542}
+{"utc": "2026-10-25T21:15:38.752762+00:00", "monotonic_ns": 1745757975645958, "event": "usb_in", "bytes": 512, "elapsed_ns": 144667}
+{"utc": "2026-10-25T21:15:38.752975+00:00", "monotonic_ns": 1745757975854166, "event": "usb_in", "bytes": 76, "elapsed_ns": 145250}
+{"utc": "2026-10-25T21:15:38.945273+00:00", "monotonic_ns": 1745758168164250, "event": "usb_out", "bytes": 3584, "elapsed_ns": 689968750, "waited_ms": 1000}
+{"utc": "2026-10-25T21:15:39.005500+00:00", "monotonic_ns": 1745758228379708, "event": "usb_in", "bytes": 512, "elapsed_ns": 594958}
+{"utc": "2026-10-25T21:15:39.005639+00:00", "monotonic_ns": 1745758228515916, "event": "usb_in", "bytes": 512, "elapsed_ns": 95709}
+{"utc": "2026-10-25T21:15:39.005754+00:00", "monotonic_ns": 1745758228628791, "event": "usb_in", "bytes": 76, "elapsed_ns": 89000}
+{"utc": "2026-10-25T21:15:39.180052+00:00", "monotonic_ns": 1745758402937833, "event": "usb_out", "bytes": 16384, "elapsed_ns": 202270291, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:39.261265+00:00", "monotonic_ns": 1745758484143458, "event": "usb_in", "bytes": 512, "elapsed_ns": 778250}
+{"utc": "2026-10-25T21:15:39.261400+00:00", "monotonic_ns": 1745758484275875, "event": "usb_in", "bytes": 512, "elapsed_ns": 94750}
+{"utc": "2026-10-25T21:15:39.261507+00:00", "monotonic_ns": 1745758484382458, "event": "usb_in", "bytes": 76, "elapsed_ns": 79375}
+{"utc": "2026-10-25T21:15:39.517567+00:00", "monotonic_ns": 1745758740452500, "event": "usb_in", "bytes": 512, "elapsed_ns": 955625}
+{"utc": "2026-10-25T21:15:39.517792+00:00", "monotonic_ns": 1745758740672666, "event": "usb_in", "bytes": 512, "elapsed_ns": 130083}
+{"utc": "2026-10-25T21:15:39.517992+00:00", "monotonic_ns": 1745758740868416, "event": "usb_in", "bytes": 76, "elapsed_ns": 131416}
+{"utc": "2026-10-25T21:15:39.771285+00:00", "monotonic_ns": 1745758994162250, "event": "usb_in", "bytes": 512, "elapsed_ns": 821708}
+{"utc": "2026-10-25T21:15:39.771486+00:00", "monotonic_ns": 1745758994359791, "event": "usb_in", "bytes": 512, "elapsed_ns": 138875}
+{"utc": "2026-10-25T21:15:39.771605+00:00", "monotonic_ns": 1745758994478250, "event": "usb_in", "bytes": 76, "elapsed_ns": 96083}
+{"utc": "2026-10-25T21:15:39.780769+00:00", "monotonic_ns": 1745759003641750, "event": "usb_out", "bytes": 16384, "elapsed_ns": 555251083, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:40.024262+00:00", "monotonic_ns": 1745759247144583, "event": "usb_in", "bytes": 512, "elapsed_ns": 689500}
+{"utc": "2026-10-25T21:15:40.024452+00:00", "monotonic_ns": 1745759247329000, "event": "usb_in", "bytes": 512, "elapsed_ns": 114958}
+{"utc": "2026-10-25T21:15:40.024617+00:00", "monotonic_ns": 1745759247490875, "event": "usb_in", "bytes": 76, "elapsed_ns": 114167}
+{"utc": "2026-10-25T21:15:40.277860+00:00", "monotonic_ns": 1745759500745625, "event": "usb_in", "bytes": 512, "elapsed_ns": 1130041}
+{"utc": "2026-10-25T21:15:40.278153+00:00", "monotonic_ns": 1745759501033916, "event": "usb_in", "bytes": 512, "elapsed_ns": 182666}
+{"utc": "2026-10-25T21:15:40.278398+00:00", "monotonic_ns": 1745759501273916, "event": "usb_in", "bytes": 76, "elapsed_ns": 164084}
+{"utc": "2026-10-25T21:15:40.530786+00:00", "monotonic_ns": 1745759753667375, "event": "usb_in", "bytes": 512, "elapsed_ns": 666333}
+{"utc": "2026-10-25T21:15:40.531029+00:00", "monotonic_ns": 1745759753903750, "event": "usb_in", "bytes": 512, "elapsed_ns": 154291}
+{"utc": "2026-10-25T21:15:40.531208+00:00", "monotonic_ns": 1745759754088166, "event": "usb_in", "bytes": 76, "elapsed_ns": 124625}
+{"utc": "2026-10-25T21:15:40.785637+00:00", "monotonic_ns": 1745760008515000, "event": "usb_in", "bytes": 512, "elapsed_ns": 685667}
+{"utc": "2026-10-25T21:15:40.785833+00:00", "monotonic_ns": 1745760008708708, "event": "usb_in", "bytes": 512, "elapsed_ns": 119833}
+{"utc": "2026-10-25T21:15:40.786004+00:00", "monotonic_ns": 1745760008874541, "event": "usb_in", "bytes": 76, "elapsed_ns": 115250}
+{"utc": "2026-10-25T21:15:40.818580+00:00", "monotonic_ns": 1745760041456541, "event": "usb_out", "bytes": 16384, "elapsed_ns": 998561208, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:41.042280+00:00", "monotonic_ns": 1745760265162958, "event": "usb_in", "bytes": 512, "elapsed_ns": 1160667}
+{"utc": "2026-10-25T21:15:41.042549+00:00", "monotonic_ns": 1745760265424333, "event": "usb_in", "bytes": 512, "elapsed_ns": 169041}
+{"utc": "2026-10-25T21:15:41.042738+00:00", "monotonic_ns": 1745760265608916, "event": "usb_in", "bytes": 76, "elapsed_ns": 122792}
+{"utc": "2026-10-25T21:15:41.297493+00:00", "monotonic_ns": 1745760520370291, "event": "usb_in", "bytes": 512, "elapsed_ns": 2224459}
+{"utc": "2026-10-25T21:15:41.297725+00:00", "monotonic_ns": 1745760520597250, "event": "usb_in", "bytes": 512, "elapsed_ns": 147125}
+{"utc": "2026-10-25T21:15:41.297881+00:00", "monotonic_ns": 1745760520752750, "event": "usb_in", "bytes": 76, "elapsed_ns": 101041}
+{"utc": "2026-10-25T21:15:41.552926+00:00", "monotonic_ns": 1745760775803416, "event": "usb_in", "bytes": 512, "elapsed_ns": 1296500}
+{"utc": "2026-10-25T21:15:41.553166+00:00", "monotonic_ns": 1745760776036375, "event": "usb_in", "bytes": 512, "elapsed_ns": 144500}
+{"utc": "2026-10-25T21:15:41.553332+00:00", "monotonic_ns": 1745760776206416, "event": "usb_in", "bytes": 76, "elapsed_ns": 112833}
+{"utc": "2026-10-25T21:15:41.652575+00:00", "monotonic_ns": 1745760875453125, "event": "usb_out", "bytes": 16384, "elapsed_ns": 793853542, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:41.805398+00:00", "monotonic_ns": 1745761028267166, "event": "usb_in", "bytes": 512, "elapsed_ns": 756334}
+{"utc": "2026-10-25T21:15:41.805526+00:00", "monotonic_ns": 1745761028392250, "event": "usb_in", "bytes": 512, "elapsed_ns": 84291}
+{"utc": "2026-10-25T21:15:41.805632+00:00", "monotonic_ns": 1745761028497208, "event": "usb_in", "bytes": 76, "elapsed_ns": 80375}
+{"utc": "2026-10-25T21:15:42.062318+00:00", "monotonic_ns": 1745761285192125, "event": "usb_in", "bytes": 512, "elapsed_ns": 1602042}
+{"utc": "2026-10-25T21:15:42.062530+00:00", "monotonic_ns": 1745761285397791, "event": "usb_in", "bytes": 512, "elapsed_ns": 125333}
+{"utc": "2026-10-25T21:15:42.062663+00:00", "monotonic_ns": 1745761285530541, "event": "usb_in", "bytes": 76, "elapsed_ns": 94334}
+{"utc": "2026-10-25T21:15:42.318784+00:00", "monotonic_ns": 1745761541662000, "event": "usb_in", "bytes": 512, "elapsed_ns": 977541}
+{"utc": "2026-10-25T21:15:42.319033+00:00", "monotonic_ns": 1745761541905916, "event": "usb_in", "bytes": 512, "elapsed_ns": 142417}
+{"utc": "2026-10-25T21:15:42.319240+00:00", "monotonic_ns": 1745761542107708, "event": "usb_in", "bytes": 76, "elapsed_ns": 135916}
+{"utc": "2026-10-25T21:15:42.574131+00:00", "monotonic_ns": 1745761797004750, "event": "usb_in", "bytes": 512, "elapsed_ns": 732792}
+{"utc": "2026-10-25T21:15:42.574314+00:00", "monotonic_ns": 1745761797178166, "event": "usb_in", "bytes": 512, "elapsed_ns": 101458}
+{"utc": "2026-10-25T21:15:42.574434+00:00", "monotonic_ns": 1745761797296750, "event": "usb_in", "bytes": 76, "elapsed_ns": 87333}
+{"utc": "2026-10-25T21:15:42.778707+00:00", "monotonic_ns": 1745762001580375, "event": "usb_out", "bytes": 10240, "elapsed_ns": 1062044000, "partial": true, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:42.827866+00:00", "monotonic_ns": 1745762050740416, "event": "usb_in", "bytes": 512, "elapsed_ns": 687875}
+{"utc": "2026-10-25T21:15:42.828108+00:00", "monotonic_ns": 1745762050974666, "event": "usb_in", "bytes": 512, "elapsed_ns": 141083}
+{"utc": "2026-10-25T21:15:42.828302+00:00", "monotonic_ns": 1745762051165375, "event": "usb_in", "bytes": 76, "elapsed_ns": 143834}
+{"utc": "2026-10-25T21:15:43.084155+00:00", "monotonic_ns": 1745762307027208, "event": "usb_in", "bytes": 512, "elapsed_ns": 728666}
+{"utc": "2026-10-25T21:15:43.084404+00:00", "monotonic_ns": 1745762307269416, "event": "usb_in", "bytes": 512, "elapsed_ns": 160250}
+{"utc": "2026-10-25T21:15:43.084585+00:00", "monotonic_ns": 1745762307448500, "event": "usb_in", "bytes": 76, "elapsed_ns": 132333}
+{"utc": "2026-10-25T21:15:43.313119+00:00", "monotonic_ns": 1745762535992083, "event": "usb_out", "bytes": 6144, "elapsed_ns": 534233250, "waited_ms": 1000}
+{"utc": "2026-10-25T21:15:43.339016+00:00", "monotonic_ns": 1745762561880750, "event": "usb_in", "bytes": 512, "elapsed_ns": 741000}
+{"utc": "2026-10-25T21:15:43.339135+00:00", "monotonic_ns": 1745762561995208, "event": "usb_in", "bytes": 512, "elapsed_ns": 84000}
+{"utc": "2026-10-25T21:15:43.339324+00:00", "monotonic_ns": 1745762562183625, "event": "usb_in", "bytes": 76, "elapsed_ns": 169458}
+{"utc": "2026-10-25T21:15:43.592633+00:00", "monotonic_ns": 1745762815505000, "event": "usb_in", "bytes": 512, "elapsed_ns": 667291}
+{"utc": "2026-10-25T21:15:43.592892+00:00", "monotonic_ns": 1745762815758708, "event": "usb_in", "bytes": 512, "elapsed_ns": 158375}
+{"utc": "2026-10-25T21:15:43.593106+00:00", "monotonic_ns": 1745762815969541, "event": "usb_in", "bytes": 76, "elapsed_ns": 139417}
+{"utc": "2026-10-25T21:15:43.844874+00:00", "monotonic_ns": 1745763067740958, "event": "usb_in", "bytes": 512, "elapsed_ns": 623708}
+{"utc": "2026-10-25T21:15:43.845105+00:00", "monotonic_ns": 1745763067971291, "event": "usb_in", "bytes": 512, "elapsed_ns": 157708}
+{"utc": "2026-10-25T21:15:43.845300+00:00", "monotonic_ns": 1745763068161791, "event": "usb_in", "bytes": 76, "elapsed_ns": 122334}
+{"utc": "2026-10-25T21:15:44.100320+00:00", "monotonic_ns": 1745763323188916, "event": "usb_in", "bytes": 512, "elapsed_ns": 711292}
+{"utc": "2026-10-25T21:15:44.100570+00:00", "monotonic_ns": 1745763323436750, "event": "usb_in", "bytes": 512, "elapsed_ns": 157750}
+{"utc": "2026-10-25T21:15:44.100812+00:00", "monotonic_ns": 1745763323672791, "event": "usb_in", "bytes": 76, "elapsed_ns": 167292}
+{"utc": "2026-10-25T21:15:44.354590+00:00", "monotonic_ns": 1745763577460375, "event": "usb_in", "bytes": 512, "elapsed_ns": 805625}
+{"utc": "2026-10-25T21:15:44.354845+00:00", "monotonic_ns": 1745763577705750, "event": "usb_in", "bytes": 512, "elapsed_ns": 158500}
+{"utc": "2026-10-25T21:15:44.355012+00:00", "monotonic_ns": 1745763577870208, "event": "usb_in", "bytes": 76, "elapsed_ns": 120125}
+{"utc": "2026-10-25T21:15:44.432743+00:00", "monotonic_ns": 1745763655610791, "event": "usb_out", "bytes": 16384, "elapsed_ns": 1054783542, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:44.605886+00:00", "monotonic_ns": 1745763828745416, "event": "usb_in", "bytes": 512, "elapsed_ns": 601083}
+{"utc": "2026-10-25T21:15:44.606034+00:00", "monotonic_ns": 1745763828890750, "event": "usb_in", "bytes": 512, "elapsed_ns": 101667}
+{"utc": "2026-10-25T21:15:44.606150+00:00", "monotonic_ns": 1745763829007166, "event": "usb_in", "bytes": 76, "elapsed_ns": 91750}
+{"utc": "2026-10-25T21:15:44.862326+00:00", "monotonic_ns": 1745764085188541, "event": "usb_in", "bytes": 512, "elapsed_ns": 1084958}
+{"utc": "2026-10-25T21:15:44.862503+00:00", "monotonic_ns": 1745764085360083, "event": "usb_in", "bytes": 512, "elapsed_ns": 110458}
+{"utc": "2026-10-25T21:15:44.862617+00:00", "monotonic_ns": 1745764085473208, "event": "usb_in", "bytes": 76, "elapsed_ns": 81292}
+{"utc": "2026-10-25T21:15:45.118052+00:00", "monotonic_ns": 1745764340917958, "event": "usb_in", "bytes": 512, "elapsed_ns": 689084}
+{"utc": "2026-10-25T21:15:45.118298+00:00", "monotonic_ns": 1745764341161958, "event": "usb_in", "bytes": 512, "elapsed_ns": 149541}
+{"utc": "2026-10-25T21:15:45.118520+00:00", "monotonic_ns": 1745764341377791, "event": "usb_in", "bytes": 76, "elapsed_ns": 142666}
+{"utc": "2026-10-25T21:15:45.370245+00:00", "monotonic_ns": 1745764593110250, "event": "usb_in", "bytes": 512, "elapsed_ns": 1326917}
+{"utc": "2026-10-25T21:15:45.370442+00:00", "monotonic_ns": 1745764593300708, "event": "usb_in", "bytes": 512, "elapsed_ns": 107042}
+{"utc": "2026-10-25T21:15:45.370605+00:00", "monotonic_ns": 1745764593459875, "event": "usb_in", "bytes": 76, "elapsed_ns": 111958}
+{"utc": "2026-10-25T21:15:45.495872+00:00", "monotonic_ns": 1745764718743208, "event": "usb_out", "bytes": 16384, "elapsed_ns": 997200667, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:45.625080+00:00", "monotonic_ns": 1745764847935458, "event": "usb_in", "bytes": 512, "elapsed_ns": 637333}
+{"utc": "2026-10-25T21:15:45.625224+00:00", "monotonic_ns": 1745764848077250, "event": "usb_in", "bytes": 512, "elapsed_ns": 104417}
+{"utc": "2026-10-25T21:15:45.625343+00:00", "monotonic_ns": 1745764848195291, "event": "usb_in", "bytes": 76, "elapsed_ns": 93708}
+{"utc": "2026-10-25T21:15:45.881192+00:00", "monotonic_ns": 1745765104054083, "event": "usb_in", "bytes": 512, "elapsed_ns": 758959}
+{"utc": "2026-10-25T21:15:45.881427+00:00", "monotonic_ns": 1745765104287000, "event": "usb_in", "bytes": 512, "elapsed_ns": 147458}
+{"utc": "2026-10-25T21:15:45.881658+00:00", "monotonic_ns": 1745765104512833, "event": "usb_in", "bytes": 76, "elapsed_ns": 147667}
+{"utc": "2026-10-25T21:15:46.132493+00:00", "monotonic_ns": 1745765355347833, "event": "usb_in", "bytes": 512, "elapsed_ns": 598417}
+{"utc": "2026-10-25T21:15:46.132639+00:00", "monotonic_ns": 1745765355490250, "event": "usb_in", "bytes": 512, "elapsed_ns": 93125}
+{"utc": "2026-10-25T21:15:46.132738+00:00", "monotonic_ns": 1745765355588291, "event": "usb_in", "bytes": 76, "elapsed_ns": 75541}
+{"utc": "2026-10-25T21:15:46.388720+00:00", "monotonic_ns": 1745765611581166, "event": "usb_in", "bytes": 512, "elapsed_ns": 888166}
+{"utc": "2026-10-25T21:15:46.388979+00:00", "monotonic_ns": 1745765611838000, "event": "usb_in", "bytes": 512, "elapsed_ns": 152791}
+{"utc": "2026-10-25T21:15:46.389235+00:00", "monotonic_ns": 1745765612089041, "event": "usb_in", "bytes": 76, "elapsed_ns": 177584}
+{"utc": "2026-10-25T21:15:46.640926+00:00", "monotonic_ns": 1745765863778291, "event": "usb_in", "bytes": 512, "elapsed_ns": 1198083}
+{"utc": "2026-10-25T21:15:46.641078+00:00", "monotonic_ns": 1745765863927541, "event": "usb_in", "bytes": 512, "elapsed_ns": 104375}
+{"utc": "2026-10-25T21:15:46.641190+00:00", "monotonic_ns": 1745765864039541, "event": "usb_in", "bytes": 76, "elapsed_ns": 88208}
+{"utc": "2026-10-25T21:15:46.655842+00:00", "monotonic_ns": 1745765878695375, "event": "usb_out", "bytes": 13824, "elapsed_ns": 1102946250, "partial": true, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:46.743261+00:00", "monotonic_ns": 1745765966111291, "event": "usb_out", "bytes": 2560, "elapsed_ns": 87348333, "waited_ms": 1000}
+{"utc": "2026-10-25T21:15:46.895348+00:00", "monotonic_ns": 1745766118200625, "event": "usb_in", "bytes": 512, "elapsed_ns": 582916}
+{"utc": "2026-10-25T21:15:46.895503+00:00", "monotonic_ns": 1745766118351500, "event": "usb_in", "bytes": 512, "elapsed_ns": 98750}
+{"utc": "2026-10-25T21:15:46.895620+00:00", "monotonic_ns": 1745766118468541, "event": "usb_in", "bytes": 76, "elapsed_ns": 90750}
+{"utc": "2026-10-25T21:15:47.153021+00:00", "monotonic_ns": 1745766375872625, "event": "usb_in", "bytes": 512, "elapsed_ns": 2339417}
+{"utc": "2026-10-25T21:15:47.153155+00:00", "monotonic_ns": 1745766376001416, "event": "usb_in", "bytes": 512, "elapsed_ns": 85250}
+{"utc": "2026-10-25T21:15:47.153232+00:00", "monotonic_ns": 1745766376077708, "event": "usb_in", "bytes": 76, "elapsed_ns": 62542}
+{"utc": "2026-10-25T21:15:47.407312+00:00", "monotonic_ns": 1745766630160000, "event": "usb_in", "bytes": 512, "elapsed_ns": 1627625}
+{"utc": "2026-10-25T21:15:47.407445+00:00", "monotonic_ns": 1745766630291333, "event": "usb_in", "bytes": 512, "elapsed_ns": 96209}
+{"utc": "2026-10-25T21:15:47.407544+00:00", "monotonic_ns": 1745766630390875, "event": "usb_in", "bytes": 76, "elapsed_ns": 75250}
+{"utc": "2026-10-25T21:15:47.663272+00:00", "monotonic_ns": 1745766886125041, "event": "usb_in", "bytes": 512, "elapsed_ns": 646417}
+{"utc": "2026-10-25T21:15:47.663439+00:00", "monotonic_ns": 1745766886285500, "event": "usb_in", "bytes": 512, "elapsed_ns": 97458}
+{"utc": "2026-10-25T21:15:47.663546+00:00", "monotonic_ns": 1745766886394166, "event": "usb_in", "bytes": 76, "elapsed_ns": 79416}
+{"utc": "2026-10-25T21:15:47.873471+00:00", "monotonic_ns": 1745767096329583, "event": "usb_out", "bytes": 16384, "elapsed_ns": 1075822875, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:47.915502+00:00", "monotonic_ns": 1745767138350958, "event": "usb_in", "bytes": 512, "elapsed_ns": 809542}
+{"utc": "2026-10-25T21:15:47.915668+00:00", "monotonic_ns": 1745767138512166, "event": "usb_in", "bytes": 512, "elapsed_ns": 103000}
+{"utc": "2026-10-25T21:15:47.915807+00:00", "monotonic_ns": 1745767138650166, "event": "usb_in", "bytes": 76, "elapsed_ns": 115875}
+{"utc": "2026-10-25T21:15:48.173288+00:00", "monotonic_ns": 1745767396141625, "event": "usb_in", "bytes": 512, "elapsed_ns": 2397709}
+{"utc": "2026-10-25T21:15:48.173507+00:00", "monotonic_ns": 1745767396354541, "event": "usb_in", "bytes": 512, "elapsed_ns": 140417}
+{"utc": "2026-10-25T21:15:48.173655+00:00", "monotonic_ns": 1745767396499125, "event": "usb_in", "bytes": 76, "elapsed_ns": 99208}
+{"utc": "2026-10-25T21:15:48.424822+00:00", "monotonic_ns": 1745767647675500, "event": "usb_in", "bytes": 512, "elapsed_ns": 666333}
+{"utc": "2026-10-25T21:15:48.425069+00:00", "monotonic_ns": 1745767647919041, "event": "usb_in", "bytes": 512, "elapsed_ns": 158291}
+{"utc": "2026-10-25T21:15:48.425278+00:00", "monotonic_ns": 1745767648125000, "event": "usb_in", "bytes": 76, "elapsed_ns": 143750}
+{"utc": "2026-10-25T21:15:48.582441+00:00", "monotonic_ns": 1745767805295708, "event": "usb_out", "bytes": 12836, "elapsed_ns": 637422042, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:48.582535+00:00", "monotonic_ns": 1745767805379041, "event": "print_command", "operation": "EndJob"}
+{"utc": "2026-10-25T21:15:48.614266+00:00", "monotonic_ns": 1745767837118416, "event": "usb_out", "bytes": 265, "elapsed_ns": 31628583, "waited_ms": 0}
+{"utc": "2026-10-25T21:15:48.677560+00:00", "monotonic_ns": 1745767900406083, "event": "usb_in", "bytes": 512, "elapsed_ns": 1501500}
+{"utc": "2026-10-25T21:15:48.677698+00:00", "monotonic_ns": 1745767900539625, "event": "usb_in", "bytes": 512, "elapsed_ns": 95583}
+{"utc": "2026-10-25T21:15:48.677803+00:00", "monotonic_ns": 1745767900643416, "event": "usb_in", "bytes": 76, "elapsed_ns": 82083}
+{"utc": "2026-10-25T21:15:48.932241+00:00", "monotonic_ns": 1745768155087208, "event": "usb_in", "bytes": 512, "elapsed_ns": 1175125}
+{"utc": "2026-10-25T21:15:48.932398+00:00", "monotonic_ns": 1745768155240208, "event": "usb_in", "bytes": 512, "elapsed_ns": 104291}
+{"utc": "2026-10-25T21:15:48.932516+00:00", "monotonic_ns": 1745768155355708, "event": "usb_in", "bytes": 76, "elapsed_ns": 90667}
+{"utc": "2026-10-25T21:15:49.186068+00:00", "monotonic_ns": 1745768408918833, "event": "usb_in", "bytes": 512, "elapsed_ns": 676875}
+{"utc": "2026-10-25T21:15:49.186299+00:00", "monotonic_ns": 1745768409141250, "event": "usb_in", "bytes": 512, "elapsed_ns": 150333}
+{"utc": "2026-10-25T21:15:49.186434+00:00", "monotonic_ns": 1745768409274375, "event": "usb_in", "bytes": 76, "elapsed_ns": 88583}
+{"utc": "2026-10-25T21:15:49.439338+00:00", "monotonic_ns": 1745768662187291, "event": "usb_in", "bytes": 512, "elapsed_ns": 1153583}
+{"utc": "2026-10-25T21:15:49.439544+00:00", "monotonic_ns": 1745768662386333, "event": "usb_in", "bytes": 512, "elapsed_ns": 121459}
+{"utc": "2026-10-25T21:15:49.439677+00:00", "monotonic_ns": 1745768662517708, "event": "usb_in", "bytes": 76, "elapsed_ns": 91083}
+{"utc": "2026-10-25T21:15:49.694715+00:00", "monotonic_ns": 1745768917564250, "event": "usb_in", "bytes": 512, "elapsed_ns": 632958}
+{"utc": "2026-10-25T21:15:49.694955+00:00", "monotonic_ns": 1745768917795833, "event": "usb_in", "bytes": 512, "elapsed_ns": 144875}
+{"utc": "2026-10-25T21:15:49.695113+00:00", "monotonic_ns": 1745768917957250, "event": "usb_in", "bytes": 76, "elapsed_ns": 107958}
+{"utc": "2026-10-25T21:15:49.948412+00:00", "monotonic_ns": 1745769171259916, "event": "usb_in", "bytes": 512, "elapsed_ns": 1191541}
+{"utc": "2026-10-25T21:15:49.948650+00:00", "monotonic_ns": 1745769171495166, "event": "usb_in", "bytes": 512, "elapsed_ns": 151083}
+{"utc": "2026-10-25T21:15:49.948856+00:00", "monotonic_ns": 1745769171695958, "event": "usb_in", "bytes": 76, "elapsed_ns": 138041}
+{"utc": "2026-10-25T21:15:50.202907+00:00", "monotonic_ns": 1745769425758833, "event": "usb_in", "bytes": 512, "elapsed_ns": 692667}
+{"utc": "2026-10-25T21:15:50.203187+00:00", "monotonic_ns": 1745769426027125, "event": "usb_in", "bytes": 512, "elapsed_ns": 164833}
+{"utc": "2026-10-25T21:15:50.203359+00:00", "monotonic_ns": 1745769426197291, "event": "usb_in", "bytes": 76, "elapsed_ns": 119791}
+{"utc": "2026-10-25T21:15:50.457519+00:00", "monotonic_ns": 1745769680367791, "event": "usb_in", "bytes": 512, "elapsed_ns": 1359167}
+{"utc": "2026-10-25T21:15:50.457743+00:00", "monotonic_ns": 1745769680581458, "event": "usb_in", "bytes": 512, "elapsed_ns": 122042}
+{"utc": "2026-10-25T21:15:50.457908+00:00", "monotonic_ns": 1745769680752333, "event": "usb_in", "bytes": 76, "elapsed_ns": 122541}
+{"utc": "2026-10-25T21:15:50.714394+00:00", "monotonic_ns": 1745769937243791, "event": "usb_in", "bytes": 512, "elapsed_ns": 2307875}
+{"utc": "2026-10-25T21:15:50.714652+00:00", "monotonic_ns": 1745769937490916, "event": "usb_in", "bytes": 512, "elapsed_ns": 150708}
+{"utc": "2026-10-25T21:15:50.714805+00:00", "monotonic_ns": 1745769937641666, "event": "usb_in", "bytes": 76, "elapsed_ns": 102792}
+{"utc": "2026-10-25T21:15:50.965921+00:00", "monotonic_ns": 1745770188764541, "event": "usb_in", "bytes": 512, "elapsed_ns": 657500}
+{"utc": "2026-10-25T21:15:50.966127+00:00", "monotonic_ns": 1745770188963791, "event": "usb_in", "bytes": 512, "elapsed_ns": 125625}
+{"utc": "2026-10-25T21:15:50.966303+00:00", "monotonic_ns": 1745770189145833, "event": "usb_in", "bytes": 76, "elapsed_ns": 129875}
+{"utc": "2026-10-25T21:15:51.222151+00:00", "monotonic_ns": 1745770444989583, "event": "usb_in", "bytes": 512, "elapsed_ns": 950250}
+{"utc": "2026-10-25T21:15:51.222316+00:00", "monotonic_ns": 1745770445151500, "event": "usb_in", "bytes": 512, "elapsed_ns": 105500}
+{"utc": "2026-10-25T21:15:51.222438+00:00", "monotonic_ns": 1745770445271791, "event": "usb_in", "bytes": 76, "elapsed_ns": 92500}
+{"utc": "2026-10-25T21:15:51.478443+00:00", "monotonic_ns": 1745770701288916, "event": "usb_in", "bytes": 512, "elapsed_ns": 904666}
+{"utc": "2026-10-25T21:15:51.478697+00:00", "monotonic_ns": 1745770701538083, "event": "usb_in", "bytes": 512, "elapsed_ns": 147209}
+{"utc": "2026-10-25T21:15:51.478919+00:00", "monotonic_ns": 1745770701754166, "event": "usb_in", "bytes": 76, "elapsed_ns": 143791}
+{"utc": "2026-10-25T21:15:51.732107+00:00", "monotonic_ns": 1745770954950291, "event": "usb_in", "bytes": 512, "elapsed_ns": 1191750}
+{"utc": "2026-10-25T21:15:51.732386+00:00", "monotonic_ns": 1745770955224833, "event": "usb_in", "bytes": 512, "elapsed_ns": 161750}
+{"utc": "2026-10-25T21:15:51.732589+00:00", "monotonic_ns": 1745770955423416, "event": "usb_in", "bytes": 76, "elapsed_ns": 135458}
+{"utc": "2026-10-25T21:15:51.988212+00:00", "monotonic_ns": 1745771211054125, "event": "usb_in", "bytes": 512, "elapsed_ns": 2233583}
+{"utc": "2026-10-25T21:15:51.988442+00:00", "monotonic_ns": 1745771211276375, "event": "usb_in", "bytes": 512, "elapsed_ns": 132333}
+{"utc": "2026-10-25T21:15:51.988595+00:00", "monotonic_ns": 1745771211428041, "event": "usb_in", "bytes": 76, "elapsed_ns": 103958}
+{"utc": "2026-10-25T21:15:52.244899+00:00", "monotonic_ns": 1745771467740458, "event": "usb_in", "bytes": 512, "elapsed_ns": 2144209}
+{"utc": "2026-10-25T21:15:52.245151+00:00", "monotonic_ns": 1745771467989916, "event": "usb_in", "bytes": 512, "elapsed_ns": 152833}
+{"utc": "2026-10-25T21:15:52.245384+00:00", "monotonic_ns": 1745771468222208, "event": "usb_in", "bytes": 76, "elapsed_ns": 153750}
+{"utc": "2026-10-25T21:15:52.500331+00:00", "monotonic_ns": 1745771723171166, "event": "usb_in", "bytes": 512, "elapsed_ns": 663417}
+{"utc": "2026-10-25T21:15:52.500545+00:00", "monotonic_ns": 1745771723376708, "event": "usb_in", "bytes": 512, "elapsed_ns": 124125}
+{"utc": "2026-10-25T21:15:52.500684+00:00", "monotonic_ns": 1745771723513916, "event": "usb_in", "bytes": 76, "elapsed_ns": 94500}
+{"utc": "2026-10-25T21:15:52.757409+00:00", "monotonic_ns": 1745771980248375, "event": "usb_in", "bytes": 512, "elapsed_ns": 1620667}
+{"utc": "2026-10-25T21:15:52.757658+00:00", "monotonic_ns": 1745771980489208, "event": "usb_in", "bytes": 512, "elapsed_ns": 161292}
+{"utc": "2026-10-25T21:15:52.757811+00:00", "monotonic_ns": 1745771980641250, "event": "usb_in", "bytes": 76, "elapsed_ns": 107250}
+{"utc": "2026-10-25T21:15:53.013724+00:00", "monotonic_ns": 1745772236569875, "event": "usb_in", "bytes": 512, "elapsed_ns": 746041}
+{"utc": "2026-10-25T21:15:53.014047+00:00", "monotonic_ns": 1745772236882375, "event": "usb_in", "bytes": 512, "elapsed_ns": 194083}
+{"utc": "2026-10-25T21:15:53.014240+00:00", "monotonic_ns": 1745772237074833, "event": "usb_in", "bytes": 76, "elapsed_ns": 119125}
+{"utc": "2026-10-25T21:15:53.270418+00:00", "monotonic_ns": 1745772493252500, "event": "usb_in", "bytes": 512, "elapsed_ns": 990750}
+{"utc": "2026-10-25T21:15:53.270607+00:00", "monotonic_ns": 1745772493437416, "event": "usb_in", "bytes": 512, "elapsed_ns": 118375}
+{"utc": "2026-10-25T21:15:53.270752+00:00", "monotonic_ns": 1745772493578791, "event": "usb_in", "bytes": 76, "elapsed_ns": 99209}
+{"utc": "2026-10-25T21:15:53.523335+00:00", "monotonic_ns": 1745772746172708, "event": "usb_in", "bytes": 512, "elapsed_ns": 874208}
+{"utc": "2026-10-25T21:15:53.523585+00:00", "monotonic_ns": 1745772746414375, "event": "usb_in", "bytes": 512, "elapsed_ns": 152416}
+{"utc": "2026-10-25T21:15:53.523767+00:00", "monotonic_ns": 1745772746599583, "event": "usb_in", "bytes": 76, "elapsed_ns": 130667}
+{"utc": "2026-10-25T21:15:53.779961+00:00", "monotonic_ns": 1745773002796750, "event": "usb_in", "bytes": 512, "elapsed_ns": 1014875}
+{"utc": "2026-10-25T21:15:53.780163+00:00", "monotonic_ns": 1745773002990791, "event": "usb_in", "bytes": 512, "elapsed_ns": 117000}
+{"utc": "2026-10-25T21:15:53.780342+00:00", "monotonic_ns": 1745773003176375, "event": "usb_in", "bytes": 76, "elapsed_ns": 132042}
+{"utc": "2026-10-25T21:15:54.033083+00:00", "monotonic_ns": 1745773255919291, "event": "usb_in", "bytes": 512, "elapsed_ns": 2156250}
+{"utc": "2026-10-25T21:15:54.033320+00:00", "monotonic_ns": 1745773256147708, "event": "usb_in", "bytes": 512, "elapsed_ns": 143041}
+{"utc": "2026-10-25T21:15:54.033505+00:00", "monotonic_ns": 1745773256336666, "event": "usb_in", "bytes": 76, "elapsed_ns": 132625}
+{"utc": "2026-10-25T21:15:54.289388+00:00", "monotonic_ns": 1745773512222250, "event": "usb_in", "bytes": 512, "elapsed_ns": 688209}
+{"utc": "2026-10-25T21:15:54.289635+00:00", "monotonic_ns": 1745773512460791, "event": "usb_in", "bytes": 512, "elapsed_ns": 152958}
+{"utc": "2026-10-25T21:15:54.289817+00:00", "monotonic_ns": 1745773512641375, "event": "usb_in", "bytes": 76, "elapsed_ns": 109833}
+{"utc": "2026-10-25T21:15:54.542704+00:00", "monotonic_ns": 1745773765537333, "event": "usb_in", "bytes": 512, "elapsed_ns": 686042}
+{"utc": "2026-10-25T21:15:54.542974+00:00", "monotonic_ns": 1745773765803958, "event": "usb_in", "bytes": 512, "elapsed_ns": 175750}
+{"utc": "2026-10-25T21:15:54.543190+00:00", "monotonic_ns": 1745773766014041, "event": "usb_in", "bytes": 76, "elapsed_ns": 137916}
+{"utc": "2026-10-25T21:15:54.799600+00:00", "monotonic_ns": 1745774022429041, "event": "usb_in", "bytes": 512, "elapsed_ns": 5574125}
+{"utc": "2026-10-25T21:15:54.799811+00:00", "monotonic_ns": 1745774022635875, "event": "usb_in", "bytes": 512, "elapsed_ns": 141208}
+{"utc": "2026-10-25T21:15:54.799964+00:00", "monotonic_ns": 1745774022785625, "event": "usb_in", "bytes": 76, "elapsed_ns": 104042}
+{"utc": "2026-10-25T21:15:55.052565+00:00", "monotonic_ns": 1745774275400041, "event": "usb_in", "bytes": 512, "elapsed_ns": 923000}
+{"utc": "2026-10-25T21:15:55.052845+00:00", "monotonic_ns": 1745774275668666, "event": "usb_in", "bytes": 512, "elapsed_ns": 177250}
+{"utc": "2026-10-25T21:15:55.053031+00:00", "monotonic_ns": 1745774275852125, "event": "usb_in", "bytes": 76, "elapsed_ns": 135000}
+{"utc": "2026-10-25T21:15:55.053109+00:00", "monotonic_ns": 1745774275930083, "event": "printer_status", "status": "processing", "status_detail": "MarkerSupplyAttention", "BST": "84", "DJS": "PR", "DBS": "NO", "DOC": "5,01,NO", "HRC": "PE", "CTK": "CL,LOW,/,BK,SETZ", "PID": "03,01,00"}
+{"utc": "2026-10-25T21:15:55.308974+00:00", "monotonic_ns": 1745774531803833, "event": "usb_in", "bytes": 512, "elapsed_ns": 701500}
+{"utc": "2026-10-25T21:15:55.309220+00:00", "monotonic_ns": 1745774532042708, "event": "usb_in", "bytes": 512, "elapsed_ns": 158000}
+{"utc": "2026-10-25T21:15:55.309381+00:00", "monotonic_ns": 1745774532201375, "event": "usb_in", "bytes": 76, "elapsed_ns": 115959}
+{"utc": "2026-10-25T21:15:55.309458+00:00", "monotonic_ns": 1745774532277750, "event": "printer_status", "status": "processing", "status_detail": "MarkerSupplyAttention", "BST": "84", "DJS": "EJ", "DBS": "NO", "DOC": "5,01,NO", "HRC": "PE", "CTK": "CL,LOW,/,BK,SETZ", "PID": "03,01,00"}
+{"utc": "2026-10-25T21:15:55.563803+00:00", "monotonic_ns": 1745774786625041, "event": "usb_in", "bytes": 512, "elapsed_ns": 1848500}
+{"utc": "2026-10-25T21:15:55.563942+00:00", "monotonic_ns": 1745774786758750, "event": "usb_in", "bytes": 512, "elapsed_ns": 94500}
+{"utc": "2026-10-25T21:15:55.564038+00:00", "monotonic_ns": 1745774786854125, "event": "usb_in", "bytes": 76, "elapsed_ns": 79334}
+{"utc": "2026-10-25T21:15:55.819893+00:00", "monotonic_ns": 1745775042721375, "event": "usb_in", "bytes": 512, "elapsed_ns": 766208}
+{"utc": "2026-10-25T21:15:55.820125+00:00", "monotonic_ns": 1745775042951625, "event": "usb_in", "bytes": 512, "elapsed_ns": 139167}
+{"utc": "2026-10-25T21:15:55.820363+00:00", "monotonic_ns": 1745775043183916, "event": "usb_in", "bytes": 76, "elapsed_ns": 161541}
+{"utc": "2026-10-25T21:15:56.072071+00:00", "monotonic_ns": 1745775294897083, "event": "usb_in", "bytes": 512, "elapsed_ns": 1305417}
+{"utc": "2026-10-25T21:15:56.072296+00:00", "monotonic_ns": 1745775295114708, "event": "usb_in", "bytes": 512, "elapsed_ns": 143209}
+{"utc": "2026-10-25T21:15:56.072443+00:00", "monotonic_ns": 1745775295260125, "event": "usb_in", "bytes": 76, "elapsed_ns": 105000}
+{"utc": "2026-10-25T21:15:56.330273+00:00", "monotonic_ns": 1745775553097041, "event": "usb_in", "bytes": 512, "elapsed_ns": 2678166}
+{"utc": "2026-10-25T21:15:56.330484+00:00", "monotonic_ns": 1745775553308000, "event": "usb_in", "bytes": 512, "elapsed_ns": 137667}
+{"utc": "2026-10-25T21:15:56.330687+00:00", "monotonic_ns": 1745775553504916, "event": "usb_in", "bytes": 76, "elapsed_ns": 128750}
+{"utc": "2026-10-25T21:15:56.586864+00:00", "monotonic_ns": 1745775809689875, "event": "usb_in", "bytes": 512, "elapsed_ns": 1018209}
+{"utc": "2026-10-25T21:15:56.587139+00:00", "monotonic_ns": 1745775809961625, "event": "usb_in", "bytes": 512, "elapsed_ns": 162166}
+{"utc": "2026-10-25T21:15:56.587331+00:00", "monotonic_ns": 1745775810148333, "event": "usb_in", "bytes": 76, "elapsed_ns": 117458}
+{"utc": "2026-10-25T21:15:56.843028+00:00", "monotonic_ns": 1745776065855083, "event": "usb_in", "bytes": 512, "elapsed_ns": 657791}
+{"utc": "2026-10-25T21:15:56.843261+00:00", "monotonic_ns": 1745776066082750, "event": "usb_in", "bytes": 512, "elapsed_ns": 137917}
+{"utc": "2026-10-25T21:15:56.843496+00:00", "monotonic_ns": 1745776066317208, "event": "usb_in", "bytes": 76, "elapsed_ns": 162208}
+{"utc": "2026-10-25T21:15:57.098547+00:00", "monotonic_ns": 1745776321369708, "event": "usb_in", "bytes": 512, "elapsed_ns": 682291}
+{"utc": "2026-10-25T21:15:57.098807+00:00", "monotonic_ns": 1745776321628333, "event": "usb_in", "bytes": 512, "elapsed_ns": 170292}
+{"utc": "2026-10-25T21:15:57.099029+00:00", "monotonic_ns": 1745776321851333, "event": "usb_in", "bytes": 76, "elapsed_ns": 147334}
+{"utc": "2026-10-25T21:15:57.354880+00:00", "monotonic_ns": 1745776577701958, "event": "usb_in", "bytes": 512, "elapsed_ns": 665875}
+{"utc": "2026-10-25T21:15:57.355103+00:00", "monotonic_ns": 1745776577917041, "event": "usb_in", "bytes": 512, "elapsed_ns": 141167}
+{"utc": "2026-10-25T21:15:57.355245+00:00", "monotonic_ns": 1745776578057458, "event": "usb_in", "bytes": 76, "elapsed_ns": 100208}
+{"utc": "2026-10-25T21:15:57.610276+00:00", "monotonic_ns": 1745776833098625, "event": "usb_in", "bytes": 512, "elapsed_ns": 745042}
+{"utc": "2026-10-25T21:15:57.610513+00:00", "monotonic_ns": 1745776833327125, "event": "usb_in", "bytes": 512, "elapsed_ns": 152000}
+{"utc": "2026-10-25T21:15:57.610698+00:00", "monotonic_ns": 1745776833519041, "event": "usb_in", "bytes": 76, "elapsed_ns": 138083}
+{"utc": "2026-10-25T21:15:57.864908+00:00", "monotonic_ns": 1745777087730166, "event": "usb_in", "bytes": 512, "elapsed_ns": 676750}
+{"utc": "2026-10-25T21:15:57.865190+00:00", "monotonic_ns": 1745777088006750, "event": "usb_in", "bytes": 512, "elapsed_ns": 181125}
+{"utc": "2026-10-25T21:15:57.865381+00:00", "monotonic_ns": 1745777088194208, "event": "usb_in", "bytes": 76, "elapsed_ns": 119542}
+{"utc": "2026-10-25T21:15:58.118553+00:00", "monotonic_ns": 1745777341367458, "event": "usb_in", "bytes": 512, "elapsed_ns": 606041}
+{"utc": "2026-10-25T21:15:58.118693+00:00", "monotonic_ns": 1745777341502125, "event": "usb_in", "bytes": 512, "elapsed_ns": 87125}
+{"utc": "2026-10-25T21:15:58.118785+00:00", "monotonic_ns": 1745777341596541, "event": "usb_in", "bytes": 76, "elapsed_ns": 68042}
+{"utc": "2026-10-25T21:15:58.370056+00:00", "monotonic_ns": 1745777592876166, "event": "usb_in", "bytes": 512, "elapsed_ns": 691834}
+{"utc": "2026-10-25T21:15:58.370321+00:00", "monotonic_ns": 1745777593137500, "event": "usb_in", "bytes": 512, "elapsed_ns": 172416}
+{"utc": "2026-10-25T21:15:58.370553+00:00", "monotonic_ns": 1745777593364416, "event": "usb_in", "bytes": 76, "elapsed_ns": 156000}
+{"utc": "2026-10-25T21:15:58.622124+00:00", "monotonic_ns": 1745777844944458, "event": "usb_in", "bytes": 512, "elapsed_ns": 1102959}
+{"utc": "2026-10-25T21:15:58.622395+00:00", "monotonic_ns": 1745777845210083, "event": "usb_in", "bytes": 512, "elapsed_ns": 170791}
+{"utc": "2026-10-25T21:15:58.622630+00:00", "monotonic_ns": 1745777845443958, "event": "usb_in", "bytes": 76, "elapsed_ns": 157125}
+{"utc": "2026-10-25T21:15:58.877283+00:00", "monotonic_ns": 1745778100097500, "event": "usb_in", "bytes": 512, "elapsed_ns": 1073500}
+{"utc": "2026-10-25T21:15:58.877478+00:00", "monotonic_ns": 1745778100288000, "event": "usb_in", "bytes": 512, "elapsed_ns": 123625}
+{"utc": "2026-10-25T21:15:58.877619+00:00", "monotonic_ns": 1745778100427083, "event": "usb_in", "bytes": 76, "elapsed_ns": 97875}
+{"utc": "2026-10-25T21:15:59.128632+00:00", "monotonic_ns": 1745778351446875, "event": "usb_in", "bytes": 512, "elapsed_ns": 642834}
+{"utc": "2026-10-25T21:15:59.128849+00:00", "monotonic_ns": 1745778351657250, "event": "usb_in", "bytes": 512, "elapsed_ns": 141250}
+{"utc": "2026-10-25T21:15:59.129017+00:00", "monotonic_ns": 1745778351825000, "event": "usb_in", "bytes": 76, "elapsed_ns": 104708}
+{"utc": "2026-10-25T21:15:59.384827+00:00", "monotonic_ns": 1745778607640583, "event": "usb_in", "bytes": 512, "elapsed_ns": 638417}
+{"utc": "2026-10-25T21:15:59.385014+00:00", "monotonic_ns": 1745778607822958, "event": "usb_in", "bytes": 512, "elapsed_ns": 111334}
+{"utc": "2026-10-25T21:15:59.385157+00:00", "monotonic_ns": 1745778607962416, "event": "usb_in", "bytes": 76, "elapsed_ns": 100583}
+{"utc": "2026-10-25T21:15:59.637903+00:00", "monotonic_ns": 1745778860710208, "event": "usb_in", "bytes": 512, "elapsed_ns": 578583}
+{"utc": "2026-10-25T21:15:59.638049+00:00", "monotonic_ns": 1745778860851708, "event": "usb_in", "bytes": 512, "elapsed_ns": 94666}
+{"utc": "2026-10-25T21:15:59.638142+00:00", "monotonic_ns": 1745778860944583, "event": "usb_in", "bytes": 76, "elapsed_ns": 75500}
+{"utc": "2026-10-25T21:15:59.893907+00:00", "monotonic_ns": 1745779116726083, "event": "usb_in", "bytes": 512, "elapsed_ns": 671459}
+{"utc": "2026-10-25T21:15:59.894202+00:00", "monotonic_ns": 1745779117014750, "event": "usb_in", "bytes": 512, "elapsed_ns": 172417}
+{"utc": "2026-10-25T21:15:59.894441+00:00", "monotonic_ns": 1745779117254083, "event": "usb_in", "bytes": 76, "elapsed_ns": 150042}
+{"utc": "2026-10-25T21:16:00.150227+00:00", "monotonic_ns": 1745779373034041, "event": "usb_in", "bytes": 512, "elapsed_ns": 593125}
+{"utc": "2026-10-25T21:16:00.150373+00:00", "monotonic_ns": 1745779373173958, "event": "usb_in", "bytes": 512, "elapsed_ns": 98291}
+{"utc": "2026-10-25T21:16:00.150471+00:00", "monotonic_ns": 1745779373272041, "event": "usb_in", "bytes": 76, "elapsed_ns": 82667}
+{"utc": "2026-10-25T21:16:00.406593+00:00", "monotonic_ns": 1745779629405083, "event": "usb_in", "bytes": 512, "elapsed_ns": 1039834}
+{"utc": "2026-10-25T21:16:00.406835+00:00", "monotonic_ns": 1745779629644625, "event": "usb_in", "bytes": 512, "elapsed_ns": 151375}
+{"utc": "2026-10-25T21:16:00.407057+00:00", "monotonic_ns": 1745779629861625, "event": "usb_in", "bytes": 76, "elapsed_ns": 146167}
+{"utc": "2026-10-25T21:16:00.659238+00:00", "monotonic_ns": 1745779882055041, "event": "usb_in", "bytes": 512, "elapsed_ns": 673917}
+{"utc": "2026-10-25T21:16:00.659510+00:00", "monotonic_ns": 1745779882313958, "event": "usb_in", "bytes": 512, "elapsed_ns": 162750}
+{"utc": "2026-10-25T21:16:00.659692+00:00", "monotonic_ns": 1745779882501416, "event": "usb_in", "bytes": 76, "elapsed_ns": 131750}
+{"utc": "2026-10-25T21:16:00.919168+00:00", "monotonic_ns": 1745780141980125, "event": "usb_in", "bytes": 512, "elapsed_ns": 4402542}
+{"utc": "2026-10-25T21:16:00.919457+00:00", "monotonic_ns": 1745780142264166, "event": "usb_in", "bytes": 512, "elapsed_ns": 195208}
+{"utc": "2026-10-25T21:16:00.919645+00:00", "monotonic_ns": 1745780142447750, "event": "usb_in", "bytes": 76, "elapsed_ns": 120750}
+{"utc": "2026-10-25T21:16:00.919729+00:00", "monotonic_ns": 1745780142529500, "event": "printer_status", "status": "processing", "status_detail": "MarkerSupplyAttention", "BST": "84", "DJS": "ID", "DBS": "NO", "DOC": "5,00,NO", "HRC": "PE", "CTK": "CL,LOW,/,BK,SETZ", "PID": "00,00,01"}
+{"utc": "2026-10-25T21:16:01.173986+00:00", "monotonic_ns": 1745780396793500, "event": "usb_in", "bytes": 364, "elapsed_ns": 628083}
+{"utc": "2026-10-25T21:16:01.174218+00:00", "monotonic_ns": 1745780397024375, "event": "print_ack", "operation": "EndJob"}
+{"utc": "2026-10-25T21:16:01.174279+00:00", "monotonic_ns": 1745780397080250, "event": "print_transfer_complete", "bytes": 308693, "end_job_acknowledged": true}

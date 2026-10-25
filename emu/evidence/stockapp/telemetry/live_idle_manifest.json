@@ -1,0 +1,29 @@
+{
+  "source": "physical USB collection using tools/stocktrace.py",
+  "capture": "live_idle.jsonl",
+  "capture_sha256": "2e4511a183a3ea0c81bc0b370015f5cc0ae9146895bbde62913066b81ecc91a6",
+  "installed_package_sha256": "380b98ca115955b8a19d410979a42374b219ced94eb03f5c7c715f28f787461e",
+  "installation_evidence": "../bringup/telemetry_v1/physical_install.json",
+  "collector": "tools/stocktrace.py",
+  "collector_sha256": "89139193c025fb1eb4afbf94d8c8c29a3e91fddef6435efec21e7699d0d219ae",
+  "command": "python tools/stocktrace.py --count 5 --interval 0.5 --setup-history --output emu/evidence/stockapp/telemetry/live_idle.jsonl",
+  "stimulus": "Idle stock runtime; telemetry control-IN requests only. No scan or print job was initiated.",
+  "first_utc": "2026-10-25T20:19:25.764227+00:00",
+  "last_utc": "2026-10-25T20:19:28.346055+00:00",
+  "snapshots": 5,
+  "all_initialized_attached": true,
+  "all_native_error_zero": true,
+  "setup_history_bytes_per_snapshot": 2048,
+  "collection_elapsed_ms": [
+    140.503,
+    140.036,
+    139.133,
+    139.234,
+    139.986
+  ],
+  "limits": [
+    "Software-state snapshots and split histories are not atomic.",
+    "Telemetry requests themselves enter the SETUP rings; indices wrap modulo 256.",
+    "No scan/print coexistence, long-duration or full hardware trace qualification."
+  ]
+}

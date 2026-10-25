@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "package_sha256": "380b98ca115955b8a19d410979a42374b219ced94eb03f5c7c715f28f787461e",
+  "passthrough_cases": 4088,
+  "accepted_boundary_reads": 12,
+  "rejected_requests": 11,
+  "compiled_user_mode_hook": true,
+  "native_lookup_and_in_continuation": true,
+  "native_completion_no_callback": true,
+  "stack_alignment_0_and_4": true,
+  "host_reader_roundtrip": true,
+  "no_mmio_mapping": true,
+  "write_allowlist_enforced": true,
+  "info_short_reply_lengths_tested": 64,
+  "boot_prefix_unchanged": true,
+  "hardware_tested": false,
+  "limits": [
+    "Fixture starts after native SETUP acquisition; USB electrical delivery is not modeled.",
+    "RAM snapshots are not atomic; actual cache, DMA and concurrency need hardware validation."
+  ],
+  "test_source_sha256": "b01c7e4a5ed07f06d9f5e3897e4fe8be5b40b11390d7effd6a9206fe1cee1436",
+  "host_source_sha256": "89139193c025fb1eb4afbf94d8c8c29a3e91fddef6435efec21e7699d0d219ae"
+}

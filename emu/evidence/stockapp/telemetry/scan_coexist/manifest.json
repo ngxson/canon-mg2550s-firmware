@@ -1,0 +1,101 @@
+{
+  "source": "physical USB collection; stock telemetry app with scan jobs from tools/stock_scan.py",
+  "installed_package_sha256": "380b98ca115955b8a19d410979a42374b219ced94eb03f5c7c715f28f787461e",
+  "installation_evidence": "../../bringup/telemetry_v1/physical_install.json",
+  "host": "macOS, direct USB, PyUSB/libusb; collector and scan tool ran as separate processes",
+  "tools": {
+    "tools/stocktrace.py": "89139193c025fb1eb4afbf94d8c8c29a3e91fddef6435efec21e7699d0d219ae",
+    "tools/stock_scan.py": "ee074c6d4ac046d7d627ac0d08b8bbdac598fe0b67682ff70e356a18918709d7",
+    "tools/stockusb/scan.py": "0a64b5771fce7e7be8c206614c72ff9c999d789f68957bfadadf5d816735f390",
+    "tools/stockusb/transport.py": "7d9a7875bd277d92998cba581c1e6e8fe558c97e84096e85aeb39d0eb9d1d0ed"
+  },
+  "stimulus": "50x50 mm crop at (10,10) mm, 150 dpi RGB with calibration; empty platen; three consecutive jobs",
+  "runs": [
+    {
+      "name": "scan_baseline",
+      "scan_command": "python tools/stock_scan.py --output scan_baseline.png --dpi 150 --x 10 --y 10 --width 50 --height 50 --trace scan_baseline_trace.jsonl",
+      "scan_trace": "scan_baseline_trace.jsonl",
+      "scan_trace_sha256": "90489c5dcf3e6241a95116e6c325bbc3e8b3380f55a9cd807e517a20c42293f2",
+      "scan_first_utc": "2026-10-25T20:40:01.697954+00:00",
+      "scan_last_utc": "2026-10-25T20:40:10.870615+00:00",
+      "scan_trace_events": 1204,
+      "image": "scan_baseline.png",
+      "image_sha256": "bcec7319a68e7c749df09b1c2ef1b990c8ab2d5f7d9a9ba30468d67edd365ea5",
+      "image_pixels": "295x295 RGB",
+      "result": "rows 295, session_closed true, exit 0"
+    },
+    {
+      "name": "scan_with_telemetry",
+      "scan_command": "python tools/stock_scan.py --output scan_with_telemetry.png --dpi 150 --x 10 --y 10 --width 50 --height 50 --trace scan_with_telemetry_trace.jsonl",
+      "scan_trace": "scan_with_telemetry_trace.jsonl",
+      "scan_trace_sha256": "5cfc775f3eca950946f5cedaf8ac1b43075ec2ab596c2a24cc500d8b1cdd4498",
+      "scan_first_utc": "2026-10-25T20:40:28.640197+00:00",
+      "scan_last_utc": "2026-10-25T20:40:36.920587+00:00",
+      "scan_trace_events": 934,
+      "image": "scan_with_telemetry.png",
+      "image_sha256": "b09be332975c9a540978eacf5daff6202fe4387f60acf0c008d0f8ae2e4614a5",
+      "image_pixels": "295x295 RGB",
+      "result": "rows 295, session_closed true, exit 0",
+      "telemetry_command": "python tools/stocktrace.py --count 70 --interval 0.25 --setup-history --output telemetry_during_scan.jsonl",
+      "telemetry_capture": "telemetry_during_scan.jsonl",
+      "telemetry_capture_sha256": "7b4fd0bf9d860af1af3bbb8bb03903f66da1c0f81e7bd053f19411163b70c47a",
+      "telemetry_first_utc": "2026-10-25T20:40:25.626755+00:00",
+      "telemetry_last_utc": "2026-10-25T20:40:53.263982+00:00",
+      "snapshots": 70,
+      "all_initialized_attached": true,
+      "all_native_error_zero": true
+    },
+    {
+      "name": "scan_with_fast_telemetry",
+      "scan_command": "python tools/stock_scan.py --output scan_with_fast_telemetry.png --dpi 150 --x 10 --y 10 --width 50 --height 50 --trace scan_with_fast_telemetry_trace.jsonl",
+      "scan_trace": "scan_with_fast_telemetry_trace.jsonl",
+      "scan_trace_sha256": "dfe0d2ef5c2322d4ece711f02230661cec349973de99d19156cd9cdae3d04062",
+      "scan_first_utc": "2026-10-25T20:42:38.149291+00:00",
+      "scan_last_utc": "2026-10-25T20:42:45.183369+00:00",
+      "scan_trace_events": 1165,
+      "image": "scan_with_fast_telemetry.png",
+      "image_sha256": "9e40ba1527cb2e2facbedab3322adae8ec1b617af7a7e1e4fae0f9f5fdd96b87",
+      "image_pixels": "295x295 RGB",
+      "result": "rows 295, session_closed true, exit 0",
+      "telemetry_command": "python tools/stocktrace.py --count 170 --interval 0.1 --output telemetry_fast_during_scan.jsonl",
+      "telemetry_capture": "telemetry_fast_during_scan.jsonl",
+      "telemetry_capture_sha256": "66c9004b2ae2acac69af301e8ccb13e64855994aa9a09e46ef58159d8e5a72d2",
+      "telemetry_first_utc": "2026-10-25T20:42:35.140289+00:00",
+      "telemetry_last_utc": "2026-10-25T20:42:53.749383+00:00",
+      "snapshots": 170,
+      "all_initialized_attached": true,
+      "all_native_error_zero": true
+    }
+  ],
+  "findings": {
+    "scan_success_all_runs": true,
+    "image_phase_seconds": {
+      "scan_baseline": 5.48,
+      "scan_with_telemetry": 6.91,
+      "scan_with_fast_telemetry": 5.65
+    },
+    "max_bulk_in_ms": {
+      "scan_baseline": 33.8,
+      "scan_with_telemetry": 196.8,
+      "scan_with_fast_telemetry": 27.9
+    },
+    "non_telemetry_setup_entries_during_job": [
+      "800600030000fe00 (scan tool GET_DESCRIPTOR string 0)"
+    ],
+    "messages_per_telemetry_setup": 4,
+    "idle_stock_messages_per_0.1s": 0,
+    "session_start_messages": 96,
+    "calibration_poll_messages": 0,
+    "image_transfer_messages": 2187,
+    "image_transfer_seconds": 5.65,
+    "d420_requests": 362,
+    "d420_empty_blocks": 361,
+    "d420_data_blocks": 38
+  },
+  "limits": [
+    "Message counts derive from the 8-bit ring index at region 1 bytes 1-2; IDs are not exposed.",
+    "Snapshots and split rings are not atomic; attribution may shift one snapshot.",
+    "Only this crop/resolution is qualified; print tool and full-platen scans are not.",
+    "No MMIO/IRQ/DMA/motor state is captured."
+  ]
+}

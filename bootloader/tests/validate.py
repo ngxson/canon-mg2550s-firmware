@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 import struct
 import zlib
-from model import Model, ROOT, setup, TICKS_PER_MS
+from model import Model, ROOT, BUILD, setup, TICKS_PER_MS
 
 STAY = ('stay', setup(0x40, 0x40))
 def begin(data): return ('begin', setup(0x40, 0x43, len(data)&65535, len(data)>>16))
@@ -17,9 +17,9 @@ APP_SEQUENCE = [(0, 0x10, 0, 0), (0x20, 0, 0, 0),
 
 
 def main():
-    image = (ROOT/'build/factory.bin').read_bytes()
-    app = (ROOT/'build/application.bin').read_bytes()
-    loader = (ROOT/'build/bootloader.bin').read_bytes()
+    image = (BUILD/'factory.bin').read_bytes()
+    app = (BUILD/'application.bin').read_bytes()
+    loader = (BUILD/'bootloader.bin').read_bytes()
     report = {'factory_sha256': hashlib.sha256(image).hexdigest(), 'cases': {}}
 
     def record(name, emulator):
@@ -188,7 +188,7 @@ def main():
     record('stage0_recovers_after_interrupted_second_stage_update',e)
 
     report['all_assertions_passed'] = True
-    (ROOT/'build/validation.json').write_text(json.dumps(report, indent=2)+'\n')
+    (BUILD/'validation.json').write_text(json.dumps(report, indent=2)+'\n')
 
 
 if __name__ == '__main__': main()

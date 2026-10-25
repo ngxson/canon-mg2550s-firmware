@@ -1,0 +1,98 @@
+{
+  "status": "Running stock experiment with guarded restart/update and stock USB management path",
+  "startup_smoke": false,
+  "runtime": true,
+  "runtime_patches": [
+    {
+      "address": "0x126b2",
+      "original": "1400069a",
+      "replacement": "fdf7d1fe",
+      "purpose": "Stock USB request 0x30007 enters held rescue before queuing or EEPROM latch writes"
+    },
+    {
+      "address": "0x154146",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x154162",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x15417e",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x11004",
+      "original": "190000eb",
+      "replacement": "080000ef",
+      "purpose": "Direct native app restart entry also enters our held rescue"
+    }
+  ],
+  "native_cpu": true,
+  "checkpoint": {
+    "address": "0x49ad2",
+    "original": "4068f8bd",
+    "replacement": "fedffee7"
+  },
+  "shim_symbols": {
+    "mg_boot_vector_api": "0x40",
+    "smoke_svc": "0x10210",
+    "caught_svc": "0x1025c",
+    "smoke_undef": "0x10264",
+    "smoke_pabort": "0x10274",
+    "smoke_dabort": "0x10284",
+    "smoke_reserved": "0x10294",
+    "smoke_fiq": "0x102a4",
+    "smoke_rescue": "0x102b4",
+    "stockapp_register": "0x102d4",
+    "stockapp_prepare_rescue": "0x103b4",
+    "stockapp_event_hook": "0x10458",
+    "management_rescue": "0x10470",
+    "stockapp_management_event": "0x10478",
+    "stockapp_native_cpu": "0x10490",
+    "shim_entry": "0x200200f0",
+    "registration_failed": "0x20020130",
+    "__stockapp_register_veneer": "0x20020158",
+    "__stockapp_native_cpu_veneer": "0x20020160",
+    "__smoke_rescue_veneer": "0x20020168"
+  },
+  "smoke_stop_patch": null,
+  "registered_vectors": true,
+  "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "protected_prefix_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+  "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+  "candidate_sha256": "0149b1397cb0a88944b7df12867fdb53215d84da42286433aa624c96a8b2859c",
+  "package_sha256": "95d64fcc46df585bd4059f076f125680356605423dcd0923850568e57215c66b",
+  "payload_length": 2031584,
+  "payload_ram_end": "0x2020ffe0",
+  "shim_flash": "0x10110",
+  "shim_ram": "0x200200f0",
+  "shim_bytes": 972,
+  "helper_veneer_patches": [
+    {
+      "pc": "0x1509c8",
+      "original_target": "0x10000",
+      "target": "0x10d00"
+    }
+  ],
+  "stock_dependencies": [
+    "stock runtime, RTOS, handlers and device drivers",
+    "stock short delay helpers copied into app-slot padding"
+  ],
+  "source_sha256": {
+    "emu/stockapp/build.py": "eccf769106f8e61a647d2420d969f26d7971e0389273290f81825e10429054ec",
+    "app/stockapp/smoke/entry.S": "2dc44b93e5460089c824a3bc8f41a120f6a455d50513c13f3f547f4e32fcf466",
+    "app/stockapp/smoke/control.c": "2c1b5822b7cca90a57a14fb319fd1f9257c8346be10cb5f2c31e3b8164cc5c25",
+    "app/stockapp/smoke/shim.ld": "2e70393cbee72188fdd1341f216ebd0aa74a19a1760fb7897d0f9d78e057fde3",
+    "bootloader/include/vectors.h": "1c675298f52de31b488cfc59559e9c48f6d5366d5e281928090a69ff205d2c91",
+    "app/stockapp/runtime/hook.S": "57845f29b54fec34dfc50da354e798ac44fff1cb679dc2cf6fd4c1e3e26defca",
+    "app/stockapp/runtime/management.c": "b741f81ab2d611e2670dad40fe66b80699e73773410de1e10f82c3d28e26cddf",
+    "app/stockapp/runtime/native_cpu.c": "53e870e33c2fcd155ea2ea46067057d555bc98ebfa777080ed2f7eab16dc829f"
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "utc": "2026-10-25T18:40:41.568010+00:00",
+  "operation": "user-requested printer power cycle before restoring original app",
+  "endpoint_source": "historical project progress notes, previous verified printer power cycle",
+  "watcher_ready": true,
+  "result": "request_accepted",
+  "curl_exit_code": 0,
+  "http_status": "200"
+}

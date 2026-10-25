@@ -1,0 +1,29 @@
+{
+  "observed_utc": "2026-10-25T15:59:23.878672+00:00",
+  "scope": "Read-only USB descriptors and printer GET_DEVICE_ID; no reset, configuration change, upload or EEPROM command",
+  "devices": [
+    {
+      "vid": "0x4a9",
+      "pid": "0x176d",
+      "bcdDevice": "0x205",
+      "interfaces": [
+        {
+          "number": 0,
+          "alternate": 0,
+          "class": 255,
+          "subclass": 0,
+          "protocol": 255
+        },
+        {
+          "number": 1,
+          "alternate": 0,
+          "class": 7,
+          "subclass": 1,
+          "protocol": 2,
+          "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe,IVEC,IVECPLI;MDL:MG2500 series;CLS:PRINTER;DES:Canon MG2500 series;VER:2.050;STA:10;FSI:00;HRI:D;MSI:AOFF,B240,E3,HASF,JOFF,K21000700;PDR:4;PSE:AGPB59861;CID:CA_BJR356_IJP;",
+          "length_matches": true
+        }
+      ]
+    }
+  ]
+}

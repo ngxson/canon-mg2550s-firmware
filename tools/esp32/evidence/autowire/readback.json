@@ -1,0 +1,25 @@
+{
+  "utc": "2026-10-25T18:08:47.974607+00:00",
+  "printer_flash_writes": 0,
+  "esp_partition_offset": "0x10000",
+  "bytes_read": 216528,
+  "sha256": "0934821328b07d92b110ba3ee92b3c9c48ce28afc41dd794c741080dccd1f812",
+  "byte_identical": true,
+  "final_rom_pins": {
+    "gpio_output_enable": "0x0",
+    "pins": {
+      "4": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      },
+      "5": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      }
+    }
+  }
+}

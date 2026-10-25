@@ -1,0 +1,12 @@
+{
+  "body_hex": "424a4c53544152540a436f6e74726f6c4d6f64653d436f6d6d6f6e0a4046524f4d55504d4f44450a424a4c454e440a",
+  "package_sha256": "93466d1d3901d72eb32908ce6e54c65475c648aef7b73d602fed3a0258e6d079",
+  "fixture": "Stock BJL parser called at idle with modeled FIFO, native startup and app patches; no USB device used",
+  "observed_stop": "tick limit at idle",
+  "pc": "0x104da2",
+  "instructions": 11879581,
+  "cpu_error": null,
+  "recovery_hook_reached": false,
+  "flash_unchanged": true,
+  "decision": "Use the original body that passed guard_validation.json, adding only the stream selector on hardware"
+}

@@ -1,0 +1,103 @@
+{
+  "started_utc": "2026-10-25T17:47:31.091736+00:00",
+  "phase": "install",
+  "result": "audit_app_installed",
+  "events": [
+    {
+      "event": "application_responding",
+      "product": "MG2550s App",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "protected_upload_begin",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      },
+      "bytes": 95520,
+      "sha256": "d18a065350c76b6c6984ed068a166494d3999a8ba40ac978dca8d601f163f7c0",
+      "flash_start": "0x10000",
+      "request": "0x43"
+    },
+    {
+      "event": "payload_transferred",
+      "bytes": 95520
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "app_readback_verified_by_updater",
+      "sha256": "d18a065350c76b6c6984ed068a166494d3999a8ba40ac978dca8d601f163f7c0"
+    },
+    {
+      "event": "application_responding",
+      "product": "MG2550s Boot Audit",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    }
+  ],
+  "bytes_transferred": 95520,
+  "finished_utc": "2026-10-25T17:47:40.422728+00:00"
+}

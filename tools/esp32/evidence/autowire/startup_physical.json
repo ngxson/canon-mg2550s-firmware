@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-25T18:09:15.892665+00:00",
+  "esp_reset_only": true,
+  "printer_reset_requested": false,
+  "printer_flash_writes": 0,
+  "lines": [
+    "ESP-ROM:esp32c3-api1-20210207",
+    "Build:Feb  7 2021",
+    "rst:0x15 (USB_UART_CHIP_RESET),boot:0xd (SPI_FAST_FLASH_BOOT)",
+    "Saved PC:0x403807ac",
+    "SPIWP:0xee",
+    "mode:DIO, clock div:1",
+    "load:0x3fcd5830,len:0x3f8",
+    "load:0x403cbf10,len:0x8c8",
+    "load:0x403ce710,len:0x258c",
+    "entry 0x403cbf10",
+    "READY RSC1 AUTOWIRE=1",
+    "DETECTING",
+    "PROBE SDA5 SCL4 RX=0 READ=0 EXCHANGES=0 DROP=0",
+    "PROBE SDA4 SCL5 RX=3 READ=1 EXCHANGES=1 DROP=0",
+    "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING",
+    "INFO RSC1 FLOATING AUTOWIRE=1 WIRING=VERIFIED",
+    "FLOATING",
+    "ERROR WIRING_UNVERIFIED",
+    "FLOATING"
+  ],
+  "automatic_result": "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING",
+  "float_clears_validation": "ERROR WIRING_UNVERIFIED"
+}

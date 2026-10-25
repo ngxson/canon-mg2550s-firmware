@@ -1,0 +1,29 @@
+{
+  "utc": "2026-10-25T18:09:33.428616+00:00",
+  "printer_reset_requested": false,
+  "printer_flash_writes": 0,
+  "lines": [
+    "SEND INFO",
+    "INFO RSC1 FLOATING AUTOWIRE=1 WIRING=UNVERIFIED",
+    "SEND FLOAT",
+    "FLOATING",
+    "SEND DETECT",
+    "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING",
+    "SEND FLOAT",
+    "FLOATING"
+  ],
+  "detected": "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING",
+  "printer_after": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  }
+}

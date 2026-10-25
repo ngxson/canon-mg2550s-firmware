@@ -1,0 +1,23 @@
+{
+  "started_utc": "2026-10-25T19:14:37.786995+00:00",
+  "phase": "verify-rescue",
+  "package_sha256": "93466d1d3901d72eb32908ce6e54c65475c648aef7b73d602fed3a0258e6d079",
+  "result": "error",
+  "events": [
+    {
+      "utc": "2026-10-25T19:14:37.805173+00:00",
+      "event": "stock_usb_responding",
+      "pid": "0x176d",
+      "bcdDevice": "0x205",
+      "interface": 1,
+      "out_endpoint": 1,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe,IVEC,IVECPLI;MDL:MG2500 series;CLS:PRINTER;DES:Canon MG2500 series;VER:2.050;STA:10;FSI:00;HRI:D;MSI:AOFF,B240,E3,HASF,JOFF,K21000700;PDR:4;PSE:AGPB59861;CID:CA_BJR356_IJP;"
+    },
+    {
+      "utc": "2026-10-25T19:14:37.805449+00:00",
+      "event": "sending_guarded_stock_rescue_request",
+      "payload_hex": "1b5b4b0200001f424a4c53544152540a4046524f4d55504d4f44450a424a4c454e440a"
+    }
+  ],
+  "error": "No responsive bootloader USB device; use I2C or reset if firmware is stuck"
+}

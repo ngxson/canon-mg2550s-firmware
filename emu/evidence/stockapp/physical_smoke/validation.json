@@ -1,0 +1,360 @@
+{
+  "startup": {
+    "status": "Offline only; independent physical recovery still required",
+    "cases": {
+      "startup_to_rescue": {
+        "reason": "0xfe",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0xfe",
+          "0xffffff01",
+          "0x13576a",
+          "0x30"
+        ],
+        "svcs": 879,
+        "panel_reached": true,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "real_reset_into_held_usb_rescue": {
+        "passed": true,
+        "info": [
+          1464223565,
+          2,
+          1,
+          13,
+          0,
+          128,
+          65536,
+          2031616
+        ],
+        "record_survived": true,
+        "flash_unchanged": true
+      },
+      "arm_svc_7": {
+        "reason": "0x7",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x7",
+          "0xfffffff8",
+          "0x207f0004",
+          "0x10"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "arm_svc_8": {
+        "reason": "0x8",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x8",
+          "0xfffffff7",
+          "0x207f0004",
+          "0x10"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "thumb_svc_7": {
+        "reason": "0x7",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x7",
+          "0xfffffff8",
+          "0x207f0002",
+          "0x30"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "thumb_svc_8": {
+        "reason": "0x8",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x8",
+          "0xfffffff7",
+          "0x207f0002",
+          "0x30"
+        ],
+        "svcs": 1,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "undef": {
+        "reason": "0x11",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x11",
+          "0xffffffee",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "pabort": {
+        "reason": "0x12",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x12",
+          "0xffffffed",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "dabort": {
+        "reason": "0x13",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x13",
+          "0xffffffec",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "reserved": {
+        "reason": "0x14",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x14",
+          "0xffffffeb",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      },
+      "fiq": {
+        "reason": "0x15",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x15",
+          "0xffffffea",
+          "0x11964",
+          "0x10"
+        ],
+        "svcs": 0,
+        "panel_reached": false,
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "returned_to_reset": true
+      }
+    },
+    "package_sha256": "9d2c2b91f9f1d55720df4f3e9a8b6e4e468288889c1e895e38b1575a4dff4238",
+    "all_assertions_passed": true
+  },
+  "protected_upload": {
+    "passed": true,
+    "package_sha256": "9d2c2b91f9f1d55720df4f3e9a8b6e4e468288889c1e895e38b1575a4dff4238",
+    "bytes": 2031616,
+    "boot_region_unchanged": true,
+    "erases": [
+      65536,
+      131072,
+      196608,
+      262144,
+      327680,
+      393216,
+      458752,
+      524288,
+      589824,
+      655360,
+      720896,
+      786432,
+      851968,
+      917504,
+      983040,
+      1048576,
+      1114112,
+      1179648,
+      1245184,
+      1310720,
+      1376256,
+      1441792,
+      1507328,
+      1572864,
+      1638400,
+      1703936,
+      1769472,
+      1835008,
+      1900544,
+      1966080,
+      2031616
+    ],
+    "program_count": 496,
+    "header_committed_last": true
+  },
+  "record_reader": {
+    "audit_sha256": "dcabb4a78c4f945ff231be00a4c58af33f33f67da867cc7f5f9b8af609f112d3",
+    "restore_sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a",
+    "cases": {
+      "baseline_high_speed": {
+        "boot_sha256": "67fd01b7baf43c7a3c3c770b45b67075e807ccde2c808cfd8d4af08c754d9f9b",
+        "read_passes": 2,
+        "bytes_per_pass": 65536,
+        "invalid_requests_rejected": 10,
+        "boot_region_unchanged": true,
+        "original_app_restored": true,
+        "erases": [
+          65536,
+          131072,
+          65536,
+          131072
+        ],
+        "program_count": 48,
+        "resets": 5
+      },
+      "candidate_high_speed": {
+        "boot_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+        "read_passes": 2,
+        "bytes_per_pass": 65536,
+        "invalid_requests_rejected": 10,
+        "boot_region_unchanged": true,
+        "original_app_restored": true,
+        "erases": [
+          65536,
+          131072,
+          65536,
+          131072
+        ],
+        "program_count": 48,
+        "resets": 5
+      },
+      "candidate_full_speed": {
+        "boot_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+        "read_passes": 2,
+        "bytes_per_pass": 65536,
+        "invalid_requests_rejected": 10,
+        "boot_region_unchanged": true,
+        "original_app_restored": true,
+        "erases": [
+          65536,
+          131072,
+          65536,
+          131072
+        ],
+        "program_count": 48,
+        "resets": 5
+      }
+    },
+    "all_assertions_passed": true,
+    "record_tests": {
+      "two_reads_match": true,
+      "invalid_requests_rejected_per_case": 7,
+      "survived_install_and_reset": true
+    }
+  },
+  "host": {
+    "passed": true,
+    "cases": {
+      "planned_stop": {
+        "passed": true,
+        "uploads": [
+          0,
+          1,
+          2
+        ],
+        "resets": [
+          1,
+          2,
+          2,
+          1,
+          2
+        ]
+      },
+      "fault_exit_restored": {
+        "passed": true,
+        "uploads": [
+          0,
+          1,
+          2
+        ],
+        "resets": [
+          1,
+          2,
+          2,
+          1,
+          2
+        ]
+      },
+      "upload_failed": {
+        "passed": true,
+        "uploads": [
+          0
+        ],
+        "resets": [
+          1
+        ]
+      },
+      "stock_return_missing": {
+        "passed": true,
+        "uploads": [
+          0
+        ],
+        "resets": [
+          1,
+          2
+        ]
+      }
+    }
+  },
+  "record_reader_sha256": "dcabb4a78c4f945ff231be00a4c58af33f33f67da867cc7f5f9b8af609f112d3"
+}

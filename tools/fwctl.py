@@ -123,7 +123,7 @@ class Bridge:
         try:
             self.send('INFO')
             try:
-                self.expect('INFO RSC1', 2)
+                info = self.expect('INFO RSC1', 2)
             except TimeoutError:
                 # ESP32 native USB-Serial/JTAG hard reset; no flash write.
                 self.port.dtr = False
@@ -132,7 +132,8 @@ class Bridge:
                 self.port.rts = False
                 time.sleep(0.2)
                 self.port.reset_input_buffer()
-                self.send('INFO'); self.expect('INFO RSC1', 10)
+                self.send('INFO'); info = self.expect('INFO RSC1', 10)
+            self.autowire = 'AUTOWIRE=1' in info.split()
             self.send('FLOAT'); self.expect('FLOATING')
             return self
         except BaseException:
@@ -145,7 +146,17 @@ class Bridge:
         finally:
             self.port.close()
 
+    def detect(self):
+        if not self.autowire:
+            raise RuntimeError('ESP32 bridge lacks wiring validation; update its firmware first')
+        self.send('DETECT')
+        result = self.expect('WIRING ', 12)
+        if not result.startswith('WIRING VERIFIED '):
+            raise RuntimeError('SDA/SCL wiring was not verified: ' + result)
+        return result
+
     def load(self, data, maintenance=False):
+        self.detect()
         verb = 'LOADBOOT' if maintenance else 'LOAD'
         self.send(f'{verb} {len(data)} {zlib.crc32(data):08x}')
         self.expect('SEND', 30)
@@ -159,6 +170,7 @@ class Bridge:
             raise RuntimeError(result)
 
     def command(self, command):
+        self.detect()
         self.send(f'COMMAND {command}'); self.expect('ARMED'); self.completion()
 
 
@@ -260,6 +272,7 @@ def main():
     dangerous.add_argument('--sha256', required=True, help='Required SHA-256 of the exact intended image')
     dangerous.add_argument('--report', type=Path, help='Save transfer and verification results as JSON')
     sub.add_parser('float', help='Release ESP32 GPIO4/5')
+    sub.add_parser('detect', help='Validate SDA/SCL orientation without printer reset or flash')
     maintenance = sub.add_parser('stage0-flash', help='Explicitly replace stage 2 using first-stage I2C recovery')
     maintenance.add_argument('image', type=Path)
     maintenance.add_argument('--sha256', required=True, help='Required exact bootloader.bin SHA-256')
@@ -272,6 +285,8 @@ def main():
         finally: usb.util.dispose_resources(dev)
     elif args.command == 'float':
         with Bridge(args.port): pass
+    elif args.command == 'detect':
+        with Bridge(args.port) as bridge: bridge.detect()
     elif args.command == 'dangerous-write':
         print('DANGEROUS: replaces ALL flash, including recovery. Power loss may require SPI. No automatic reboot.', flush=True)
         print(json.dumps(dangerous_write(args.image.read_bytes(), args.sha256,

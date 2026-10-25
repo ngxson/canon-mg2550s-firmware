@@ -7,6 +7,13 @@ application updates over printer USB or the existing EEPROM SDA/SCL wires to
 an ESP32-C3. Both the bootloader and the included demo application implement
 software reboot commands, so normal development does not require power cycling.
 
+**Installed source revision:** the optional application exception-vector ABI
+is implemented and emulation-validated. Two physical reads of all 64 KiB match
+the tested boot region exactly; the original source app was restored and is
+responding. Independent reset-time I²C recovery has also passed a physical
+same-image second-stage reinstall and restart. See [verification evidence](evidence/VECTORS.md).
+Installation statements below describe the earlier physical baseline.
+
 **Layout version 2 reserves 64 KiB total for both bootloader stages.** It is
 installed on the development printer. Validation includes 31 baseline cases,
 22 dangerous-write cases, and the exact old-layout migration in emulation.
@@ -80,6 +87,7 @@ normally requests application startup explicitly.
 | `0x20200000` | Incoming image staging |
 | `0x207ff000` | Initial runtime stack top |
 | `0xe0000800–0xe000080f` | Checked one-shot warm-reset request |
+| `0xe0000880–0xe00008c3` | Optional app exception registration (vector-ABI revision) |
 | `0xe0000f00` | Early first-stage stack top |
 
 Normal updates protect the first **64 KiB** in software. The reserved sectors
@@ -104,14 +112,17 @@ application validation must pass before success is reported. If power fails
 before the header commit, the next boot rejects the app and stays in rescue.
 There is no A/B application rollback slot.
 
-The 16 KiB first-stage image is hash-pinned for this layout:
+The current source's 16 KiB first-stage candidate is hash-pinned:
 
 ```text
-SHA-256 2b68ecfc23016d708256318cff7d20338d2351d001b142743ac5b2d6f79b7995
+SHA-256 b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8
 ```
 
 `build.py` refuses to silently change that sector. This preserves the independent
 recovery route while the higher-level bootloader evolves.
+The previous physically recorded baseline pin is `2b68ecfc…`; the revised pin
+does not mean the candidate has been flashed. Build it separately with
+`--output "$PWD/bootloader/build/vectors"` to retain saved baseline artifacts.
 
 Normal app updates retain 64 KiB block erases (`D8h`) starting at `0x10000`.
 First-stage maintenance uses 4 KiB sector erases (`20h`) strictly within
@@ -208,16 +219,18 @@ writes the EEPROM.
 
 | ESP32-C3 | Printer |
 |---|---|
-| GPIO5 | SDA |
-| GPIO4 | SCL |
+| GPIO4 / GPIO5 | SDA / SCL, either order; detected at startup |
 | GND | GND |
 
 Use the printer's normal supply, and power the ESP32 from Mac USB. During this
 setup connect only SDA/SCL/GND between them; leave programmer **3.3 V feeds
 disconnected** from the printer. Printer-side pull-ups are used. GPIO4/5 start
 as floating inputs without internal pulls and return to that state on completion,
-`FLOAT`, an error, or 120 seconds of inactivity. Reset never automatically arms
-the bridge. The host also sends `FLOAT` in its cleanup path.
+`FLOAT`, or 120 seconds of inactivity. Reset starts a bounded wiring probe,
+which never advertises an image or valid management command. Image uploads and
+management commands require a verified mapping; the host rechecks it before
+each operation and sends `FLOAT` in cleanup. See [detection evidence and
+limits](../tools/esp32/README.md). Failed detection releases both pins.
 
 Build/install the C ESP-IDF bridge once:
 

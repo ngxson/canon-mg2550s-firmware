@@ -1,0 +1,122 @@
+{
+  "started_utc": "2026-10-25T18:49:52.623808+00:00",
+  "phase": "install",
+  "package_sha256": "d14b44594f18504f4b81107e0e0c8f7adf6bcb56a4118ce46ef36d6f1d03c13e",
+  "result": "error",
+  "events": [
+    {
+      "utc": "2026-10-25T18:49:52.634423+00:00",
+      "event": "original_app_ready",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T18:49:55.778187+00:00",
+      "event": "wiring",
+      "result": "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING"
+    },
+    {
+      "utc": "2026-10-25T18:49:57.747222+00:00",
+      "event": "protected_upload_begin",
+      "bytes": 2031616,
+      "sha256": "d14b44594f18504f4b81107e0e0c8f7adf6bcb56a4118ce46ef36d6f1d03c13e",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "utc": "2026-10-25T18:50:01.612350+00:00",
+      "event": "payload_transferred",
+      "bytes": 2031616
+    },
+    {
+      "utc": "2026-10-25T18:50:01.726040+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T18:51:09.309090+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T18:51:09.311474+00:00",
+      "event": "updater_verified_flash",
+      "sha256": "d14b44594f18504f4b81107e0e0c8f7adf6bcb56a4118ce46ef36d6f1d03c13e"
+    },
+    {
+      "utc": "2026-10-25T18:51:09.311904+00:00",
+      "event": "starting_running_stock_app"
+    },
+    {
+      "utc": "2026-10-25T18:51:40.093004+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:52:10.290704+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:52:40.445643+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:53:10.624412+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:53:40.773482+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:54:10.943313+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:54:41.149976+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    }
+  ],
+  "error": ""
+}

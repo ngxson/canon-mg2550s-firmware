@@ -14,7 +14,9 @@ import subprocess
 import zlib
 
 ROOT = Path(__file__).resolve().parent
-PINNED_STAGE0_SHA = '2b68ecfc23016d708256318cff7d20338d2351d001b142743ac5b2d6f79b7995'
+# Deliberate, user-authorized vector-ABI candidate revision (not yet installed).
+# Previous physical baseline: 2b68ecfc23016d708256318cff7d20338d2351d001b142743ac5b2d6f79b7995.
+PINNED_STAGE0_SHA = 'b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8'
 FLAGS = ['-mcpu=arm946e-s', '-marm', '-Os', '-std=c11', '-ffreestanding',
          '-fno-builtin', '-fno-unwind-tables', '-fno-asynchronous-unwind-tables',
          '-fno-stack-protector', '-fno-delete-null-pointer-checks',
@@ -82,9 +84,10 @@ def main():
     # Keep first-stage bytes pinned independently of normal app development.
     stage0 = link('stage0', [
         'stage0/panel.c', 'src/flash.c', 'stage0/flash_guard.c', 'stage0/integrity.c',
-        'src/boot.c', 'src/cpu.c', 'stage0/loader.c', 'stage0/i2c.c', 'stage0/memory.c',
+        'src/boot.c', 'src/cpu.c', 'src/vectors.c', 'stage0/loader.c', 'stage0/i2c.c', 'stage0/memory.c',
     ], 'stage0/stage0.ld').ljust(0x4000, b'\xff')
-    assert len(stage0) == 0x4000 and sha(stage0) == PINNED_STAGE0_SHA, 'Frozen recovery stage changed: '+sha(stage0)
+    if len(stage0) != 0x4000 or sha(stage0) != PINNED_STAGE0_SHA:
+        raise SystemExit('Pinned recovery stage changed: '+sha(stage0))
     common = ['src/panel.c', 'src/integrity.c', 'src/runtime.c', 'src/usb.c',
               'src/entry.c', 'src/service.c', 'src/i2c.c', 'src/mailbox.c', 'src/update.c']
     loader = package(link('bootloader', common + ['src/flash.c', 'src/flash_guard.c'],
@@ -102,6 +105,8 @@ def main():
     manifest = {
         'compiler': run('gcc', '--version').decode().splitlines()[0],
         'stock_bytes_used': 0,
+        'vector_abi': {'version': 1, 'address': '0x40', 'state': '0xe0000880',
+                       'status': 'candidate; hardware validation pending'},
         'layout': {'version': 2, 'stage0': [0, 0x4000],
                    'bootloader': [0x4000, 0x10000], 'application': [0x10000, 0x200000]},
         'artifacts': {name: {'bytes': len(data), 'sha256': sha(data)} for name, data in artifacts.items()},

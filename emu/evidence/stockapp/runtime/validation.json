@@ -1,0 +1,253 @@
+{
+  "manifest": {
+    "status": "Running stock experiment with guarded restart/update and stock USB management path",
+    "startup_smoke": false,
+    "runtime": true,
+    "runtime_patches": [
+      {
+        "address": "0x126b2",
+        "original": "1400069a",
+        "replacement": "fdf7d1fe",
+        "purpose": "Stock USB request 0x30007 enters held rescue before queuing or EEPROM latch writes"
+      },
+      {
+        "address": "0x154146",
+        "original": "10b53820",
+        "replacement": "07dffee7",
+        "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+      },
+      {
+        "address": "0x154162",
+        "original": "10b53820",
+        "replacement": "07dffee7",
+        "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+      },
+      {
+        "address": "0x15417e",
+        "original": "10b53820",
+        "replacement": "07dffee7",
+        "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+      },
+      {
+        "address": "0x11004",
+        "original": "190000eb",
+        "replacement": "080000ef",
+        "purpose": "Direct native app restart entry also enters our held rescue"
+      }
+    ],
+    "shim_symbols": {
+      "mg_boot_vector_api": "0x40",
+      "smoke_svc": "0x10210",
+      "caught_svc": "0x1025c",
+      "smoke_undef": "0x10264",
+      "smoke_pabort": "0x10274",
+      "smoke_dabort": "0x10284",
+      "smoke_reserved": "0x10294",
+      "smoke_fiq": "0x102a4",
+      "smoke_rescue": "0x102b4",
+      "stockapp_register": "0x102d4",
+      "stockapp_prepare_rescue": "0x103b4",
+      "stockapp_event_hook": "0x10458",
+      "management_rescue": "0x10470",
+      "stockapp_management_event": "0x10478",
+      "shim_entry": "0x200200f0",
+      "registration_failed": "0x2002012c",
+      "__stockapp_register_veneer": "0x20020158",
+      "__smoke_rescue_veneer": "0x20020160"
+    },
+    "smoke_stop_patch": null,
+    "registered_vectors": true,
+    "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+    "protected_prefix_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+    "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+    "candidate_sha256": "b0ece6a7427155954459458b773046d6e0b3cd04d1e27505ff438ad85660adb0",
+    "package_sha256": "b6be3687ab4fc0286922b82734f37b4152a8006d8f4fec117896222e9fad5e13",
+    "payload_length": 2031584,
+    "payload_ram_end": "0x2020ffe0",
+    "shim_flash": "0x10110",
+    "shim_ram": "0x200200f0",
+    "shim_bytes": 924,
+    "helper_veneer_patches": [
+      {
+        "pc": "0x1509c8",
+        "original_target": "0x10000",
+        "target": "0x10d00"
+      }
+    ],
+    "stock_dependencies": [
+      "stock runtime, RTOS, handlers and device drivers",
+      "stock short delay helpers copied into app-slot padding"
+    ],
+    "source_sha256": {
+      "emu/stockapp/build.py": "8f0a7520132ac53db25ba846e3be5e29f5ab8c34218da8bc3d4407e630511f82",
+      "app/stockapp/smoke/entry.S": "f06479d132e559282e5fa4f09369148b58cfc219631f7f6cdfb608a9791b0a64",
+      "app/stockapp/smoke/control.c": "2c1b5822b7cca90a57a14fb319fd1f9257c8346be10cb5f2c31e3b8164cc5c25",
+      "app/stockapp/smoke/shim.ld": "2e70393cbee72188fdd1341f216ebd0aa74a19a1760fb7897d0f9d78e057fde3",
+      "bootloader/include/vectors.h": "1c675298f52de31b488cfc59559e9c48f6d5366d5e281928090a69ff205d2c91",
+      "app/stockapp/runtime/hook.S": "57845f29b54fec34dfc50da354e798ac44fff1cb679dc2cf6fd4c1e3e26defca",
+      "app/stockapp/runtime/management.c": "b741f81ab2d611e2670dad40fe66b80699e73773410de1e10f82c3d28e26cddf"
+    }
+  },
+  "guard_and_upload_validation": {
+    "package_sha256": "b6be3687ab4fc0286922b82734f37b4152a8006d8f4fec117896222e9fad5e13",
+    "cases": {
+      "0x154146": {
+        "reason": "0x7",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x7",
+          "0xfffffff8",
+          "0x154148",
+          "0x30"
+        ],
+        "flash_unchanged": true,
+        "spi_writes": 0
+      },
+      "0x154162": {
+        "reason": "0x7",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x7",
+          "0xfffffff8",
+          "0x154164",
+          "0x30"
+        ],
+        "flash_unchanged": true,
+        "spi_writes": 0
+      },
+      "0x15417e": {
+        "reason": "0x7",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x7",
+          "0xfffffff8",
+          "0x154180",
+          "0x30"
+        ],
+        "flash_unchanged": true,
+        "spi_writes": 0
+      },
+      "0x11004": {
+        "reason": "0x8",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0x8",
+          "0xfffffff7",
+          "0x11008",
+          "0x10"
+        ],
+        "flash_unchanged": true,
+        "spi_writes": 0
+      },
+      "unrelated_event": {
+        "returned_to_stock": true,
+        "flash_unchanged": true
+      },
+      "bjl": {
+        "reason": "0xfd",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0xfd",
+          "0xffffff02",
+          "0x10472",
+          "0x20000030"
+        ],
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "input_fixture": "Actual parser with modeled FIFO; not USB electrical delivery",
+        "held_rescue_after_real_reset": true
+      },
+      "xml": {
+        "reason": "0xfd",
+        "record": [
+          "0x31504d53",
+          "0xceafb2ac",
+          "0x2",
+          "0xfffffffd",
+          "0xfd",
+          "0xffffff02",
+          "0x10472",
+          "0x20000030"
+        ],
+        "flash_unchanged": true,
+        "spi_writes": 0,
+        "input_fixture": "Actual parser with modeled FIFO; not USB electrical delivery",
+        "held_rescue_after_real_reset": true
+      },
+      "protected_upload": {
+        "bytes": 2031616,
+        "boot_unchanged": true,
+        "header_last": true
+      }
+    },
+    "passed": true
+  },
+  "normal_boot_comparison": {
+    "passed": true,
+    "fields": {
+      "mmio_writes": {
+        "identical": true,
+        "count": 16135,
+        "sha256": "6754ab27c1008e325c6b40673960165f9e28a03dbf346ca8f7f9130310ad4bf0"
+      },
+      "motor_writes": {
+        "identical": true,
+        "count": 106,
+        "sha256": "9260154a54d07e687273b1c86a6bc540e20c420d2e72647effb552aede5b894c"
+      },
+      "transfers": {
+        "identical": true,
+        "count": 117,
+        "sha256": "c8372b55551b5086485a3c7cf534fd31dbdc8f066c273adaa555be0bb89a6d01"
+      },
+      "context_restores": {
+        "identical": true,
+        "count": 4606,
+        "sha256": "61534658f8ba7ddd7dbbf5820b44466d71a79c8af060bb735dcfce0e0c3b91eb"
+      }
+    }
+  },
+  "cases": {
+    "reset-boot": {
+      "passed": true,
+      "stop": "tick limit at idle",
+      "pc": "0x104da2",
+      "SVC_exceptions": 24580,
+      "irqs": 2429,
+      "full_image_unchanged": true,
+      "registration_intact": true,
+      "spi_writes": 0,
+      "raw_report_sha256": "d3a4dd464f7fa496520f373ae14e810dc26e04536372d9393c49c35fc0137ef6"
+    },
+    "reset-home": {
+      "passed": true,
+      "stop": "optical reference stage reached; pixels not modeled",
+      "pc": "0xf4c2c",
+      "SVC_exceptions": 24472,
+      "irqs": 2931,
+      "full_image_unchanged": true,
+      "registration_intact": true,
+      "spi_writes": 0,
+      "raw_report_sha256": "7ef6d1367e908da2455f715cb87c83b7a919273d6459cce5a8dbe3afeda455d3"
+    }
+  },
+  "physical_upload_performed": true,
+  "physical_flash_verified": "C0",
+  "physical_stock_usb_verified": false,
+  "physical_report": "physical_install.json"
+}

@@ -1,0 +1,8 @@
+{
+  "utc": "2026-10-25T17:36:09.560163+00:00",
+  "port": "/dev/cu.usbmodem1201",
+  "printer_reboot_requested": false,
+  "printer_flash_write_requested": false,
+  "stats": "STATS FLOATING RX=0 READ=0 SENT=0 DROP=0 OFFSET=FFFFFFFF TXLEFT=0 SDA=1 SCL=1",
+  "result": "bridge_responsive_pins_floating"
+}

@@ -1,0 +1,26 @@
+{
+  "result": "held_rescue",
+  "events": [
+    {
+      "utc": "2026-10-25T21:36:40.829924+00:00",
+      "event": "watcher_ready"
+    },
+    {
+      "utc": "2026-10-25T21:37:15.495699+00:00",
+      "event": "bootloader_held",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    }
+  ]
+}

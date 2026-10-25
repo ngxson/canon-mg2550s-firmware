@@ -1,0 +1,188 @@
+{
+  "package_sha256": "cbc6fb0118175b31f73b8718aaac13ccc5ec273997413302f93b38dda47f9253",
+  "checkpoint": null,
+  "result": "checkpoint_passed_reader_running",
+  "events": [
+    {
+      "utc": "2026-10-25T19:01:15.562864+00:00",
+      "event": "starting_app",
+      "product": "MG2550s Bootloader",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T19:01:18.626852+00:00",
+      "event": "fresh_wiring",
+      "result": "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING"
+    },
+    {
+      "utc": "2026-10-25T19:01:18.629287+00:00",
+      "event": "protected_upload_begin",
+      "bytes": 2031616,
+      "sha256": "cbc6fb0118175b31f73b8718aaac13ccc5ec273997413302f93b38dda47f9253",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "utc": "2026-10-25T19:01:22.493610+00:00",
+      "event": "payload_transferred",
+      "bytes": 2031616
+    },
+    {
+      "utc": "2026-10-25T19:01:22.607306+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T19:02:30.202682+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T19:02:30.204547+00:00",
+      "event": "updater_verified_flash",
+      "sha256": "cbc6fb0118175b31f73b8718aaac13ccc5ec273997413302f93b38dda47f9253"
+    },
+    {
+      "utc": "2026-10-25T19:02:30.204862+00:00",
+      "event": "starting_checkpoint"
+    },
+    {
+      "utc": "2026-10-25T19:03:47.865450+00:00",
+      "event": "returned_to_held_rescue",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T19:03:47.866653+00:00",
+      "event": "protected_upload_begin",
+      "bytes": 95616,
+      "sha256": "dcabb4a78c4f945ff231be00a4c58af33f33f67da867cc7f5f9b8af609f112d3",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "utc": "2026-10-25T19:03:48.049630+00:00",
+      "event": "payload_transferred",
+      "bytes": 95616
+    },
+    {
+      "utc": "2026-10-25T19:03:48.163120+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T19:03:51.491713+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T19:03:51.492610+00:00",
+      "event": "updater_verified_flash",
+      "sha256": "dcabb4a78c4f945ff231be00a4c58af33f33f67da867cc7f5f9b8af609f112d3"
+    },
+    {
+      "utc": "2026-10-25T19:03:55.273330+00:00",
+      "event": "record_read",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0xfc",
+        "0xffffff03",
+        "0x104da8",
+        "0x40101"
+      ],
+      "checkpoint_reached": true,
+      "reader_left_running": true
+    }
+  ],
+  "usb_snapshot": {
+    "phy": "0x101",
+    "dctl": "0x2",
+    "interrupted_lr": "0x104da8",
+    "irq_count": 1024
+  },
+  "record": [
+    "0x31504d53",
+    "0xceafb2ac",
+    "0x2",
+    "0xfffffffd",
+    "0xfc",
+    "0xffffff03",
+    "0x104da8",
+    "0x40101"
+  ],
+  "checkpoint_reached": true
+}

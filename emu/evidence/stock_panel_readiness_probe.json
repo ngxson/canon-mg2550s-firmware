@@ -1,0 +1,116 @@
+{
+  "firmware_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "scope": "Synthetic panel-readiness sensitivity, not physical verification",
+  "units": "MMIO reads, not time",
+  "assertions_passed": true,
+  "cases": [
+    {
+      "initial_unavailable_reads": 0,
+      "first_eight_samples": [
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28"
+      ],
+      "accepted_iterations": 16,
+      "mode": 3,
+      "updater_entered": true,
+      "status": "C0",
+      "panel_reads": 146
+    },
+    {
+      "initial_unavailable_reads": 1,
+      "first_eight_samples": [
+        "0x8",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28"
+      ],
+      "accepted_iterations": 16,
+      "mode": 3,
+      "updater_entered": true,
+      "status": "C0",
+      "panel_reads": 150
+    },
+    {
+      "initial_unavailable_reads": 2,
+      "first_eight_samples": [
+        "0x8",
+        "0x8",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28"
+      ],
+      "accepted_iterations": 15,
+      "mode": 1,
+      "updater_entered": false,
+      "status": null,
+      "panel_reads": 64
+    },
+    {
+      "initial_unavailable_reads": 4,
+      "first_eight_samples": [
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x28",
+        "0x28",
+        "0x28",
+        "0x28"
+      ],
+      "accepted_iterations": 15,
+      "mode": 1,
+      "updater_entered": false,
+      "status": null,
+      "panel_reads": 64
+    },
+    {
+      "initial_unavailable_reads": 8,
+      "first_eight_samples": [
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8"
+      ],
+      "accepted_iterations": 14,
+      "mode": 1,
+      "updater_entered": false,
+      "status": null,
+      "panel_reads": 64
+    },
+    {
+      "initial_unavailable_reads": 64,
+      "first_eight_samples": [
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8",
+        "0x8"
+      ],
+      "accepted_iterations": 0,
+      "mode": 1,
+      "updater_entered": false,
+      "status": null,
+      "panel_reads": 64
+    }
+  ]
+}

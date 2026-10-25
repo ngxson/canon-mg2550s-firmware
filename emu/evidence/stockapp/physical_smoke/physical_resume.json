@@ -1,0 +1,165 @@
+{
+  "utc": "2026-10-25T18:16:28.551464+00:00",
+  "result": "passed_original_restored",
+  "events": [
+    {
+      "event": "stock_returned_to_held_rescue",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "protected_upload_begin",
+      "bytes": 95616,
+      "sha256": "dcabb4a78c4f945ff231be00a4c58af33f33f67da867cc7f5f9b8af609f112d3",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "event": "payload_transferred",
+      "bytes": 95616
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "updater_verified_flash",
+      "sha256": "dcabb4a78c4f945ff231be00a4c58af33f33f67da867cc7f5f9b8af609f112d3"
+    },
+    {
+      "event": "stock_record_read",
+      "record": [
+        "0x31504d53",
+        "0xceafb2ac",
+        "0x2",
+        "0xfffffffd",
+        "0xfe",
+        "0xffffff01",
+        "0x13576a",
+        "0x30"
+      ],
+      "planned_stop_confirmed": true
+    },
+    {
+      "event": "boot_region_readback",
+      "sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+      "unchanged": true
+    },
+    {
+      "event": "protected_upload_begin",
+      "bytes": 95328,
+      "sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "event": "payload_transferred",
+      "bytes": 95328
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "updater_verified_flash",
+      "sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a"
+    },
+    {
+      "event": "original_app_restored",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      },
+      "sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a"
+    }
+  ],
+  "records_identical": true,
+  "record": [
+    "0x31504d53",
+    "0xceafb2ac",
+    "0x2",
+    "0xfffffffd",
+    "0xfe",
+    "0xffffff01",
+    "0x13576a",
+    "0x30"
+  ],
+  "planned_stop_confirmed": true,
+  "boot_region_unchanged": true
+}

@@ -1,0 +1,12 @@
+{
+  "utc": "2026-10-25T17:27:48.078352+00:00",
+  "devices": [
+    {
+      "vid": "0x4a9",
+      "pid": "0x176d",
+      "bus": 1,
+      "address": 1,
+      "management_error": "[Errno 60] Operation timed out"
+    }
+  ]
+}

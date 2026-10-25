@@ -1,0 +1,55 @@
+{
+  "audit_sha256": "d18a065350c76b6c6984ed068a166494d3999a8ba40ac978dca8d601f163f7c0",
+  "restore_sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a",
+  "cases": {
+    "baseline_high_speed": {
+      "boot_sha256": "67fd01b7baf43c7a3c3c770b45b67075e807ccde2c808cfd8d4af08c754d9f9b",
+      "read_passes": 2,
+      "bytes_per_pass": 65536,
+      "invalid_requests_rejected": 10,
+      "boot_region_unchanged": true,
+      "original_app_restored": true,
+      "erases": [
+        65536,
+        131072,
+        65536,
+        131072
+      ],
+      "program_count": 48,
+      "resets": 5
+    },
+    "candidate_high_speed": {
+      "boot_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+      "read_passes": 2,
+      "bytes_per_pass": 65536,
+      "invalid_requests_rejected": 10,
+      "boot_region_unchanged": true,
+      "original_app_restored": true,
+      "erases": [
+        65536,
+        131072,
+        65536,
+        131072
+      ],
+      "program_count": 48,
+      "resets": 5
+    },
+    "candidate_full_speed": {
+      "boot_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+      "read_passes": 2,
+      "bytes_per_pass": 65536,
+      "invalid_requests_rejected": 10,
+      "boot_region_unchanged": true,
+      "original_app_restored": true,
+      "erases": [
+        65536,
+        131072,
+        65536,
+        131072
+      ],
+      "program_count": 48,
+      "resets": 5
+    }
+  },
+  "all_assertions_passed": true
+}

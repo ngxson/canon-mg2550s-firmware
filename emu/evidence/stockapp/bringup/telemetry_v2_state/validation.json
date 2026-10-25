@@ -1,0 +1,292 @@
+{
+  "package_sha256": "29a4f2f90fe22042e0e4fa613392dc05f441657bda8000c5dd8349e3cf646874",
+  "checkpoint": null,
+  "irq_snapshot": 2048,
+  "record": [
+    "0x31504d53",
+    "0xceafb2ac",
+    "0x2",
+    "0xfffffffd",
+    "0xfc",
+    "0xffffff03",
+    "0x5",
+    "0x11040100"
+  ],
+  "native_cpu": false,
+  "native_startup": true,
+  "native_ram_clears": [
+    {
+      "start": "0x10000000",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x100fffff",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x101ffffe",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x102ffffd",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x103ffffc",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x104ffffb",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x105ffffa",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x106ffff9",
+      "bytes": 1048575
+    },
+    {
+      "start": "0x107ffff8",
+      "bytes": 8
+    }
+  ],
+  "CP15_instructions": [
+    {
+      "pc": "0x102fc",
+      "opcode": "0xee070f9a",
+      "count": 1
+    },
+    {
+      "pc": "0x11074",
+      "opcode": "0xee070f15",
+      "count": 2
+    },
+    {
+      "pc": "0x11088",
+      "opcode": "0xee073f9a",
+      "count": 1024
+    },
+    {
+      "pc": "0x1108c",
+      "opcode": "0xee072f5e",
+      "count": 1024
+    },
+    {
+      "pc": "0x110ac",
+      "opcode": "0xee070f9a",
+      "count": 2
+    },
+    {
+      "pc": "0x110b0",
+      "opcode": "0xee110f10",
+      "count": 2
+    },
+    {
+      "pc": "0x110c0",
+      "opcode": "0xee010f10",
+      "count": 2
+    },
+    {
+      "pc": "0x110c8",
+      "opcode": "0xee060f10",
+      "count": 2
+    },
+    {
+      "pc": "0x110cc",
+      "opcode": "0xee060f11",
+      "count": 2
+    },
+    {
+      "pc": "0x110d0",
+      "opcode": "0xee060f12",
+      "count": 2
+    },
+    {
+      "pc": "0x110d4",
+      "opcode": "0xee060f13",
+      "count": 2
+    },
+    {
+      "pc": "0x110d8",
+      "opcode": "0xee060f14",
+      "count": 2
+    },
+    {
+      "pc": "0x110dc",
+      "opcode": "0xee060f15",
+      "count": 2
+    },
+    {
+      "pc": "0x110e0",
+      "opcode": "0xee060f16",
+      "count": 2
+    },
+    {
+      "pc": "0x110e4",
+      "opcode": "0xee060f17",
+      "count": 2
+    },
+    {
+      "pc": "0x110f0",
+      "opcode": "0xee060f10",
+      "count": 1
+    },
+    {
+      "pc": "0x110f8",
+      "opcode": "0xee060f11",
+      "count": 1
+    },
+    {
+      "pc": "0x11100",
+      "opcode": "0xee020f10",
+      "count": 1
+    },
+    {
+      "pc": "0x11108",
+      "opcode": "0xee020f30",
+      "count": 1
+    },
+    {
+      "pc": "0x11110",
+      "opcode": "0xee030f10",
+      "count": 1
+    },
+    {
+      "pc": "0x11120",
+      "opcode": "0xee050f50",
+      "count": 1
+    },
+    {
+      "pc": "0x11124",
+      "opcode": "0xee050f70",
+      "count": 1
+    },
+    {
+      "pc": "0x11128",
+      "opcode": "0xee110f10",
+      "count": 1
+    },
+    {
+      "pc": "0x11138",
+      "opcode": "0xee010f10",
+      "count": 1
+    },
+    {
+      "pc": "0x1113c",
+      "opcode": "0xee110f10",
+      "count": 1
+    },
+    {
+      "pc": "0x11148",
+      "opcode": "0xee010f10",
+      "count": 1
+    },
+    {
+      "pc": "0x11154",
+      "opcode": "0xee060f10",
+      "count": 1
+    },
+    {
+      "pc": "0x1115c",
+      "opcode": "0xee060f11",
+      "count": 1
+    },
+    {
+      "pc": "0x1116c",
+      "opcode": "0xee060f12",
+      "count": 1
+    },
+    {
+      "pc": "0x11174",
+      "opcode": "0xee060f13",
+      "count": 1
+    },
+    {
+      "pc": "0x1117c",
+      "opcode": "0xee060f14",
+      "count": 1
+    },
+    {
+      "pc": "0x11184",
+      "opcode": "0xee020f10",
+      "count": 1
+    },
+    {
+      "pc": "0x1118c",
+      "opcode": "0xee020f30",
+      "count": 1
+    },
+    {
+      "pc": "0x11194",
+      "opcode": "0xee030f10",
+      "count": 1
+    },
+    {
+      "pc": "0x111b0",
+      "opcode": "0xee050f50",
+      "count": 1
+    },
+    {
+      "pc": "0x111b4",
+      "opcode": "0xee050f70",
+      "count": 1
+    },
+    {
+      "pc": "0x111b8",
+      "opcode": "0xee110f10",
+      "count": 1
+    },
+    {
+      "pc": "0x111c8",
+      "opcode": "0xee010f10",
+      "count": 1
+    },
+    {
+      "pc": "0x111cc",
+      "opcode": "0xee110f10",
+      "count": 1
+    },
+    {
+      "pc": "0x111d8",
+      "opcode": "0xee010f10",
+      "count": 1
+    },
+    {
+      "pc": "0x150114",
+      "opcode": "0xee070f15",
+      "count": 1
+    },
+    {
+      "pc": "0x150154",
+      "opcode": "0xee073f9a",
+      "count": 512
+    },
+    {
+      "pc": "0x150158",
+      "opcode": "0xee072f5e",
+      "count": 512
+    },
+    {
+      "pc": "0x150178",
+      "opcode": "0xee070f9a",
+      "count": 1
+    }
+  ],
+  "irqs": 2048,
+  "svcs": 27262,
+  "held_rescue": [
+    1464223565,
+    2,
+    1,
+    13,
+    0,
+    128,
+    65536,
+    2031616
+  ],
+  "flash_unchanged": true,
+  "passed": true,
+  "limits": "Synthetic peripheral readiness/IRQ timing; cache not modeled; native-startup DRAM aliases and memory configuration inputs are explicit assumptions"
+}

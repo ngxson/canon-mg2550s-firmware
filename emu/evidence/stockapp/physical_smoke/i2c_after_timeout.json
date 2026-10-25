@@ -1,0 +1,7 @@
+{
+  "utc": "2026-10-25T18:15:28.714152+00:00",
+  "type": "non_rebooting_command_zero_wiring_probe",
+  "printer_flash_writes": 0,
+  "printer_reset_requested": false,
+  "wiring": "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING"
+}

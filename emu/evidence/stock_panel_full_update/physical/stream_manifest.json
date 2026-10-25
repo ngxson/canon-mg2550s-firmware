@@ -1,0 +1,10 @@
+{
+  "image": "replacement_factory.bin",
+  "image_bytes": 2097152,
+  "image_sha256": "b1c7abc8b7303e84fbde73ec88de02355cf810848486d30cb9dfe269294ec8b8",
+  "stream_bytes": 4718676,
+  "stream_sha256": "5892a0fec2c4265f4cbb02a003af77196f7b6b8bfdca0d4a3d0851df6c8f1f86",
+  "start": "0x0",
+  "end_inclusive": "0x1fffff",
+  "data_records": 32768
+}

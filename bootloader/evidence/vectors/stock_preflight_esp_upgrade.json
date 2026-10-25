@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-25T18:01:43.810323+00:00",
+  "purpose": "Verify ESP32 layout-2 application upgrade by full readback",
+  "esp_partition_offset": "0x10000",
+  "printer_flash_writes": 0,
+  "bytes_read": 214544,
+  "sha256": "5ca6f747dfb8c5fad489017bd2585a5eded45bda2da9c2182dd104f42e5b40a1",
+  "byte_identical": true,
+  "final_pins": {
+    "gpio_output_enable": "0x0",
+    "pins": {
+      "4": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      },
+      "5": {
+        "iomux": "0x1a00",
+        "output_enabled": false,
+        "pullup_enabled": false,
+        "pulldown_enabled": false
+      }
+    }
+  }
+}

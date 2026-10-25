@@ -1,0 +1,22 @@
+{
+  "recorded_utc": "2026-10-25T17:42:08.491794+00:00",
+  "operation": "User-requested read-only USB enumeration and management status check",
+  "usb_product": "MG2550s App",
+  "info": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "assistant_requested_reset": false,
+  "assistant_requested_flash_write": false,
+  "exact_bootloader_revision_verified": false,
+  "how_device_returned": "Not established by this check"
+}

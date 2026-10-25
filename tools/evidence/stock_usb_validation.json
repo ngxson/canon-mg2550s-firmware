@@ -1,0 +1,133 @@
+{
+  "hardware_tested": false,
+  "reference": "/Users/ngxson/work/hobby-printer-esp32",
+  "cases": {
+    "scan_0": {
+      "dpi": 75,
+      "rows": 91,
+      "commands": 26,
+      "all_pixels_and_commands_match_C": true
+    },
+    "scan_1": {
+      "dpi": 150,
+      "rows": 91,
+      "commands": 24,
+      "all_pixels_and_commands_match_C": true
+    },
+    "scan_2": {
+      "dpi": 300,
+      "rows": 91,
+      "commands": 24,
+      "all_pixels_and_commands_match_C": true
+    },
+    "scan_3": {
+      "dpi": 600,
+      "rows": 91,
+      "commands": 24,
+      "all_pixels_and_commands_match_C": true
+    },
+    "scan_4": {
+      "dpi": 150,
+      "rows": 123,
+      "commands": 13,
+      "all_pixels_and_commands_match_C": true
+    },
+    "scan_5": {
+      "dpi": 75,
+      "rows": 877,
+      "commands": 221,
+      "all_pixels_and_commands_match_C": true
+    },
+    "scan_6": {
+      "dpi": 75,
+      "rows": 32,
+      "commands": 24,
+      "all_pixels_and_commands_match_C": true
+    },
+    "failed_block": {
+      "cleanup_closed": true,
+      "expected_result": true
+    },
+    "cancel": {
+      "cleanup_closed": true,
+      "expected_result": true
+    },
+    "bad_checksum": {
+      "cleanup_closed": true,
+      "expected_result": true
+    },
+    "timeout_retry": {
+      "cleanup_closed": true,
+      "expected_result": true
+    },
+    "zlp_retry": {
+      "cleanup_closed": true,
+      "expected_result": true
+    },
+    "short_image": {
+      "cleanup_closed": true,
+      "expected_result": true
+    },
+    "input_bounds": {
+      "passed": true
+    },
+    "packbits": {
+      "C_comparisons": 30
+    },
+    "print_300_A4": {
+      "bytes": 43008,
+      "byte_identical_to_C": true,
+      "decoded_pages": 1,
+      "sha256": "6b3603c7cbe62d0df0d3490dda51cc2fda4f1684e023b7f62304beda18d606ee"
+    },
+    "print_300_Letter": {
+      "bytes": 42253,
+      "byte_identical_to_C": true,
+      "decoded_pages": 1,
+      "sha256": "407511efe3122daf15dd0025793d77b03ae67be9db630ebc9fccf27c67f42b32"
+    },
+    "print_600_A4": {
+      "bytes": 103916,
+      "byte_identical_to_C": true,
+      "decoded_pages": 1,
+      "sha256": "c8da73c64d751d1b79df18fda0fc26341a92f75b818368db465849940ace15d0"
+    },
+    "print_600_Letter": {
+      "bytes": 102954,
+      "byte_identical_to_C": true,
+      "decoded_pages": 1,
+      "sha256": "f1d90cb36b70d5d70102c4cc503a46c59aa57cf9fc748c39deced4206e499dbc"
+    },
+    "print_transport": {
+      "fragmented_acks": true,
+      "no_resend_after_timeout": true,
+      "cancel_on_error": true,
+      "backchannel_polls_per_second_max": 4,
+      "chatty_reads": 7,
+      "stall_resume_exact": true,
+      "stall_deadline": true
+    }
+  },
+  "reference_sha256": {
+    "components/scanner/fake_scanner.c": "58308348e81971711671c072125a8ea8518c5fdc3110607b7e360a0e1afc2295",
+    "components/scanner/pixma_scan.c": "899b82ff2e7c4637972aba032871a46c375b6417d8c431478484dad812e25bd8",
+    "components/canon_bjl/canon_bjl.c": "9b7f0676ed720258291638061fc43cef01d34d0e3dfd2b10888c158b0b10afb9",
+    "components/canon_bjl/bjl_render.c": "e784fe5e7cdf6711dbbde7d91683a2a83811957471d9caad19a4673a579e8630",
+    "components/scanner/include/fake_scanner.h": "2313e66f040fbd01238215f928d885cf061614318bb71443d54f491ff7352bf3",
+    "components/scanner/include/pixma_scan.h": "6488e2f155abb634058daeef60f63834cb21369ebe3161ea862c45eae8cadc44",
+    "components/canon_bjl/include/canon_bjl.h": "5b1684a31bcfbea07912132bba95a38d5bab6735a291f5b5197820ffa0c1bf3d",
+    "components/canon_bjl/include/bjl_render.h": "b94b503ce1b108a1cc2e5d03ec3f08b3bd1cbc88fd3597f88d08bf5297769bf8"
+  },
+  "passed": true,
+  "source_sha256": {
+    "tools/stockusb/transport.py": "cc735d7c038c58c1a28ef792777f937b91f7ebf863e710625798afe7efec662a",
+    "tools/stockusb/__init__.py": "c8723cd325ca5f2c7b7cf3236521641781f38d6def64e61707dddc4db2f75da3",
+    "tools/stockusb/scan.py": "0a64b5771fce7e7be8c206614c72ff9c999d789f68957bfadadf5d816735f390",
+    "tools/stockusb/raster.py": "3500f97521427d3ac62b8fe00d365d08043429a176a7df05c9a41b6354cee85c",
+    "tools/stockusb/printing.py": "82e3a4a2d7754b40561513391e8b6bae99cf7475ffe3ce1b6645e7ea2a3338b8",
+    "tools/stock_scan.py": "ee074c6d4ac046d7d627ac0d08b8bbdac598fe0b67682ff70e356a18918709d7",
+    "tools/stock_print.py": "a36dd6ae4bd34c36886384c762ddf37d67249bc937baace48e7b52e383c4eb08",
+    "tools/tests/validate_stock_usb.py": "5437ba21bc1da0a698771128371248fcfb17b40aaaae25cd1bd25f71ddc53671",
+    "tools/tests/stock_reference.c": "6848a9797aebfea92cebc257d460c11dc581d7738848d6c3941be802e84ec8d5"
+  }
+}

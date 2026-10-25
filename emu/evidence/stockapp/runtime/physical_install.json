@@ -1,0 +1,132 @@
+{
+  "started_utc": "2026-10-25T18:26:30.549268+00:00",
+  "phase": "install",
+  "package_sha256": "b6be3687ab4fc0286922b82734f37b4152a8006d8f4fec117896222e9fad5e13",
+  "result": "error",
+  "events": [
+    {
+      "utc": "2026-10-25T18:26:30.583731+00:00",
+      "event": "original_app_ready",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T18:26:33.712902+00:00",
+      "event": "wiring",
+      "result": "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING"
+    },
+    {
+      "utc": "2026-10-25T18:26:35.693039+00:00",
+      "event": "protected_upload_begin",
+      "bytes": 2031616,
+      "sha256": "b6be3687ab4fc0286922b82734f37b4152a8006d8f4fec117896222e9fad5e13",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "utc": "2026-10-25T18:26:39.562159+00:00",
+      "event": "payload_transferred",
+      "bytes": 2031616
+    },
+    {
+      "utc": "2026-10-25T18:26:39.675906+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T18:27:47.232798+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T18:27:47.235618+00:00",
+      "event": "updater_verified_flash",
+      "sha256": "b6be3687ab4fc0286922b82734f37b4152a8006d8f4fec117896222e9fad5e13"
+    },
+    {
+      "utc": "2026-10-25T18:27:47.236010+00:00",
+      "event": "starting_running_stock_app"
+    },
+    {
+      "utc": "2026-10-25T18:28:18.021903+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:28:48.207858+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:29:18.366331+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:29:48.519776+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:30:18.668754+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:30:48.850125+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:31:19.007347+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:31:49.176821+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T18:32:19.375095+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    }
+  ],
+  "error": "Stock USB identity not observed; no automatic reset/reflash"
+}

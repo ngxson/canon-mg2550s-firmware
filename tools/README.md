@@ -8,10 +8,19 @@ protocol details and recovery limits.
   USB `dangerous-write` for complete raw flash replacement, including stage 0.
 - `install_legacy.py`: historical OpenFW 0.1 → 128 KiB layout migration only;
   it cannot install the current 64 KiB layout.
-- `esp32/`: C bridge firmware, default/finished state GPIO4/5 floating.
+- `esp32/`: C bridge firmware with [automatic SDA/SCL validation](esp32/README.md)
+  at every boot; GPIO4/5 return to floating inputs after probing or transfers.
 - `float_esp32.py`: optional independent ROM register check of floating GPIO4/5;
   requires esptool 4.x or PlatformIO's `tool-esptoolpy` package.
 - `requirements.txt`: Python host dependencies. USB also requires libusb.
+- `stocktrace.py`: bounded read-only USB software-state snapshots from the
+  optional [stock telemetry app](../emu/evidence/stockapp/telemetry/README.md).
+  The app is installed; live snapshots/history and native printer identity
+  passed physical checks. Scan/print coexistence with polling is still pending.
+- `stock_scan.py`, `stock_print.py`: [direct stock USB scan/print tools](STOCK_USB.md),
+  ported from the working ESP32 host protocols. PNG/PPM scans and A4/Letter image
+  printing; no telemetry patch required. Python/C equivalence tests pass;
+  physical qualification of these Python tools is still pending.
 
 Commands are run from the repository root:
 
@@ -21,6 +30,7 @@ python3 tools/fwctl.py flash bootloader/build/application.bin
 python3 tools/fwctl.py flash bootloader/build/application.bin --transport i2c
 python3 tools/fwctl.py reboot
 python3 tools/fwctl.py reboot --mode application
+python3 tools/fwctl.py --port /dev/cu.usbmodem1201 detect
 ```
 
 Global options such as `--port` and `--serial` go before the subcommand. Normal

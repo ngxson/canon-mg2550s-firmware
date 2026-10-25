@@ -1,0 +1,50 @@
+{
+  "passed": true,
+  "package_sha256": "380b98ca115955b8a19d410979a42374b219ced94eb03f5c7c715f28f787461e",
+  "candidate_sha256": "449aeac6312ea1486243db2256f58da939766a74497ebae2e1082dfe2153175b",
+  "ticks": 450,
+  "irqs": 757,
+  "usb_state": [
+    2,
+    0,
+    1,
+    1
+  ],
+  "usb_errors": [],
+  "native_usb_initializations": 1,
+  "native_usb_attachments": 1,
+  "power_pulse_samples": 20,
+  "counter_saturated_at": 84,
+  "boot_unchanged": true,
+  "no_flash_or_spi_writes": true,
+  "usb_electrical_enumeration_proven": false,
+  "usb_host_events": [
+    {
+      "tick": 64,
+      "event": "soft disconnect"
+    },
+    {
+      "tick": 247,
+      "event": "soft disconnect"
+    },
+    {
+      "tick": 247,
+      "event": "soft disconnect"
+    },
+    {
+      "tick": 256,
+      "event": "attach",
+      "generation": 0
+    },
+    {
+      "tick": 256,
+      "event": "bus reset"
+    }
+  ],
+  "limits": [
+    "Synthetic connected VBUS, microcode startup FIFO token and TX readiness.",
+    "USB reset reaches stock; later engine/global-NAK completions are not fully modeled.",
+    "Synthetic IRQ/peripheral/EEPROM inputs and DRAM aliases; cache timing unmodeled."
+  ],
+  "test_source_sha256": "d6650b9ea8b503f303e150e5177a8bdb097f47773a28fbe52cb11d1bd203b4d9"
+}

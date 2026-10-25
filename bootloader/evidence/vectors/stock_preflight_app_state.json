@@ -1,0 +1,75 @@
+{
+  "utc": "2026-10-25T17:57:58.625775+00:00",
+  "purpose": "Read-only app state while diagnosing absent I2C replies",
+  "states": {
+    "scanner_home": [
+      1296582477,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ],
+    "scan_page": [
+      1196446541,
+      1,
+      0,
+      0,
+      0,
+      0,
+      2592,
+      5184,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      599292,
+      70
+    ],
+    "paper_feed": [
+      1145458765,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      2,
+      0
+    ],
+    "carriage": [
+      1380140877,
+      1,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  }
+}

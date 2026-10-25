@@ -1,0 +1,90 @@
+{
+  "started_utc": "2026-10-25T17:47:45.270883+00:00",
+  "phase": "read",
+  "result": "boot_region_read_and_compared",
+  "events": [
+    {
+      "event": "application_responding",
+      "product": "MG2550s Boot Audit",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "boot_region_read",
+      "pass_number": 1,
+      "bytes": 65536,
+      "sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92"
+    },
+    {
+      "event": "boot_region_read",
+      "pass_number": 2,
+      "bytes": 65536,
+      "sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92"
+    },
+    {
+      "event": "boot_comparison",
+      "two_reads_identical": true,
+      "boot_region_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+      "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+      "stage2_slot_sha256": "ee94142a632e66818dd82295174fe65362d79c3a29991c8398c6fcef7228288e",
+      "matches_tested_candidate": true,
+      "matches_saved_baseline": false,
+      "candidate_differing_bytes": 0,
+      "baseline_differing_bytes": 2736,
+      "vector_descriptor_words": [
+        "0x3158564d",
+        "0x1",
+        "0x18",
+        "0xe0000880",
+        "0x8cc",
+        "0x890"
+      ]
+    },
+    {
+      "event": "after_read",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    }
+  ],
+  "comparison": {
+    "two_reads_identical": true,
+    "boot_region_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+    "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+    "stage2_slot_sha256": "ee94142a632e66818dd82295174fe65362d79c3a29991c8398c6fcef7228288e",
+    "matches_tested_candidate": true,
+    "matches_saved_baseline": false,
+    "candidate_differing_bytes": 0,
+    "baseline_differing_bytes": 2736,
+    "vector_descriptor_words": [
+      "0x3158564d",
+      "0x1",
+      "0x18",
+      "0xe0000880",
+      "0x8cc",
+      "0x890"
+    ]
+  },
+  "finished_utc": "2026-10-25T17:47:46.247960+00:00"
+}

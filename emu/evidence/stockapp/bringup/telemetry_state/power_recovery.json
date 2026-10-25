@@ -1,0 +1,14 @@
+{
+  "result": "error",
+  "events": [
+    {
+      "utc": "2026-10-25T20:02:38.487510+00:00",
+      "event": "watcher_ready"
+    },
+    {
+      "utc": "2026-10-25T20:02:47.716318+00:00",
+      "event": "error",
+      "error": "The device has no langid (permission issue, no string descriptors supported or device error)"
+    }
+  ]
+}

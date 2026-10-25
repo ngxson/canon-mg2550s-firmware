@@ -1,0 +1,55 @@
+{
+  "utc": "2026-10-25T18:08:38.472111+00:00",
+  "files": {
+    "tools/esp32/src/main.c": {
+      "bytes": 14230,
+      "sha256": "5366c547f4e1120a5c8918b4c0ee70a79c838f74025431c871b5c3c90d12b769"
+    },
+    "tools/esp32/src/wiring.c": {
+      "bytes": 2129,
+      "sha256": "71ace65a661ea7f407120fa3aa5962ecdd55f753223df9d9d69db6e52e9a5a5c"
+    },
+    "tools/esp32/src/wiring.h": {
+      "bytes": 1015,
+      "sha256": "160e6f063f5c2fd2585856da68a2464814bc60e960be6335e98fb018d25ac40d"
+    },
+    "tools/esp32/src/CMakeLists.txt": {
+      "bytes": 267,
+      "sha256": "ffb1e75b5ab2e06d187753342e892ab78e8a694f49c38e56d405951c99797685"
+    },
+    "tools/fwctl.py": {
+      "bytes": 16567,
+      "sha256": "853c468725846c876a2bf062bc18d9a51c6c258a46f1ac284494326604bb5163"
+    },
+    "tools/esp32/.pio/build/bridge/firmware.bin": {
+      "bytes": 216528,
+      "sha256": "0934821328b07d92b110ba3ee92b3c9c48ce28afc41dd794c741080dccd1f812"
+    },
+    "tools/esp32/.pio/build/bridge/firmware.elf": {
+      "bytes": 3650360,
+      "sha256": "5bc6e728ed94735f516175ff33189d741de0557949d3d34004d319dc8cbfd3c9"
+    }
+  },
+  "validation": {
+    "native_sanitizer_detector_groups": 6,
+    "host_gate_tests": 4,
+    "arm_printer_cases": [
+      "bootloader_command_zero_rejected_no_reset_no_flash",
+      "app_command_zero_rejected_no_reset_no_flash",
+      "stage0_ignores_probe_then_stage2_rejects"
+    ],
+    "pio_build": "passed"
+  },
+  "physical_verification": {
+    "installed_application_readback": "readback.json",
+    "startup_detection": "startup_physical.json",
+    "fresh_host_detection": "host_physical.json",
+    "observed_mapping": {
+      "sda": 4,
+      "scl": 5
+    },
+    "proof": "REJECT90",
+    "printer_app_remained_healthy": true,
+    "opposite_physical_wire_order": "simulated; not physically rearranged for this test"
+  }
+}

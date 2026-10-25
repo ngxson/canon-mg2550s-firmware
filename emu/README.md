@@ -236,6 +236,13 @@ jobs are outside this public snapshot. Physical replacement-firmware results are
 recorded separately in [homing](../app/evidence/HOMING.md) and
 [page-scan evidence](../app/evidence/PAGE_SCAN.md).
 
+The separate [stock-as-app investigation](evidence/STOCK_AS_APP.md) compares a
+stock-derived app-slot candidate against native stock. Its initial unchanged-
+bootloader experiment uses an explicit vector-fetch assumption. The subsequent
+[bootloader vector ABI](../bootloader/evidence/VECTORS.md) executes real flash
+dispatch without that overlay; physical validation is pending.
+See [the offline reproduction](stockapp/README.md).
+
 ## Source map
 
 | File | Role |

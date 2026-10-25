@@ -1,0 +1,34 @@
+{
+  "started_utc": "2026-10-25T18:36:07.348395+00:00",
+  "user_reported_manual_power_cycle": true,
+  "restore_sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a",
+  "result": "error",
+  "events": [
+    {
+      "utc": "2026-10-25T18:36:07.348531+00:00",
+      "event": "watching_for_bootloader",
+      "timeout_seconds": 180
+    },
+    {
+      "utc": "2026-10-25T18:36:37.368567+00:00",
+      "event": "still_watching_for_bootloader"
+    },
+    {
+      "utc": "2026-10-25T18:37:07.371778+00:00",
+      "event": "still_watching_for_bootloader"
+    },
+    {
+      "utc": "2026-10-25T18:37:37.391452+00:00",
+      "event": "still_watching_for_bootloader"
+    },
+    {
+      "utc": "2026-10-25T18:38:07.407288+00:00",
+      "event": "still_watching_for_bootloader"
+    },
+    {
+      "utc": "2026-10-25T18:38:37.426102+00:00",
+      "event": "still_watching_for_bootloader"
+    }
+  ],
+  "error": "Bootloader was not captured; no firmware write or reset requested"
+}

@@ -1,0 +1,26 @@
+{
+  "utc": "2026-10-25T19:16:52.571340+00:00",
+  "devices": [
+    {
+      "vid": "0x4a9",
+      "pid": "0x176d",
+      "product": "MG2500 series",
+      "interfaces": [
+        {
+          "number": 0,
+          "class": 255,
+          "subclass": 0,
+          "protocol": 255
+        },
+        {
+          "number": 1,
+          "class": 7,
+          "subclass": 1,
+          "protocol": 2
+        }
+      ],
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe,IVEC,IVECPLI;MDL:MG2500 series;CLS:PRINTER;DES:Canon MG2500 series;VER:2.050;STA:11;FSI:00;HRI:D;MSI:AOFF,B240,E3,HASF,JOFF,K21000700;PDR:4;PSE:AGPB59861;CID:CA_BJR356_IJP;"
+    }
+  ],
+  "read_only": true
+}

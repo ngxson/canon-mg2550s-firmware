@@ -1,0 +1,178 @@
+{
+  "source": "physical USB collection; stock telemetry app; tools/stock_print.py and tools/stock_scan.py from this Mac",
+  "installed_package_sha256": "380b98ca115955b8a19d410979a42374b219ced94eb03f5c7c715f28f787461e",
+  "installation_evidence": "../../bringup/telemetry_v1/physical_install.json",
+  "tools": {
+    "tools/stock_print.py": "a36dd6ae4bd34c36886384c762ddf37d67249bc937baace48e7b52e383c4eb08",
+    "tools/stock_scan.py": "ee074c6d4ac046d7d627ac0d08b8bbdac598fe0b67682ff70e356a18918709d7",
+    "tools/stocktrace.py": "89139193c025fb1eb4afbf94d8c8c29a3e91fddef6435efec21e7699d0d219ae",
+    "tools/stockusb/printing.py": "82e3a4a2d7754b40561513391e8b6bae99cf7475ffe3ce1b6645e7ea2a3338b8",
+    "tools/stockusb/transport.py": "cc735d7c038c58c1a28ef792777f937b91f7ebf863e710625798afe7efec662a",
+    "tools/stockusb/raster.py": "3500f97521427d3ac62b8fe00d365d08043429a176a7df05c9a41b6354cee85c",
+    "tools/stockusb/scan.py": "0a64b5771fce7e7be8c206614c72ff9c999d789f68957bfadadf5d816735f390"
+  },
+  "offline_validation": "../../../../../tools/evidence/stock_usb_validation.json",
+  "stimulus": "test_sheet.png (4791x6816 px, fits the 600 dpi A4 printable area) printed at 300 dpi without polling and at 600 dpi with 10 Hz history-free polling; both sheets scanned back at 300 dpi full platen",
+  "runs": [
+    {
+      "name": "print_300_baseline",
+      "command": "python tools/stock_print.py --image test_sheet.png --dpi 300 --paper A4 --send --finish-timeout 600 --stall-timeout 900 --trace print_300_baseline_trace.jsonl",
+      "polling": "none",
+      "first_utc": "2026-10-25T21:14:51.541043+00:00",
+      "last_utc": "2026-10-25T21:15:10.447942+00:00",
+      "trace_events": 246,
+      "end_job_acknowledged": true,
+      "page_printed": true
+    },
+    {
+      "name": "print_600_telemetry",
+      "command": "python tools/stock_print.py --image test_sheet.png --dpi 600 --paper A4 --send --finish-timeout 600 --stall-timeout 900 --trace print_600_telemetry_trace.jsonl",
+      "polling": "10 Hz history-free",
+      "first_utc": "2026-10-25T21:15:34.169031+00:00",
+      "last_utc": "2026-10-25T21:16:01.174279+00:00",
+      "trace_events": 355,
+      "end_job_acknowledged": true,
+      "page_printed": true,
+      "telemetry_command": "python tools/stocktrace.py --count 9000 --interval 0.1 --output telemetry_fast_during_print_600.jsonl (stopped with SIGTERM)",
+      "telemetry_first_utc": "2026-10-25T21:15:30.905046+00:00",
+      "telemetry_last_utc": "2026-10-25T21:18:17.314476+00:00",
+      "snapshots": 1519,
+      "all_initialized_attached": true,
+      "all_native_error_zero": true
+    }
+  ],
+  "scans": [
+    {
+      "file": "scan_of_printed_sheet_300dpi.jpg",
+      "of": "300 dpi print",
+      "command": "python tools/stock_scan.py --output scan_of_printed_sheet_300dpi.png --dpi 300",
+      "trace": "scan_of_printed_sheet_trace.jsonl",
+      "note": "stored as JPEG q90; geometry was measured on the lossless PNG whose hash is recorded"
+    },
+    {
+      "file": "scan_of_printed_sheet_600dpi_job_300dpi_scan.jpg",
+      "of": "600 dpi print (reused sheet)",
+      "command": "python tools/stock_scan.py --output scan_of_printed_sheet_600dpi_job_300dpi_scan.png --dpi 300",
+      "trace": "scan_of_printed_sheet_600dpi_job_trace.jsonl",
+      "note": "stored as JPEG q90; geometry was measured on the lossless PNG whose hash is recorded"
+    },
+    {
+      "file": "scan_of_geometry_sheet_300dpi.jpg",
+      "of": "geometry_sheet.png printed at 600 dpi (message-ring capture run)",
+      "command": "python tools/stock_scan.py --output scan_of_geometry_sheet_300dpi.png --dpi 300",
+      "trace": "scan_of_geometry_sheet_trace.jsonl",
+      "note": "stored as JPEG q90; measured on the lossless PNG"
+    }
+  ],
+  "files_sha256": {
+    "geometry_sheet.png": "8fe5fc4b8cb8c06e2e3cc7b84238596387d620e9fb89404cc4f8d70a62a4d80b",
+    "history_after_print_300.jsonl": "f20174f71f041a30be36da1757ef78369825598d3a28477266b1ee1cd63ebe9a",
+    "history_after_print_600.jsonl": "f0dfe3fdf97a2983a9a6ad2d1a88c47c647df42076203eaee2d22e4d2f919f84",
+    "history_before_print_300.jsonl": "342da45f952180f2f9b300deb5ac07110e0230a5fc1abf976aee70e0a7b95efe",
+    "history_before_print_600.jsonl": "ecd2749f6c2682032bef5f5b4b24b97f616663a1f2d69d192c46d2ce039f0b0e",
+    "print_300_baseline_trace.jsonl": "b509f53a425cdff47d3df922ef9da3a2c59fe4cdfee272979147a774baada40d",
+    "print_600_telemetry_trace.jsonl": "9fb1ebef2f67b63bc05a6f719e9919ee53566805e9bb53d3eb15c02471c71782",
+    "scan_of_geometry_sheet_300dpi.jpg": "b789bd58b3e0d356035763ef4b4de048ebc80fb7a7ff37d849fd6b99a9abc35a",
+    "scan_of_geometry_sheet_trace.jsonl": "e5e123961795a4461f5fbd520e3d84bd5470bbd9a05dc198625a2c5487015a38",
+    "scan_of_printed_sheet_300dpi.jpg": "65ab233116b5dbe44caae2f9b99852a83345261cc09777e9acefa9999c00b55d",
+    "scan_of_printed_sheet_600dpi_job_300dpi_scan.jpg": "3d9064968f9b6ece8e6876a489706601c960cdec9225d7dd64a7f2283d0eb0ef",
+    "scan_of_printed_sheet_600dpi_job_trace.jsonl": "896f8a24751c4ee92fa8896888a67006f931b82c9de99ffd022f9eb92395c854",
+    "scan_of_printed_sheet_trace.jsonl": "fb5857320d0d26df53c02ced316c7a2f3a3e91598f8cf64a99949cbb2ca0da52",
+    "telemetry_fast_during_print_600.jsonl": "51cf1059aab62a3858ed9a62b846b321f66262852608a54b6c791c70dd1dd4fb",
+    "test_sheet.png": "24ef221d6f51f656d626a37438fd4fdefd240b1d4c6e47f5164e323f27e0abcd"
+  },
+  "findings": {
+    "print_success_both_runs": true,
+    "job_seconds": {
+      "300": 18.9,
+      "600": 27.0
+    },
+    "nak_wait_ms": {
+      "300": 13000,
+      "600": 3000
+    },
+    "backchannel_reads_per_second": {
+      "300": 11.5,
+      "600": 11.7
+    },
+    "stock_messages_during_600_job": 238,
+    "stock_messages_idle": 0,
+    "ruler_scale_percent": {
+      "300_x": -0.03,
+      "300_y": -0.06,
+      "600_x": 0.03,
+      "600_y": -0.01
+    },
+    "corner_mark_printed_mm_of_16_9": {
+      "300": 8.8,
+      "600": 8.6
+    },
+    "bottom_cutoff_mm_from_top_edge": 280,
+    "printer_status_sequence": [
+      "idle",
+      "processing DJS=LD",
+      "processing DJS=PR",
+      "processing DJS=EJ",
+      "processing DJS=ID / idle"
+    ],
+    "status_detail": "MarkerSupplyAttention (CTK CL LOW)",
+    "port_status": "0x18"
+  },
+  "limits": [
+    "One sheet per mode; no repeat and no Letter.",
+    "Message counts derive from the 8-bit ring index; IDs not exposed.",
+    "Origin offsets unmeasured: sheets overhung the platen edge.",
+    "Bottom cut-off needs a dedicated geometry test."
+  ],
+  "lossless_scan_sha256_measured": {
+    "scan_of_printed_sheet_300dpi.png": "4e6d689d654a633ae39ada8f7d904db4e07fe9d54e4bbe0669766757e68b9688",
+    "scan_of_printed_sheet_600dpi_job_300dpi_scan.png": "9eb874e1c85130670b50cac293243c60fb63908461bbaf1d29d02858c1976324",
+    "scan_of_geometry_sheet_300dpi.png": "9d86de34c788a85240067b78ac96112f43c21a9e3d3791972d6429f320892421"
+  },
+  "geometry_measurement": {
+    "paper_top_edge_mm_from_scan_top": 3.05,
+    "origin_mm_from_scan_top": 5.97,
+    "top_offset_mm": 2.92,
+    "top_offset_nominal_mm": 3.18,
+    "left_offset_mm": 3.47,
+    "left_offset_nominal_mm": 3.53,
+    "top_bars_mm_from_origin": [
+      0.0,
+      0.93,
+      1.86,
+      2.92,
+      3.89,
+      4.91,
+      5.88,
+      6.86,
+      7.92,
+      8.93,
+      9.91,
+      13.17
+    ],
+    "bottom_bars_mm_from_origin": [
+      243.7,
+      247.9,
+      249.8,
+      251.8,
+      253.9,
+      255.7,
+      257.7,
+      259.9,
+      261.8,
+      263.9,
+      265.9,
+      267.9,
+      269.8,
+      271.8,
+      273.8,
+      275.9
+    ],
+    "last_bar_label": 276,
+    "lowest_ink_mm_from_origin": 277.2,
+    "cutoff_mm_from_paper_top": 280.2,
+    "blank_bottom_mm": 16.8,
+    "declared_printable_height_mm": 288.6,
+    "rows_600dpi_printed_of_6816": 6548
+  }
+}

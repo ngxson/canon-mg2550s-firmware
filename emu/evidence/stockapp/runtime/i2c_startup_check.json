@@ -1,0 +1,13 @@
+{
+  "utc": "2026-10-25T18:31:14.483417+00:00",
+  "printer_reset_requested": false,
+  "printer_flash_writes": 0,
+  "probe": "command zero only; both orientations; pins released on exit",
+  "lines": [
+    "INFO RSC1 FLOATING AUTOWIRE=1 WIRING=UNVERIFIED",
+    "FLOATING",
+    "WIRING FAILED SDA4 SCL5 PROOF=NONE FLOATING",
+    "FLOATING"
+  ],
+  "error": "SDA/SCL wiring was not verified: WIRING FAILED SDA4 SCL5 PROOF=NONE FLOATING"
+}

@@ -1,0 +1,552 @@
+{
+  "started_at": "2026-10-25T16:13:42.263914+00:00",
+  "image": "replacement_factory.bin",
+  "image_bytes": 2097152,
+  "image_sha256": "b1c7abc8b7303e84fbde73ec88de02355cf810848486d30cb9dfe269294ec8b8",
+  "stream_bytes": 4718676,
+  "stream_sha256": "5892a0fec2c4265f4cbb02a003af77196f7b6b8bfdca0d4a3d0851df6c8f1f86",
+  "start": "0x0",
+  "end_inclusive": "0x1fffff",
+  "data_records": 32768,
+  "expected_device_id": "MFG:Canon;* (any-canon)",
+  "bytes_transferred": 4718676,
+  "status_reads": [
+    {
+      "time": "2026-10-25T16:13:42.275881+00:00",
+      "bytes_transferred": 0,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:42.594743+00:00",
+      "bytes_transferred": 65536,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:42.739744+00:00",
+      "bytes_transferred": 131072,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:42.884233+00:00",
+      "bytes_transferred": 196608,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:43.028739+00:00",
+      "bytes_transferred": 262144,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:43.173659+00:00",
+      "bytes_transferred": 327680,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:43.318408+00:00",
+      "bytes_transferred": 393216,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:43.463235+00:00",
+      "bytes_transferred": 458752,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:43.608197+00:00",
+      "bytes_transferred": 524288,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:43.752959+00:00",
+      "bytes_transferred": 589824,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:43.897364+00:00",
+      "bytes_transferred": 655360,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:44.042835+00:00",
+      "bytes_transferred": 720896,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:44.187836+00:00",
+      "bytes_transferred": 786432,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:44.332576+00:00",
+      "bytes_transferred": 851968,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:44.478144+00:00",
+      "bytes_transferred": 917504,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:44.622914+00:00",
+      "bytes_transferred": 983040,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:44.767237+00:00",
+      "bytes_transferred": 1048576,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:44.912161+00:00",
+      "bytes_transferred": 1114112,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:45.057390+00:00",
+      "bytes_transferred": 1179648,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:45.202295+00:00",
+      "bytes_transferred": 1245184,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:45.346958+00:00",
+      "bytes_transferred": 1310720,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:45.491605+00:00",
+      "bytes_transferred": 1376256,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:45.636235+00:00",
+      "bytes_transferred": 1441792,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:45.780863+00:00",
+      "bytes_transferred": 1507328,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:45.925531+00:00",
+      "bytes_transferred": 1572864,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:46.070380+00:00",
+      "bytes_transferred": 1638400,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:46.215418+00:00",
+      "bytes_transferred": 1703936,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:46.360337+00:00",
+      "bytes_transferred": 1769472,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:46.506196+00:00",
+      "bytes_transferred": 1835008,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:46.650831+00:00",
+      "bytes_transferred": 1900544,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:46.796111+00:00",
+      "bytes_transferred": 1966080,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:46.941505+00:00",
+      "bytes_transferred": 2031616,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:47.087094+00:00",
+      "bytes_transferred": 2097152,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:47.232812+00:00",
+      "bytes_transferred": 2162688,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:47.378120+00:00",
+      "bytes_transferred": 2228224,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:47.524181+00:00",
+      "bytes_transferred": 2293760,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:47.669935+00:00",
+      "bytes_transferred": 2359296,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:47.815507+00:00",
+      "bytes_transferred": 2424832,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:47.961275+00:00",
+      "bytes_transferred": 2490368,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:48.106862+00:00",
+      "bytes_transferred": 2555904,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:48.254426+00:00",
+      "bytes_transferred": 2621440,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:48.399141+00:00",
+      "bytes_transferred": 2686976,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:48.543728+00:00",
+      "bytes_transferred": 2752512,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:48.688365+00:00",
+      "bytes_transferred": 2818048,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:48.832988+00:00",
+      "bytes_transferred": 2883584,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:48.977686+00:00",
+      "bytes_transferred": 2949120,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:49.122566+00:00",
+      "bytes_transferred": 3014656,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:49.267851+00:00",
+      "bytes_transferred": 3080192,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:49.413258+00:00",
+      "bytes_transferred": 3145728,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:49.559066+00:00",
+      "bytes_transferred": 3211264,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:49.704127+00:00",
+      "bytes_transferred": 3276800,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:49.850011+00:00",
+      "bytes_transferred": 3342336,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:49.995970+00:00",
+      "bytes_transferred": 3407872,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:50.141892+00:00",
+      "bytes_transferred": 3473408,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:50.287766+00:00",
+      "bytes_transferred": 3538944,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:50.432211+00:00",
+      "bytes_transferred": 3604480,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:50.576842+00:00",
+      "bytes_transferred": 3670016,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:50.721514+00:00",
+      "bytes_transferred": 3735552,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:50.866126+00:00",
+      "bytes_transferred": 3801088,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:51.010758+00:00",
+      "bytes_transferred": 3866624,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:51.155408+00:00",
+      "bytes_transferred": 3932160,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:51.300165+00:00",
+      "bytes_transferred": 3997696,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:51.445101+00:00",
+      "bytes_transferred": 4063232,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:51.590180+00:00",
+      "bytes_transferred": 4128768,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:51.735269+00:00",
+      "bytes_transferred": 4194304,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:51.880042+00:00",
+      "bytes_transferred": 4259840,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:52.025378+00:00",
+      "bytes_transferred": 4325376,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:52.171338+00:00",
+      "bytes_transferred": 4390912,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:52.317317+00:00",
+      "bytes_transferred": 4456448,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:52.463601+00:00",
+      "bytes_transferred": 4521984,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:52.608998+00:00",
+      "bytes_transferred": 4587520,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:52.755024+00:00",
+      "bytes_transferred": 4653056,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:52.900294+00:00",
+      "bytes_transferred": 4718592,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:53.095112+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:53.701695+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:54.284883+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:54.869266+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:55.490743+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:56.080372+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:56.664650+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:57.234292+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:57.842450+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:58.463626+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:59.042389+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:13:59.547694+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:14:00.053204+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:14:00.558745+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+      "status": "80"
+    },
+    {
+      "time": "2026-10-25T16:14:01.062750+00:00",
+      "bytes_transferred": 4718676,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:C0;",
+      "status": "C0"
+    }
+  ],
+  "result": "success_reported_by_updater",
+  "pid": "0x12fe",
+  "interface": 0,
+  "out_endpoint": 1,
+  "max_packet": 512,
+  "bus": 1,
+  "address": 1,
+  "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe;MDL:Device;CLS:PRINTER;DES:Canon Device;VER:0.022;STA:80;",
+  "finished_at": "2026-10-25T16:14:01.063550+00:00"
+}

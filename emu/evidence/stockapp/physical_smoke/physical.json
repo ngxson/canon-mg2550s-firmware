@@ -1,0 +1,77 @@
+{
+  "utc": "2026-10-25T18:12:57.721255+00:00",
+  "result": "error",
+  "events": [
+    {
+      "event": "original_app_ready",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "fresh_wiring_check",
+      "result": "WIRING VERIFIED SDA4 SCL5 PROOF=REJECT90 FLOATING"
+    },
+    {
+      "event": "protected_upload_begin",
+      "bytes": 2031616,
+      "sha256": "9d2c2b91f9f1d55720df4f3e9a8b6e4e468288889c1e895e38b1575a4dff4238",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "event": "payload_transferred",
+      "bytes": 2031616
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "event": "updater_verified_flash",
+      "sha256": "9d2c2b91f9f1d55720df4f3e9a8b6e4e468288889c1e895e38b1575a4dff4238"
+    },
+    {
+      "event": "starting_stock_smoke"
+    }
+  ],
+  "error": "No responsive bootloader USB device; use I2C or reset if firmware is stuck"
+}

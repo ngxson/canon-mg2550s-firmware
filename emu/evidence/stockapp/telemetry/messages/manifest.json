@@ -1,0 +1,98 @@
+{
+  "source": "physical USB collection; telemetry ABI 2 stock app; tools/stocktrace.py --messages with tools/stock_scan.py and tools/stock_print.py",
+  "installed_package_sha256": "aa7ac52fe77712cf15f34174db7f1cc2008a91a866c1ad0299dc688082f6008f",
+  "installation_evidence": "../../bringup/telemetry_v2/physical_install.json",
+  "tools": {
+    "tools/stocktrace.py": "8b59ab16e2ed6c489b09c935dc734ea1ff3206da841f49e386b03f85816a6089",
+    "tools/stockmsgs.py": "4037301aecd9d364bcb1bbeb1d75e0a47c0263882a23290028a6452eb40fedb2",
+    "tools/stock_scan.py": "ee074c6d4ac046d7d627ac0d08b8bbdac598fe0b67682ff70e356a18918709d7",
+    "tools/stock_print.py": "a36dd6ae4bd34c36886384c762ddf37d67249bc937baace48e7b52e383c4eb08",
+    "tools/stockusb/printing.py": "82e3a4a2d7754b40561513391e8b6bae99cf7475ffe3ce1b6645e7ea2a3338b8",
+    "tools/stockusb/transport.py": "cc735d7c038c58c1a28ef792777f937b91f7ebf863e710625798afe7efec662a"
+  },
+  "captures": {
+    "idle_messages": {
+      "first_utc": "2026-10-25T21:42:10.047438+00:00",
+      "last_utc": "2026-10-25T21:42:13.559300+00:00",
+      "snapshots": 20,
+      "sha256": "6de50d7027fc6403061d4647a928eddc3519276fe6e0b30dce3150fc0455fb14",
+      "command": "python tools/stocktrace.py --interval 0.1 --messages --output idle_messages.jsonl"
+    },
+    "messages_during_scan": {
+      "first_utc": "2026-10-25T21:42:13.691408+00:00",
+      "last_utc": "2026-10-25T21:42:28.921264+00:00",
+      "snapshots": 80,
+      "sha256": "a6ef80ae84bcab4ad59d5a46acd73d8b1c744bc8c5e3f2261c8178a4697c5961",
+      "command": "python tools/stocktrace.py --interval 0.1 --messages --output messages_during_scan.jsonl"
+    },
+    "messages_during_print": {
+      "first_utc": "2026-10-25T21:42:29.095941+00:00",
+      "last_utc": "2026-10-25T21:43:41.788785+00:00",
+      "snapshots": 378,
+      "sha256": "77d32950dcc3f569ea2914c108b7e4d5cf0ca0920631849ab4c362e16d9858a6",
+      "command": "python tools/stocktrace.py --interval 0.1 --messages --output messages_during_print.jsonl"
+    }
+  },
+  "stimuli": {
+    "scan": "python tools/stock_scan.py --dpi 150 --x 10 --y 10 --width 50 --height 50 (trace scan_during_messages_trace.jsonl)",
+    "print": "python tools/stock_print.py --image ../print_coexist/geometry_sheet.png --dpi 600 --paper A4 --send --stall-timeout 900 (trace print_geometry_trace.jsonl); 186,535 bytes, EndJob acknowledged"
+  },
+  "files_sha256": {
+    "idle_messages.jsonl": "6de50d7027fc6403061d4647a928eddc3519276fe6e0b30dce3150fc0455fb14",
+    "messages_during_print.jsonl": "77d32950dcc3f569ea2914c108b7e4d5cf0ca0920631849ab4c362e16d9858a6",
+    "messages_during_scan.jsonl": "a6ef80ae84bcab4ad59d5a46acd73d8b1c744bc8c5e3f2261c8178a4697c5961",
+    "print_geometry_trace.jsonl": "75fc14d4e9a7d006c049ed897f5a73dce459df639c4fe3bf7104327290ce0256",
+    "scan_during_messages.png": "500afbdb9cb0073e57319cf4a0d6d60c5dfeba5c34e4c953028ffd561b41e899",
+    "scan_during_messages_trace.jsonl": "feb52683a159b6878b62d66ca5d70474db05c4c961c1aa774564c29a88af7184"
+  },
+  "findings": {
+    "own_pattern": [
+      "f01f",
+      "f022",
+      "f023",
+      "f021"
+    ],
+    "scan_bulk_round_trip": [
+      "f05b",
+      "f05c",
+      "f00e",
+      "f05d",
+      "f05e",
+      "f00a"
+    ],
+    "scan_session_start": [
+      "f005",
+      "f026",
+      "f044",
+      "f063",
+      "f064",
+      "f033",
+      "f004"
+    ],
+    "print_status_read": [
+      "f041",
+      "f042"
+    ],
+    "print_job_start": [
+      "f03f",
+      "f00b",
+      "f006"
+    ],
+    "print_raster_messages": 0,
+    "engine_transition_id": "f00f",
+    "print_job_end": [
+      "f002",
+      "f026",
+      "f044",
+      "f063",
+      "f04d",
+      "f04e",
+      "f031",
+      "f003",
+      "f006"
+    ],
+    "overflow_flags": 0,
+    "all_initialized_attached": true,
+    "all_native_error_zero": true
+  }
+}

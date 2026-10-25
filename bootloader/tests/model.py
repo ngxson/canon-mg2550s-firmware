@@ -5,6 +5,7 @@ flash bounds, state transitions and USB responses execute as ARM instructions.
 """
 from collections import deque
 import json
+import os
 from pathlib import Path
 import struct
 import zlib
@@ -12,6 +13,7 @@ from unicorn import Uc, UC_ARCH_ARM, UC_MODE_ARM, UC_HOOK_CODE
 from unicorn.arm_const import UC_ARM_REG_PC, UC_ARM_REG_CPSR, UC_CPU_ARM_946
 
 ROOT = Path(__file__).resolve().parents[1]
+BUILD = Path(os.environ.get('MG2550S_BOOT_BUILD', ROOT / 'build')).resolve()
 USB = 0xc0780000
 ENABLE = 0x80000000
 TICKS_PER_MS = 96000
@@ -37,10 +39,10 @@ class Model:
                  command=None, corrupt=False, host=True, speed=True, coalesced=False,
                  cut_after=None, corrupt_frame=False, hold_reboot_ack=False,
                  maintenance=False, metadata=None, dangerous=False):
-        self.meta = metadata or json.loads((ROOT / 'build/manifest.json').read_text())
+        self.meta = metadata or json.loads((BUILD / 'manifest.json').read_text())
         self.app_flash = self.meta['layout']['application'][0]
         self.dangerous = dangerous
-        self.source = image or (ROOT / 'build/factory.bin').read_bytes()
+        self.source = image or (BUILD / 'factory.bin').read_bytes()
         self.uc = Uc(UC_ARCH_ARM, UC_MODE_ARM)
         self.uc.ctl_set_cpu_model(UC_CPU_ARM_946)
         self.uc.mem_map(0, 0x200000); self.uc.mem_write(0, self.source)
@@ -180,7 +182,7 @@ class Model:
 
     def i2c_response(self):
         if self.selected == 0xffffffff:
-            offer = 4 if self.command else ((1 if self.maintenance else 2) if self.i2c_image else 0)
+            offer = 4 if self.command is not None else ((1 if self.maintenance else 2) if self.i2c_image else 0)
             image = self.i2c_image or b''
             body = struct.pack('<7I', 0xffffffff, 0x31435352, 1, len(image), zlib.crc32(image), self.command or 0, offer)
         else:
@@ -234,7 +236,13 @@ class Model:
                 assert self.maintenance and opcode == 0x20 and 0x4000 <= dest < 0x10000
             else:
                 assert opcode == 0xd8 and (self.dangerous or dest >= self.app_flash)
-            cpu.mem_write(dest, b'\xff'*length); self.erases.append(dest); self.erase_sizes.append(length)
+            cpu.mem_write(dest, b'\xff'*length)
+            # Peripheral writes bypass emulated CPU stores. Unicorn 2.1.4 can
+            # otherwise reuse old translated flash instructions after reset,
+            # even though data reads see the newly programmed bytes. Drop only
+            # those translation blocks; this is not a hardware I-cache model.
+            cpu.ctl_remove_cache(dest, dest+length)
+            self.erases.append(dest); self.erase_sizes.append(length)
         if address == 0xc0aa0058 and value == 1:
             dest, source = self.regs[0xc0aa005c], self.regs[0xc0a90000]
             assert dest % 4096 == 0 and dest+4096 <= 0x200000 and self.regs[0xc0aa0060] == 4096
@@ -243,7 +251,9 @@ class Model:
             data = bytes(cpu.mem_read(source, 4096)); old = bytes(cpu.mem_read(dest, 4096))
             data = bytes(a & b for a, b in zip(old, data))
             if self.corrupt: data = bytes([data[0] ^ 1]) + data[1:]
-            cpu.mem_write(dest, data); self.programs.append(dest)
+            cpu.mem_write(dest, data)
+            cpu.ctl_remove_cache(dest, dest+len(data))
+            self.programs.append(dest)
             if self.cut_after == len(self.programs): self.cut = True; cpu.emu_stop()
 
     def run(self, predicate, *, resume=False, budget=30000000):

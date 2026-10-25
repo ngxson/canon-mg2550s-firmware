@@ -1,0 +1,32 @@
+{
+  "events": [
+    {
+      "utc": "2026-10-25T18:55:13.979193+00:00",
+      "event": "watcher_ready"
+    },
+    {
+      "utc": "2026-10-25T18:55:14.090330+00:00",
+      "event": "power_cycle_response",
+      "exit_code": 0,
+      "http_status": "200"
+    },
+    {
+      "utc": "2026-10-25T18:55:48.512195+00:00",
+      "event": "bootloader_held",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    }
+  ],
+  "result": "held_rescue"
+}

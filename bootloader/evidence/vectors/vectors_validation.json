@@ -1,0 +1,139 @@
+{
+  "all_assertions_passed": true,
+  "cases": {
+    "all_seven_flash_handlers_sp_mod8_0": {
+      "passed": true,
+      "max_stack_bytes": 64
+    },
+    "all_seven_flash_handlers_sp_mod8_4": {
+      "passed": true,
+      "max_stack_bytes": 68
+    },
+    "all_seven_ram_handlers_sp_mod8_0": {
+      "passed": true,
+      "max_stack_bytes": 64
+    },
+    "all_seven_ram_handlers_sp_mod8_4": {
+      "passed": true,
+      "max_stack_bytes": 68
+    },
+    "all_zero_handlers_use_fault": {
+      "passed": true
+    },
+    "reject_target_boot_flash": {
+      "passed": true
+    },
+    "reject_target_boot_ram": {
+      "passed": true
+    },
+    "reject_target_thumb": {
+      "passed": true
+    },
+    "reject_target_halfword": {
+      "passed": true
+    },
+    "reject_target_mmio": {
+      "passed": true
+    },
+    "reject_target_outside_flash": {
+      "passed": true
+    },
+    "reject_target_past_payload": {
+      "passed": true
+    },
+    "reject_target_past_ram_payload": {
+      "passed": true
+    },
+    "reject_target_wraparound": {
+      "passed": true
+    },
+    "reject_target_header": {
+      "passed": true
+    },
+    "reject_table_null": {
+      "passed": true
+    },
+    "reject_table_unaligned": {
+      "passed": true
+    },
+    "reject_table_mmio": {
+      "passed": true
+    },
+    "reject_table_ram_edge": {
+      "passed": true
+    },
+    "reject_table_sram_edge": {
+      "passed": true
+    },
+    "reject_table_flash_edge": {
+      "passed": true
+    },
+    "reject_caller_irq_enabled": {
+      "passed": true
+    },
+    "reject_caller_fiq_enabled": {
+      "passed": true
+    },
+    "reject_caller_user": {
+      "passed": true
+    },
+    "reject_corrupt_magic": {
+      "passed": true
+    },
+    "reject_corrupt_magic_inverse": {
+      "passed": true
+    },
+    "reject_corrupt_version": {
+      "passed": true
+    },
+    "reject_corrupt_target": {
+      "passed": true
+    },
+    "reject_corrupt_inverse": {
+      "passed": true
+    },
+    "dispatch_rechecks_target_bounds": {
+      "passed": true
+    },
+    "reject_header_length_zero": {
+      "passed": true
+    },
+    "reject_header_length_unaligned": {
+      "passed": true
+    },
+    "reject_header_length_overflow": {
+      "passed": true
+    },
+    "reject_header_magic": {
+      "passed": true
+    },
+    "reject_header_version": {
+      "passed": true
+    },
+    "reject_header_load": {
+      "passed": true
+    },
+    "reject_header_entry": {
+      "passed": true
+    },
+    "reject_header_flags": {
+      "passed": true
+    },
+    "clear_disables_and_wipes": {
+      "passed": true
+    },
+    "reset_disarms_valid_app": {
+      "passed": true
+    },
+    "reset_disarms_invalid_app_rescue": {
+      "passed": true
+    },
+    "current_source_app_boot_and_management_reboot": {
+      "passed": true,
+      "application_sha256": "47f078c2a3cc75dac1d67dd02c0531e9c85e47f67b0cfe0edfa471d9e582b15a"
+    }
+  },
+  "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+  "factory_sha256": "62ac67c22ba081f393558929cb822963dbc86b00df7ca6d59a7db754e9f80ac1",
+  "model": "Real ARM wrappers and C validator; architectural exception entry supplied by harness"
+}
