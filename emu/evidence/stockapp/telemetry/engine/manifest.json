@@ -1,0 +1,120 @@
+{
+  "source": "physical USB collection; telemetry ABI 3 stock app; tools/stocktrace.py --engine with tools/stock_scan.py and tools/stock_print.py",
+  "installed_package_sha256": "f4eb8d476de3e4be78edc56827e557922d399f46b81d4d67c5a9496c1e6f382d",
+  "installation_evidence": "../../bringup/telemetry_v3/physical_install.json",
+  "brief": "fw_dump/gpt/BRIEF_message_ids.md (RE brief 12, answered 2026-10-25)",
+  "tools": {
+    "tools/stocktrace.py": "48fa66f1569a30b7cf00bd8834d1bdc889d1c9813055a3e252fd455145ec044f",
+    "tools/stock_scan.py": "ee074c6d4ac046d7d627ac0d08b8bbdac598fe0b67682ff70e356a18918709d7",
+    "tools/stock_print.py": "a36dd6ae4bd34c36886384c762ddf37d67249bc937baace48e7b52e383c4eb08",
+    "tools/stockusb/printing.py": "82e3a4a2d7754b40561513391e8b6bae99cf7475ffe3ce1b6645e7ea2a3338b8",
+    "tools/stockusb/transport.py": "cc735d7c038c58c1a28ef792777f937b91f7ebf863e710625798afe7efec662a"
+  },
+  "captures": {
+    "idle_engine": {
+      "first_utc": "2026-10-25T22:27:57.238919+00:00",
+      "last_utc": "2026-10-25T22:27:59.427451+00:00",
+      "snapshots": 10,
+      "sha256": "7270e2bac5e42c66a0c3bb87fc608fabb80dc61c8cf25a438671807c6e1b1960"
+    },
+    "engine_during_scan": {
+      "first_utc": "2026-10-25T22:27:59.522716+00:00",
+      "last_utc": "2026-10-25T22:28:12.975103+00:00",
+      "snapshots": 91,
+      "sha256": "4a2bde31fcb9b9cb5aacf0d180fbb97822d25b46ad8f4f96611ce5c994b142ec"
+    },
+    "engine_during_print": {
+      "first_utc": "2026-10-25T22:28:46.160305+00:00",
+      "last_utc": "2026-10-25T22:29:52.289481+00:00",
+      "snapshots": 443,
+      "sha256": "b795b3d00e82c38ef957b7676b4ffe9fb6c2ebd0037741eb5cc8c36188e0128f"
+    }
+  },
+  "stimuli": {
+    "scan": "50x50 mm at 150 dpi (scan_during_engine_trace.jsonl)",
+    "print": "../print_coexist/geometry_sheet.png at 600 dpi A4, 186,535 bytes, EndJob acknowledged (print_during_engine_trace.jsonl); last available sheet"
+  },
+  "files_sha256": {
+    "clamp_fixture.py": "90fca7de4f1b3c45c81677819c4dbf3416b5db9ddf9c6a93860cf52168985743",
+    "clamp_fixture_output.txt": "a850141d8ebe64c7bbb5e6812a84988bab334ebc2501cfb263f4883a832f3710",
+    "engine_during_print.jsonl": "b795b3d00e82c38ef957b7676b4ffe9fb6c2ebd0037741eb5cc8c36188e0128f",
+    "engine_during_scan.jsonl": "4a2bde31fcb9b9cb5aacf0d180fbb97822d25b46ad8f4f96611ce5c994b142ec",
+    "idle_engine.jsonl": "7270e2bac5e42c66a0c3bb87fc608fabb80dc61c8cf25a438671807c6e1b1960",
+    "print_during_engine_trace.jsonl": "804b129a9b49c54074e152f7be7521e6f341f5f5235f3c2fa20a2c475419e781",
+    "scan_during_engine.png": "5d109205060269ac1d36b02a5ef723cf1135a549b3cebf4aa90e765c2ac9afc9",
+    "scan_during_engine_trace.jsonl": "64db2df148c423e26aff0a9403d81cf9d059999a5f8ed07499d72d30c9822f81",
+    "scan_of_geometry_print2_engine_run_300dpi.jpg": "4b8c1788b8f392ffe91ac5567c6d08b1b12f9d9cfb88b6dd9c73ccb6e224e560",
+    "scan_of_geometry_print2_trace.jsonl": "faa1af1937b5d4dc7d962acf85d728216d071aebcde5884517113605cb79b10c"
+  },
+  "findings": {
+    "requested_area_600dpi": [
+      83,
+      75,
+      4791,
+      6816
+    ],
+    "active_area_600dpi": [
+      83,
+      75,
+      4791,
+      6545
+    ],
+    "paper_600dpi": [
+      4961,
+      7016
+    ],
+    "bottom_margin_units": 396,
+    "bottom_margin_mm": 16.76,
+    "active_height_mm": 277.1,
+    "measured_cutoff_mm": 277.2,
+    "wp_substate": 4,
+    "wp_seconds": 33,
+    "lf_during_wp": [
+      3095,
+      53095,
+      11983
+    ],
+    "lf_at_load": 218,
+    "lf_first_print": 871,
+    "edge_latched_lf": 12589,
+    "edge_state": 2,
+    "lf_after_eject": 16185,
+    "scan_status_cache_change": "+0x127 1->0 at session start, back at end",
+    "all_initialized_attached": true
+  },
+  "scan_of_print": {
+    "file": "scan_of_geometry_print2_engine_run_300dpi.jpg",
+    "lossless_sha256_measured": "7a5ff21edaa3860094885b525df89e80fae661855e0fbe64d9b84fba8cf93aa6",
+    "measurement": {
+      "left_offset_mm": 2.96,
+      "top_offset_mm": 3.47,
+      "last_bar_label": 276,
+      "bars_mm": [
+        255.8,
+        275.8
+      ],
+      "lowest_ink_mm_from_origin": 277.6,
+      "rows_600dpi": 6558,
+      "active_h_latched": 6545,
+      "active_h_mm": 277.1
+    },
+    "note": "second print of geometry_sheet.png, made during engine_during_print.jsonl; stored as JPEG q90"
+  },
+  "clamp_verification": {
+    "function": "0xaac50",
+    "caller": "0xaaeb0 (from 0xaacaa)",
+    "constant": "0xff+0x8d=396 at 0xaac86/0xaac8c",
+    "formula": "active_h=min(H, paperH-Y-396)",
+    "fixture": "clamp_fixture.py (Unicorn, Docker image mg2550s-emu)",
+    "fixture_output": "clamp_fixture_output.txt",
+    "cases": {
+      "75/6816/7016": 6545,
+      "75/6545/7016": 6545,
+      "75/6000/7016": 6000,
+      "75/6816/6600": 6129,
+      "0/7016/7016": 6620,
+      "59/6484/6600": 6145
+    },
+    "brief_13": "fw_dump/gpt/BRIEF_bottom_margin.md agrees"
+  }
+}

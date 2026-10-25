@@ -21,6 +21,8 @@ def main():
     p.add_argument('--output',type=Path,help='Save generated .prn to a new file')
     p.add_argument('--send',action='store_true',help='Print one physical page over USB')
     p.add_argument('--trace',type=Path,help='New JSONL metadata file; excludes raster/document bytes')
+    p.add_argument('--label',help='Identification printed in the top margin; default for --send is an automatic unique label')
+    p.add_argument('--no-label',action='store_true',help='Send the page without any identification')
     p.add_argument('--finish-timeout',type=float,default=180,help='Seconds to wait for the EndJob acknowledgement')
     p.add_argument('--stall-timeout',type=float,default=900,
                    help='Seconds the printer may refuse data while printing or waiting for paper (ESP32: unbounded)')
@@ -29,9 +31,15 @@ def main():
     if not 0<args.finish_timeout<=3600: p.error('finish-timeout must be in (0, 3600] seconds')
     if not 0<args.stall_timeout<=3600: p.error('stall-timeout must be in (0, 3600] seconds')
     page=Page(args.dpi,args.paper)
+    label=args.label
+    if label is None and args.send and not args.no_label:
+        import datetime,os
+        stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d %H:%M:%SZ')
+        label=f'{stamp}  {args.image.name if args.image else "test-page"}  {args.dpi}dpi {args.paper}  job {os.urandom(2).hex()}'
     trace=Trace(args.trace)
+    if label: trace('print_label',label=label)
     try:
-        image=prepare_image(page,args.image)
+        image=prepare_image(page,args.image,label)
         pixels=np.asarray(image)
         if args.output:
             digest=hashlib.sha256();n=0
@@ -51,7 +59,7 @@ def main():
             with USB('print',trace) as io:
                 result=print_page(io,page,pixels,trace,finish_timeout=args.finish_timeout,
                                   stall_timeout=args.stall_timeout,on_stall=stall,on_status=status)
-            print(json.dumps(result))
+            print(json.dumps({**result,'label':label}))
             if not result['end_job_acknowledged']:
                 raise SystemExit('Data sent, but EndJob was not acknowledged; physical completion is unverified')
     finally:

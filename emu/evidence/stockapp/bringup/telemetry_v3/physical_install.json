@@ -1,0 +1,403 @@
+{
+  "started_utc": "2026-10-25T22:25:24.647397+00:00",
+  "phase": "install",
+  "package_sha256": "f4eb8d476de3e4be78edc56827e557922d399f46b81d4d67c5a9496c1e6f382d",
+  "result": "stock_telemetry_installed_and_verified",
+  "events": [
+    {
+      "utc": "2026-10-25T22:25:24.666646+00:00",
+      "event": "original_app_ready",
+      "info": {
+        "layout_version": 2,
+        "mode": "application",
+        "held": false,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": false,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T22:25:24.710535+00:00",
+      "event": "wiring",
+      "result": "WIRING VERIFIED SDA5 SCL4 PROOF=REJECT90 FLOATING"
+    },
+    {
+      "utc": "2026-10-25T22:25:26.698903+00:00",
+      "event": "protected_upload_begin",
+      "bytes": 2031616,
+      "sha256": "f4eb8d476de3e4be78edc56827e557922d399f46b81d4d67c5a9496c1e6f382d",
+      "request": "0x43",
+      "flash_start": "0x10000"
+    },
+    {
+      "utc": "2026-10-25T22:25:30.564126+00:00",
+      "event": "payload_transferred",
+      "bytes": 2031616
+    },
+    {
+      "utc": "2026-10-25T22:25:30.677870+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": true,
+        "app_valid": false,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "80",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T22:26:38.257254+00:00",
+      "event": "update_status",
+      "info": {
+        "layout_version": 2,
+        "mode": "bootloader",
+        "held": true,
+        "busy": false,
+        "app_valid": true,
+        "dangerous_write": true,
+        "reboot_blocked": false,
+        "remaining_ms": 0,
+        "status": "C0",
+        "application_flash": "0x10000",
+        "application_capacity": 2031616
+      }
+    },
+    {
+      "utc": "2026-10-25T22:26:38.260057+00:00",
+      "event": "updater_verified_flash",
+      "sha256": "f4eb8d476de3e4be78edc56827e557922d399f46b81d4d67c5a9496c1e6f382d"
+    },
+    {
+      "utc": "2026-10-25T22:26:38.260569+00:00",
+      "event": "starting_running_stock_app"
+    },
+    {
+      "utc": "2026-10-25T22:27:09.021433+00:00",
+      "event": "waiting_for_stock_usb",
+      "last_error": null
+    },
+    {
+      "utc": "2026-10-25T22:27:13.078991+00:00",
+      "event": "stock_usb_responding",
+      "pid": "0x176d",
+      "bcdDevice": "0x205",
+      "interface": 1,
+      "out_endpoint": 1,
+      "device_id": "MFG:Canon;CMD:BJL,BJRaster3,BSCCe,IVEC,IVECPLI;MDL:MG2500 series;CLS:PRINTER;DES:Canon MG2500 series;VER:2.050;STA:30;FSI:00;HRI:D;MSI:AOFF,B240,E3,HASF,JOFF,K21000700;PDR:4;PSE:AGPB59861;CID:CA_BJR356_IJP;"
+    },
+    {
+      "utc": "2026-10-25T22:27:14.483198+00:00",
+      "event": "live_telemetry_verified",
+      "snapshots": 20,
+      "history_bytes": 2048,
+      "last_state": {
+        "state": 4,
+        "mode": 1,
+        "initialized": 1,
+        "attached": 1
+      }
+    }
+  ],
+  "telemetry": {
+    "snapshots": [
+      {
+        "utc": "2026-10-25T22:27:13.094914+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "006d6c1212000000",
+        "atomic": false,
+        "host_elapsed_ns": 7255000
+      },
+      {
+        "utc": "2026-10-25T22:27:13.152050+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "0075741414000000",
+        "atomic": false,
+        "host_elapsed_ns": 6691125
+      },
+      {
+        "utc": "2026-10-25T22:27:13.208799+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "007d7c1616000000",
+        "atomic": false,
+        "host_elapsed_ns": 6392209
+      },
+      {
+        "utc": "2026-10-25T22:27:13.276622+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "0085841818000000",
+        "atomic": false,
+        "host_elapsed_ns": 17620375
+      },
+      {
+        "utc": "2026-10-25T22:27:13.333927+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "008d8c1a1a000000",
+        "atomic": false,
+        "host_elapsed_ns": 6903792
+      },
+      {
+        "utc": "2026-10-25T22:27:13.395827+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "0095941c1c000000",
+        "atomic": false,
+        "host_elapsed_ns": 7261583
+      },
+      {
+        "utc": "2026-10-25T22:27:13.454166+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "009d9c1e1e000000",
+        "atomic": false,
+        "host_elapsed_ns": 6832625
+      },
+      {
+        "utc": "2026-10-25T22:27:13.512489+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00a5a42020000000",
+        "atomic": false,
+        "host_elapsed_ns": 7594041
+      },
+      {
+        "utc": "2026-10-25T22:27:13.571337+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00adac2222000000",
+        "atomic": false,
+        "host_elapsed_ns": 5940292
+      },
+      {
+        "utc": "2026-10-25T22:27:13.634033+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00b5b42424000000",
+        "atomic": false,
+        "host_elapsed_ns": 7675625
+      },
+      {
+        "utc": "2026-10-25T22:27:13.696634+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00bdbc2626000000",
+        "atomic": false,
+        "host_elapsed_ns": 7673167
+      },
+      {
+        "utc": "2026-10-25T22:27:13.759409+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00c5c42828000000",
+        "atomic": false,
+        "host_elapsed_ns": 7876958
+      },
+      {
+        "utc": "2026-10-25T22:27:13.820350+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00cdcc2a2a000000",
+        "atomic": false,
+        "host_elapsed_ns": 6977625
+      },
+      {
+        "utc": "2026-10-25T22:27:13.879661+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00d5d42c2c000000",
+        "atomic": false,
+        "host_elapsed_ns": 7506167
+      },
+      {
+        "utc": "2026-10-25T22:27:13.942303+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00dddc2e2e000000",
+        "atomic": false,
+        "host_elapsed_ns": 7622167
+      },
+      {
+        "utc": "2026-10-25T22:27:14.004227+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00e5e43030000000",
+        "atomic": false,
+        "host_elapsed_ns": 6895209
+      },
+      {
+        "utc": "2026-10-25T22:27:14.066238+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00f4f33333000000",
+        "atomic": false,
+        "host_elapsed_ns": 6984625
+      },
+      {
+        "utc": "2026-10-25T22:27:14.127968+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "00fcfb3535000000",
+        "atomic": false,
+        "host_elapsed_ns": 8231250
+      },
+      {
+        "utc": "2026-10-25T22:27:14.187303+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "0004033737000000",
+        "atomic": false,
+        "host_elapsed_ns": 6329625
+      },
+      {
+        "utc": "2026-10-25T22:27:14.243956+00:00",
+        "source": "physical USB software-state snapshot",
+        "usb_state": {
+          "state": 4,
+          "mode": 1,
+          "initialized": 1,
+          "attached": 1
+        },
+        "error_and_indices_hex": "000c0b3939000000",
+        "atomic": false,
+        "host_elapsed_ns": 5931708
+      }
+    ],
+    "history": {
+      "utc": "2026-10-25T22:27:14.303565+00:00",
+      "source": "physical USB software-state snapshot",
+      "usb_state": {
+        "state": 4,
+        "mode": 1,
+        "initialized": 1,
+        "attached": 1
+      },
+      "error_and_indices_hex": "0014133b3b000000",
+      "atomic": false,
+      "setup_history": {
+        "first_words_hex": "000501008006000180060203800602038006010380060103800603038006030380060002800600020009010080060003a1000000a1000000c0d00000c0d04000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000a1000000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d10000c0d14000c0d18000c0d1c00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "last_words_hex": "00000000000012000904020009041c000904020009040c000904020009040e000000090000003e000000000000000400000100010100ff000000400000004000000004000100080000000400010008000000040001000800000004000100080000000400010008000000040001000800000004000100080000000400010008000000040001000800000004000100080000000400010008000000040001000800000004000100080000000400010008000000040001000800000004000100080000010001000004000100080000000400010008000000040001000800000004000100080000000400010008000200400002004000020040000200400002004000020040000200400002004000020040000200400002004000020040000200400002004000020040000200400003004000030040000300400003004000030040000300400000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+        "indices_before": [
+          59,
+          59
+        ],
+        "indices_after": [
+          92,
+          92
+        ],
+        "limit": "Split rings are not atomic; these telemetry requests also enter stock history. Indices wrap modulo 256; unchanged indices do not prove consistency."
+      },
+      "host_elapsed_ns": 179332042
+    },
+    "normal_identity_after_telemetry": true
+  }
+}

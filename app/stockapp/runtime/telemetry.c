@@ -25,6 +25,16 @@ struct region { uint32_t address, length; };
  * 0x180406ce[0x180404cc++]. 0x1803fcc6 and 0x180404cd count processed
  * messages. Region 1 already carries 0x1803fcc5/6.
  */
+/* Regions 7-11 (ABI 3) are plain-RAM engine/status state identified by the
+ * answered RE brief 12 (fw_dump/gpt/BRIEF_message_ids.md): the reported-status
+ * cache read by the ivec status formatter (DJS category nibble at +0x0f,
+ * substate u16 at +0x10 bits 4-8, PID at +0x13..+0x15, CC override at
+ * +0x124; readers 0x3e66c/0x3ef5a, writer 0x39018), the print geometry in
+ * 1/600 inch (active and requested area/paper; writers 0xac21a/0xac75c/
+ * 0xaacaa), the ASF state byte (0xdc024), the LF position word (0xd9322) and
+ * the saved paper-edge coordinate plus edge-state byte (0xd72b6/0xd7250).
+ * None of these are MMIO.
+ */
 static const struct region regions[] = {
     {0x1804099c, 4},       /* USB state, mode, initialized, attached */
     {0x1803fcc4, 8},       /* error bytes, message and SETUP history indices */
@@ -33,16 +43,23 @@ static const struct region regions[] = {
     {0x180404cc, 2},       /* filtered message ring: write index, processed count */
     {0x180404ce, 512},     /* all message IDs, 256 x u16 */
     {0x180406ce, 512},     /* filtered message IDs, 256 x u16 */
+    {0x1803a790, 0x128},   /* reported-status cache: DJS/PID/BST inputs, CC override */
+    {0x1806c974, 28},      /* print geometry, 1/600 inch */
+    {0x180c6f54, 1},       /* ASF state */
+    {0x180d5790, 4},       /* LF position word */
+    {0x1879b98c, 5},       /* saved edge coordinate, edge state */
 };
 /* Little endian: STL1, ABI, maximum transfer, region count, then region pairs.
- * ABI 2 is 72 bytes, so the host reads it with wValue as the byte offset.
+ * ABI 3 is 112 bytes, so the host reads it with wValue as the byte offset.
  * Addresses are diagnostic metadata, never accepted from the USB requester.
  */
 static const uint32_t info[] = {
-    0x314c5453, 2, 64, 7,
+    0x314c5453, 3, 64, 12,
     0x1804099c, 4, 0x1803fcc4, 8,
     0x1803fccc, 1024, 0x180400cc, 1024,
     0x180404cc, 2, 0x180404ce, 512, 0x180406ce, 512,
+    0x1803a790, 0x128, 0x1806c974, 28, 0x180c6f54, 1,
+    0x180d5790, 4, 0x1879b98c, 5,
 };
 
 /* 0: native passthrough, 2: native IN-data state, 3: native STALL state.

@@ -32,26 +32,37 @@ with native error zero. Provenance: [manifest.json](manifest.json).
 - **Printer back-channel status read:** `f041 f042`, one pair per bulk IN
   read of the print interface, four per second with the ESP32 pacing.
 - **Print job:** `f03f f00b f006` once at `StartJob`; the 186 KiB raster OUT
-  stream produced **no messages at all**. Engine transitions show as `f00f`
-  bursts (a housekeeping ID excluded from the filtered ring): ×4 and ×2 just
-  before status `LD`, ×3 at `PR`, ×1 before `EJ`, ×11 plus `f006` at `ID`.
-  After the `EndJob` acknowledgement: `f002 f026 f044 f063 f04d f04e f031
-  f003 f006`.
+  stream produced **no messages at all**. `f00f` bursts (excluded from the
+  filtered ring) appear near status changes: ×4 and ×2 just before `LD`, ×3
+  at `PR`, ×1 before `EJ`, ×11 plus `f006` at `ID`. After the `EndJob`
+  acknowledgement: `f002 f026 f044 f063 f04d f04e f031 f003 f006`.
 
-So `f026 f044 f063` is common to scan-session start, scan-session end and
-print-job end, and `f006`/`f003` close both job types. The printer's own
-status went `NO → WP → LD → PR → EJ → ID → NO`; it held bulk OUT for 38 s in
-state `WP` before loading paper, with no messages in that window other than
-status polls, so that wait is inside the engine, not the USB task.
+The printer's own status went `NO → WP → LD → PR → EJ → ID → NO`; it held
+bulk OUT for 38 s in state `WP` before loading paper, with no messages in that
+window other than status polls.
+
+## What the rings are, per the answered RE brief 12
+
+The brief answer ([fw_dump/gpt/BRIEF_message_ids.md](../../../../../../fw_dump/gpt/BRIEF_message_ids.md))
+corrects the first reading above: the recorder at `0x50a76` belongs to the
+**USB device task** and its mailbox `0x3f`, so every ID here is a USB
+transport/control event, not engine progress. `f01f f021 f022 f023` are
+posted by the USB control driver, `f03f f041 f042 f044 f04d f04e` by the
+printer-class driver, `f05b–f05e f063 f064` by the scanner-class driver;
+`f00f` is a buffer/data-availability notification carrying a pointer, length
+and channel, so its bursts around `LD/PR/EJ` are status data being produced,
+not an engine timer. `f003` on this mailbox is distinct from the raster
+parser's `f003`. The event code is the low 24 bits of the word at message
+`+0x1c`; the rings keep only 16.
 
 ## What this gives the emulator
 
 The stock USB task's message sequence per host transaction is now known for
-both interfaces, with the IDs that must be posted after SETUP, bulk OUT and
-bulk IN completions. The engine side remains opaque: paper load, print and
-eject only surface as `f00f` timer-style events and status fields, so the next
-instrumentation step should be the sender side of `f00f` and the handlers of
-`f026/f044/f063`, not more USB regions.
+both interfaces. For engine state the answer names plain-RAM variables
+instead: the reported-status cache (`0x1803a790`, DJS category/substate and
+PID), the print geometry (`0x1806c974`, 1/600 inch), the ASF state byte, the
+LF position word and the saved paper-edge coordinate. Those are exposed as
+regions 7–11 in telemetry ABI 3 and read with `stocktrace.py --engine`.
 
 ## Limits
 

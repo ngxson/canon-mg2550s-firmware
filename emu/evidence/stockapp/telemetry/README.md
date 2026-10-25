@@ -40,7 +40,9 @@ USB drivers; the shim is an observation tool toward replacing those dependencies
 | `0xc0 / 0xd1`, `wIndex=region`, `wValue=offset` | Read 1–64 bytes wholly inside one allowed RAM region |
 
 ABI 1 (regions 0–3, 48-byte map read at offset zero only) was the first
-installed build; ABI 2 adds regions 4–6 below and is otherwise identical.
+installed build; ABI 2 added regions 4–6, ABI 3 adds regions 7–11 (112-byte
+map). The region addresses for 7–11 come from the answered RE brief 12 and are
+plain RAM; the brief explicitly excludes the MMIO sensor and carriage getters.
 
 Malformed telemetry requests return the native STALL result. Other requests
 retain the native vendor lookup. Recognized replies are copied into the stock
@@ -57,6 +59,11 @@ pointer at `+0x10`. This follows the stock GET_DEVICE_ID handler's pattern.
 | 4 | `0x180404cc` | 2 | Filtered message ring write index and processed count (`0x50af0`, `0x50bb0`) |
 | 5 | `0x180404ce` | 512 | Every dispatched message ID, 256 × u16, indexed by region-1 byte 1 (`0x50a7e–0x50a96`) |
 | 6 | `0x180406ce` | 512 | Same IDs minus 14 housekeeping IDs (`0xf002/f006/f00c/f00f/f010/f01f–f023/f04f–f052`), written at `0x50aec–0x50af8` |
+| 7 | `0x1803a790` | 296 | Reported-status cache read by the ivec status formatter: DJS category nibble at `+0x0f`, substate bits 4–8 of the u16 at `+0x10`, PID at `+0x13..+0x15`, CC override at `+0x124` (RE brief 12, ABI 3) |
+| 8 | `0x1806c974` | 28 | Print geometry in 1/600 inch: active X/Y/W/H, paper W/H, requested X/Y/W/H, requested paper W/H (brief 12) |
+| 9 | `0x180c6f54` | 1 | ASF state byte: 0 after eject, 1 after forward alignment (brief 12) |
+| 10 | `0x180d5790` | 4 | LF position/accounting word (brief 12) |
+| 11 | `0x1879b98c` | 5 | Saved paper-edge coordinate and edge-state byte (brief 12) |
 
 Region 1 byte 1 is the all-messages write index and byte 2 the processed
 count (`0x1803fcc5/6`); the recorder at `0x50a76–0x50bca` stores the u16 at

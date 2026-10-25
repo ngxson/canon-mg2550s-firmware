@@ -74,7 +74,11 @@ python3 tools/stock_print.py --image picture.png --dpi 300 --paper A4 --send
 ```
 
 The image is fitted and centered inside the printable area, preserving its
-aspect ratio. Supported modes are A4/Letter, plain paper, 300/600 dpi. At 300 dpi
+aspect ratio. Every sent page carries a unique identification in the top
+margin (UTC time, source name, mode and a random job tag) so printed sheets
+can be told apart afterwards; `--label TEXT` sets it explicitly and
+`--no-label` omits it. The label is also written to the trace file and the
+result line. Supported modes are A4/Letter, plain paper, 300/600 dpi. At 300 dpi
 CMYK has one bit per pixel; at 600 dpi C/M use three levels packed into two bits,
 and Y/K use one bit. Borders, gamma/dot gain, dithering, PackBits compression,
 eight-line CMYK bands, page geometry and IVEC wrappers follow the ESP32 C code.

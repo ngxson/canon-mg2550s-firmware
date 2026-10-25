@@ -146,6 +146,31 @@ Evidence: [watcher](../bringup/telemetry_v2_state/power_recovery.json),
 [idle rings](live_idle_v2.jsonl). The ABI 1 build `380b98ca…461e` is no
 longer installed.
 
+## Third deployment: ABI 3 engine regions — 2026-10-25 22:22–22:27 UTC
+
+RE brief 12 (`fw_dump/gpt/BRIEF_message_ids.md`) was answered with plain-RAM
+addresses for the reported-status cache, print geometry, ASF state, LF
+position and the saved paper edge; regions 7–11 expose them (ABI 3, 112-byte
+map). Same flow, new images from the changed sources:
+
+- Runtime `emu/output/stockapp/telemetry_v3/candidate.mgap`, SHA-256
+  `f4eb8d476de3e4be78edc56827e557922d399f46b81d4d67c5a9496c1e6f382d`
+  (shim 1,540 bytes); bounded image `telemetry_v3_state`, SHA-256
+  `db8f90dc01cda02db722c2e5aaf7850e4478e04e5ec39f2a30434cf8e5b5f80e`.
+- Emulator checks passed on both: 4,088 passthrough cases, 36 boundary reads,
+  19 rejections, message and engine round trips; native startup 757 IRQs with
+  one USB init/attach; guard regression; bounded return after 2,048 IRQs.
+- Physical: webhook `200`, held rescue captured at 22:22:49, checkpoint
+  wiring verified, bounded run returned with `[4,1,1,1]`/error 0/PHY
+  `0x10101`, runtime installed and `stock_telemetry_installed_and_verified`
+  at 22:27:14. First idle engine read: DJS `NO` (category 1), PID `0 0 0`,
+  geometry all zero after the power cycle, ASF byte `0xff`, LF position 3095,
+  edge coordinate sentinel `0x6fffffff`.
+
+Evidence: [checkpoint](../bringup/telemetry_v3_state/physical.json),
+[install](../bringup/telemetry_v3/physical_install.json),
+[idle read](live_idle_v3.jsonl). ABI 2 (`aa7ac52f…008f`) is no longer installed.
+
 ## Remaining qualification and emulator work
 
 The deployment is complete. The Python scan tool and scan/telemetry

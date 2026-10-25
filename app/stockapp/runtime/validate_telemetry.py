@@ -26,7 +26,7 @@ class Fixture:
     def __init__(self, image):
         self.uc = u = Uc(UC_ARCH_ARM, UC_MODE_ARM)
         u.mem_map(0, 0x200000); u.mem_write(0, image)
-        u.mem_map(0x10012000, 0x2000); u.mem_map(0x18000000, 0x80000)
+        u.mem_map(0x10012000, 0x2000); u.mem_map(0x18000000, 0x800000)
         self.writes = []
         self.stop = None
         u.hook_add(UC_HOOK_CODE, lambda uc,addr,size,user:
@@ -114,16 +114,18 @@ def main():
             expected=bytes(patched.uc.mem_read(address+offset,n))
             assert patched.transfer(0xd1,offset,region,n)==expected
             accepted+=1
-    # ABI 2: the 72-byte map is read with wValue as byte offset.
+    # ABI 3: the 112-byte map is read with wValue as byte offset.
+    words=4+2*len(REGIONS); size=4*words
     tail=patched.transfer(0xd0,64,0,64)
-    assert len(tail)==8 and full_info+tail==struct.pack('<18I',0x314c5453,2,64,len(REGIONS),*(v for r in REGIONS for v in r))
-    assert patched.transfer(0xd0,1,0,8)==full_info[1:9] and patched.transfer(0xd0,71,0,1)==tail[-1:]
+    assert len(tail)==size-64 and full_info+tail==struct.pack(f'<{words}I',0x314c5453,3,64,len(REGIONS),*(v for r in REGIONS for v in r))
+    assert patched.transfer(0xd0,1,0,8)==full_info[1:9] and patched.transfer(0xd0,size-1,0,1)==tail[-1:]
     rejected=0
     for req,value,index,length,buffer in (
-        (0xd0,72,0,48,BUF),(0xd0,0xffff,0,1,BUF),(0xd0,0,1,48,BUF),(0xd0,0,0,0,BUF),
+        (0xd0,size,0,48,BUF),(0xd0,0xffff,0,1,BUF),(0xd0,0,1,48,BUF),(0xd0,0,0,0,BUF),
         (0xd0,0,0,65,BUF),(0xd1,0,len(REGIONS),4,BUF),(0xd1,0xffff,2,1,BUF),
         (0xd1,1023,2,2,BUF),(0xd1,0,2,65535,BUF),(0xd1,0,0,5,BUF),(0xd1,2,4,1,BUF),
-        (0xd1,511,5,2,BUF),(0xd1,0,6,513,BUF),
+        (0xd1,511,5,2,BUF),(0xd1,0,6,513,BUF),(0xd1,0x128,7,1,BUF),(0xd1,0,8,29,BUF),
+        (0xd1,1,9,1,BUF),(0xd1,0,11,6,BUF),
         (0xd1,0,0,4,0xc0780014),(0xd1,0,0,0,BUF)):
         assert patched.lookup(0xc0,req,value,index,length,buffer=buffer)==(15,3)
         assert patched.uc.mem_read(BUF,64)==b'\xa5'*64
@@ -136,6 +138,13 @@ def main():
     for key,region in (('all_ids_hex',5),('filtered_ids_hex',6)):
         assert bytes.fromhex(snapshot['messages'][key])==bytes(patched.uc.mem_read(REGIONS[region][0],512))
     assert snapshot['messages']['filtered_index_before']==4 and snapshot['messages']['filtered_processed_before']==17
+    engine=reader.snapshot(engine=True)['engine']
+    assert bytes.fromhex(engine['status_raw_hex'])==bytes(patched.uc.mem_read(REGIONS[7][0],0x128))
+    assert engine['asf_state']==patched.uc.mem_read(REGIONS[9][0],1)[0]
+    assert engine['lf_position_ulf']==int.from_bytes(patched.uc.mem_read(REGIONS[10][0],4),'little',signed=True)
+    assert engine['edge_state']==patched.uc.mem_read(REGIONS[11][0]+4,1)[0]
+    assert engine['geometry_600dpi']['active_x']==struct.unpack('<h',patched.uc.mem_read(REGIONS[8][0],2))[0]
+    assert engine['djs'] in ('NO','S1','CC','WP','LD','PR','EJ','ID') or engine['djs'].startswith('?')
     for fixture in (patched,base):
         assert bytes(fixture.uc.mem_read(0,0x10000))==image[:0x10000]
     report={'passed':True,'package_sha256':m['package_sha256'],
@@ -143,7 +152,7 @@ def main():
             'compiled_user_mode_hook':True,'native_lookup_and_in_continuation':True,
             'native_completion_no_callback':True,'stack_alignment_0_and_4':True,
             'host_reader_roundtrip':True,'no_mmio_mapping':True,'write_allowlist_enforced':True,
-            'info_short_reply_lengths_tested':64,'abi':2,'regions':len(REGIONS),'message_rings_roundtrip':True,
+            'info_short_reply_lengths_tested':64,'abi':3,'regions':len(REGIONS),'message_rings_roundtrip':True,'engine_regions_roundtrip':True,
             'boot_prefix_unchanged':True,'hardware_tested':False,
             'limits':['Fixture starts after native SETUP acquisition; USB electrical delivery is not modeled.',
                       'RAM snapshots are not atomic; actual cache, DMA and concurrency need hardware validation.'],

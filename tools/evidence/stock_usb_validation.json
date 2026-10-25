@@ -123,10 +123,10 @@
     "tools/stockusb/transport.py": "cc735d7c038c58c1a28ef792777f937b91f7ebf863e710625798afe7efec662a",
     "tools/stockusb/__init__.py": "c8723cd325ca5f2c7b7cf3236521641781f38d6def64e61707dddc4db2f75da3",
     "tools/stockusb/scan.py": "0a64b5771fce7e7be8c206614c72ff9c999d789f68957bfadadf5d816735f390",
-    "tools/stockusb/raster.py": "3500f97521427d3ac62b8fe00d365d08043429a176a7df05c9a41b6354cee85c",
+    "tools/stockusb/raster.py": "27ff42b6d50e70fe21388d83d30128e937254a875c5c4aefca8636aaaf96188d",
     "tools/stockusb/printing.py": "82e3a4a2d7754b40561513391e8b6bae99cf7475ffe3ce1b6645e7ea2a3338b8",
     "tools/stock_scan.py": "ee074c6d4ac046d7d627ac0d08b8bbdac598fe0b67682ff70e356a18918709d7",
-    "tools/stock_print.py": "a36dd6ae4bd34c36886384c762ddf37d67249bc937baace48e7b52e383c4eb08",
+    "tools/stock_print.py": "371192b4949a7b4a7a08b775d6db89672c88cb1616ef4705ab544d3647f2bc5a",
     "tools/tests/validate_stock_usb.py": "5437ba21bc1da0a698771128371248fcfb17b40aaaae25cd1bd25f71ddc53671",
     "tools/tests/stock_reference.c": "6848a9797aebfea92cebc257d460c11dc581d7738848d6c3941be802e84ec8d5"
   }

@@ -11,10 +11,43 @@ import struct
 import time
 
 MAGIC = 0x314c5453
-ABI = 2
+ABI = 3
 REGIONS = ((0x1804099c, 4), (0x1803fcc4, 8),
            (0x1803fccc, 1024), (0x180400cc, 1024),
-           (0x180404cc, 2), (0x180404ce, 512), (0x180406ce, 512))
+           (0x180404cc, 2), (0x180404ce, 512), (0x180406ce, 512),
+           (0x1803a790, 0x128), (0x1806c974, 28), (0x180c6f54, 1),
+           (0x180d5790, 4), (0x1879b98c, 5))
+# DJS formatting per RE brief 12: category nibble 7 selects the print-job
+# substates; anything else is NO except substate 20; CC override wins.
+DJS_CATEGORY7 = {4: 'WP', 25: 'WP', 5: 'LD', 6: 'PR', 7: 'EJ', 0: 'ID', 1: 'ID', 2: 'ID', 3: 'ID', 11: 'ID'}
+
+
+def decode_engine(status, geometry, asf, lf, edge):
+    """Decode the regions 7-11 bytes; raw hex is kept beside every field."""
+    category = status[0x0f] & 0x0f
+    substate = (int.from_bytes(status[0x10:0x12], 'little') >> 4) & 0x1f
+    cc = status[0x124]
+    if cc == 1: djs = 'CC'
+    elif category == 7: djs = DJS_CATEGORY7.get(substate, f'?{substate}')
+    else: djs = 'S1' if substate == 20 else 'NO'
+    # Brief 12 names 24 bytes from 0x1806c974; the region's last 4 bytes are kept raw.
+    g = struct.unpack('<hhHHHHhhHHHH', geometry[:24])
+    names = ('active_x', 'active_y', 'active_w', 'active_h', 'paper_w', 'paper_h',
+             'req_x', 'req_y', 'req_w', 'req_h', 'req_paper_w', 'req_paper_h')
+    lf_position = int.from_bytes(lf, 'little', signed=True)
+    edge_coordinate = int.from_bytes(edge[:4], 'little', signed=True)
+    # RE brief 13: LF word and edge coordinate are signed 'Ulf' units
+    # (1 Ulf = 6 controller counts; 1/1200 inch is inferred, not calibrated);
+    # edge state 1 = not latched, 2 = trailing edge captured; eject finishes
+    # at saved_edge + 3596 Ulf. PID byte 0: 0 idle, 2 preparing/loading,
+    # 1 printing, 3 finishing (inferred); bytes 1-2 are copied page values.
+    return {'djs': djs, 'category': category, 'substate': substate, 'cc_override': cc,
+            'pid': list(status[0x13:0x16]), 'session_available': status[0x127], 'status_raw_hex': status.hex(),
+            'geometry_600dpi': dict(zip(names, g)), 'geometry_tail_hex': geometry[24:].hex(), 'asf_state': asf[0],
+            'lf_position_ulf': lf_position, 'edge_coordinate_ulf': edge_coordinate, 'edge_state': edge[4],
+            'eject_remaining_ulf': (3596 - (lf_position - edge_coordinate)) if edge[4] == 2 else None,
+            'limit': 'Reported-status cache and feed accounting, not raw sensors; fields per RE briefs 12/13; '
+                     'geometry in 1/600 inch, LF/edge in Ulf (6 controller counts, 1/1200 inch inferred).'}
 # Stock's message recorder excludes these IDs from the filtered ring.
 HOUSEKEEPING = frozenset([0xf002, 0xf006, 0xf00c, 0xf00f, 0xf010,
                           0xf01f, 0xf020, 0xf021, 0xf022, 0xf023,
@@ -53,7 +86,7 @@ class Reader:
             data.extend(part)
         return bytes(data)
 
-    def snapshot(self, history=False, messages=False):
+    def snapshot(self, history=False, messages=False, engine=False):
         start = time.monotonic_ns()
         state = self.read(0)
         errors = self.read(1)
@@ -81,6 +114,9 @@ class Reader:
                 'all_ids_hex': all_ids.hex(), 'filtered_ids_hex': filtered_ids.hex(),
                 'limit': 'Rings of 256 u16 IDs written by stock at 0x50a76-0x50bca; not atomic. '
                          'Each telemetry control request itself produces four messages.'}
+        if engine:
+            result['engine'] = decode_engine(self.read(7), self.read(8), self.read(9),
+                                             self.read(10), self.read(11))
         result['host_elapsed_ns'] = time.monotonic_ns()-start
         return result
 
@@ -109,6 +145,7 @@ def main():
     p.add_argument('--interval', type=float, default=1.0)
     p.add_argument('--setup-history', action='store_true', help='Include the non-atomic SETUP rings (32 extra reads)')
     p.add_argument('--messages', action='store_true', help='Include the stock message-ID rings (18 extra reads)')
+    p.add_argument('--engine', action='store_true', help='Include status cache, print geometry, ASF/LF/edge state (9 extra reads)')
     p.add_argument('--output', help='New JSONL evidence file; existing files are refused')
     args = p.parse_args()
     if args.count < 1 or args.interval < 0.1:
@@ -119,7 +156,7 @@ def main():
     try:
         if args.output: output = open(args.output, 'x', encoding='utf8')
         for i in range(args.count):
-            result = reader.snapshot(args.setup_history, args.messages)
+            result = reader.snapshot(args.setup_history, args.messages, args.engine)
             result['usb_identity'] = {'vid': hex(dev.idVendor), 'pid': hex(dev.idProduct),
                                       'bcd_device': hex(dev.bcdDevice), 'product': 'MG2500 series'}
             line = json.dumps(result)

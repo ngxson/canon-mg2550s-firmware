@@ -92,9 +92,14 @@ The printer honours the declared origin on both axes within 0.1 mm and
 prints the first row, but stops after row ≈ 6548 of the 6,816 it was sent:
 nothing beyond 277.2 mm from the origin appears, on all three sheets. With the
 ESP32's header this stock printer therefore has a usable area of about
-277 mm × 203 mm, not the 288.6 mm declared. The paper-end sensor position is
-the likely reason; whether a different `p`/`P` geometry command extends it is
-untested. The printer status went `WP` for 38 s before `LD` on this job.
+277 mm × 203 mm, not the 288.6 mm declared. **Cause found with telemetry
+ABI 3** ([engine/README.md](../engine/README.md)): stock latches an active
+area of `h=6545` for the requested `h=6816`, i.e. it applies a 396-unit
+(16.76 mm) bottom margin at job setup; 6545 rows = 277.1 mm. It is a
+geometry clamp, not a sensor limit: the literal 396 lives in the stock
+function at `0xaac50`, confirmed by executing it in the emulator and by RE
+brief 13. The printer status went `WP` for 38 s
+before `LD` on this job (substate 4 with feed-motor activity on the repeat).
 
 ## Limits
 

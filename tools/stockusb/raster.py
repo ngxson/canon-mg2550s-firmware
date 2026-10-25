@@ -128,7 +128,19 @@ def job_stream(page,rows):
     yield START;yield MODE;yield from page_stream(page,rows);yield END
 
 
-def prepare_image(page,path=None):
+def stamp_label(canvas,page,label):
+    """Print a unique identification in the top margin so sheets stay apart."""
+    from PIL import ImageDraw,ImageFont
+    size=max(10,int(page.dpi*0.1))   # about 2.5 mm high
+    try: font=ImageFont.truetype('/System/Library/Fonts/Helvetica.ttc',size)
+    except Exception: font=ImageFont.load_default()
+    d=ImageDraw.Draw(canvas)
+    d.rectangle((0,0,page.width-1,size+6),fill='white')
+    d.text((int(page.dpi*0.1),2),label,fill='black',font=font)
+    return canvas
+
+
+def prepare_image(page,path=None,label=None):
     from PIL import Image,ImageOps,ImageDraw
     canvas=Image.new('RGB',(page.width,page.height),'white')
     if path:
@@ -144,4 +156,5 @@ def prepare_image(page,path=None):
             x=int((50+i*150)*s);y=int(100*s)
             d.rectangle((x,y,x+int(100*s),y+int(100*s)),fill=color)
         d.line((int(50*s),int(230*s),int(800*s),int(230*s)),fill='black',width=max(1,int(s)))
+    if label: stamp_label(canvas,page,label)
     return canvas
