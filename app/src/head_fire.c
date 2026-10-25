@@ -137,6 +137,11 @@ static const struct record id25[2] = {
  * sequence (waveform, control words, count range, acquire/release) stays
  * the stock black-list sequence; only these two words change. */
 static struct record custom = { 3u, 0u, 0xffffffffu, 0xffffffffu };
+/* Experiment: the two mode-8 pattern words (stock 0x03000300 / 0x00030003, four
+ * nibble fields each) can be overridden for the next fires and jobs (USB 0x89/0x8a);
+ * 0 restores stock. Their effect inside a nozzle group is what the test measures. */
+static uint32_t pattern_a = 0x03000300u, pattern_b = 0x00030003u;
+
 
 
 enum hf_state { HF_IDLE = 0, HF_PENDING, HF_DONE };
@@ -149,6 +154,13 @@ static uint32_t adc_before[2], adc_after[2], elapsed_ms, wait_ms_last, status_en
 static int32_t x_fire;
 
 static uint32_t ms_since(uint32_t t) { return (app_clock_ticks() - t) / CLOCK_TICKS_PER_MS; }
+bool head_fire_set_pattern(unsigned which, uint32_t value)
+{
+    if (state == HF_PENDING || which > 1) return false;
+    if (which) pattern_b = value ? value : 0x00030003u; else pattern_a = value ? value : 0x03000300u;
+    return true;
+}
+
 bool head_fire_set_word(unsigned which, uint32_t value)
 {
     if (state == HF_PENDING || which > 1) return false;
@@ -193,8 +205,8 @@ static void engine_setup(void)
     head_block_init();                       /* 0: stock head-block configuration (once per boot) */
     head_if_prepare();                       /*    connection test and cold preparation (once) */
     head_if_acquire();                       /* 0a: owner acquire, same writes as the mode-4 acquire */
-    /* 1: pattern scratch words for waveform mode 8 */
-    wr(0xc0c29230u, 0x03000300u); wr(0xc0c29234u, 0x00030003u); wr(0xc0c29238u, 0);
+    /* 1: pattern scratch words for waveform mode 8 (stock values unless overridden) */
+    wr(0xc0c29230u, pattern_a); wr(0xc0c29234u, pattern_b); wr(0xc0c29238u, 0);
     wr(0xc0c29280u, 0); wr(0xc0c29284u, 0); wr(0xc0c29288u, 0); wr(0xc0c29200u, 0); wr(0xc0c29204u, 0);
     /* 2: rank/temperature waveform banks: black (bank 3), LCL (bank 0), SCL (bank 2) */
     write_bank(0xc0c29850u, 0xc0c295dcu, &bk37[bk_sel]);
@@ -316,12 +328,13 @@ void head_fire_poll(void)
 #define STAMP_LEAD 1500u             /* counts before the first entry where the crawl starts */
 #define STAMP_TAIL 600u              /* counts after the last entry where the crawl ends */
 #define STAMP_LATE 192u              /* entry passed by more than this is missed */
+#define STAMP_MIN_CRAWL 7000u        /* longer than the carriage short-move threshold */
 #define STAMP_CRAWL_DEFAULT 10000u   /* counts/s; the controller's floor speed */
 static struct { uint32_t x, a, b; } stamp[STAMP_MAX];
 static unsigned stamp_n, stamp_next, stamp_fired, stamp_missed, stamp_state, stamp_result, stamp_count, stamp_options;
 static uint32_t stamp_crawl, stamp_t0, stamp_ms;
 static bool stamp_abort;
-enum { SJ_IDLE = 0, SJ_APPROACH, SJ_CRAWL, SJ_FINISH };
+enum { SJ_IDLE = 0, SJ_APPROACH, SJ_CRAWL, SJ_FINISH, SJ_RETREAT };
 enum { SJR_NONE = 0, SJR_RUNNING, SJR_OK, SJR_CARRIAGE, SJR_CANCELLED, SJR_TIMEOUT, SJR_PARAM, SJR_REFUSED };
 
 bool stamp_clear(void) { if (stamp_state != SJ_IDLE) return false; stamp_n = 0; return true; }
@@ -348,10 +361,16 @@ bool stamp_run(unsigned value, unsigned crawl_units)
     if (!carriage_referenced()) { stamp_result = SJR_CARRIAGE; return false; }
     unsigned bk, cl1, cl2;
     if (!cartridge_ranks(&bk, &cl1, &cl2) || bk != RANK_BK || cl1 != RANK_CL1 || cl2 != RANK_CL2) { stamp_result = SJR_REFUSED; return false; }
-    if (!carriage_move_request((int32_t)(stamp[0].x - STAMP_LEAD), 0)) { stamp_result = SJR_CARRIAGE; return false; }
+    /* The approach must be a sweep-controller move (the short-move mode stalls): if the
+     * carriage is already within the short-move range of the approach point, retreat first. */
+    int32_t approach = (int32_t)(stamp[0].x - STAMP_LEAD), here = carriage_position();
+    uint32_t away = (uint32_t)(approach > here ? approach - here : here - approach);
+    unsigned first_state = SJ_APPROACH; int32_t first_target = approach;
+    if (away <= 6000u + 500u) { first_state = SJ_RETREAT; first_target = approach >= 8000 ? approach - 8000 : approach + 8000; }
+    if (!carriage_move_request(first_target, 0)) { stamp_result = SJR_CARRIAGE; return false; }
     stamp_count = n; stamp_options = opt; stamp_crawl = crawl_units ? crawl_units * 100u : STAMP_CRAWL_DEFAULT;
     bk_sel = bk_selector[ambient_bin(ambient ? ambient : HF_AMBIENT_DEFAULT)]; cl_sel = cl_selector[ambient_bin(ambient ? ambient : HF_AMBIENT_DEFAULT)];
-    stamp_next = stamp_fired = stamp_missed = 0; stamp_abort = false; stamp_result = SJR_RUNNING; stamp_state = SJ_APPROACH;
+    stamp_next = stamp_fired = stamp_missed = 0; stamp_abort = false; stamp_result = SJR_RUNNING; stamp_state = first_state;
     stamp_t0 = app_clock_ticks();
     dbg_puts("[stamp] job n="); dbg_dec(stamp_n); dbg_puts(" count="); dbg_dec(n); dbg_puts(" crawl="); dbg_dec(stamp_crawl);
     dbg_puts(" x="); dbg_dec(stamp[0].x); dbg_puts(".."); dbg_dec(stamp[stamp_n - 1].x); dbg_putc('\n');
@@ -376,13 +395,24 @@ static void stamp_finish(unsigned r)
 static void stamp_poll(void)
 {
     if (stamp_state == SJ_IDLE) return;
-    if (stamp_abort) { carriage_cancel(); if (stamp_state == SJ_APPROACH) { stamp_state = SJ_IDLE; stamp_result = SJR_CANCELLED; return; } stamp_finish(SJR_CANCELLED); return; }
+    if (stamp_abort) { carriage_cancel(); if (stamp_state == SJ_APPROACH || stamp_state == SJ_RETREAT) { stamp_state = SJ_IDLE; stamp_result = SJR_CANCELLED; return; } stamp_finish(SJR_CANCELLED); return; }
+    if (stamp_state == SJ_RETREAT) {
+        if (carriage_busy()) return;
+        if (!carriage_move_request((int32_t)(stamp[0].x - STAMP_LEAD), 0)) { stamp_state = SJ_IDLE; stamp_result = SJR_CARRIAGE; return; }
+        stamp_state = SJ_APPROACH;
+        return;
+    }
     if (stamp_state == SJ_APPROACH) {
         if (carriage_busy()) return;
         if (carriage_position() > (int32_t)(stamp[0].x - STAMP_LEAD / 2u)) { stamp_state = SJ_IDLE; stamp_result = SJR_CARRIAGE; return; }
         count = stamp_count;
         engine_setup();
-        if (!carriage_move_request((int32_t)(stamp[stamp_n - 1].x + STAMP_TAIL), stamp_crawl)) { stamp_finish(SJR_CARRIAGE); return; }
+        /* The crawl must be a sweep-controller move: shorter targets would take the short-move
+         * mode, which does not sustain motion on hardware. Extend the end past the threshold. */
+        uint32_t end = stamp[stamp_n - 1].x + STAMP_TAIL, min_end = (uint32_t)carriage_position() + STAMP_MIN_CRAWL;
+        if (end < min_end) end = min_end;
+        if (end > 116736u - 64u) end = 116736u - 64u;
+        if (!carriage_move_request((int32_t)end, stamp_crawl)) { stamp_finish(SJR_CARRIAGE); return; }
         stamp_state = SJ_CRAWL;
         return;
     }

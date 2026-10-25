@@ -20,7 +20,7 @@ RESULTS = {0: 'none', 1: 'running', 2: 'ok', 3: 'no_paper', 4: 'timeout', 5: 'ca
 def main():
     p = argparse.ArgumentParser(description=__doc__)
     p.add_argument('mode', choices=sorted(MODES))
-    p.add_argument('--advance', type=int, default=0, help='forward counts from the handoff point before stopping/ejecting (0 = firmware default 3762)')
+    p.add_argument('--advance', type=int, default=0, help='forward counts from the handoff point before stopping/ejecting (0 = firmware default 3876)')
     p.add_argument('--phase1', type=int, default=0, help='reverse counts before the sensor is consulted (0 = firmware default 2048)')
     p.add_argument('--handoff', type=int, default=0, help='extra pickup counts past the sensor edge (0 = firmware default 2048)')
     p.add_argument('--output', type=Path)

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """Print text by stationary stamping with the stock black waveform (host-driven).
 
-  stamp_print.py "HELLO WORLD" --x0 40000 --count 15 --output app/evidence/head_fire/hello.json
+  stamp_print.py "HELLO WORLD" --count 15 --output app/evidence/head_fire/hello.json
+  stamp_print.py "HELLO|WORLD"           # two lines: one crawl per line, one band advance between them
 
 For each pixel column of the text (5x7 font, one pixel = one nozzle group
 high and the same width) an entry (carriage position, two record words
 selecting the column's groups: tools/stamp_plan.py with the nozzle map
 measured by mask_map.py) is uploaded; the firmware's stamp job then crawls
 the carriage across the text and fires one black record of --count pulses
-as each entry's position is crossed (emulated in tests/validate_stamp.py). The sheet is picked up and placed as before (hold 8000
-plus an advance of 8000 counts), ejected at the end, carriage parked.
+as each entry's position is crossed (emulated in tests/validate_stamp.py). The sheet is picked up and placed with the firmware default (stock-like
+handoff; nozzle column 8..22 mm from the leading edge), ejected at the end, carriage parked.
 
 Physically fires the black head. Do not run without the owner present; the
 short-move mode of the carriage was emulated but not yet run on the printer.
@@ -28,13 +29,16 @@ def main():
     p.add_argument('--count', type=int, default=15, help='pulses per stop, 15..100')
     p.add_argument('--ambient', type=int, default=40); p.add_argument('--scale', type=int, default=1, help='pixel size in nozzle groups')
     p.add_argument('--crawl', type=int, default=10000, help='crawl speed in counts/s during the pass')
+    p.add_argument('--line-gap', type=int, default=32, help='blank 600 dpi rows between lines (default one group)')
     p.add_argument('--map', type=Path, default=APP / 'evidence/head_fire/nozzle_map.json', help='JSON with NozzleMap fields (default: the measured map)')
     p.add_argument('--no-feed', action='store_true', help='sheet already placed; do not pick up or eject')
     p.add_argument('--output', type=Path)
     args = p.parse_args()
     nmap = NozzleMap(**{k: v for k, v in json.loads(args.map.read_text()).items() if not k.startswith('_')}) if args.map else NozzleMap()
-    cols = text_bitmap(args.text); stops = plan(cols, nmap, args.x0, pixel_groups=args.scale)
-    print(len(cols), 'columns,', len(stops), 'stops, span', stops[-1].x - stops[0].x, 'counts')
+    lines = args.text.split('\\n') if '\\n' in args.text else args.text.split('|')
+    plans = [plan(text_bitmap(line), nmap, args.x0, pixel_groups=args.scale) for line in lines]
+    band_counts = (7 * args.scale * nmap.group_rows + args.line_gap) * 3          # 3 LF counts per 600 dpi row
+    print(len(lines), 'line(s);', [len(p) for p in plans], 'entries; band advance', band_counts, 'counts')
     import usb.util
     dev, info = wait_device('application')
     log = bytearray(); report = {'management': info, 'text': args.text, 'x0': args.x0, 'count': args.count, 'nozzle_map': vars(nmap), 'stops': []}
@@ -88,20 +92,23 @@ def main():
     try:
         drain(); cart_read()
         dev.ctrl_transfer(0x40, 0x6c, 0, 0, b'', timeout=1000); wait(0x6e, 12, 48)
-        if not args.no_feed: feed(1, 8000 // 64); feed(3, 8000 // 64)
-        # Upload the entries, then run the crawl job: the firmware fires each entry when the
-        # encoder crosses its position (src/head_fire.c stamp job), smear = crawl speed x 2.4 ms.
-        dev.ctrl_transfer(0x40, 0x86, 0, 0, b'', timeout=1000)
-        for i, st in enumerate(stops):
-            dev.ctrl_transfer(0x40, 0x83, st.word_a & 0xffff, st.word_a >> 16, b'', timeout=1000)
-            dev.ctrl_transfer(0x40, 0x84, st.word_b & 0xffff, st.word_b >> 16, b'', timeout=1000)
-            dev.ctrl_transfer(0x40, 0x85, i, st.x // 64, b'', timeout=1000)
-        t0 = time.monotonic()
-        dev.ctrl_transfer(0x40, 0x87, (args.count & 0xff) | 0x200, args.crawl // 100, b'', timeout=1000)
-        w = wait(0x88, 12, 48)
-        report['job'] = {'result': w[3], 'entries': w[4], 'fired': w[5], 'missed': w[6], 'ms': w[8], 'crawl': w[10]}
-        print('job result', w[3], 'fired', w[5], 'of', w[4], 'missed', w[6], 'in', w[8], 'ms', flush=True)
-        assert w[3] == 2, ('stamp job failed', w)
+        if not args.no_feed: feed(1, 0)   # firmware default: stock-like handoff, first line ~8 mm from the leading edge
+        # One crawl job per text line (src/head_fire.c stamp job: an entry fires when the encoder
+        # crosses its position); the paper advances one band between lines.
+        report['jobs'] = []
+        for n, stops in enumerate(plans):
+            if n: feed(3, band_counts // 64)
+            dev.ctrl_transfer(0x40, 0x86, 0, 0, b'', timeout=1000)
+            for i, st in enumerate(stops):
+                dev.ctrl_transfer(0x40, 0x83, st.word_a & 0xffff, st.word_a >> 16, b'', timeout=1000)
+                dev.ctrl_transfer(0x40, 0x84, st.word_b & 0xffff, st.word_b >> 16, b'', timeout=1000)
+                dev.ctrl_transfer(0x40, 0x85, i, st.x // 64, b'', timeout=1000)
+            t0 = time.monotonic()
+            dev.ctrl_transfer(0x40, 0x87, (args.count & 0xff) | 0x200, args.crawl // 100, b'', timeout=1000)
+            w = wait(0x88, 12, 48)
+            report['jobs'].append({'line': lines[n], 'result': w[3], 'entries': w[4], 'fired': w[5], 'missed': w[6], 'ms': w[8]})
+            print(f'line {n} {lines[n]!r}: result {w[3]} fired {w[5]} of {w[4]} missed {w[6]} in {w[8]} ms', flush=True)
+            assert w[3] == 2, ('stamp job failed', w)
         seq = struct.unpack('<20I', bytes(dev.ctrl_transfer(0xc0, 0x82, 0, 0, 80, timeout=1000)))[17]
         dev.ctrl_transfer(0x40, 0x81, 0x100 | 0x400, args.ambient, b'', timeout=1000)
         t0 = time.monotonic()

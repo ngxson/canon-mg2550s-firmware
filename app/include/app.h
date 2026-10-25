@@ -120,6 +120,9 @@ bool cartridge_ranks(unsigned *bk, unsigned *cl1, unsigned *cl2);
 #define APP_REQUEST_HEAD_WORD_A 0x83u    /* OUT: wValue | wIndex << 16 = record word for 0xc0c291e0 (experiment, used with 0x81 option 0x2000) */
 #define APP_REQUEST_HEAD_WORD_B 0x84u    /* OUT: same for 0xc0c291e8 */
 bool head_fire_set_word(unsigned which, uint32_t value);
+#define APP_REQUEST_HEAD_PATTERN_A 0x89u  /* OUT: wValue | wIndex << 16 = pattern word for 0xc0c29230 (0 = stock) */
+#define APP_REQUEST_HEAD_PATTERN_B 0x8au  /* OUT: same for 0xc0c29234 */
+bool head_fire_set_pattern(unsigned which, uint32_t value);
 /* Stamp job: fire entries at carriage positions while crawling (src/head_fire.c). */
 #define APP_REQUEST_STAMP_COMMIT 0x85u   /* OUT: wValue = entry index, wIndex = x / 64; copies the 0x83/0x84 words */
 #define APP_REQUEST_STAMP_CLEAR 0x86u    /* OUT: forget all entries */
@@ -184,6 +187,8 @@ bool paper_manual_running(void);
 void paper_manual_poll(void);
 bool scanner_motor_shared_init(void);     /* scanner driver's motor-off shared setup, for experiments */
 void buttons_request(void);         /* enable the front-panel key probe (USB 0x70) */
+#define APP_REQUEST_BTN_MAP 0x8bu        /* OUT: wValue = button map (0 default, 1 feed bench), see src/buttons.c */
+bool buttons_select_map(unsigned map);
 void buttons_poll(void);            /* always-active keys, optional change log */
 void scanner_poll(void);            /* run an armed action, if any */
 void scanner_lamp_toggle(void);     /* toggle continuous CIS illumination (Cancel key) */

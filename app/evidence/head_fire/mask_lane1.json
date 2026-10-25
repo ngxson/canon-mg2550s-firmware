@@ -1,0 +1,89 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "cases": [
+    {
+      "case": "all",
+      "x": 36000,
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "case": "w0 low16",
+      "x": 38500,
+      "words": [
+        "0xffff",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w0 high16",
+      "x": 41000,
+      "words": [
+        "0xffff0000",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w1 only",
+      "x": 43500,
+      "words": [
+        "0x0",
+        "0xffffffff",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w2 only",
+      "x": 46000,
+      "words": [
+        "0x0",
+        "0x0",
+        "0xffffffff"
+      ]
+    },
+    {
+      "case": "w0 bits0-3",
+      "x": 48500,
+      "words": [
+        "0xf",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w0 bits0-1",
+      "x": 51000,
+      "words": [
+        "0x3",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w0 bit0",
+      "x": 53500,
+      "words": [
+        "0x1",
+        "0x0",
+        "0x0"
+      ]
+    }
+  ]
+}

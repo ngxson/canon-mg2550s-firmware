@@ -33,10 +33,10 @@
  * (fw_dump/gpt/BRIEF_paper_pickup.md answer; 1 stock LF unit = 6 counts). */
 #define PHASE1_COUNTS 2048u        /* reverse before the sensor is consulted (stock: 12,300; the owner's manual runs reached the sensor at ~8,200 and switched 300..2,600 later) */
 #define SEARCH_COUNTS 90000u       /* RAS_LOAD_MAX: total reverse per attempt before giving up */
-#define HANDOFF_DEFAULT 2048u      /* post-edge pickup continuation (stock mode records 7,968..12,018 grind on this unit; manual runs: ~2,000) */
+#define HANDOFF_DEFAULT 7968u      /* stock post-edge pickup travel A = 1328 Ulf (brief 10); was 2048u: a marginal nip handoff */
 #define RESET_COUNTS 18570u        /* RAS_SWINGARM_INI: forward reset after a miss */
 #define HOME_COUNTS 37140u         /* forward reset from an unknown arm position (2 x RESET_COUNTS); physically needed after an aborted pickup */
-#define ADVANCE_DEFAULT 3762u      /* RAS_NIPtoNOZZLE: forward alignment (627 units), page corrections not applied */
+#define ADVANCE_DEFAULT 3876u      /* stock forward alignment T = 627 + 19 Ulf (brief 10); was 3762u */
 #define EJECT_MARGIN 21576u        /* RAS_EJECT: forward after the trailing edge */
 #define EJECT_MAX_COUNTS 60000u    /* sensor still covered after this much forward travel: jam */
 #define PICKUP_RETRIES 3u

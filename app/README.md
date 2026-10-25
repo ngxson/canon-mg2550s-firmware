@@ -68,16 +68,16 @@ work, keep the bootloader artifacts matching the installed recovery stages.
 Tests combine `bootloader/build/boot_region.bin` and its symbol manifest with
 the new app package and manifest.
 
-Run all fourteen scanner, cartridge, mechanism, head, tunnel and management checks before flashing:
+Run all fifteen scanner, cartridge, mechanism, head, tunnel, bench and management checks before flashing:
 
 ```sh
-for check in app home motor buttons scanner page cartridge printregs feed carriage page_job head_fire stamp tunnel; do
+for check in app home motor buttons scanner page cartridge printregs feed carriage page_job head_fire stamp tunnel bench; do
   docker run --rm --network none -v "$PWD:/project:rw" \
     mg2550s-emu "app/tests/validate_${check}.py" || break
 done
 ```
 
-Proceed only after all fourteen pass. Reports are written under `app/build/`.
+Proceed only after all fifteen pass. Reports are written under `app/build/`.
 Tests execute the linked ARM instructions, including boot and recovery, and
 check motion sequencing, capture/transfer failures, Cancel and management
 liveness. No stock dump is needed for these tests. Native execution is also
@@ -226,6 +226,20 @@ alignment: put the ejected sheet face down against the glass corner mark and
 run the tool. It reports each ink mark's centre, size and bounding box in
 millimetres from the glass corner, writes an annotated PNG and a JSON report,
 and with `--reference` the shift of each mark versus a previous scan.
+
+## Bench tests on the panel buttons
+
+```sh
+python3 app/tools/bench.py map 1     # feed bench
+python3 app/tools/bench.py log       # afterwards: what each press did, with counter and sensor values
+```
+
+Tests that need someone at the printer are driven from the panel instead of
+from timed host sequences (USB 0x8b selects the map). Feed bench, map 1:
+Copy B/W picks up a sheet and places it (hold, then 8000 counts); Copy
+Colour advances it 1024 counts per press; Power moves the carriage between
+park and 60000 counts; Cancel ejects a held sheet, otherwise stops. Map 0
+restores the default keys (feeder and transport toggles, Cancel stops).
 
 ## Register tunnel for hardware-in-the-loop emulation
 

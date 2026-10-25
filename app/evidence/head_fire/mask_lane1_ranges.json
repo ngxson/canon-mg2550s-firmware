@@ -1,0 +1,134 @@
+{
+  "management": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "cases": [
+    {
+      "case": "all",
+      "x": 36000,
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "case": "w0 b0",
+      "x": 38000,
+      "words": [
+        "0xff",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w0 b1",
+      "x": 40000,
+      "words": [
+        "0xff00",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w0 b2",
+      "x": 42000,
+      "words": [
+        "0xff0000",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w0 b3",
+      "x": 44000,
+      "words": [
+        "0xff000000",
+        "0x0",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w1 b0",
+      "x": 46000,
+      "words": [
+        "0x0",
+        "0xff",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w1 b1",
+      "x": 48000,
+      "words": [
+        "0x0",
+        "0xff00",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w1 b2",
+      "x": 50000,
+      "words": [
+        "0x0",
+        "0xff0000",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w1 b3",
+      "x": 52000,
+      "words": [
+        "0x0",
+        "0xff000000",
+        "0x0"
+      ]
+    },
+    {
+      "case": "w2 b0",
+      "x": 54000,
+      "words": [
+        "0x0",
+        "0x0",
+        "0xff"
+      ]
+    },
+    {
+      "case": "w2 b1",
+      "x": 56000,
+      "words": [
+        "0x0",
+        "0x0",
+        "0xff00"
+      ]
+    },
+    {
+      "case": "w2 b2",
+      "x": 58000,
+      "words": [
+        "0x0",
+        "0x0",
+        "0xff0000"
+      ]
+    },
+    {
+      "case": "w2 b3",
+      "x": 60000,
+      "words": [
+        "0x0",
+        "0x0",
+        "0xff000000"
+      ]
+    }
+  ]
+}

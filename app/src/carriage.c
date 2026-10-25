@@ -201,6 +201,10 @@ static void move_tick(void)
     if (integral < -(int32_t)tune.integral_max) integral = -(int32_t)tune.integral_max;
     int32_t effort = (int32_t)motor_divide(wanted, tune.kff_div) + sdiv(error, tune.kp_div) + integral;
     if (ticks <= tune.kick_ticks && speed < 2000) effort = (int32_t)tune.kick;
+    /* Re-kick: a slow crawl can stop mid-travel when the PI effort is small (seen on
+     * 2026-10-26 after a short approach). If the counter has not moved for 50 ms at low
+     * speed, apply the unseat kick again; the 400 ms stall check still bounds it. */
+    if (ticks > tune.kick_ticks && speed < 2000 && ms_since(last_change) >= 50u) effort = (int32_t)tune.kick;
     if (effort > (int32_t)CMD_DRIVE_MAX) effort = (int32_t)CMD_DRIVE_MAX;
     if (effort < -(int32_t)tune.brake_max) effort = -(int32_t)tune.brake_max;
     uint32_t compare = direction ? (uint32_t)((int32_t)NEUTRAL - effort) : (uint32_t)((int32_t)NEUTRAL + effort);

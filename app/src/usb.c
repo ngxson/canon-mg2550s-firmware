@@ -315,6 +315,8 @@ static void setup_request(void)
         if(!scanner_motor_busy() && !scan_page_busy() && stamp_run(value,index)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_STAMP_STATUS && !value && !index) {
         reply(stamp_status(control_buffer),length);
+    } else if(type==0x40 && (request==APP_REQUEST_HEAD_PATTERN_A || request==APP_REQUEST_HEAD_PATTERN_B) && !length) {
+        if(head_fire_set_pattern(request-APP_REQUEST_HEAD_PATTERN_A,(uint32_t)value|(uint32_t)index<<16)) ack(); else stall();
     } else if(type==0x40 && (request==APP_REQUEST_HEAD_WORD_A || request==APP_REQUEST_HEAD_WORD_B) && !length) {
         if(head_fire_set_word(request-APP_REQUEST_HEAD_WORD_A,(uint32_t)value|(uint32_t)index<<16)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_CART_STATUS && !value && !index) {
@@ -348,6 +350,8 @@ static void setup_request(void)
         if(paper_manual_request(value)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_PAPER_STATUS && !value && !index) {
         reply(paper_feed_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_BTN_MAP && !index && !length) {
+        if(buttons_select_map(value)) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_BTN && !value && !index && !length) {
         buttons_request(); ack();
     } else if(type==0x40 && request==APP_REQUEST_MOTOR_JOG && !index && !length && value<=1u) {

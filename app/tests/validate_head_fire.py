@@ -50,10 +50,10 @@ def expand(row):
     return [p[j if j < 5 else 4] for j in range(16)], tail
 
 
-def oracle(bk_sel, cl_sel, count, mode='fire', records=(0, 1), colour=False, custom=None):
+def oracle(bk_sel, cl_sel, count, mode='fire', records=(0, 1), colour=False, custom=None, pattern=(0x03000300, 0x00030003)):
     """Ordered (addr, value) writes to the engine block and CR work words, brief steps 1..12."""
     t = []
-    t += [(0xc0c29230, 0x03000300), (0xc0c29234, 0x00030003), (0xc0c29238, 0), (0xc0c29280, 0), (0xc0c29284, 0),
+    t += [(0xc0c29230, pattern[0]), (0xc0c29234, pattern[1]), (0xc0c29238, 0), (0xc0c29280, 0), (0xc0c29284, 0),
           (0xc0c29288, 0), (0xc0c29200, 0), (0xc0c29204, 0)]                                     # 1
     for base, tail_addr, row in ((0xc0c29850, 0xc0c295dc, BK37[bk_sel]), (0xc0c29700, 0xc0c295d0, LCL16[cl_sel]),
                                  (0xc0c297e0, 0xc0c295d8, SCL13[cl_sel])):                        # 2
@@ -160,9 +160,9 @@ def main():
     def engine(trace):
         return [(a, v) for a, v in trace if (ENGINE_LO <= a < ENGINE_HI and not 0xc0c29540 <= a <= 0xc0c29550) or a in CR_WORK]
 
-    def check_sequence(e, n0, bk_sel, cl_sel, count, mode='fire', records=(0, 1), colour=False, custom=None):
+    def check_sequence(e, n0, bk_sel, cl_sel, count, mode='fire', records=(0, 1), colour=False, custom=None, pattern=(0x03000300, 0x00030003)):
         t = e.trace[n0:]
-        got, want = engine(t), oracle(bk_sel, cl_sel, count, mode, records, colour, custom)
+        got, want = engine(t), oracle(bk_sel, cl_sel, count, mode, records, colour, custom, pattern)
         for i, (g, w) in enumerate(zip(got, want)):
             assert g == w, ('step mismatch at write %d: got %s want %s' % (i, (hex(g[0]), hex(g[1])), (hex(w[0]), hex(w[1]))))
         assert len(got) == len(want), (len(got), len(want), [(hex(a), hex(v)) for a, v in got[len(want):][:6]])
@@ -276,6 +276,14 @@ def main():
     clean(e)
     command(e, 'custom_colour', 0x81, 0x2000 | 0x1000, 0, expect_stall=True); assert hf(e)[3] == 8
     print('PASS custom_record_words')
+
+    # 4e) Pattern-word override (experiment): applied in step 1, stock restored with 0.
+    command(e, 'pat_a', 0x89, 0x0100, 0x0100); command(e, 'pat_b', 0x8a, 0x0001, 0x0001)
+    n0 = len(e.trace); s = fire(e, 0x2000 | 15, 0); assert s[3] == 2
+    check_sequence(e, n0, 3, 2, 15, 'fire', (0,), custom=(0xfffffffe, 0x80000000), pattern=(0x01000100, 0x00010001)); clean(e)
+    command(e, 'pat_a0', 0x89, 0, 0); command(e, 'pat_b0', 0x8a, 0, 0)
+    n0 = len(e.trace); s = fire(e, 0x2000 | 15, 0); check_sequence(e, n0, 3, 2, 15, 'fire', (0,), custom=(0xfffffffe, 0x80000000)); clean(e)
+    print('PASS pattern_override')
 
     # 5) Wrong black rank: refused even after a complete read.
     e2 = booted(fuse={0: BLACK40, 1: COLOUR16_7}); home(e2); cart_read(e2); n0 = len(e2.trace)

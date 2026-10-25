@@ -220,3 +220,122 @@ side is lighter. Path used: cartridge rank gate, stock prefire setup
 column's cleared groups, arm, completion poll; cleanup, release, shutdown.
 No stock code runs; the register sequence is the one documented in
 `src/head_fire.c`.
+
+## Pattern words and feed ruler (2026-10-26, builds e16d86d9 / d997fcef)
+
+`tools/fine_test.py` on the HELLO WORLD sheet (series 1 and series 2 run
+separately after a carriage fix; the sheet was not fed between them and the
+scan was taken with the sheet turned around; `fine_test_scan.*`).
+
+**Series 1, pattern words:** seven jobs, one entry each, group 5 only,
+15 pulses, pattern pairs (0x03000300/0x00030003 stock, 0x01000100/0x00010001,
+0x02000200/0x00020002, swapped, 0x0f000f00/0x000f000f, zeros,
+0x03030303/0x03030303). All seven marks are one group tall (1.0..1.35 mm)
+and 0.7..1.0 mm wide; darkness falls through the series (0.56, 0.40, 0.57,
+0.42, 0.34, faint, faintest: `fine_test_pattern_crop.png`). The words modulate
+the amount of ink, not the nozzle selection; no sub-group addressing.
+
+**Series 2, feed ruler:** reference pair (groups 0 and 9, 13 mm apart) at
+placement, then twenty advance-only feeds of 1024 counts, a reference pair
+3.9 mm further across after each (`fine_test_feed_crop.png`). Steps 0..14
+(fifteen pairs) lie on the same two lines (y = 25.5 and 38.7 mm in that
+scan): **the sheet did not move for fifteen advances (15,360 counts of
+roller rotation)**; from step 15 the pairs step down the page by about
+15 mm per advance (1024 counts at 70 counts/mm). Transport engages only
+after a long roller travel in this state; on the calibration sheet it was
+the opposite (first advance 57 mm, then slip). The LF counter follows the
+motor in both cases. Paper transport after our placement is not under
+control; multi-band printing needs the stock engage conditions (brief 10).
+
+The 150 dpi scan attempt timed out on the IPP-USB bulk write; 75 dpi was used.
+
+## Feed engagement tests (2026-10-26, build 90d4d372)
+
+Automated over USB with the paper-end sensor (`0xc0c84e08`) as the motion
+judge (it clears when the trailing edge passes, after about four 1024-count
+advances from the placement), plus the feed-bench button map on the panel.
+Every variant moved the sheet: bench presses alone; carriage off the cap
+(test A); a cartridge read (head-interface acquire/release/shutdown) before
+the advances (B); a dry stamp job before (C); a dry job with keep (D); real
+firing jobs alternating with advances (E); six dry 32-entry crawls with
+keep, an advance after each; the same with real count-100 firing
+(`feed_replica_scan.png`: six rows of marks 14.3 mm apart, 1024 counts at
+70 counts/mm). The earlier non-moving sheets (mapping rows, feed ruler)
+are therefore not reproduced by any firmware sequence; the remaining
+suspect is mechanical at the output side (the leading edge hanging half
+out after placement and catching), which no sensor sees.
+
+## Band-path mask registers 0xc0c27570.. with the stationary engine (2026-10-26)
+
+Written through the register tunnel before single-group fires (group 5,
+15 pulses, one entry per case at 2500-count spacing): lane-0 triple
+untouched (0), zero, all ones (the third word reads back 0x1), bit 0 only,
+low 16 bits; then the lane-1 triple zeroed. Scan `mask27570_scan.*`: the
+first five marks are identical one-group marks (0.7..1.0 x 1.35..1.7 mm);
+the lane-1-zero case left no visible mark (see the pixel check in the memo
+if it was merely faint). The lane-0 masks do not change what the work
+engine fires; these registers belong to the band path. Finer-than-group
+selection is not available through the stationary engine with any word
+tried so far (record words, pattern words, 27570 masks).
+
+## Lane-1 mask words, first mapping row (2026-10-26)
+
+`tools/mask_lane1.py`: eight single-group fires (group 5, 15 pulses) under
+lane-1 triples (0xc0c27580/84/88): all ones; word0 low 16; word0 high 16;
+word1 only; word2 only; word0 bits 0..3; bits 0..1; bit 0. Scan at 75 dpi
+(`mask_lane1_scan.*`), marks 6.5 mm apart from x = 189.1 mm: all ones 0.7 mm
+tall (!), low16 1.35, high16 1.7, word1 1.7, word2 1.35, bits 0..3 1.7,
+bits 0..1 none, bit 0 none. Fifteen-pulse marks are too faint and 75 dpi too
+coarse (a 32-nozzle group is four pixels) to read sub-group structure; the
+only firm facts: zero masks suppress the fire, one or two enabled bits give
+no visible ink, four or more give a full-looking group mark. Next row: count
+100 and contiguous byte ranges per word.
+
+## Lane-1 mask words, byte-range row at count 100 (2026-10-26)
+
+`tools/mask_lane1.py run --cases ranges --count 100 --pitch 2000`: thirteen
+single-group fires (all ones, then each byte of word0, word1, word2 alone).
+Scan `mask_lane1_ranges_scan.*`: thirteen marks, every one 1.0..1.35 mm
+wide and 2.0 mm tall (1.7 for the two ends), centroids within 0.3 mm of each
+other, ink within 15 %. **No word or byte selects a sub-range of the
+group**; the lane-1 words gate the amount fired (zero = nothing, one or two
+bits at 15 pulses = nothing visible, any byte at 100 pulses = the whole
+group). Together with the record words (ten groups of 32), the pattern words
+(ink amount) and lane 0's words (no effect), the stationary work engine
+offers no finer selection than a 32-nozzle group. Finer vertical resolution
+needs the band path (brief 11).
+
+## Two lines: "HELLO" and "WORLD" with a band advance (2026-10-26, build 90d4d372)
+
+`tools/stamp_print.py "HELLO|WORLD" --count 15`: one crawl per line (25
+entries each, all fired), one advance-only feed of 768 counts (7 groups of
+32 rows plus a 32-row gap, 3 counts per row) between them, on the reused
+sheet turned around. Scan `hello_two_lines_scan.png`, crop
+`hello_two_lines_crop.png`: the two lines are separated by the planned band
+pitch and read in order with the leading edge at the top. Multi-band
+printing on the open path works when the transport engages; the earlier
+non-moving sheets remain the open question of brief 10.
+
+## Stock-like pickup handoff (2026-10-26, one sheet, `scans/stock_hold*`)
+
+Brief 10 gave stock's post-edge pickup travel A = 1328 Ulf = 7968 counts and
+forward alignment T = 627 + 19 Ulf = 3876 counts; our handoff had been 2048.
+Firmware defaults changed (`paper_feed.c` HANDOFF_DEFAULT 7968, ADVANCE_DEFAULT
+3876), suites passed, flashed (`47f078c2`). Test: `paper_feed.py hold`
+(defaults, pickup 16280 counts, one attempt), record 1 prefire at x=59840,
+advance-only 6976 counts, record 1 prefire at x=45184, eject (8892 counts),
+park. Scan (75 dpi, top = trailing edge, right = park side):
+
+| mark | carriage | scan x | scan y (centre) | length |
+|---|---|---|---|---|
+| first (placement) | 59840 | 143.2 mm | 281.4 mm | 13.9 mm |
+| second (+6976 counts) | 45184 | 181.2 mm | 180.6 mm | 14.2 mm |
+
+Sheet 296.7 mm long in the scan, so the first column spans 8.4..22.3 mm from
+the leading edge (centre 15.3 mm): the stock-like handoff puts the nozzle
+line about 5 mm further down the page than stock's 3 mm top margin, and the
+sheet was properly in the transport (100.7 mm measured for 6976 counts =
+69.3 counts/mm, matching the 69.8 calibration). The earlier "16000 counts
+past the handoff" placement was slip after the marginal 2048 handoff, not
+geometry. Carriage: 14656 counts = 38.0 mm = 386 counts/mm (9800/inch).
+`stamp_print.py` and `fine_test.py` now use the default placement.

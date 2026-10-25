@@ -1,0 +1,40 @@
+{
+  "image": "app/evidence/head_fire/scans/stock_hold.png",
+  "resolution": 75,
+  "mm_per_px": 0.33866666666666667,
+  "image_mm": [
+    215.7,
+    296.7
+  ],
+  "paper_fraction": 0.995,
+  "marks": [
+    {
+      "x_mm": 181.18,
+      "y_mm": 180.64,
+      "w_mm": 1.02,
+      "h_mm": 14.22,
+      "area_mm2": 14.34,
+      "bbox_px": [
+        534,
+        513,
+        537,
+        555
+      ],
+      "mean_darkness": 0.982
+    },
+    {
+      "x_mm": 143.19,
+      "y_mm": 281.35,
+      "w_mm": 1.02,
+      "h_mm": 13.89,
+      "area_mm2": 11.81,
+      "bbox_px": [
+        422,
+        812,
+        425,
+        853
+      ],
+      "mean_darkness": 0.923
+    }
+  ]
+}
