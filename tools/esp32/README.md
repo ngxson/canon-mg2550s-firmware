@@ -48,3 +48,22 @@ and reordered events under native sanitizers; `tests/host_test.py` checks the
 host write/reboot gates; `tests/probe_printer.py` executes command zero in the
 ARM printer emulator. The first two are simulations, not ESP32 peripheral
 emulation. Physical outcomes are recorded separately in `evidence/`.
+
+## Passive I²C sniffing (added 2026-10-26)
+
+`SNIFF` puts the bridge into a passive bus monitor on the verified (or
+default SDA5/SCL4) orientation: both pins stay inputs with pulls disabled and
+nothing is ever driven or acknowledged. A dedicated task polls the GPIO input
+register in 4 ms bursts with interrupts masked, so 100–400 kHz edges are not
+missed; the decoder prints one line per transaction:
+
+```
+I2C <us since boot> S <addr+rw><a|n> <byte><a|n> ... P|Sr
+```
+
+`STOP` ends the capture and reports `FRAMES`, `BYTES` and `DROP`. The mode
+is refused while the slave is armed or probing. It was used to capture the
+printer's boot-time 24C08 traffic
+([evidence](../../emu/evidence/stockapp/telemetry/engine/i2c_sniff_power_cycle.json)):
+the reset-time recovery loader's polls of the disarmed bridge appear as NAKed
+address `0x84`, followed by stock's EEPROM reads and counter writes.

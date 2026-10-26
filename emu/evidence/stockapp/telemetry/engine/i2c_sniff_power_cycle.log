@@ -1,0 +1,599 @@
+# passive I2C sniff (polling sampler) on the EEPROM bus, recovery ESP32 bridge; printer power cycle via webhook at 2026-10-26T00:19:32.360310+00:00 (http 200); 75 s window; timestamps in us since ESP32 boot
+I2C 5755767 S 84n [1 bits 00] P
+I2C 5755923 S 84n [1 bits 00] P
+I2C 1953999 S 84n [1 bits 00] P
+I2C 1954153 S 84n [1 bits 00] P
+I2C 1954239 S 84n [1 bits 00] P
+I2C 1954393 S 84n [1 bits 00] P
+I2C 1954478 S 84n [1 bits 00] P
+I2C 1954633 S 84n [1 bits 00] P
+I2C 1954719 S 84n [1 bits 00] P
+I2C 1954873 S 84n [1 bits 00] P
+I2C 2035208 S 84n [1 bits 00] P
+I2C 2035294 S 84n [1 bits 00] P
+I2C 2035448 S 84n [1 bits 00] P
+I2C 2035534 S 84n [1 bits 00] P
+I2C 2035688 S 84n [1 bits 00] P
+I2C 2035774 S 84n [1 bits 00] P
+I2C 2035928 S 84n [1 bits 00] P
+I2C 2116457 S 84n [1 bits 00] P
+I2C 2116543 S 84n [1 bits 00] P
+I2C 2116697 S 84n [1 bits 00] P
+I2C 2116783 S 84n [1 bits 00] P
+I2C 2116937 S 84n [1 bits 00] P
+I2C 2117023 S 84n [1 bits 00] P
+I2C 2117177 S 84n [1 bits 00] P
+I2C 2197694 S 84n [1 bits 00] P
+I2C 2197779 S 84n [1 bits 00] P
+I2C 2197933 S 84n [1 bits 00] P
+I2C 2198019 S 84n [1 bits 00] P
+I2C 2198173 S 84n [1 bits 00] P
+I2C 2198259 S 84n [1 bits 00] P
+I2C 2198413 S 84n [1 bits 00] P
+I2C 2278980 S 84n [1 bits 00] P
+I2C 2279065 S 84n [1 bits 00] P
+I2C 2279220 S 84n [1 bits 00] P
+I2C 2279306 S 84n [1 bits 00] P
+I2C 2279460 S 84n [1 bits 00] P
+I2C 2279546 S 84n [1 bits 00] P
+I2C 2279700 S 84n [1 bits 00] P
+I2C 2360266 S 84n [1 bits 00] P
+I2C 2360352 S 84n [1 bits 00] P
+I2C 2360506 S 84n [1 bits 00] P
+I2C 2360592 S 84n [1 bits 00] P
+I2C 2360746 S 84n [1 bits 00] P
+I2C 2360832 S 84n [1 bits 00] P
+I2C 2360986 S 84n [1 bits 00] P
+I2C 2441502 S 84n [1 bits 00] P
+I2C 2441588 S 84n [1 bits 00] P
+I2C 2441743 S 84n [1 bits 00] P
+I2C 2441828 S 84n [1 bits 00] P
+I2C 2441982 S 84n [1 bits 00] P
+I2C 2442068 S 84n [1 bits 00] P
+I2C 2442222 S 84n [1 bits 00] P
+I2C 2522789 S 84n [1 bits 00] P
+I2C 2522875 S 84n [1 bits 00] P
+I2C 2523029 S 84n [1 bits 00] P
+I2C 2523115 S 84n [1 bits 00] P
+I2C 2523269 S 84n [1 bits 00] P
+I2C 2523355 S 84n [1 bits 00] P
+I2C 2523509 S 84n [1 bits 00] P
+I2C 2604030 S 84n [1 bits 00] P
+I2C 2604116 S 84n [1 bits 00] P
+I2C 2604270 S 84n [1 bits 00] P
+I2C 2604356 S 84n [1 bits 00] P
+I2C 2604510 S 84n [1 bits 00] P
+I2C 2604596 S 84n [1 bits 00] P
+I2C 2604750 S 84n [1 bits 00] P
+I2C 2685317 S 84n [1 bits 00] P
+I2C 2685402 S 84n [1 bits 00] P
+I2C 2685556 S 84n [1 bits 00] P
+I2C 2685642 S 84n [1 bits 00] P
+I2C 2685796 S 84n [1 bits 00] P
+I2C 2685882 S 84n [1 bits 00] P
+I2C 2686036 S 84n [1 bits 00] P
+I2C 2766559 S 84n [1 bits 00] P
+I2C 2766644 S 84n [1 bits 00] P
+I2C 2766799 S 84n [1 bits 00] P
+I2C 2766884 S 84n [1 bits 00] P
+I2C 2767039 S 84n [1 bits 00] P
+I2C 2767124 S 84n [1 bits 00] P
+I2C 2767279 S 84n [1 bits 00] P
+I2C 2847845 S 84n [1 bits 00] P
+I2C 2847931 S 84n [1 bits 00] P
+I2C 2848085 S 84n [1 bits 00] P
+I2C 2848171 S 84n [1 bits 00] P
+I2C 2848325 S 84n [1 bits 00] P
+I2C 2848411 S 84n [1 bits 00] P
+I2C 2848565 S 84n [1 bits 00] P
+I2C 2929081 S 84n [1 bits 00] P
+I2C 2929167 S 84n [1 bits 00] P
+I2C 2929321 S 84n [1 bits 00] P
+I2C 2929407 S 84n [1 bits 00] P
+I2C 2929561 S 84n [1 bits 00] P
+I2C 2929647 S 84n [1 bits 00] P
+I2C 2929801 S 84n [1 bits 00] P
+I2C 3010356 S 84n [1 bits 00] P
+I2C 3010442 S 84n [1 bits 00] P
+I2C 3010596 S 84n [1 bits 00] P
+I2C 3010682 S 84n [1 bits 00] P
+I2C 3010836 S 84n [1 bits 00] P
+I2C 3010922 S 84n [1 bits 00] P
+I2C 3011076 S 84n [1 bits 00] P
+I2C 3091643 S 84n [1 bits 00] P
+I2C 3091728 S 84n [1 bits 00] P
+I2C 3091883 S 84n [1 bits 00] P
+I2C 3091968 S 84n [1 bits 00] P
+I2C 3092122 S 84n [1 bits 00] P
+I2C 3092208 S 84n [1 bits 00] P
+I2C 3092363 S 84n [1 bits 00] P
+I2C 3172879 S 84n [1 bits 00] P
+I2C 3172964 S 84n [1 bits 00] P
+I2C 3173119 S 84n [1 bits 00] P
+I2C 3173204 S 84n [1 bits 00] P
+I2C 3173359 S 84n [1 bits 00] P
+I2C 3173444 S 84n [1 bits 00] P
+I2C 3173599 S 84n [1 bits 00] P
+I2C 3254165 S 84n [1 bits 00] P
+I2C 3254251 S 84n [1 bits 00] P
+I2C 3254405 S 84n [1 bits 00] P
+I2C 3254491 S 84n [1 bits 00] P
+I2C 3254645 S 84n [1 bits 00] P
+I2C 3254731 S 84n [1 bits 00] P
+I2C 3254885 S 84n [1 bits 00] P
+I2C 3335457 S 84n [1 bits 00] P
+I2C 3335542 S 84n [1 bits 00] P
+I2C 3335697 S 84n [1 bits 00] P
+I2C 3335782 S 84n [1 bits 00] P
+I2C 3335937 S 84n [1 bits 00] P
+I2C 3336022 S 84n [1 bits 00] P
+I2C 3336176 S 84n [1 bits 00] P
+I2C 3416694 S 84n [1 bits 00] P
+I2C 3416779 S 84n [1 bits 00] P
+I2C 3416934 S 84n [1 bits 00] P
+I2C 3417019 S 84n [1 bits 00] P
+I2C 3417174 S 84n [1 bits 00] P
+I2C 3417259 S 84n [1 bits 00] P
+I2C 3417414 S 84n [1 bits 00] P
+I2C 3497859 S P
+I2C 3497980 S 84n [1 bits 00] P
+I2C 3498066 S 84n [1 bits 00] P
+I2C 3498220 S 84n [1 bits 00] P
+I2C 3498306 S 84n [1 bits 00] P
+I2C 3498460 S 84n [1 bits 00] P
+I2C 3498546 S 84n [1 bits 00] P
+I2C 3498700 S 84n [1 bits 00] P
+I2C 3579266 S 84n [1 bits 00] P
+I2C 3579351 S 84n [1 bits 00] P
+I2C 3579506 S 84n [1 bits 00] P
+I2C 3579591 S 84n [1 bits 00] P
+I2C 3579745 S 84n [1 bits 00] P
+I2C 3579831 S 84n [1 bits 00] P
+I2C 3579985 S 84n [1 bits 00] P
+I2C 3660429 S P
+I2C 3660552 S 84n [1 bits 00] P
+I2C 3660638 S 84n [1 bits 00] P
+I2C 3660792 S 84n [1 bits 00] P
+I2C 3660878 S 84n [1 bits 00] P
+I2C 3661032 S 84n [1 bits 00] P
+I2C 3661118 S 84n [1 bits 00] P
+I2C 3661272 S 84n [1 bits 00] P
+I2C 3741830 S 84n [1 bits 00] P
+I2C 3741916 S 84n [1 bits 00] P
+I2C 3742070 S 84n [1 bits 00] P
+I2C 3742156 S 84n [1 bits 00] P
+I2C 3742310 S 84n [1 bits 00] P
+I2C 3742395 S 84n [1 bits 00] P
+I2C 3742550 S 84n [1 bits 00] P
+I2C 3823116 S 84n [1 bits 00] P
+I2C 3823202 S 84n [1 bits 00] P
+I2C 3823356 S 84n [1 bits 00] P
+I2C 3823442 S 84n [1 bits 00] P
+I2C 3823596 S 84n [1 bits 00] P
+I2C 3823682 S 84n [1 bits 00] P
+I2C 3823836 S 84n [1 bits 00] P
+I2C 3904353 S 84n [1 bits 00] P
+I2C 3904438 S 84n [1 bits 00] P
+I2C 3904593 S 84n [1 bits 00] P
+I2C 3904678 S 84n [1 bits 00] P
+I2C 3904832 S 84n [1 bits 00] P
+I2C 3904918 S 84n [1 bits 00] P
+I2C 3905072 S 84n [1 bits 00] P
+I2C 3985639 S 84n [1 bits 00] P
+I2C 3985725 S 84n [1 bits 00] P
+I2C 3985879 S 84n [1 bits 00] P
+I2C 3985965 S 84n [1 bits 00] P
+I2C 3986119 S 84n [1 bits 00] P
+I2C 3986205 S 84n [1 bits 00] P
+I2C 3986359 S 84n [1 bits 00] P
+I2C 4066792 S [5 bits 12] P
+I2C 4066930 S 84n [1 bits 00] P
+I2C 4067016 S 84n [1 bits 00] P
+I2C 4067170 S 84n [1 bits 00] P
+I2C 4067256 S 84n [1 bits 00] P
+I2C 4067410 S 84n [1 bits 00] P
+I2C 4067496 S 84n [1 bits 00] P
+I2C 4067650 S 84n [1 bits 00] P
+I2C 4148226 S 84n [1 bits 00] P
+I2C 4148312 S 84n [1 bits 00] P
+I2C 4148466 S 84n [1 bits 00] P
+I2C 4148552 S 84n [1 bits 00] P
+I2C 4148706 S 84n [1 bits 00] P
+I2C 4148792 S 84n [1 bits 00] P
+I2C 4148946 S 84n [1 bits 00] P
+I2C 4229513 S 84n [1 bits 00] P
+I2C 4229598 S 84n [1 bits 00] P
+I2C 4229753 S 84n [1 bits 00] P
+I2C 4229838 S 84n [1 bits 00] P
+I2C 4229993 S 84n [1 bits 00] P
+I2C 4230078 S 84n [1 bits 00] P
+I2C 4230233 S 84n [1 bits 00] P
+I2C 4310752 S 84n [1 bits 00] P
+I2C 4310838 S 84n [1 bits 00] P
+I2C 4310992 S 84n [1 bits 00] P
+I2C 4311078 S 84n [1 bits 00] P
+I2C 4311232 S 84n [1 bits 00] P
+I2C 4311318 S 84n [1 bits 00] P
+I2C 4311472 S 84n [1 bits 00] P
+I2C 4392044 S 84n [1 bits 00] P
+I2C 4392130 S 84n [1 bits 00] P
+I2C 4392284 S 84n [1 bits 00] P
+I2C 4392370 S 84n [1 bits 00] P
+I2C 4392524 S 84n [1 bits 00] P
+I2C 4392609 S 84n [1 bits 00] P
+I2C 4392764 S 84n [1 bits 00] P
+I2C 4473284 S 84n [1 bits 00] P
+I2C 4473369 S 84n [1 bits 00] P
+I2C 4473524 S 84n [1 bits 00] P
+I2C 4473609 S 84n [1 bits 00] P
+I2C 4473763 S 84n [1 bits 00] P
+I2C 4473849 S 84n [1 bits 00] P
+I2C 4474003 S 84n [1 bits 00] P
+I2C 4554438 S [3 bits 02] P
+I2C 4554570 S 84n [1 bits 00] P
+I2C 4554656 S 84n [1 bits 00] P
+I2C 4554810 S 84n [1 bits 00] P
+I2C 4554896 S 84n [1 bits 00] P
+I2C 4555050 S 84n [1 bits 00] P
+I2C 4555136 S 84n [1 bits 00] P
+I2C 4555290 S 84n [1 bits 00] P
+I2C 4635864 S 84n [1 bits 00] P
+I2C 4635950 S 84n [1 bits 00] P
+I2C 4636104 S 84n [1 bits 00] P
+I2C 4636190 S 84n [1 bits 00] P
+I2C 4636344 S 84n [1 bits 00] P
+I2C 4636430 S 84n [1 bits 00] P
+I2C 4636584 S 84n [1 bits 00] P
+I2C 4717151 S 84n [1 bits 00] P
+I2C 4717237 S 84n [1 bits 00] P
+I2C 4717391 S 84n [1 bits 00] P
+I2C 4717476 S 84n [1 bits 00] P
+I2C 4717631 S 84n [1 bits 00] P
+I2C 4717716 S 84n [1 bits 00] P
+I2C 4717871 S 84n [1 bits 00] P
+I2C 4798444 S 84n [1 bits 00] P
+I2C 4798530 S 84n [1 bits 00] P
+I2C 4798684 S 84n [1 bits 00] P
+I2C 4798770 S 84n [1 bits 00] P
+I2C 4798924 S 84n [1 bits 00] P
+I2C 4799010 S 84n [1 bits 00] P
+I2C 4799164 S 84n [1 bits 00] P
+I2C 4879563 S P
+I2C 4879687 S 84n [1 bits 00] P
+I2C 4879773 S 84n [1 bits 00] P
+I2C 4879927 S 84n [1 bits 00] P
+I2C 4880013 S 84n [1 bits 00] P
+I2C 4880167 S 84n [1 bits 00] P
+I2C 4880253 S 84n [1 bits 00] P
+I2C 4880407 S 84n [1 bits 00] P
+I2C 4960868 S [8 bits 12] P
+I2C 4961015 S 84n [1 bits 00] P
+I2C 4961101 S 84n [1 bits 00] P
+I2C 4961255 S 84n [1 bits 00] P
+I2C 4961341 S 84n [1 bits 00] P
+I2C 4961495 S 84n [1 bits 00] P
+I2C 4961581 S 84n [1 bits 00] P
+I2C 4961735 S 84n [1 bits 00] P
+I2C 5042313 S 84n [1 bits 00] P
+I2C 5042399 S 84n [1 bits 00] P
+I2C 5042553 S 84n [1 bits 00] P
+I2C 5042639 S 84n [1 bits 00] P
+I2C 5042793 S 84n [1 bits 00] P
+I2C 5042879 S 84n [1 bits 00] P
+I2C 5043033 S 84n [1 bits 00] P
+I2C 5123600 S 84n [1 bits 00] P
+I2C 5123685 S 84n [1 bits 00] P
+I2C 5123840 S 84n [1 bits 00] P
+I2C 5123925 S 84n [1 bits 00] P
+I2C 5124080 S 84n [1 bits 00] P
+I2C 5124165 S 84n [1 bits 00] P
+I2C 5124320 S 84n [1 bits 00] P
+I2C 5204725 S P
+I2C 5204847 S 84n [1 bits 00] P
+I2C 5204932 S 84n [1 bits 00] P
+I2C 5205087 S 84n [1 bits 00] P
+I2C 5205172 S 84n [1 bits 00] P
+I2C 5205327 S 84n [1 bits 00] P
+I2C 5205412 S 84n [1 bits 00] P
+I2C 5205567 S 84n [1 bits 00] P
+I2C 5286030 S [7 bits 12] P
+I2C 5286175 S 84n [1 bits 00] P
+I2C 5286261 S 84n [1 bits 00] P
+I2C 5286415 S 84n [1 bits 00] P
+I2C 5286501 S 84n [1 bits 00] P
+I2C 5286655 S 84n [1 bits 00] P
+I2C 5286741 S 84n [1 bits 00] P
+I2C 5286895 S 84n [1 bits 00] P
+I2C 5367369 S 84n [1 bits 00] P
+I2C 5367523 S 84n [1 bits 00] P
+I2C 5367609 S 84n [1 bits 00] P
+I2C 5367763 S 84n [1 bits 00] P
+I2C 5367849 S 84n [1 bits 00] P
+I2C 5368003 S 84n [1 bits 00] P
+I2C 5368089 S 84n [1 bits 00] P
+I2C 5368243 S 84n [1 bits 00] P
+I2C 5448831 S 84n [1 bits 00] P
+I2C 5448916 S 84n [1 bits 00] P
+I2C 5449071 S 84n [1 bits 00] P
+I2C 5449156 S 84n [1 bits 00] P
+I2C 5449310 S 84n [1 bits 00] P
+I2C 5449396 S 84n [1 bits 00] P
+I2C 5449550 S 84n [1 bits 00] P
+I2C 5529973 S 84n [1 bits 00] P
+I2C 5530127 S 84n [1 bits 00] P
+I2C 5530213 S 84n [1 bits 00] P
+I2C 5530367 S 84n [1 bits 00] P
+I2C 5530453 S 84n [1 bits 00] P
+I2C 5530607 S 84n [1 bits 00] P
+I2C 5530693 S 84n [1 bits 00] P
+I2C 5530847 S 84n [1 bits 00] P
+I2C 5611434 S 84n [1 bits 00] P
+I2C 5611520 S 84n [1 bits 00] P
+I2C 5611674 S 84n [1 bits 00] P
+I2C 5611760 S 84n [1 bits 00] P
+I2C 5611914 S 84n [1 bits 00] P
+I2C 5612000 S 84n [1 bits 00] P
+I2C 5612154 S 84n [1 bits 00] P
+I2C 5692570 S 84n [1 bits 00] P
+I2C 5692725 S 84n [1 bits 00] P
+I2C 5692811 S 84n [1 bits 00] P
+I2C 5692965 S 84n [1 bits 00] P
+I2C 5693050 S 84n [1 bits 00] P
+I2C 5693205 S 84n [1 bits 00] P
+I2C 5693290 S 84n [1 bits 00] P
+I2C 5693445 S 84n [1 bits 00] P
+I2C 5773899 S [3 bits 02] P
+I2C 5774032 S 84n [1 bits 00] P
+I2C 5774118 S 84n [1 bits 00] P
+I2C 5774272 S 84n [1 bits 00] P
+I2C 5774358 S 84n [1 bits 00] P
+I2C 5774512 S 84n [1 bits 00] P
+I2C 5774598 S 84n [1 bits 00] P
+I2C 5774752 S 84n [1 bits 00] P
+I2C 5855222 S 84n [1 bits 00] P
+I2C 5855377 S 84n [1 bits 00] P
+I2C 5855462 S 84n [1 bits 00] P
+I2C 5855617 S 84n [1 bits 00] P
+I2C 5855702 S 84n [1 bits 00] P
+I2C 5855857 S 84n [1 bits 00] P
+I2C 5855942 S 84n [1 bits 00] P
+I2C 5856097 S 84n [1 bits 00] P
+I2C 5936580 S 84n [1 bits 00] P
+I2C 5936735 S 84n [1 bits 00] P
+I2C 5936820 S 84n [1 bits 00] P
+I2C 5936974 S 84n [1 bits 00] P
+I2C 5937060 S 84n [1 bits 00] P
+I2C 5937214 S 84n [1 bits 00] P
+I2C 5937300 S 84n [1 bits 00] P
+I2C 5937454 S 84n [1 bits 00] P
+I2C 6017893 S 84n [1 bits 00] P
+I2C 6018047 S 84n [1 bits 00] P
+I2C 6018133 S 84n [1 bits 00] P
+I2C 6018287 S 84n [1 bits 00] P
+I2C 6018373 S 84n [1 bits 00] P
+I2C 6018527 S 84n [1 bits 00] P
+I2C 6018613 S 84n [1 bits 00] P
+I2C 6018767 S 84n [1 bits 00] P
+I2C 5855185 S ffn [1 bits 01] Sr
+I2C 5855237 S [1 bits 00] P
+I2C 5855480 S a0a 02a [1 bits 01] Sr
+I2C 5855541 S a1a b6a 5ba b0a 49a 3fa 00n [1 bits 00] P
+I2C 5856107 S a0a 20a [1 bits 01] Sr
+I2C 5856168 S a1a b6a 5ba b0a 49a 3fa 00n [1 bits 00] P
+I2C 5856672 S a0a 30a [1 bits 01] Sr
+I2C 5856732 S a1a 80a 97a 02a 02a 23a 0cn [1 bits 00] P
+I2C 5857222 S a0a 40a [1 bits 01] Sr
+I2C 5857283 S a1a 80a 97a 02a 02a 23a 0cn [1 bits 00] P
+I2C 5857881 S a0a 50a [1 bits 01] Sr
+I2C 5857942 S a1a 80a 34a 34a 38a 42a 44a 46a 41a 00a 14a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5858585 S a0a 08a 3ca 09a 04n 40a 04a [8 bits 02] P
+I2C 5858979 S a0a 80a [1 bits 01] Sr
+I2C 5859040 S a1a 9da 51a 01a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5859662 S a0a 90a [1 bits 01] Sr
+I2C 5859723 S a1a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5860481 S a0a a0a [1 bits 01] Sr
+I2C 5860542 S a1a 80a 34a 34a 38a 42a 44a 46a 41a 00a 14a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5861178 S a0a b0a [1 bits 01] Sr
+I2C 5861239 S a1a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 41a 47a 50a 42n [1 bits 00] P
+I2C 5861947 S a0a c0a [1 bits 01] Sr
+I2C 5862008 S a1a 35a 39a 38a 36a 31a 00a 00a 00a 0ba 02a 0fa 02a 81a 50a 01a 00n [1 bits 00] P
+I2C 5862632 S 80a 00a 00a 00a 00a 00a 00a [7 bits 02] P
+I2C 5864144 S a0a f0a [1 bits 01] Sr
+I2C 5864205 S a1a 94a 62a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 79a 7ea 01a 00n [1 bits 00] P
+I2C 5864834 S a2a 00a [1 bits 01] Sr
+I2C 5864895 S a3a 0ea a3a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 87a 21a 02a 00n [1 bits 00] P
+I2C 5865517 S a2a 10a [1 bits 01] Sr
+I2C 5865578 S a3a 00a 00a 00a 00n [1 bits 00] P
+I2C 5865985 S a2a 18a [1 bits 01] Sr
+I2C 5866046 S a3a 94a 62a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5866453 S a2a 20a [1 bits 01] Sr
+I2C 5866514 S a3a 00a 00a 00a 00a 79a 7ea 01a 00a 0ea a3a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5867144 S a2a 30a [1 bits 01] Sr
+I2C 5867205 S a3a 00a 00a 00a 00a 87a 21a 02a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5869238 S a2a 60a [1 bits 01] Sr
+I2C 5869299 S a3a 00a 00a 00a 00a 00a 00a 00a 00a 7ea 4aa c8a 01a 54a 4aa c8a 01n [1 bits 00] P
+I2C 5869921 S a2a 70a [1 bits 01] Sr
+I2C 5869982 S a3a 00a 00a 00a 00a bea ffa bea ffa 7fa 2ba f1a 64a 3fa 85a 37a a7n [1 bits 00] P
+I2C 5870603 S a2a 80a [1 bits 01] Sr
+I2C 5870664 S a3a 00a 00a efa 03a 22a 00a 34a 3aa 36a 38a 37a 3fa 3fa 3ea 08a 3fn [1 bits 00] P
+I2C 5871286 S a2a 90a [1 bits 01] Sr
+I2C 5871347 S a3a 00a 00a 00a 00a 00a 00a 3ba 37a 00a 00a 00a 00a 05a 00a f7a 00n [1 bits 00] P
+I2C 5872145 S a2a a8a [1 bits 01] Sr
+I2C 5872206 S a3a 46a 52a a0a 40a 00a 00a 53a f0n [1 bits 00] P
+I2C 5872623 S a0a 00a 00a 00a 00a 00a 00a [7 bits 02] P
+I2C 5873988 S a2a d0a [1 bits 01] Sr
+I2C 5874049 S a3a 7ea 4aa c8a 01a 54a 4aa c8a 01a 00a 00a 00a 00a bea ffa bea ffn [1 bits 00] P
+I2C 5874666 S a2a e0a [1 bits 01] Sr
+I2C 5874727 S a3a 7fa 2ba f1a 64a 3fa 85a 37a a7a 00a 00a efa 03a 22a 00a 34a 3an [1 bits 00] P
+I2C 5875341 S a2a f0a [1 bits 01] Sr
+I2C 5875402 S a3a 36a 38a 37a 3fa 3fa 3ea 08a 3fa 00a 00a 00a 00a 00a 00a 3ba 37n [1 bits 00] P
+I2C 5876024 S a4a 00a [1 bits 01] Sr
+I2C 5876085 S a5a 00a 00a 00a 00a 05a 00a f7a 00n [1 bits 00] P
+I2C 5876629 S a4a 10a [1 bits 01] Sr
+I2C 5876690 S a5a 5da d4a 86a 08a 00a 00a 32a 31a 30a 30a 30a 37a 30a 30n [1 bits 00] P
+I2C 5877394 S a4a 20a [1 bits 01] Sr
+I2C 5877455 S a5a 48a 11a 33a 00a 00a [7 bits 01] Sr
+I2C 5878760 S a4a 40a [1 bits 01] Sr
+I2C 5878821 S a5a 00a 00a 01a 00a 01a 00a 01a 00a 0da 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5879438 S a4a 50a [1 bits 01] Sr
+I2C 5879499 S a5a 00a 00a 04a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5880112 S a4a 60a [1 bits 01] Sr
+I2C 5880173 S a5a 00a 00a 06a 00a 20a 04a 55a 36a 7ea c1a 27a 13a e2a efa a7a 12n [1 bits 00] P
+I2C 5880793 S a4a 70a [1 bits 01] Sr
+I2C 5880854 S a5a 14a 4ea e8a 11a 00a 00a 00a 00a 00a 00a 00a 00a 04a 00a 00a 00n [1 bits 00] P
+I2C 5881472 S a4a 80a [1 bits 01] Sr
+I2C 5881533 S a5a 00a 00a 00a 00a 00a 00a 05a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5882161 S a4a 90a [1 bits 01] Sr
+I2C 5882222 S a5a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 01a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 14a 00a 14a 00a 00a [8 bits 02] P
+I2C 5883584 S a4a c0a [1 bits 01] Sr
+I2C 5883644 S a5a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5884270 S a4a d0a [1 bits 01] Sr
+I2C 5884331 S a5a 00a 00a 01a 00a 00a 00a 00a 00a 05a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5884950 S a4a e0a [1 bits 01] Sr
+I2C 5885011 S a5a 00a 00a 00a 00a 24a 22a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5885627 S a4a f0a [1 bits 01] Sr
+I2C 5885688 S a5a 00a 00a 00a 00a 00a 00a 04a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5886358 S a6a 00a [1 bits 01] Sr
+I2C 5886419 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5887036 S 00a 00a 00a 00a 00a 00a 00a 00a 00a [3 bits 02] P
+I2C 5887444 S a6a 30a [1 bits 01] Sr
+I2C 5887505 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5888124 S a6a 40a [1 bits 01] Sr
+I2C 5888184 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5888800 S a6a 50a [1 bits 01] Sr
+I2C 5888861 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5889478 S a6a 60a [1 bits 01] Sr
+I2C 5889539 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5890162 S a6a 70a [1 bits 01] Sr
+I2C 5890223 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5890846 S a6a 80a [1 bits 01] Sr
+I2C 5890907 S a7a 00a 00a 00a 00a [4 bits 02] P
+I2C 5892211 S a6a a0a [1 bits 01] Sr
+I2C 5892272 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5892886 S a6a b0a [1 bits 01] Sr
+I2C 5892947 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5893560 S a6a c0a [1 bits 01] Sr
+I2C 5893621 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5894237 S a6a d0a [1 bits 01] Sr
+I2C 5894298 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5894922 S a6a e0a [1 bits 01] Sr
+I2C 5894982 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5895608 S a6a f0a [1 bits 01] Sr
+I2C 5895669 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5952352 S a0a 04a [1 bits 01] Sr
+I2C 5952412 S a0a 80a 00a 00a 00a [3 bits 02] P
+I2C 5954355 S a4a 20a 47a 11a [1 bits 00] P
+I2C 5954681 S a4n [1 bits 00] P
+I2C 5961971 S a4a 3aa 0ca 00a [1 bits 00] P
+I2C 5962416 S [7 bits 53] Sr
+I2C 5971283 S a4a 20a [1 bits 01] Sr
+I2C 5971344 S a5a 47a 11a 33a 00a 00a 00a 00a 00a 00a 00a 00a 00a 0fa 00a 05a 00a 00a 01a 00a 01a 00a 01a 00a 0da 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5972406 S a4a 50a [1 bits 01] Sr
+I2C 5972467 S a5a 00a 00a 04a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5973095 S a4a 60a [1 bits 01] Sr
+I2C 5973156 S a5a 00a 00a 06a 00a 20a 04a 55a 36a 7ea c1a 27a 13a e2a efa a7a 12n [1 bits 00] P
+I2C 5973773 S a4a 70a [1 bits 01] Sr
+I2C 5973834 S a5a 14a 4ea e8a 11a 00a 00a 00a 00a 00a 00a 00a 00a 04a 00a 00a 00n [1 bits 00] P
+I2C 5974451 S a4a 80a [1 bits 01] Sr
+I2C 5974512 S a5a 00a 00a 00a 00a 00a 00a 05a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5975309 S a4a 90a [1 bits 01] Sr
+I2C 5975370 S a5a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 01a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 02n 00a 02n 00a 00a 00a [2 bits 02] P
+I2C 5977378 S a4a c0a [1 bits 01] Sr
+I2C 5977439 S a5a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5978056 S a4a d0a [1 bits 01] Sr
+I2C 5978117 S a5a 00a 00a 01a 00a 00a 00a 00a 00a 05a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5978736 S a4a e0a [1 bits 01] Sr
+I2C 5978797 S a5a 00a 00a 00a 00a 24a 22a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5979418 S a4a f0a [1 bits 01] Sr
+I2C 5979479 S a5a 00a 00a 00a 00a 00a 00a 04a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5980351 S a6a 00a [1 bits 01] Sr
+I2C 5980412 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 29n 80a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a [3 bits 02] P
+I2C 5982422 S a6a 30a [1 bits 01] Sr
+I2C 5982482 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5983096 S a6a 40a [1 bits 01] Sr
+I2C 5983157 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5983780 S a6a 50a [1 bits 01] Sr
+I2C 5983841 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5984458 S a6a 60a [1 bits 01] Sr
+I2C 5984519 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5985297 S a6a 70a [1 bits 01] Sr
+I2C 5985358 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a [3 bits 02] P
+I2C 5987370 S a6a a0a [1 bits 01] Sr
+I2C 5987431 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5988057 S a6a b0a [1 bits 01] Sr
+I2C 5988118 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5988737 S a6a c0a [1 bits 01] Sr
+I2C 5988798 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5989414 S a6a d0a [1 bits 01] Sr
+I2C 5989475 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 5990352 S a6a e0a [1 bits 01] Sr
+I2C 5990413 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a [2 bits 01] Sr
+I2C 5993166 S a0a 08a [1 bits 01] Sr
+I2C 5993227 S a1a 30a 00n [1 bits 00] P
+I2C 5993685 S a0a 08a 30a 00a [1 bits 00] P
+I2C 5994046 S a0n [1 bits 00] P
+I2C 5999673 S a0a 08a [1 bits 01] Sr
+I2C 5999733 S a1a 30a 00n [1 bits 00] P
+I2C 6646177 S a0a 28a [1 bits 01] Sr
+I2C 6646238 S a1a ffa 53n [1 bits 00] P
+I2C 6646795 S a0a 26a [1 bits 01] Sr
+I2C 6646856 S a1a ffa ffn [1 bits 00] P
+I2C 6647323 S a0a 26a [1 bits 01] Sr
+I2C 6647384 S a1a ffa ffn [1 bits 00] P
+I2C 6647837 S a0a 28a [1 bits 01] Sr
+I2C 6647898 S a1a ffa 53n [1 bits 00] P
+I2C 6796239 S a4a 20a 46a 11a [1 bits 00] P
+I2C 6797039 S a4n [1 bits 00] P
+I2C 6804240 S a4n [1 bits 00] P
+I2C 6815515 S a4a 20a [1 bits 01] Sr
+I2C 6815576 S a5a 46a 11a 33a 00a 00a 00a 00a 00a 00a 00a 00a 00a 0fa 00a 00a 00n [1 bits 00] P
+I2C 6820378 S a4a 30a [1 bits 01] Sr
+I2C 6820439 S a5a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 0ca 00a [3 bits 00] P
+I2C 6821029 S a4a 40a [1 bits 01] Sr
+I2C 6821089 S a5a 00a 00a 01a 00a 01a 00a 01a 00a 0da 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6824429 S a4a 50a [1 bits 01] Sr
+I2C 6824490 S a5a 00a 00a 04a 00a 00a 00a 00a 00a 00a 00a 00a [7 bits 01] Sr
+I2C 6825753 S a5a 00a 00a 06a 00a 20a 04a 55a 36a 7ea c1a 27a 13a e2a efa a7a 12n [1 bits 00] P
+I2C 6826446 S a4a 70a [1 bits 01] Sr
+I2C 6826507 S a5a 14a 4ea e8a 11a 00a 00a 00a 00a 00a 00a 00a 00a 04a 00a 00a 00n [1 bits 00] P
+I2C 6827188 S a4a 80a [1 bits 01] Sr
+I2C 6827249 S a5a 00a 00a 00a 00a 00a 00a 05a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6827896 S a4a 90a [1 bits 01] Sr
+I2C 6827957 S a5a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 01a 00a 00a 00n [1 bits 00] P
+I2C 6828628 S a4a a0a [1 bits 01] Sr
+I2C 6828689 S a5a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 06a 00a 06a 00a 00a 00n [1 bits 00] P
+I2C 6829475 S a4a b0a [1 bits 01] Sr
+I2C 6829536 S a5a 00a 00a 00a 00a 00a 00a [7 bits 01] Sr
+I2C 6829889 S a4a d0a [1 bits 01] Sr
+I2C 6829950 S a5a 00a 00a 01a 00a 00a 00a 00a 00a 05a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6830568 S a4a e0a [1 bits 01] Sr
+I2C 6830629 S a5a 00a 00a 00a 00a 24a 22a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6831251 S a4a f0a [1 bits 01] Sr
+I2C 6831312 S a5a 00a 00a 00a 00a 00a 00a 04a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6831930 S a6a 00a [1 bits 01] Sr
+I2C 6831991 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6832608 S a6a 10a [1 bits 01] Sr
+I2C 6832669 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6833485 S a6a 20a [1 bits 01] Sr
+I2C 6833546 S a7a 00a 00a 00a 00a 00a 00a 00a [5 bits 00] P
+I2C 6834866 S a6a 40a [1 bits 01] Sr
+I2C 6834927 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6835547 S a6a 50a [1 bits 01] Sr
+I2C 6835608 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6836238 S a6a 60a [1 bits 01] Sr
+I2C 6836299 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6836917 S a6a 70a [1 bits 01] Sr
+I2C 6836978 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6837604 S a6a 80a [1 bits 01] Sr
+I2C 6837665 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6838403 S a6a 90a [1 bits 01] Sr
+I2C 6838464 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 09a [8 bits c1] Sr
+I2C 6839824 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6840443 S a6a c0a [1 bits 01] Sr
+I2C 6840504 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6841118 S a6a d0a [1 bits 01] Sr
+I2C 6841178 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6841798 S a6a e0a [1 bits 01] Sr
+I2C 6841859 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P
+I2C 6842477 S a6a f0a [1 bits 01] Sr
+I2C 6842538 S a7a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00a 00n [1 bits 00] P

@@ -1,0 +1,5223 @@
+{
+  "ticks": 900,
+  "stop": "tick limit at idle",
+  "error": null,
+  "faults": [],
+  "usb_state": [
+    4,
+    1,
+    1,
+    1
+  ],
+  "error_and_indices_hex": "0053530606000000",
+  "setup_history": [
+    "0005070000000000",
+    "8006000100001200",
+    "800600020000ff00",
+    "800600030000ff00",
+    "0009010000000000",
+    "a100000000010001"
+  ],
+  "messages_all_last64": [
+    "f036",
+    "f03c",
+    "f01b",
+    "f01f",
+    "f022",
+    "f023",
+    "f01f",
+    "f022",
+    "f023",
+    "f021",
+    "f01f",
+    "f022",
+    "f023",
+    "f021",
+    "f01f",
+    "f022",
+    "f023",
+    "f021",
+    "f01f",
+    "f030",
+    "f033",
+    "f026",
+    "f044",
+    "f063",
+    "f04d",
+    "f031",
+    "f035",
+    "f038",
+    "f036",
+    "f03c",
+    "f018",
+    "f00a",
+    "f003",
+    "f00f",
+    "f022",
+    "f023",
+    "f01f",
+    "f022",
+    "f023",
+    "f023",
+    "f023",
+    "f023",
+    "f03f",
+    "f00f",
+    "f00b",
+    "f021",
+    "f00f",
+    "f002",
+    "f026",
+    "f044",
+    "f063",
+    "f04d",
+    "f04e",
+    "f031",
+    "f00f",
+    "f003",
+    "f006",
+    "f00f",
+    "f00f",
+    "f004",
+    "f00f",
+    "f006",
+    "f00f",
+    "f006"
+  ],
+  "messages_filtered_last64": [
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "0000",
+    "f018",
+    "f000",
+    "f019",
+    "f01a",
+    "f030",
+    "f033",
+    "f018",
+    "f026",
+    "f044",
+    "f063",
+    "f04d",
+    "f031",
+    "f035",
+    "f038",
+    "f036",
+    "f03c",
+    "f01b",
+    "f030",
+    "f033",
+    "f026",
+    "f044",
+    "f063",
+    "f04d",
+    "f031",
+    "f035",
+    "f038",
+    "f036",
+    "f03c",
+    "f018",
+    "f00a",
+    "f003",
+    "f03f",
+    "f00b",
+    "f026",
+    "f044",
+    "f063",
+    "f04d",
+    "f04e",
+    "f031",
+    "f003",
+    "f004"
+  ],
+  "usb_errors": [],
+  "dcfg": "0x74",
+  "usb": {
+    "irqs": 30,
+    "connected": true,
+    "bus_stage": 2,
+    "configured": true,
+    "address_loaded": true,
+    "responses": [
+      [
+        0,
+        "address",
+        ""
+      ],
+      [
+        0,
+        "device",
+        "1201000200000040a9046d17050201020001"
+      ],
+      [
+        0,
+        "config",
+        "09023e00020100c0010904000003ff00ff0007050702000200070588020002000705890340000b0904010002070102000705010200020007058202000200"
+      ],
+      [
+        0,
+        "string0",
+        "04030904"
+      ],
+      [
+        0,
+        "configure",
+        ""
+      ],
+      [
+        0,
+        "device_id",
+        "00d04d46473a43616e6f6e3b434d443a424a4c2c424a526173746572332c42534343652c495645432c49564543504c493b4d444c3a4d4732353030207365726965733b434c533a5052494e5445523b4445533a43616e6f6e204d4732353030207365726965733b5645523a322e3035303b5354413a33303b4653493a30303b4852493a443b4d53493a414f46462c423234302c45332c484153462c4a4f46462c4b32313030303730303b5044523a343b5053453a4147504235393836313b4349443a43415f424a523335365f494a503b"
+      ]
+    ],
+    "stalls": [],
+    "bulk_bytes_sent": 512,
+    "bulk_total": 308693,
+    "armed_now": [
+      [
+        "out",
+        0
+      ]
+    ]
+  },
+  "descriptors": {
+    "endpoints": [
+      [
+        "0x7",
+        2
+      ],
+      [
+        "0x88",
+        2
+      ],
+      [
+        "0x89",
+        3
+      ],
+      [
+        "0x1",
+        2
+      ],
+      [
+        "0x82",
+        2
+      ]
+    ]
+  },
+  "events": [
+    {
+      "tick": 64,
+      "event": "soft disconnect"
+    },
+    {
+      "tick": 247,
+      "event": "soft disconnect"
+    },
+    {
+      "tick": 247,
+      "event": "engine command",
+      "code": "0x101",
+      "addr": "0x1000c4f0",
+      "words": [
+        "0xc07e0600",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 247,
+      "event": "engine command",
+      "code": "0x102",
+      "addr": "0x1000c510",
+      "words": [
+        "0x61a80",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 247,
+      "event": "engine command",
+      "code": "0x110",
+      "addr": "0x1000c530",
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 247,
+      "event": "soft disconnect"
+    },
+    {
+      "tick": 248,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x101"
+    },
+    {
+      "tick": 248,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x102"
+    },
+    {
+      "tick": 248,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x110"
+    },
+    {
+      "tick": 256,
+      "event": "attach",
+      "generation": 0
+    },
+    {
+      "tick": 256,
+      "event": "bus reset"
+    },
+    {
+      "tick": 257,
+      "event": "core bit 7: global OUT NAK effective"
+    },
+    {
+      "tick": 257,
+      "event": "engine command",
+      "code": "0xf004",
+      "addr": "0x1000c570",
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 258,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0xf004"
+    },
+    {
+      "tick": 258,
+      "event": "engine command",
+      "code": "0x3002",
+      "addr": "0x1000c550",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 259,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3002"
+    },
+    {
+      "tick": 260,
+      "event": "enumeration done as core bit 13 (mask preset)"
+    },
+    {
+      "tick": 260,
+      "event": "engine command",
+      "code": "0x3001",
+      "addr": "0x1000c4f0",
+      "words": [
+        "0x1",
+        "0x200",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 261,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3001"
+    },
+    {
+      "tick": 262,
+      "event": "machine mode forced at ctx+0x14 (experiment)",
+      "mode": "0x7000007"
+    },
+    {
+      "tick": 271,
+      "event": "EP0 IN demand (bit 13)",
+      "name": "address"
+    },
+    {
+      "tick": 271,
+      "event": "EP0 IN packet",
+      "name": "address",
+      "bytes": 0
+    },
+    {
+      "tick": 271,
+      "event": "response",
+      "name": "address",
+      "bytes": 0
+    },
+    {
+      "tick": 274,
+      "event": "EP0 IN demand (bit 13)",
+      "name": "device"
+    },
+    {
+      "tick": 274,
+      "event": "EP0 IN packet",
+      "name": "device",
+      "bytes": 18
+    },
+    {
+      "tick": 275,
+      "event": "response",
+      "name": "device",
+      "bytes": 18
+    },
+    {
+      "tick": 277,
+      "event": "EP0 IN demand (bit 13)",
+      "name": "config"
+    },
+    {
+      "tick": 277,
+      "event": "EP0 IN packet",
+      "name": "config",
+      "bytes": 62
+    },
+    {
+      "tick": 278,
+      "event": "response",
+      "name": "config",
+      "bytes": 62
+    },
+    {
+      "tick": 278,
+      "event": "bulk OUT endpoint selected",
+      "ep": 1
+    },
+    {
+      "tick": 280,
+      "event": "EP0 IN demand (bit 13)",
+      "name": "string0"
+    },
+    {
+      "tick": 280,
+      "event": "EP0 IN packet",
+      "name": "string0",
+      "bytes": 4
+    },
+    {
+      "tick": 281,
+      "event": "response",
+      "name": "string0",
+      "bytes": 4
+    },
+    {
+      "tick": 282,
+      "event": "core bit 7: global OUT NAK effective"
+    },
+    {
+      "tick": 282,
+      "event": "engine command",
+      "code": "0xf004",
+      "addr": "0x1000c590",
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0xf004"
+    },
+    {
+      "tick": 283,
+      "event": "engine command",
+      "code": "0x3003",
+      "addr": "0x1000c510",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "event": "engine command",
+      "code": "0x3004",
+      "addr": "0x1000c530",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "event": "engine command",
+      "code": "0xf001",
+      "addr": "0x1000c550",
+      "words": [
+        "0x100018f0",
+        "0xa800",
+        "0x1"
+      ]
+    },
+    {
+      "tick": 283,
+      "event": "engine command",
+      "code": "0x3302",
+      "addr": "0x1000c4f0",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "event": "engine command",
+      "code": "0x3202",
+      "addr": "0x1000c510",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "event": "engine command",
+      "code": "0x3202",
+      "addr": "0x1000c530",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "event": "engine command",
+      "code": "0x3301",
+      "addr": "0x1000c550",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 284,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3003"
+    },
+    {
+      "tick": 284,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3004"
+    },
+    {
+      "tick": 284,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0xf001"
+    },
+    {
+      "tick": 284,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3302"
+    },
+    {
+      "tick": 284,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3202"
+    },
+    {
+      "tick": 284,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3202"
+    },
+    {
+      "tick": 284,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3301"
+    },
+    {
+      "tick": 284,
+      "event": "EP0 IN demand (bit 13)",
+      "name": "configure"
+    },
+    {
+      "tick": 284,
+      "event": "EP0 IN packet",
+      "name": "configure",
+      "bytes": 0
+    },
+    {
+      "tick": 284,
+      "event": "response",
+      "name": "configure",
+      "bytes": 0
+    },
+    {
+      "tick": 287,
+      "event": "EP0 IN demand (bit 13)",
+      "name": "device_id"
+    },
+    {
+      "tick": 287,
+      "event": "EP0 IN packet",
+      "name": "device_id",
+      "bytes": 64
+    },
+    {
+      "tick": 288,
+      "event": "EP0 IN packet",
+      "name": "device_id",
+      "bytes": 64
+    },
+    {
+      "tick": 288,
+      "event": "EP0 IN packet",
+      "name": "device_id",
+      "bytes": 64
+    },
+    {
+      "tick": 289,
+      "event": "EP0 IN packet",
+      "name": "device_id",
+      "bytes": 16
+    },
+    {
+      "tick": 289,
+      "event": "response",
+      "name": "device_id",
+      "bytes": 208
+    },
+    {
+      "tick": 289,
+      "event": "special-path feed experiment",
+      "buffer": "0x100018f0",
+      "bytes": 512,
+      "token": "0xc0010000"
+    },
+    {
+      "tick": 289,
+      "event": "status FIFO IRQ",
+      "source": 69
+    },
+    {
+      "tick": 289,
+      "event": "status FIFO token read",
+      "token": "0xc0010000"
+    },
+    {
+      "tick": 289,
+      "event": "engine command",
+      "code": "0xf003",
+      "addr": "0x1000c4f0",
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 290,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0xf003"
+    },
+    {
+      "tick": 312,
+      "event": "core bit 7: global OUT NAK effective"
+    },
+    {
+      "tick": 313,
+      "event": "engine command",
+      "code": "0xf004",
+      "addr": "0x1000c570",
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 314,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0xf004"
+    },
+    {
+      "tick": 316,
+      "event": "engine command",
+      "code": "0xf005",
+      "addr": "0x1000c590",
+      "words": [
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 317,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0xf005"
+    },
+    {
+      "tick": 319,
+      "event": "engine command",
+      "code": "0x3202",
+      "addr": "0x1000c510",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 319,
+      "event": "engine command",
+      "code": "0x3301",
+      "addr": "0x1000c530",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 320,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3202"
+    },
+    {
+      "tick": 320,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3301"
+    },
+    {
+      "tick": 425,
+      "event": "engine command",
+      "code": "0x3302",
+      "addr": "0x1000c550",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 425,
+      "event": "engine command",
+      "code": "0x3202",
+      "addr": "0x1000c4f0",
+      "words": [
+        "0x1",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 426,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3302"
+    },
+    {
+      "tick": 426,
+      "event": "engine completion IRQ",
+      "source": 68,
+      "code": "0x3202"
+    }
+  ],
+  "transfers": [
+    {
+      "tick": 270,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 8,
+      "setup": true
+    },
+    {
+      "tick": 272,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 8,
+      "setup": true
+    },
+    {
+      "tick": 275,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 0,
+      "setup": false
+    },
+    {
+      "tick": 275,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 8,
+      "setup": true
+    },
+    {
+      "tick": 278,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 0,
+      "setup": false
+    },
+    {
+      "tick": 278,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 8,
+      "setup": true
+    },
+    {
+      "tick": 281,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 0,
+      "setup": false
+    },
+    {
+      "tick": 281,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 8,
+      "setup": true
+    },
+    {
+      "tick": 285,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 8,
+      "setup": true
+    },
+    {
+      "tick": 289,
+      "event": "transfer",
+      "dir": "out",
+      "ep": 0,
+      "bytes": 0,
+      "setup": false
+    }
+  ],
+  "engine_done": [
+    {
+      "tick": 247,
+      "value": 268485872,
+      "addr": 268485872,
+      "code": 257,
+      "words": [
+        "0xffff0101",
+        "0xffffffff",
+        "0xc07e0600",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 247,
+      "value": 268485904,
+      "addr": 268485904,
+      "code": 258,
+      "words": [
+        "0xffff0102",
+        "0xffffffff",
+        "0x61a80",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 247,
+      "value": 268485936,
+      "addr": 268485936,
+      "code": 272,
+      "words": [
+        "0xffff0110",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 257,
+      "value": 268486000,
+      "addr": 268486000,
+      "code": 61444,
+      "words": [
+        "0xfffff004",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 258,
+      "value": 268485968,
+      "addr": 268485968,
+      "code": 12290,
+      "words": [
+        "0xffff3002",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 260,
+      "value": 268485872,
+      "addr": 268485872,
+      "code": 12289,
+      "words": [
+        "0xffff3001",
+        "0xffffffff",
+        "0x1",
+        "0x200",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 282,
+      "value": 268486032,
+      "addr": 268486032,
+      "code": 61444,
+      "words": [
+        "0xfffff004",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "value": 268485904,
+      "addr": 268485904,
+      "code": 12291,
+      "words": [
+        "0xffff3003",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "value": 268485936,
+      "addr": 268485936,
+      "code": 12292,
+      "words": [
+        "0xffff3004",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "value": 268485968,
+      "addr": 268485968,
+      "code": 61441,
+      "words": [
+        "0xfffff001",
+        "0xffffffff",
+        "0x100018f0",
+        "0xa800",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "value": 268485872,
+      "addr": 268485872,
+      "code": 13058,
+      "words": [
+        "0xffff3302",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "value": 268485904,
+      "addr": 268485904,
+      "code": 12802,
+      "words": [
+        "0xffff3202",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "value": 268485936,
+      "addr": 268485936,
+      "code": 12802,
+      "words": [
+        "0xffff3202",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 283,
+      "value": 268485968,
+      "addr": 268485968,
+      "code": 13057,
+      "words": [
+        "0xffff3301",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 289,
+      "value": 268485872,
+      "addr": 268485872,
+      "code": 61443,
+      "words": [
+        "0xfffff003",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 313,
+      "value": 268486000,
+      "addr": 268486000,
+      "code": 61444,
+      "words": [
+        "0xfffff004",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 316,
+      "value": 268486032,
+      "addr": 268486032,
+      "code": 61445,
+      "words": [
+        "0xfffff005",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 319,
+      "value": 268485904,
+      "addr": 268485904,
+      "code": 12802,
+      "words": [
+        "0xffff3202",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 319,
+      "value": 268485936,
+      "addr": 268485936,
+      "code": 13057,
+      "words": [
+        "0xffff3301",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 425,
+      "value": 268485968,
+      "addr": 268485968,
+      "code": 13058,
+      "words": [
+        "0xffff3302",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    },
+    {
+      "tick": 425,
+      "value": 268485872,
+      "addr": 268485872,
+      "code": 12802,
+      "words": [
+        "0xffff3202",
+        "0xffffffff",
+        "0x1",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff",
+        "0xffffffff"
+      ]
+    }
+  ],
+  "engine_pending": [],
+  "bulk_commands": [],
+  "engine_sources": {
+    "0x51843": 67,
+    "0x5184b": 68,
+    "0x51853": 69
+  },
+  "control_object": "04c61d00a10000000100000100000000b02a0110d008041834090418800a0418",
+  "device_object": "44c41d00cf0300000000000000000000b0c50010000000000000000000000108020000000000000000000000b0c50010cf0300000101000000000000010000000000000000000000000000000200000001000000010000000100000000000000",
+  "coordination_bytes_0x180409a5": "000000",
+  "printer_stop_flag_0x18040b83": 0,
+  "printer_object_state_0x18040b57": 8,
+  "ctx_mode_word": "0x7000007",
+  "geometry_0x1806c974": "00000000000000000000000000000000000000000000000000000000",
+  "ep1_object": "0x1802c1e4",
+  "ep1_object_words": [
+    "0x20001",
+    "0x1",
+    "0x400200",
+    "0x2000000",
+    "0x0",
+    "0x0",
+    "0x0",
+    "0x1",
+    "0x1020002",
+    "0x0",
+    "0x400200",
+    "0x2000002",
+    "0x1",
+    "0x0",
+    "0x0",
+    "0x0"
+  ],
+  "usb_reads_after": [
+    {
+      "tick": 282,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x80",
+      "task": 72
+    },
+    {
+      "tick": 282,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1880",
+      "task": 72
+    },
+    {
+      "tick": 282,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1880",
+      "task": 72
+    },
+    {
+      "tick": 282,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x0",
+      "task": 72
+    },
+    {
+      "tick": 282,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x0",
+      "task": 72
+    },
+    {
+      "tick": 283,
+      "pc": "0x4af2e",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4aba0",
+      "address": "0xc0780010",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abc0",
+      "address": "0xc0780010",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4af2e",
+      "address": "0xc0780a00",
+      "value": "0x108a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4aba0",
+      "address": "0xc0780010",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abc0",
+      "address": "0xc0780010",
+      "value": "0x80000080",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4af2e",
+      "address": "0xc0780940",
+      "value": "0x104a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4aba0",
+      "address": "0xc0780010",
+      "value": "0x80000080",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abc0",
+      "address": "0xc0780010",
+      "value": "0x80000040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4af2e",
+      "address": "0xc0780a20",
+      "value": "0x10ce0040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4aba0",
+      "address": "0xc0780010",
+      "value": "0x80000040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abc0",
+      "address": "0xc0780010",
+      "value": "0x800000c0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b6ac",
+      "address": "0xc0780940",
+      "value": "0x104a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a4da",
+      "address": "0xc0780940",
+      "value": "0x104a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a5aa",
+      "address": "0xc0780be0",
+      "value": "0x100a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a572",
+      "address": "0xc0780be0",
+      "value": "0x100a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b6ac",
+      "address": "0xc0780a00",
+      "value": "0x108a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a4da",
+      "address": "0xc0780a00",
+      "value": "0x108a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b6ac",
+      "address": "0xc0780a20",
+      "value": "0x10ce0040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a4da",
+      "address": "0xc0780a20",
+      "value": "0x10ce0040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2d0",
+      "address": "0xc0780848",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4afae",
+      "address": "0xc0780b00",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4ab2a",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2d0",
+      "address": "0xc0780840",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b5c2",
+      "address": "0xc0780880",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2a4",
+      "address": "0xc0780880",
+      "value": "0x8",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b314",
+      "address": "0xc078089c",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b340",
+      "address": "0xc0780860",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b340",
+      "address": "0xc0780864",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2a4",
+      "address": "0xc078089c",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49ca8",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49cae",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49cb2",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad2a",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad3e",
+      "address": "0xc0780840",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4b2a4",
+      "address": "0xc0780880",
+      "value": "0x2008",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49ca8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49cae",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49cb2",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b2d0",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b2a4",
+      "address": "0xc0780880",
+      "value": "0x2008",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x80000",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x10000",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x10000",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c56",
+      "address": "0xc0780b08",
+      "value": "0x8",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c5c",
+      "address": "0xc0780880",
+      "value": "0x2008",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c60",
+      "address": "0xc0780880",
+      "value": "0x2008",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x4aff6",
+      "address": "0xc0780b14",
+      "value": "0xc07e0648",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4affa",
+      "address": "0xc07e0640",
+      "value": "0xa1",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4affe",
+      "address": "0xc07e0644",
+      "value": "0x1000100",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b580",
+      "address": "0xc0780840",
+      "value": "0x2006",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4af2e",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4aba0",
+      "address": "0xc0780010",
+      "value": "0x800000c0",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4abc0",
+      "address": "0xc0780010",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4aba0",
+      "address": "0xc0780010",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4abc0",
+      "address": "0xc0780010",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b580",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b340",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b554",
+      "address": "0xc0780880",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b314",
+      "address": "0xc0780880",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b1bc",
+      "address": "0xc0780b08",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4afe2",
+      "address": "0xc0780b00",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4ab2a",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b2d0",
+      "address": "0xc0780840",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b5c2",
+      "address": "0xc0780880",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b4f6",
+      "address": "0xc0780880",
+      "value": "0x8",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49ca8",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49cae",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49cb2",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad2a",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad3e",
+      "address": "0xc0780840",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49ca8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cae",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cb2",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad2a",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad3e",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49ca8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cae",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cb2",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad2a",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad3e",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49ca8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cae",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cb2",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad2a",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad3e",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49ca8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cae",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cb2",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b60a",
+      "address": "0xc0780014",
+      "value": "0x80000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b2d0",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4a8e2",
+      "address": "0xc0780b20",
+      "value": "0x100a8200",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x80000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x10000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x10000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c56",
+      "address": "0xc0780b08",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c5c",
+      "address": "0xc0780880",
+      "value": "0x100f",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c60",
+      "address": "0xc0780880",
+      "value": "0x100f",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x4a8e2",
+      "address": "0xc0780b00",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4af80",
+      "address": "0xc0780b10",
+      "value": "0x60000040",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4afae",
+      "address": "0xc0780b00",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b2a4",
+      "address": "0xc0780880",
+      "value": "0x100e",
+      "task": 60
+    },
+    {
+      "tick": 311,
+      "pc": "0x4b382",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 60
+    },
+    {
+      "tick": 313,
+      "pc": "0x49c10",
+      "address": "0xc0780014",
+      "value": "0x80",
+      "task": 72
+    },
+    {
+      "tick": 313,
+      "pc": "0x49c12",
+      "address": "0xc0780018",
+      "value": "0xc1880",
+      "task": 72
+    },
+    {
+      "tick": 313,
+      "pc": "0x49c16",
+      "address": "0xc0780018",
+      "value": "0xc1880",
+      "task": 72
+    },
+    {
+      "tick": 313,
+      "pc": "0x49c20",
+      "address": "0xc0780838",
+      "value": "0x0",
+      "task": 72
+    },
+    {
+      "tick": 313,
+      "pc": "0x49c22",
+      "address": "0xc078083c",
+      "value": "0x0",
+      "task": 72
+    }
+  ],
+  "usb_writes_after": [
+    {
+      "tick": 282,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 282,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x80",
+      "task": 72
+    },
+    {
+      "tick": 282,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c590",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4ab08",
+      "address": "0xc0780804",
+      "value": "0x8",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abb8",
+      "address": "0xc0780010",
+      "value": "0x80000020",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abb8",
+      "address": "0xc0780010",
+      "value": "0x800000a0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abb8",
+      "address": "0xc0780010",
+      "value": "0x80000060",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4abb8",
+      "address": "0xc0780010",
+      "value": "0x800000e0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c510",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c530",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c550",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b6ba",
+      "address": "0xc0780940",
+      "value": "0x104a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a4e2",
+      "address": "0xc0780940",
+      "value": "0x104a8200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a5b8",
+      "address": "0xc0780be0",
+      "value": "0x100a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a57a",
+      "address": "0xc0780be0",
+      "value": "0x100a8200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b6ba",
+      "address": "0xc0780a00",
+      "value": "0x108a0200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a4e2",
+      "address": "0xc0780a00",
+      "value": "0x108a8200",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b6ba",
+      "address": "0xc0780a20",
+      "value": "0x10ce0040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4a4e2",
+      "address": "0xc0780a20",
+      "value": "0x10ce8040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c4f0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c510",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b266",
+      "address": "0xc0780948",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2d8",
+      "address": "0xc0780848",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4afa6",
+      "address": "0xc0780b10",
+      "value": "0x60080040",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4afac",
+      "address": "0xc0780b14",
+      "value": "0xc07e0640",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4afb4",
+      "address": "0xc0780b00",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b266",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b240",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4ab32",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2d8",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b5c8",
+      "address": "0xc0780880",
+      "value": "0x8",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2ac",
+      "address": "0xc0780880",
+      "value": "0x2008",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b31c",
+      "address": "0xc078089c",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b240",
+      "address": "0xc0780be8",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b348",
+      "address": "0xc0780860",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b266",
+      "address": "0xc0780a08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b348",
+      "address": "0xc0780864",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b266",
+      "address": "0xc0780a28",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b240",
+      "address": "0xc0780be8",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x4b2ac",
+      "address": "0xc078089c",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c530",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c550",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49cb6",
+      "address": "0xc0780840",
+      "value": "0x0",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x49cb8",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad26",
+      "address": "0xc0780910",
+      "value": "0x80000",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad28",
+      "address": "0xc0780914",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad30",
+      "address": "0xc0780900",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad34",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad38",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4ad44",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 60
+    },
+    {
+      "tick": 284,
+      "pc": "0x4b2ac",
+      "address": "0xc0780880",
+      "value": "0x2008",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49cb6",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49cb8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b266",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b240",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b2d8",
+      "address": "0xc0780840",
+      "value": "0x2006",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b2ac",
+      "address": "0xc0780880",
+      "value": "0x2008",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x80000",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c64",
+      "address": "0xc0780880",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x49c66",
+      "address": "0xc0780b08",
+      "value": "0x8",
+      "task": 72
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b586",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b4c8",
+      "address": "0xc0780908",
+      "value": "0x7",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4abb8",
+      "address": "0xc0780010",
+      "value": "0x80000020",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4abb8",
+      "address": "0xc0780010",
+      "value": "0x80000020",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b586",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b348",
+      "address": "0xc0780840",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b55c",
+      "address": "0xc0780880",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b31c",
+      "address": "0xc0780880",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4afda",
+      "address": "0xc0780b10",
+      "value": "0x60080040",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4afe0",
+      "address": "0xc0780b14",
+      "value": "0xc07e0640",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4afea",
+      "address": "0xc0780b00",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b266",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b240",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4ab32",
+      "address": "0xc0780900",
+      "value": "0x8000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b2d8",
+      "address": "0xc0780840",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b5c8",
+      "address": "0xc0780880",
+      "value": "0x8",
+      "task": 60
+    },
+    {
+      "tick": 285,
+      "pc": "0x4b4fc",
+      "address": "0xc0780880",
+      "value": "0x100f",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49cb6",
+      "address": "0xc0780840",
+      "value": "0x0",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x49cb8",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 72
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad26",
+      "address": "0xc0780910",
+      "value": "0x80040",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad28",
+      "address": "0xc0780914",
+      "value": "0x100129e0",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad30",
+      "address": "0xc0780900",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad34",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad38",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 287,
+      "pc": "0x4ad44",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cb6",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cb8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad26",
+      "address": "0xc0780910",
+      "value": "0x80040",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad28",
+      "address": "0xc0780914",
+      "value": "0x10012a20",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad30",
+      "address": "0xc0780900",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad34",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad38",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad44",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cb6",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x49cb8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad26",
+      "address": "0xc0780910",
+      "value": "0x80040",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad28",
+      "address": "0xc0780914",
+      "value": "0x10012a60",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad30",
+      "address": "0xc0780900",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad34",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad38",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 288,
+      "pc": "0x4ad44",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cb6",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cb8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad26",
+      "address": "0xc0780910",
+      "value": "0x80010",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad28",
+      "address": "0xc0780914",
+      "value": "0x10012aa0",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad30",
+      "address": "0xc0780900",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad34",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad38",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4ad44",
+      "address": "0xc0780840",
+      "value": "0x7",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x40000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cb6",
+      "address": "0xc0780840",
+      "value": "0x6",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49cb8",
+      "address": "0xc0780908",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b240",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b266",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b2d8",
+      "address": "0xc0780840",
+      "value": "0x2006",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c4f0",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x80000",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c64",
+      "address": "0xc0780880",
+      "value": "0x100e",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x49c66",
+      "address": "0xc0780b08",
+      "value": "0x1",
+      "task": 72
+    },
+    {
+      "tick": 289,
+      "pc": "0x4afa6",
+      "address": "0xc0780b10",
+      "value": "0x60080040",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4afac",
+      "address": "0xc0780b14",
+      "value": "0xc07e0640",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4afb4",
+      "address": "0xc0780b00",
+      "value": "0x80008000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b266",
+      "address": "0xc0780908",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b240",
+      "address": "0xc0780b08",
+      "value": "0x2000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x4b2ac",
+      "address": "0xc0780880",
+      "value": "0x300e",
+      "task": 60
+    },
+    {
+      "tick": 311,
+      "pc": "0x4aa80",
+      "address": "0xc0780804",
+      "value": "0x0",
+      "task": 60
+    },
+    {
+      "tick": 311,
+      "pc": "0x4b388",
+      "address": "0xc0780018",
+      "value": "0xc1880",
+      "task": 60
+    },
+    {
+      "tick": 313,
+      "pc": "0x49c1a",
+      "address": "0xc0780018",
+      "value": "0xc1800",
+      "task": 72
+    },
+    {
+      "tick": 313,
+      "pc": "0x49c1c",
+      "address": "0xc0780014",
+      "value": "0x80",
+      "task": 72
+    },
+    {
+      "tick": 313,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c570",
+      "task": 60
+    },
+    {
+      "tick": 316,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c590",
+      "task": 60
+    },
+    {
+      "tick": 317,
+      "pc": "0x4ab08",
+      "address": "0xc0780804",
+      "value": "0x8",
+      "task": 60
+    },
+    {
+      "tick": 319,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c510",
+      "task": 60
+    },
+    {
+      "tick": 319,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c530",
+      "task": 60
+    },
+    {
+      "tick": 425,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c550",
+      "task": 60
+    },
+    {
+      "tick": 425,
+      "pc": "0x49ba2",
+      "address": "0xc0750080",
+      "value": "0x1000c4f0",
+      "task": 60
+    }
+  ],
+  "engine_reads": [
+    {
+      "tick": 282,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 283,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 289,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 313,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 316,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 319,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 319,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 425,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    },
+    {
+      "tick": 425,
+      "pc": "0x49b9a",
+      "address": "0xc0750080",
+      "value": "0x80000000",
+      "task": 60
+    }
+  ],
+  "shared_ram_writes": [
+    {
+      "tick": 283,
+      "pc": "0x30ca4",
+      "address": "0x1000103e",
+      "size": 1,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x30cae",
+      "address": "0x1000106b",
+      "size": 1,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x30cba",
+      "address": "0x1000102c",
+      "size": 1,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000000",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000004",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000008",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000000c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000010",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000014",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000018",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000001c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000020",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000024",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000028",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000002c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000030",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000034",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000038",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000003c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000040",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000044",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000048",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000004c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000050",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000054",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000058",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000005c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000060",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000064",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000068",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000006c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000070",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000074",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000078",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000007c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000080",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000084",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000088",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000008c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000090",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000094",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000098",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000009c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000a0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000a4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000a8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000ac",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000b0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000b4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000b8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000bc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000c0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000c4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000c8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000cc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000d0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000d4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000d8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000dc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000e0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000e4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000e8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100000ec",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000f0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000f4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000f8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100000fc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000100",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000104",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000108",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000010c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000110",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000114",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000118",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000011c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000120",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000124",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000128",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000012c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000130",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000134",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000138",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000013c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000140",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000144",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000148",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000014c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000150",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000154",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000158",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000015c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000160",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000164",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000168",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000016c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000170",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000174",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000178",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000017c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000180",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000184",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000188",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000018c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000190",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000194",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000198",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000019c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001a0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001a4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001a8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001ac",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001b0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001b4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001b8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001bc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001c0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001c4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001c8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001cc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001d0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001d4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001d8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001dc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001e0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001e4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001e8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100001ec",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001f0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001f4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001f8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100001fc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000200",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000204",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000208",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000020c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000210",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000214",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000218",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000021c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000220",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000224",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000228",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000022c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000230",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000234",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000238",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000023c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000240",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000244",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000248",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000024c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000250",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000254",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000258",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000025c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000260",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000264",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000268",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000026c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000270",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000274",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000278",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000027c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000280",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000284",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000288",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000028c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000290",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000294",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000298",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x1000029c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002a0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002a4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002a8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002ac",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002b0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002b4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002b8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002bc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002c0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002c4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002c8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002cc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002d0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002d4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002d8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002dc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002e0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002e4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002e8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x100002ec",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002f0",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002f4",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002f8",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x100002fc",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000300",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000304",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x10000308",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f328",
+      "address": "0x1000030c",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    },
+    {
+      "tick": 283,
+      "pc": "0x14f32c",
+      "address": "0x10000310",
+      "size": 4,
+      "value": "0x0",
+      "task": 33
+    }
+  ],
+  "mem_watch": [
+    {
+      "tick": 0,
+      "pc": "0x11a3c",
+      "address": "0x180409a0",
+      "size": 4,
+      "value": "0x0",
+      "task": null,
+      "lr": "0x1197c"
+    },
+    {
+      "tick": 0,
+      "pc": "0x11a3c",
+      "address": "0x18040b58",
+      "size": 4,
+      "value": "0x0",
+      "task": null,
+      "lr": "0x1197c"
+    },
+    {
+      "tick": 0,
+      "pc": "0x4fca8",
+      "address": "0x180409a0",
+      "size": 4,
+      "value": "0x0",
+      "task": null,
+      "lr": "0x4fc89"
+    },
+    {
+      "tick": 0,
+      "pc": "0x4e08e",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x0",
+      "task": null,
+      "lr": "0x4e083"
+    },
+    {
+      "tick": 0,
+      "pc": "0x4e094",
+      "address": "0x18040b58",
+      "size": 1,
+      "value": "0x0",
+      "task": null,
+      "lr": "0x4e083"
+    },
+    {
+      "tick": 247,
+      "pc": "0x50166",
+      "address": "0x180409a0",
+      "size": 4,
+      "value": "0x200000f",
+      "task": 60,
+      "lr": "0x50159"
+    },
+    {
+      "tick": 247,
+      "pc": "0x4e10c",
+      "address": "0x18040b58",
+      "size": 1,
+      "value": "0x1",
+      "task": 60,
+      "lr": "0x4dda1"
+    },
+    {
+      "tick": 247,
+      "pc": "0x4e112",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x1",
+      "task": 60,
+      "lr": "0x4dda1"
+    },
+    {
+      "tick": 258,
+      "pc": "0x4e20e",
+      "address": "0x18040b58",
+      "size": 1,
+      "value": "0x1",
+      "task": 60,
+      "lr": "0x105b61"
+    },
+    {
+      "tick": 283,
+      "pc": "0x4e23e",
+      "address": "0x18040b58",
+      "size": 1,
+      "value": "0x2",
+      "task": 60,
+      "lr": "0x1540b5"
+    },
+    {
+      "tick": 283,
+      "pc": "0x4e7a0",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x3",
+      "task": 60,
+      "lr": "0x4a2fd"
+    },
+    {
+      "tick": 289,
+      "pc": "0x4e3ae",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x4",
+      "task": 60,
+      "lr": "0x114dd1"
+    },
+    {
+      "tick": 289,
+      "pc": "0x4e2f0",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x5",
+      "task": 60,
+      "lr": "0x4db89"
+    },
+    {
+      "tick": 319,
+      "pc": "0x4ea12",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x7",
+      "task": 60,
+      "lr": "0x105b61"
+    },
+    {
+      "tick": 319,
+      "pc": "0x4e7a0",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x3",
+      "task": 60,
+      "lr": "0x4a2fd"
+    },
+    {
+      "tick": 425,
+      "pc": "0x4e7de",
+      "address": "0x18040b57",
+      "size": 1,
+      "value": "0x8",
+      "task": 60,
+      "lr": "0x4a2fd"
+    }
+  ],
+  "shared_ram_reads": [
+    {
+      "tick": 314,
+      "pc": "0x49bc8",
+      "address": "0x1000c570",
+      "size": 2,
+      "value": "0xf004",
+      "task": 72
+    },
+    {
+      "tick": 317,
+      "pc": "0x49bc8",
+      "address": "0x1000c590",
+      "size": 2,
+      "value": "0xf005",
+      "task": 72
+    }
+  ],
+  "watched": [],
+  "task_path": []
+}

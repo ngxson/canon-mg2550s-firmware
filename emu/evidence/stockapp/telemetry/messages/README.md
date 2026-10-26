@@ -72,3 +72,26 @@ regions 7–11 in telemetry ABI 3 and read with `stocktrace.py --engine`.
 - IDs are 16-bit tags only; payloads, senders and receivers are not exposed.
 - One scan and one print; the print used the fixed transport with paced
   back channel, so the host stimulus differs from the ESP32 in timing only.
+
+## Hardware re-enumeration capture — 2026-10-26
+
+`host_reset_reenumeration.jsonl`: the Mac issued a USB port reset to the
+running stock app (libusb `reset_device`); rings were read before and
+0.14 s after re-enumeration, so the difference is the stock messages of one
+real enumeration (49 IDs, 27 filtered). Decoded:
+
+- Bus reset: `f030 f033`, then the class-driver group
+  `f026 f044 f063 f04d f031 f035 f038 f036 f03c`. This is the reset
+  reaction, which also explains the same group at scan-session and
+  print-job boundaries (bus-level session changes).
+- Each control transfer: `f01f f022 f023 f021`, with one `f023` per IN
+  data packet (GET_DEVICE_ID shows four, so this enumeration ran at full
+  speed with 64-byte packets).
+- The host's SETUP sequence as recorded by stock: SET_ADDRESS 2, device
+  descriptor, strings 2/1/3 (short then full), configuration (9 then 62),
+  SET_CONFIGURATION 1, string 0, GET_DEVICE_ID. Stock answered all of them.
+
+The emulator's reproduction of this sequence is tracked in
+[usb_enumeration/README.md](../../bringup/usb_enumeration/README.md); as of
+this capture it lacks the per-packet `f023` event and stalls at the
+SET_CONFIGURATION status stage.

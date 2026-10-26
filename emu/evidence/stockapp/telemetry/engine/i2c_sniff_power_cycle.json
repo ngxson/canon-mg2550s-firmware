@@ -1,0 +1,1762 @@
+{
+ "source": "passive I2C sniff by the recovery ESP32 bridge (tools/esp32 SNIFF command), printer power cycle 2026-10-26",
+ "log": "i2c_sniff_power_cycle.log",
+ "nak_addresses_8bit": {
+  "0x84": 366,
+  "0xff": 1,
+  "0xa4": 3,
+  "0xa0": 1
+ },
+ "reads": [
+  {
+   "t_us": 5855541,
+   "address": 2,
+   "length": 6,
+   "data": "b65bb0493f00"
+  },
+  {
+   "t_us": 5856168,
+   "address": 32,
+   "length": 6,
+   "data": "b65bb0493f00"
+  },
+  {
+   "t_us": 5856732,
+   "address": 48,
+   "length": 6,
+   "data": "80970202230c"
+  },
+  {
+   "t_us": 5857283,
+   "address": 64,
+   "length": 6,
+   "data": "80970202230c"
+  },
+  {
+   "t_us": 5857942,
+   "address": 80,
+   "length": 16,
+   "data": "80343438424446410014000000000000"
+  },
+  {
+   "t_us": 5859040,
+   "address": 128,
+   "length": 16,
+   "data": "9d510100000000000000000000000000"
+  },
+  {
+   "t_us": 5859723,
+   "address": 144,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5860542,
+   "address": 160,
+   "length": 16,
+   "data": "80343438424446410014000000000000"
+  },
+  {
+   "t_us": 5861239,
+   "address": 176,
+   "length": 16,
+   "data": "00000000000000000000000041475042"
+  },
+  {
+   "t_us": 5862008,
+   "address": 192,
+   "length": 16,
+   "data": "35393836310000000b020f0281500100"
+  },
+  {
+   "t_us": 5864205,
+   "address": 240,
+   "length": 16,
+   "data": "946200000000000000000000797e0100"
+  },
+  {
+   "t_us": 5864895,
+   "address": 256,
+   "length": 16,
+   "data": "0ea30000000000000000000087210200"
+  },
+  {
+   "t_us": 5865578,
+   "address": 272,
+   "length": 4,
+   "data": "00000000"
+  },
+  {
+   "t_us": 5866046,
+   "address": 280,
+   "length": 8,
+   "data": "9462000000000000"
+  },
+  {
+   "t_us": 5866514,
+   "address": 288,
+   "length": 16,
+   "data": "00000000797e01000ea3000000000000"
+  },
+  {
+   "t_us": 5867205,
+   "address": 304,
+   "length": 12,
+   "data": "000000008721020000000000"
+  },
+  {
+   "t_us": 5869299,
+   "address": 352,
+   "length": 16,
+   "data": "00000000000000007e4ac801544ac801"
+  },
+  {
+   "t_us": 5869982,
+   "address": 368,
+   "length": 16,
+   "data": "00000000beffbeff7f2bf1643f8537a7"
+  },
+  {
+   "t_us": 5870664,
+   "address": 384,
+   "length": 16,
+   "data": "0000ef032200343a3638373f3f3e083f"
+  },
+  {
+   "t_us": 5871347,
+   "address": 400,
+   "length": 16,
+   "data": "0000000000003b37000000000500f700"
+  },
+  {
+   "t_us": 5872206,
+   "address": 424,
+   "length": 8,
+   "data": "4652a040000053f0"
+  },
+  {
+   "t_us": 5874049,
+   "address": 464,
+   "length": 16,
+   "data": "7e4ac801544ac80100000000beffbeff"
+  },
+  {
+   "t_us": 5874727,
+   "address": 480,
+   "length": 16,
+   "data": "7f2bf1643f8537a70000ef032200343a"
+  },
+  {
+   "t_us": 5875402,
+   "address": 496,
+   "length": 16,
+   "data": "3638373f3f3e083f0000000000003b37"
+  },
+  {
+   "t_us": 5876085,
+   "address": 512,
+   "length": 8,
+   "data": "000000000500f700"
+  },
+  {
+   "t_us": 5876690,
+   "address": 528,
+   "length": 14,
+   "data": "5dd4860800003231303030373030"
+  },
+  {
+   "t_us": 5877455,
+   "address": 544,
+   "length": 5,
+   "data": "4811330000"
+  },
+  {
+   "t_us": 5878821,
+   "address": 576,
+   "length": 16,
+   "data": "00000100010001000d00000000000000"
+  },
+  {
+   "t_us": 5879499,
+   "address": 592,
+   "length": 16,
+   "data": "00000400000000000000000000000000"
+  },
+  {
+   "t_us": 5880173,
+   "address": 608,
+   "length": 16,
+   "data": "00000600200455367ec12713e2efa712"
+  },
+  {
+   "t_us": 5880854,
+   "address": 624,
+   "length": 16,
+   "data": "144ee811000000000000000004000000"
+  },
+  {
+   "t_us": 5881533,
+   "address": 640,
+   "length": 16,
+   "data": "00000000000005000000000000000000"
+  },
+  {
+   "t_us": 5882222,
+   "address": 656,
+   "length": 29,
+   "data": "0000000000000000000000000100000000000000000000001400140000"
+  },
+  {
+   "t_us": 5883644,
+   "address": 704,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5884331,
+   "address": 720,
+   "length": 16,
+   "data": "00000100000000000500000000000000"
+  },
+  {
+   "t_us": 5885011,
+   "address": 736,
+   "length": 16,
+   "data": "00000000242200000000000000000000"
+  },
+  {
+   "t_us": 5885688,
+   "address": 752,
+   "length": 16,
+   "data": "00000000000004000000000000000000"
+  },
+  {
+   "t_us": 5886419,
+   "address": 768,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5887505,
+   "address": 816,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5888184,
+   "address": 832,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5888861,
+   "address": 848,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5889539,
+   "address": 864,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5890223,
+   "address": 880,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5890907,
+   "address": 896,
+   "length": 4,
+   "data": "00000000"
+  },
+  {
+   "t_us": 5892272,
+   "address": 928,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5892947,
+   "address": 944,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5893621,
+   "address": 960,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5894298,
+   "address": 976,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5894982,
+   "address": 992,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5895669,
+   "address": 1008,
+   "length": 12,
+   "data": "000000000000000000000000"
+  },
+  {
+   "t_us": 5971344,
+   "address": 544,
+   "length": 31,
+   "data": "4711330000000000000000000f000500000100010001000d00000000000000"
+  },
+  {
+   "t_us": 5972467,
+   "address": 592,
+   "length": 16,
+   "data": "00000400000000000000000000000000"
+  },
+  {
+   "t_us": 5973156,
+   "address": 608,
+   "length": 16,
+   "data": "00000600200455367ec12713e2efa712"
+  },
+  {
+   "t_us": 5973834,
+   "address": 624,
+   "length": 16,
+   "data": "144ee811000000000000000004000000"
+  },
+  {
+   "t_us": 5974512,
+   "address": 640,
+   "length": 16,
+   "data": "00000000000005000000000000000000"
+  },
+  {
+   "t_us": 5975370,
+   "address": 656,
+   "length": 30,
+   "data": "000000000000000000000000010000000000000000000000020002000000"
+  },
+  {
+   "t_us": 5977439,
+   "address": 704,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5978117,
+   "address": 720,
+   "length": 16,
+   "data": "00000100000000000500000000000000"
+  },
+  {
+   "t_us": 5978797,
+   "address": 736,
+   "length": 16,
+   "data": "00000000242200000000000000000000"
+  },
+  {
+   "t_us": 5979479,
+   "address": 752,
+   "length": 16,
+   "data": "00000000000004000000000000000000"
+  },
+  {
+   "t_us": 5980412,
+   "address": 768,
+   "length": 30,
+   "data": "000000000000000000000000002980000000000000000000000000000000"
+  },
+  {
+   "t_us": 5982482,
+   "address": 816,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5983157,
+   "address": 832,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5983841,
+   "address": 848,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5984519,
+   "address": 864,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5985358,
+   "address": 880,
+   "length": 30,
+   "data": "000000000000000000000000000000000000000000000000000000000000"
+  },
+  {
+   "t_us": 5987431,
+   "address": 928,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5988118,
+   "address": 944,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5988798,
+   "address": 960,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5989475,
+   "address": 976,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 5990413,
+   "address": 992,
+   "length": 13,
+   "data": "00000000000000000000000000"
+  },
+  {
+   "t_us": 5993227,
+   "address": 8,
+   "length": 2,
+   "data": "3000"
+  },
+  {
+   "t_us": 5999733,
+   "address": 8,
+   "length": 2,
+   "data": "3000"
+  },
+  {
+   "t_us": 6646238,
+   "address": 40,
+   "length": 2,
+   "data": "ff53"
+  },
+  {
+   "t_us": 6646856,
+   "address": 38,
+   "length": 2,
+   "data": "ffff"
+  },
+  {
+   "t_us": 6647384,
+   "address": 38,
+   "length": 2,
+   "data": "ffff"
+  },
+  {
+   "t_us": 6647898,
+   "address": 40,
+   "length": 2,
+   "data": "ff53"
+  },
+  {
+   "t_us": 6815576,
+   "address": 544,
+   "length": 16,
+   "data": "4611330000000000000000000f000000"
+  },
+  {
+   "t_us": 6820439,
+   "address": 560,
+   "length": 12,
+   "data": "000000000000000000000c00"
+  },
+  {
+   "t_us": 6821089,
+   "address": 576,
+   "length": 16,
+   "data": "00000100010001000d00000000000000"
+  },
+  {
+   "t_us": 6824490,
+   "address": 592,
+   "length": 11,
+   "data": "0000040000000000000000"
+  },
+  {
+   "t_us": 6826507,
+   "address": 624,
+   "length": 16,
+   "data": "144ee811000000000000000004000000"
+  },
+  {
+   "t_us": 6827249,
+   "address": 640,
+   "length": 16,
+   "data": "00000000000005000000000000000000"
+  },
+  {
+   "t_us": 6827957,
+   "address": 656,
+   "length": 16,
+   "data": "00000000000000000000000001000000"
+  },
+  {
+   "t_us": 6828689,
+   "address": 672,
+   "length": 16,
+   "data": "00000000000000000000060006000000"
+  },
+  {
+   "t_us": 6829536,
+   "address": 688,
+   "length": 6,
+   "data": "000000000000"
+  },
+  {
+   "t_us": 6829950,
+   "address": 720,
+   "length": 16,
+   "data": "00000100000000000500000000000000"
+  },
+  {
+   "t_us": 6830629,
+   "address": 736,
+   "length": 16,
+   "data": "00000000242200000000000000000000"
+  },
+  {
+   "t_us": 6831312,
+   "address": 752,
+   "length": 16,
+   "data": "00000000000004000000000000000000"
+  },
+  {
+   "t_us": 6831991,
+   "address": 768,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6832669,
+   "address": 784,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6833546,
+   "address": 800,
+   "length": 7,
+   "data": "00000000000000"
+  },
+  {
+   "t_us": 6834927,
+   "address": 832,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6835608,
+   "address": 848,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6836299,
+   "address": 864,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6836978,
+   "address": 880,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6837665,
+   "address": 896,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6838464,
+   "address": 912,
+   "length": 11,
+   "data": "0000000000000000000009"
+  },
+  {
+   "t_us": 6840504,
+   "address": 960,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6841178,
+   "address": 976,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6841859,
+   "address": 992,
+   "length": 16,
+   "data": "00000000000000000000000000000000"
+  },
+  {
+   "t_us": 6842538,
+   "address": 1008,
+   "length": 12,
+   "data": "000000000000000000000000"
+  }
+ ],
+ "writes": [
+  {
+   "t_us": 5858585,
+   "address": 8,
+   "data": "3c09044004"
+  },
+  {
+   "t_us": 5872623,
+   "address": 0,
+   "data": "0000000000"
+  },
+  {
+   "t_us": 5952412,
+   "address": 128,
+   "data": "000000"
+  },
+  {
+   "t_us": 5954355,
+   "address": 544,
+   "data": "4711"
+  },
+  {
+   "t_us": 5961971,
+   "address": 570,
+   "data": "0c00"
+  },
+  {
+   "t_us": 5993685,
+   "address": 8,
+   "data": "3000"
+  },
+  {
+   "t_us": 6796239,
+   "address": 544,
+   "data": "4611"
+  }
+ ],
+ "observed_bytes": 791,
+ "observed_image_hex": "ffffb65bb0493f003000ffffffffffffffffffffffffffffffffffffffffffffb65bb0493f00ffffff53ffffffffffff80970202230cffffffffffffffffffff80970202230cffffffffffffffffffff80343438424446410014000000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff9d51010000000000000000000000000000000000000000000000000000000000803434384244464100140000000000000000000000000000000000004147504235393836310000000b020f0281500100ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff946200000000000000000000797e01000ea3000000000000000000008721020000000000ffffffff946200000000000000000000797e01000ea3000000000000000000008721020000000000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff00000000000000007e4ac801544ac80100000000beffbeff7f2bf1643f8537a70000ef032200343a3638373f3f3e083f0000000000003b37000000000500f700ffffffffffffffff4652a040000053f0ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff7e4ac801544ac80100000000beffbeff7f2bf1643f8537a70000ef032200343a3638373f3f3e083f0000000000003b37000000000500f700ffffffffffffffff5dd4860800003231303030373030ffff4811330000000000000000000f000500000100010001000d00000000000000ff00000100010001000d000000000000000000040000000000000000000000000000000600200455367ec12713e2efa712144ee811000000000000000004000000000000000000050000000000000000000000000000000000000000000100000000000000000000001400140000000000000000000000ffffffffffffffffffff00000000000000000000000000000000000001000000000005000000000000000000000024220000000000000000000000000000000004000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffffffffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000009ffffffffff0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000ffffffff",
+ "observed_mask": "0011111111000000000000000000000011111111110000001111110000000000111111000000000011111111111111110000000000000000000000000000000011111111111111111111111111111111111111111111111111111111111111111111111111111111000000000000000000000000000000001111111111111111111111111111111111110000111111111111111111111111111111111111000000000000000000000000000000000000111111111111111111111111111111111111111111111111111111111111111100000000111111110000000000000000000000000000000011111111111111111111111111111111111111111111111111111111000000001111111111111100111111111111111111111111111111101111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111000000000011111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110000000001111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111100000111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111110000",
+ "bytes_differing_from_emu_inputs_eeprom_bin": 218,
+ "differences": [
+  {
+   "address": "0xf0",
+   "emulator": "0xbf",
+   "observed": "0x94"
+  },
+  {
+   "address": "0xf1",
+   "emulator": "0x1a",
+   "observed": "0x62"
+  },
+  {
+   "address": "0xfc",
+   "emulator": "0x76",
+   "observed": "0x79"
+  },
+  {
+   "address": "0xfd",
+   "emulator": "0x3f",
+   "observed": "0x7e"
+  },
+  {
+   "address": "0x100",
+   "emulator": "0xfc",
+   "observed": "0xe"
+  },
+  {
+   "address": "0x101",
+   "emulator": "0x85",
+   "observed": "0xa3"
+  },
+  {
+   "address": "0x10c",
+   "emulator": "0x72",
+   "observed": "0x87"
+  },
+  {
+   "address": "0x10d",
+   "emulator": "0xc5",
+   "observed": "0x21"
+  },
+  {
+   "address": "0x10e",
+   "emulator": "0x1",
+   "observed": "0x2"
+  },
+  {
+   "address": "0x118",
+   "emulator": "0xbf",
+   "observed": "0x94"
+  },
+  {
+   "address": "0x119",
+   "emulator": "0x1a",
+   "observed": "0x62"
+  },
+  {
+   "address": "0x124",
+   "emulator": "0x76",
+   "observed": "0x79"
+  },
+  {
+   "address": "0x125",
+   "emulator": "0x3f",
+   "observed": "0x7e"
+  },
+  {
+   "address": "0x128",
+   "emulator": "0xfc",
+   "observed": "0xe"
+  },
+  {
+   "address": "0x129",
+   "emulator": "0x85",
+   "observed": "0xa3"
+  },
+  {
+   "address": "0x134",
+   "emulator": "0x72",
+   "observed": "0x87"
+  },
+  {
+   "address": "0x135",
+   "emulator": "0xc5",
+   "observed": "0x21"
+  },
+  {
+   "address": "0x136",
+   "emulator": "0x1",
+   "observed": "0x2"
+  },
+  {
+   "address": "0x160",
+   "emulator": "0x40",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x168",
+   "emulator": "0xb2",
+   "observed": "0x7e"
+  },
+  {
+   "address": "0x169",
+   "emulator": "0x3a",
+   "observed": "0x4a"
+  },
+  {
+   "address": "0x16c",
+   "emulator": "0xb2",
+   "observed": "0x54"
+  },
+  {
+   "address": "0x16d",
+   "emulator": "0x3a",
+   "observed": "0x4a"
+  },
+  {
+   "address": "0x184",
+   "emulator": "0x2a",
+   "observed": "0x22"
+  },
+  {
+   "address": "0x1a8",
+   "emulator": "0xf1",
+   "observed": "0x46"
+  },
+  {
+   "address": "0x1a9",
+   "emulator": "0xd1",
+   "observed": "0x52"
+  },
+  {
+   "address": "0x1d0",
+   "emulator": "0xb2",
+   "observed": "0x7e"
+  },
+  {
+   "address": "0x1d1",
+   "emulator": "0x3a",
+   "observed": "0x4a"
+  },
+  {
+   "address": "0x1d4",
+   "emulator": "0xb2",
+   "observed": "0x54"
+  },
+  {
+   "address": "0x1d5",
+   "emulator": "0x3a",
+   "observed": "0x4a"
+  },
+  {
+   "address": "0x1ec",
+   "emulator": "0x2a",
+   "observed": "0x22"
+  },
+  {
+   "address": "0x220",
+   "emulator": "0xc",
+   "observed": "0x48"
+  },
+  {
+   "address": "0x221",
+   "emulator": "0x40",
+   "observed": "0x11"
+  },
+  {
+   "address": "0x222",
+   "emulator": "0x1f",
+   "observed": "0x33"
+  },
+  {
+   "address": "0x223",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x224",
+   "emulator": "0xb7",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x225",
+   "emulator": "0x3a",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x226",
+   "emulator": "0xc8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x227",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x228",
+   "emulator": "0x5a",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x229",
+   "emulator": "0x1d",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x22a",
+   "emulator": "0xaf",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x22b",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x22c",
+   "emulator": "0xc",
+   "observed": "0xf"
+  },
+  {
+   "address": "0x22d",
+   "emulator": "0x13",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x22e",
+   "emulator": "0x0",
+   "observed": "0x5"
+  },
+  {
+   "address": "0x230",
+   "emulator": "0x33",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x231",
+   "emulator": "0x0",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x232",
+   "emulator": "0xa5",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x233",
+   "emulator": "0x0",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x234",
+   "emulator": "0x32",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x235",
+   "emulator": "0x0",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x236",
+   "emulator": "0xa5",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x237",
+   "emulator": "0x0",
+   "observed": "0xd"
+  },
+  {
+   "address": "0x238",
+   "emulator": "0x14",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x23a",
+   "emulator": "0x32",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x23c",
+   "emulator": "0xba",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x23e",
+   "emulator": "0xb4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x240",
+   "emulator": "0xf2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x242",
+   "emulator": "0x1a",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x244",
+   "emulator": "0x18",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x246",
+   "emulator": "0x19",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x248",
+   "emulator": "0x3",
+   "observed": "0xd"
+  },
+  {
+   "address": "0x252",
+   "emulator": "0x2b",
+   "observed": "0x4"
+  },
+  {
+   "address": "0x254",
+   "emulator": "0x6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x255",
+   "emulator": "0x2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x257",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x259",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x25c",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x25e",
+   "emulator": "0xc",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x260",
+   "emulator": "0x6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x262",
+   "emulator": "0x96",
+   "observed": "0x6"
+  },
+  {
+   "address": "0x264",
+   "emulator": "0x0",
+   "observed": "0x20"
+  },
+  {
+   "address": "0x265",
+   "emulator": "0xf2",
+   "observed": "0x4"
+  },
+  {
+   "address": "0x266",
+   "emulator": "0x29",
+   "observed": "0x55"
+  },
+  {
+   "address": "0x267",
+   "emulator": "0x2a",
+   "observed": "0x36"
+  },
+  {
+   "address": "0x268",
+   "emulator": "0x3a",
+   "observed": "0x7e"
+  },
+  {
+   "address": "0x269",
+   "emulator": "0x22",
+   "observed": "0xc1"
+  },
+  {
+   "address": "0x26a",
+   "emulator": "0xe8",
+   "observed": "0x27"
+  },
+  {
+   "address": "0x26b",
+   "emulator": "0x1a",
+   "observed": "0x13"
+  },
+  {
+   "address": "0x26c",
+   "emulator": "0x41",
+   "observed": "0xe2"
+  },
+  {
+   "address": "0x26d",
+   "emulator": "0x8a",
+   "observed": "0xef"
+  },
+  {
+   "address": "0x26e",
+   "emulator": "0x70",
+   "observed": "0xa7"
+  },
+  {
+   "address": "0x26f",
+   "emulator": "0x2c",
+   "observed": "0x12"
+  },
+  {
+   "address": "0x270",
+   "emulator": "0x66",
+   "observed": "0x14"
+  },
+  {
+   "address": "0x271",
+   "emulator": "0x9c",
+   "observed": "0x4e"
+  },
+  {
+   "address": "0x272",
+   "emulator": "0x3f",
+   "observed": "0xe8"
+  },
+  {
+   "address": "0x273",
+   "emulator": "0xd",
+   "observed": "0x11"
+  },
+  {
+   "address": "0x274",
+   "emulator": "0x7",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x276",
+   "emulator": "0x2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x27c",
+   "emulator": "0x8b",
+   "observed": "0x4"
+  },
+  {
+   "address": "0x27e",
+   "emulator": "0x2a",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x280",
+   "emulator": "0x9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x286",
+   "emulator": "0x1e",
+   "observed": "0x5"
+  },
+  {
+   "address": "0x287",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x298",
+   "emulator": "0x1f",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x299",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x29a",
+   "emulator": "0xa",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x29c",
+   "emulator": "0x0",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x2a8",
+   "emulator": "0x0",
+   "observed": "0x14"
+  },
+  {
+   "address": "0x2aa",
+   "emulator": "0x4a",
+   "observed": "0x14"
+  },
+  {
+   "address": "0x2ab",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2ac",
+   "emulator": "0x3e",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2ad",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2ae",
+   "emulator": "0x9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2ca",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2cc",
+   "emulator": "0x6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2d0",
+   "emulator": "0xd",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2d2",
+   "emulator": "0xa",
+   "observed": "0x1"
+  },
+  {
+   "address": "0x2d4",
+   "emulator": "0x34",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2d6",
+   "emulator": "0x1e",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2d8",
+   "emulator": "0x29",
+   "observed": "0x5"
+  },
+  {
+   "address": "0x2da",
+   "emulator": "0x2a",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2dc",
+   "emulator": "0x2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2e4",
+   "emulator": "0x38",
+   "observed": "0x24"
+  },
+  {
+   "address": "0x2e5",
+   "emulator": "0x6",
+   "observed": "0x22"
+  },
+  {
+   "address": "0x2e8",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x2f6",
+   "emulator": "0x1",
+   "observed": "0x4"
+  },
+  {
+   "address": "0x2fb",
+   "emulator": "0xa",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x37a",
+   "emulator": "0xb6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x37b",
+   "emulator": "0xd3",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x37e",
+   "emulator": "0xb6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x37f",
+   "emulator": "0xd2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x382",
+   "emulator": "0xb6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x383",
+   "emulator": "0xd2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x386",
+   "emulator": "0xb6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x387",
+   "emulator": "0xd2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x38a",
+   "emulator": "0xb6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x38b",
+   "emulator": "0xd2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x38d",
+   "emulator": "0x20",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x38e",
+   "emulator": "0xb9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x38f",
+   "emulator": "0xde",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x392",
+   "emulator": "0xb5",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x393",
+   "emulator": "0xd0",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x396",
+   "emulator": "0xb4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x397",
+   "emulator": "0xcf",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x39a",
+   "emulator": "0xb5",
+   "observed": "0x9"
+  },
+  {
+   "address": "0x3a0",
+   "emulator": "0xf",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a1",
+   "emulator": "0x2c",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a2",
+   "emulator": "0xbb",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a3",
+   "emulator": "0xe6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a4",
+   "emulator": "0x14",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a5",
+   "emulator": "0x2c",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a6",
+   "emulator": "0xba",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a7",
+   "emulator": "0xf6",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a8",
+   "emulator": "0x10",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3a9",
+   "emulator": "0x2c",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3aa",
+   "emulator": "0xba",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ab",
+   "emulator": "0xf8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ac",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ad",
+   "emulator": "0x2c",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ae",
+   "emulator": "0xba",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3af",
+   "emulator": "0xd9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b0",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b1",
+   "emulator": "0x2c",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b2",
+   "emulator": "0xb9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b3",
+   "emulator": "0xda",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b4",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b5",
+   "emulator": "0x28",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b6",
+   "emulator": "0xba",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b7",
+   "emulator": "0xdb",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b8",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3b9",
+   "emulator": "0x30",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ba",
+   "emulator": "0xba",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3bb",
+   "emulator": "0xdc",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3bc",
+   "emulator": "0x71",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3bd",
+   "emulator": "0xff",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3be",
+   "emulator": "0xe9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3bf",
+   "emulator": "0xc2",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3c0",
+   "emulator": "0x10",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3c3",
+   "emulator": "0xc0",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3c4",
+   "emulator": "0xf9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3c5",
+   "emulator": "0xff",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3c6",
+   "emulator": "0x2e",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ca",
+   "emulator": "0xff",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3cb",
+   "emulator": "0xff",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3cc",
+   "emulator": "0x3f",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3cd",
+   "emulator": "0x85",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ce",
+   "emulator": "0x37",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3cf",
+   "emulator": "0xa7",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3d0",
+   "emulator": "0x9f",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3d1",
+   "emulator": "0x41",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3d2",
+   "emulator": "0xe1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3d3",
+   "emulator": "0xc4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3d4",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3d8",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3dc",
+   "emulator": "0x9e",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3dd",
+   "emulator": "0x3a",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3de",
+   "emulator": "0xc8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3df",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e0",
+   "emulator": "0x9f",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e1",
+   "emulator": "0x3a",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e2",
+   "emulator": "0xc8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e3",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e4",
+   "emulator": "0x9f",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e5",
+   "emulator": "0x3a",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e6",
+   "emulator": "0xc8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e7",
+   "emulator": "0x1",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e8",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3e9",
+   "emulator": "0x24",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ea",
+   "emulator": "0xb8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3eb",
+   "emulator": "0xbf",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ec",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ed",
+   "emulator": "0x24",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ee",
+   "emulator": "0xb8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3ef",
+   "emulator": "0xc8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f0",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f1",
+   "emulator": "0x24",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f2",
+   "emulator": "0xb8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f3",
+   "emulator": "0xc9",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f4",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f5",
+   "emulator": "0x24",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f6",
+   "emulator": "0xb8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f7",
+   "emulator": "0xca",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f8",
+   "emulator": "0x4",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3f9",
+   "emulator": "0x24",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3fa",
+   "emulator": "0xb8",
+   "observed": "0x0"
+  },
+  {
+   "address": "0x3fb",
+   "emulator": "0xcc",
+   "observed": "0x0"
+  }
+ ],
+ "notes": [
+  "0x84 NAKs are the reset-time recovery loader polling the bridge at 7-bit 0x42 while it is disarmed.",
+  "Addresses are 24C08 absolute (block = 7-bit device 0x50..0x53 minus 0x50, times 256, plus word address).",
+  "Timestamps in this first capture wrap every 26.8 s (32-bit cycle counter); later builds use 64-bit microseconds."
+ ]
+}

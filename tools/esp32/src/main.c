@@ -14,6 +14,7 @@
 #include "hal/i2c_ll.h"
 #include "protocol.h"
 #include "wiring.h"
+#include "sniff.h"
 
 static gpio_num_t sda=GPIO_NUM_5,scl=GPIO_NUM_4;
 static struct wiring wiring;
@@ -260,7 +261,7 @@ void app_main(void)
     char line[96]; unsigned position=0; uint32_t observed_activity=0;
     for(;;) {
         char c; int count=usb_serial_jtag_read_bytes(&c,1,pdMS_TO_TICKS(10));
-        service(); probe_poll();
+        service(); probe_poll(); sniff_poll();
         if(slave && observed_activity!=read_events+rx_events) {
             observed_activity=read_events+rx_events; last_activity=esp_timer_get_time();
         }
@@ -285,6 +286,14 @@ void app_main(void)
                     gpio_get_level(sda),gpio_get_level(scl));
                 say(report);
             }
+            else if(!strcmp(line,"SNIFF") && !slave && !probing) {
+                /* Passive bus capture on the verified (or default) orientation; never drives a pin. */
+                gpio_num_t s_sda=wiring.phase==WIRING_VERIFIED?sda:GPIO_NUM_5, s_scl=wiring.phase==WIRING_VERIFIED?scl:GPIO_NUM_4;
+                char report[96];
+                if(sniff_start(s_sda,s_scl,say)) { snprintf(report,sizeof(report),"SNIFFING SDA%d SCL%d PASSIVE\n",(int)s_sda,(int)s_scl); say(report); }
+                else say("ERROR SNIFF\n");
+            }
+            else if(!strcmp(line,"STOP")) { if(sniff_active()) sniff_stop(); else say("ERROR NOT_SNIFFING\n"); }
             else if(!strcmp(line,"FLOAT")) {
                 disarm(); probing=false; wiring=(struct wiring){0}; say("FLOATING\n");
             }
