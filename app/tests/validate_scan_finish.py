@@ -54,7 +54,7 @@ def main():
 
     e.run(lambda q: word(q, 'page_phase') == 7, resume=True, budget=400_000_000)
     assert e.drive is None and e.regs.get(0xc0c85614, 0) == 0
-    assert call(e, 'scanner_line_ready') == 32, 'return-home discarded unread rows'
+    assert call(e, 'scanner_line_ready') == 32 + 156, 'return-home discarded unread rows'   # 156 run-in lines at 300 dpi precede the region
     status, _, body, _ = v.http(e, 0, 'GET',
         '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
     width, height, ctype, rows, _, depth = v.decode_png(body)

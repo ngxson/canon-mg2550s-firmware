@@ -1,0 +1,85 @@
+{
+  "cases": [
+    {
+      "name": "full75",
+      "dpi": 75,
+      "download_seconds": 15.935484667075798,
+      "pixels": [
+        620,
+        876
+      ],
+      "bytes": 1645200,
+      "mode": "RGB",
+      "total_seconds": 25.498786334181204,
+      "page_status": [
+        1196446541,
+        1,
+        7,
+        0,
+        915,
+        915,
+        2592,
+        5184,
+        512,
+        7340006,
+        7340016,
+        0,
+        0,
+        0,
+        25498,
+        70
+      ],
+      "power": 0,
+      "motor": 0,
+      "gate": 0
+    },
+    {
+      "name": "full150",
+      "dpi": 150,
+      "download_seconds": 19.12352608400397,
+      "pixels": [
+        1240,
+        1753
+      ],
+      "bytes": 6552786,
+      "mode": "RGB",
+      "total_seconds": 28.682976209092885,
+      "page_status": [
+        1196446541,
+        1,
+        7,
+        0,
+        1831,
+        1831,
+        2592,
+        5184,
+        256,
+        7340016,
+        7340035,
+        0,
+        0,
+        0,
+        28682,
+        70
+      ],
+      "power": 0,
+      "motor": 0,
+      "gate": 0
+    }
+  ],
+  "management_before": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "error": "OSError('image file is truncated')",
+  "emergency_stop": "acknowledged"
+}

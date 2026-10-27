@@ -1,0 +1,21 @@
+SINGLE 2112 phase None {'K': 20582, 'C': 8320, 'M': 8320, 'Y': 8320}
+ALT16 2112 phase 0 {'K': 11286, 'C': 4160, 'M': 4160, 'Y': 4160}
+ALT16 2112 phase 16 {'K': 8896, 'C': 4160, 'M': 4160, 'Y': 4160}
+routine 8 result 0 errors 5
+routine 10 result 0 errors 5
+routine 5 result 1 errors 5
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+routine 7 result 1 errors 6
+SINGLE head counts {'0': 10496, '1': 10086, '2': 8320, '3': 0, '5': 8320, '4': 0, '7': 8320, '6': 0}
+routine 10 result 0 errors 6
+routine 5 result 1 errors 6
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+routine 7 result 1 errors 6
+ALT16 head counts {'0': 5848, '1': 5438, '2': 4160, '3': 0, '5': 4160, '4': 0, '7': 4160, '6': 0}
+routine 10 result 0 errors 6
+routine 5 result 1 errors 6
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+routine 7 result 1 errors 6
+ALT16 head counts {'0': 4448, '1': 4448, '2': 4160, '3': 0, '5': 4160, '4': 0, '7': 4160, '6': 0}
+routine 9 result 0 errors 6
+Printed and ejected Q272212

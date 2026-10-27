@@ -1,0 +1,18 @@
+{
+  "cases": [],
+  "management_before": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "error": "TimeoutError('POST /eSCL/ScanJobs: incomplete response (0 bytes)')",
+  "emergency_stop": "USBTimeoutError(60, 'Operation timed out')"
+}

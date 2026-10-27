@@ -1,0 +1,316 @@
+/* On-device page printer over the hybrid band path.
+ *
+ * Input rows (300 dpi grey or sRGB, from urf.c) are separated into K/C/M/Y
+ * ink amounts, scaled to the 600 dpi engine (each input row gives two output
+ * rows; horizontally every output column samples input column
+ * X_IN0 + X / 2.048: the 1.024 width compensation measured on sheet PG2052,
+ * applied before halftoning as print_doc.py does) and halftoned with an 8x8
+ * ordered dither into packed bit rows held in rings. Bands are then printed
+ * exactly as the host tools do (page_live.py / print_doc.py):
+ *   home, head prepare (cartridge read, keep), stock load (routine 8),
+ *   first-line advance (routine 10), per band and sweep: geometry, prepare
+ *   (routine 5, fresh once per job), the tile raster written into the stock
+ *   managers, executor (routine 7, live, stock CR), then the band advance;
+ *   stock eject (routine 9), home.
+ * Colour pages use stock print mode 7 with 152-row bands; the C/M/Y arrays
+ * sit 128 rows below black row 0 on paper, so a band's black covers data rows
+ * [152b - 128, 152b + 24) while its colour covers [152b, 152b + 152). Mono
+ * pages use mode 1, 304-row bands, one 4224-column sweep. Everything here is
+ * polled; the shim runs each stock routine inside hybrid_poll(). */
+#include "app.h"
+#include "print_job.h"
+
+#define COLS 4224u                 /* printable width, 600 dpi columns (178.8 mm nominal) */
+#define SEG_COLOUR 2112u           /* columns per sweep in mode 7 (arena budget) */
+#define SEG_MONO 4224u
+#define ROW_BYTES (COLS / 8u)
+#define K_RING 320u                /* rows: a 304-row mono band, or 152 + the 128-row colour lead */
+#define C_RING 160u
+#define MAX_ROWS 6400u             /* 271 mm of output rows */
+#define COLOUR_LEAD 128u           /* black row 0 prints 128 rows above the colour arrays' row 0 */
+#define X_START 35008u             /* our carriage count of output column 0 (print_doc.py) */
+#define STOCK_CAP 2688u
+#define PLACE_K 34272u
+#define FIRST_ULF_COLOUR 394u      /* 650 Ulf puts black row 0 ~3.2 mm from the edge; black leads the colour origin by 128 rows = 256 Ulf */
+#define FIRST_ULF_MONO 650u
+#define X_IN0 183u                 /* input pixel under output column 0: (35008 - 29000) / 16 columns = 15.5 mm at 300 dpi */
+#define Y_IN0 38u                  /* input row under output row 0: 3.2 mm at 300 dpi */
+#define AMBIENT 50u
+
+enum step { S_NONE, S_HOMING, S_HEAD, S_LOADED, S_FIRST, S_BAND, S_PREPARED, S_FIRED, S_ADVANCED, S_EJECTED, S_HOMING2 };
+
+static enum print_engine_state state;
+static enum step step;
+static bool waiting, page_open, input_done, mono, job_fresh, sheet_loaded, cancel_wanted;
+static bool dry;                   /* emulator exercise (USB 0xa3): no homing, head or sheet checks; dry executor */
+static uint32_t expect;
+static unsigned rows_in, in_row, band_rows, band_next, bands_total, seg_index, pages, sweeps, failures, last_fail, routines_before;
+static uint32_t job_started_ms;
+static struct urf_decoder decoder;
+static uint8_t k_ring[K_RING][ROW_BYTES], c_ring[3][C_RING][ROW_BYTES];
+static const uint8_t bayer[8][8] = {
+    {0, 32, 8, 40, 2, 34, 10, 42}, {48, 16, 56, 24, 50, 18, 58, 26}, {12, 44, 4, 36, 14, 46, 6, 38}, {60, 28, 52, 20, 62, 30, 54, 22},
+    {3, 35, 11, 43, 1, 33, 9, 41}, {51, 19, 59, 27, 49, 17, 57, 25}, {15, 47, 7, 39, 13, 45, 5, 37}, {63, 31, 55, 23, 61, 29, 53, 21}};
+
+bool print_engine_available(void) { return hybrid_panel_available(); }
+bool print_engine_busy(void) { return state == PE_RECEIVING || state == PE_PRINTING; }
+enum print_engine_state print_engine_state(void) { return state; }
+
+static unsigned seg_cols(void) { return mono ? SEG_MONO : SEG_COLOUR; }
+static unsigned segments(void) { return COLS / seg_cols(); }
+/* Rows the rings can hold ahead of the next band (ring arithmetic in the header comment). */
+static unsigned accept_limit(void) { return band_rows * band_next + (mono ? K_RING : C_RING); }
+static int place_for_x(unsigned x)
+{
+    unsigned raw = (x + STOCK_CAP + 32u) / 64u * 64u;
+    return (int)((raw - PLACE_K) / 4u);
+}
+
+/* ---- rows in: separation, scaling, halftone ---- */
+static bool sink_page(const struct urf_page *p)
+{
+    if (page_open) return false;                              /* the previous page is still printing */
+    mono = p->components == 1u;
+    band_rows = mono ? 304u : 152u;
+    rows_in = in_row = band_next = bands_total = seg_index = 0; page_open = true; input_done = false;
+    dbg_puts("[print] page "); dbg_dec(p->index); dbg_putc('/'); dbg_dec(p->count); dbg_putc(' ');
+    dbg_dec(p->width); dbg_putc('x'); dbg_dec(p->height); dbg_puts(mono ? " grey\n" : " colour\n");
+    return true;
+}
+
+static void convert_row(const uint8_t *px, unsigned width, unsigned comps, unsigned d)
+{
+    uint8_t *k = k_ring[d % K_RING], *c = c_ring[0][d % C_RING], *m = c_ring[1][d % C_RING], *y = c_ring[2][d % C_RING];
+    memset(k, 0, ROW_BYTES);
+    if (!mono) { memset(c, 0, ROW_BYTES); memset(m, 0, ROW_BYTES); memset(y, 0, ROW_BYTES); }
+    const uint8_t *t = bayer[d & 7u];
+    for (unsigned X = 0; X < COLS; ++X) {
+        unsigned xi = X_IN0 + ((X * 125u) >> 8);               /* X / 2.048 */
+        if (xi >= width) break;
+        unsigned th = (unsigned)t[X & 7u] * 4u + 2u, bit = 1u << (X & 7u), byte = X >> 3;
+        const uint8_t *s = px + xi * comps;
+        if (mono) { if (255u - s[0] > th) k[byte] |= (uint8_t)bit; }
+        else {
+            unsigned ci = 255u - s[0], mi = 255u - s[1], yi = 255u - s[2];
+            unsigned ki = ci < mi ? (ci < yi ? ci : yi) : (mi < yi ? mi : yi);   /* grey component replacement */
+            if (ki > th) k[byte] |= (uint8_t)bit;
+            if (ci - ki > th) c[byte] |= (uint8_t)bit;
+            if (mi - ki > th) m[byte] |= (uint8_t)bit;
+            if (yi - ki > th) y[byte] |= (uint8_t)bit;
+        }
+        if (!(X & 255u)) app_yield();
+    }
+}
+
+static bool sink_row(const uint8_t *px, unsigned width, unsigned comps)
+{
+    if (!page_open) return false;
+    if (in_row < Y_IN0) { ++in_row; return true; }           /* above the printable area */
+    if (rows_in + 2u > MAX_ROWS) { ++in_row; return true; }   /* below it: dropped */
+    if (rows_in + 2u > accept_limit()) return false;          /* rings full: re-offered after the next band */
+    ++in_row;
+    convert_row(px, width, comps, rows_in); ++rows_in;        /* 300 -> 600 dpi: the pair shares pixels, */
+    convert_row(px, width, comps, rows_in); ++rows_in;        /* each with its own dither row */
+    return true;
+}
+
+static void page_end(void)
+{
+    if (input_done) return;
+    input_done = true;
+    unsigned span = rows_in + (mono ? 0u : COLOUR_LEAD);    /* colour pages: the black lead trails the data */
+    bands_total = (span + band_rows - 1u) / band_rows;
+    if (!bands_total) bands_total = 1;
+    dbg_puts("[print] page data complete: "); dbg_dec(rows_in); dbg_puts(" rows, "); dbg_dec(bands_total); dbg_puts(" bands\n");
+}
+
+static const struct urf_sink sink = {sink_page, sink_row, page_end};
+
+/* ---- job control ---- */
+bool print_engine_start(void)
+{
+    if (!print_engine_available() || print_engine_busy() || service_busy() || head_fire_busy() || cartridge_busy()) return false;
+    urf_init(&decoder, &sink);
+    state = PE_RECEIVING; step = S_NONE; waiting = page_open = input_done = cancel_wanted = false;
+    rows_in = band_next = bands_total = seg_index = pages = sweeps = 0; job_fresh = true; sheet_loaded = false;
+    job_started_ms = time_ms(); last_fail = 0;
+    dbg_puts("[print] job start\n");
+    return true;
+}
+
+unsigned print_engine_feed(const uint8_t *data, unsigned len)
+{
+    if (state != PE_RECEIVING) return len;                    /* a finished or failed job drains its data */
+    unsigned n = urf_feed(&decoder, data, len);
+    if (decoder.error) { dbg_puts("[print] bad URF document\n"); ++failures; last_fail = 1; state = page_open ? PE_PRINTING : PE_FAILED; if (page_open) page_end(); return len; }
+    return n;
+}
+
+void print_engine_finish(void)
+{
+    if (state != PE_RECEIVING) return;
+    if (!page_open && !decoder.done && !decoder.page_pending) { dbg_puts("[print] empty document\n"); ++failures; last_fail = 2; state = PE_FAILED; return; }
+    if (page_open) page_end();                                /* a truncated page prints what arrived */
+    state = PE_PRINTING;
+}
+
+void print_engine_cancel(void)
+{
+    if (print_engine_busy()) { cancel_wanted = true; dbg_puts("[print] cancel requested\n"); }
+}
+
+bool print_engine_control(unsigned op, unsigned arg)
+{
+    if (op == 1u) { if (print_engine_busy()) return false; dry = arg != 0; dbg_puts(dry ? "[print] dry mode\n" : "[print] live mode\n"); return true; }
+    if (op == 2u) { print_engine_cancel(); return true; }
+    return false;
+}
+
+/* Routine flags: live runs drive the carriage and feed; dry runs are the emulator's. */
+#define F_LOAD (dry ? 0x800u : 0x100u | 0x800u | 0x1000u)
+#define F_EJECT (dry ? 0x800u | 0x400u : 0x100u | 0x800u | 0x400u)
+#define F_FIRE (dry ? 0x1000u | 0x2000u : 0x100u | 0x1000u)
+
+/* ---- band output ---- */
+static void write_tiles(uint8_t *raster, unsigned stride, unsigned slots, const uint8_t *ring, unsigned ring_rows, int row0, unsigned rows, unsigned col0, unsigned ncols)
+{
+    for (unsigned g = 0; g < rows / 8u && g < slots; ++g)
+        for (unsigned r = 0; r < 8u; ++r) {
+            int d = row0 + (int)(8u * g + r);
+            if (d < 0 || (unsigned)d >= rows_in) continue;        /* blank rows: the fresh allocation is zero */
+            const uint8_t *src = ring + ((unsigned)d % ring_rows) * ROW_BYTES + col0 / 8u;
+            for (unsigned t = 0; t < ncols / 16u; ++t) { uint8_t *o = raster + t * stride + 16u * g + 2u * r; o[0] = src[2u * t]; o[1] = src[2u * t + 1u]; }
+            app_yield();
+        }
+}
+
+static bool fill_band(void)
+{
+    unsigned c0 = seg_index * seg_cols(), n = seg_cols();
+    static const unsigned groups[4] = {6, 0, 2, 4};              /* K, C, M, Y managers */
+    for (unsigned i = 0; i < (mono ? 1u : 4u); ++i) {
+        unsigned slots, width, stride, size;
+        uint8_t *raster = hybrid_manager_raster(groups[i], &slots, &width, &stride, &size);
+        if (!raster || width < n || (n / 16u) * stride > size) { dbg_puts("[print] manager not ready\n"); return false; }
+        int row0 = (int)(band_rows * band_next) - (i == 0 && !mono ? (int)COLOUR_LEAD : 0);
+        write_tiles(raster, stride, slots, i == 0 ? &k_ring[0][0] : &c_ring[i - 1u][0][0], i == 0 ? K_RING : C_RING, row0, band_rows, c0, n);
+    }
+    return true;
+}
+
+/* Start a stock routine; the poll resumes at `next` once it has finished with `want`. */
+static bool start(unsigned value, unsigned index, enum step next, uint32_t want, unsigned code)
+{
+    routines_before = hybrid_routines_run();
+    if (!hybrid_run(value, index)) { dbg_puts("[print] routine refused\n"); last_fail = code; return false; }
+    waiting = true; expect = want; step = next; return true;
+}
+
+static void fail(unsigned code)
+{
+    ++failures; last_fail = code; state = PE_FAILED; waiting = false;
+    dbg_puts("[print] failed, code "); dbg_dec(code); dbg_putc('\n');
+    if (sheet_loaded && start(9u | F_EJECT, AMBIENT, S_EJECTED, 0, code)) return;   /* leave the sheet out */
+    step = S_NONE;
+}
+
+static void eject(void) { if (!start(9u | F_EJECT, AMBIENT, S_EJECTED, 0, 30)) fail(30); }
+
+static void page_done(void)
+{
+    ++pages; page_open = false; band_next = bands_total = 0; rows_in = 0;
+    dbg_puts("[print] page printed, sweeps so far "); dbg_dec(sweeps); dbg_putc('\n');
+    if (cancel_wanted) { state = PE_CANCELED; dbg_puts("[print] canceled\n"); }
+}
+
+void print_engine_poll(void)
+{
+    if (!print_engine_busy() && state != PE_FAILED) return;
+    if (state == PE_FAILED && !waiting && step == S_NONE) return;
+    if (page_open) (void)urf_flush(&decoder);                 /* rows/pages refused earlier are re-offered */
+    if (waiting) {
+        if (hybrid_routines_run() == routines_before || hybrid_busy()) return;
+        waiting = false;
+        if (hybrid_last_result() != expect && state != PE_FAILED) {
+            /* The emulator's sheet model leaves the PE sensor clear after the loader, so its LF
+             * advances report no paper (0xbada); dry runs log and continue, live runs fail. */
+            if (dry && (step == S_FIRST || step == S_ADVANCED)) { dbg_puts("[print] dry: advance result ignored\n"); }
+            else { fail(40u + (unsigned)step); return; }
+        }
+    }
+    switch (step) {
+    case S_NONE:
+        if (state == PE_FAILED) return;
+        if (cancel_wanted) { state = PE_CANCELED; dbg_puts("[print] canceled\n"); return; }
+        if (!page_open) {
+            if (state == PE_PRINTING && !decoder.page_pending) { state = PE_COMPLETED; dbg_puts("[print] job complete: "); dbg_dec(pages); dbg_puts(" pages, "); dbg_dec(sweeps); dbg_puts(" sweeps, "); dbg_dec(time_ms() - job_started_ms); dbg_puts(" ms\n"); }
+            return;
+        }
+        if (rows_in < 2u && !input_done) return;             /* wait for the first rows before moving paper */
+        if (service_busy() || cartridge_busy() || head_fire_busy()) return;
+        if (dry) { step = S_HEAD; return; }
+        if (!carriage_home_request()) return;
+        step = S_HOMING; return;
+    case S_HOMING:
+        if (carriage_busy()) return;
+        if (!carriage_referenced()) { fail(10); return; }
+        if (!head_if_prepared() && !cartridge_request(3u | 0x200u, 0)) { fail(11); return; }
+        step = S_HEAD; return;
+    case S_HEAD:
+        if (cartridge_busy()) return;
+        if (!dry && !head_if_prepared()) { fail(12); return; }
+        if (!start(8u | F_LOAD, AMBIENT, S_LOADED, 0, 13)) fail(13);
+        return;
+    case S_LOADED:
+        if (!dry && !hybrid_sheet_loaded()) { fail(14); return; }
+        sheet_loaded = true;
+        if (!start(10u | 0x800u, mono ? FIRST_ULF_MONO : FIRST_ULF_COLOUR, S_FIRST, 0, 15)) fail(15);
+        return;
+    case S_FIRST:
+        seg_index = 0; step = S_BAND; return;
+    case S_BAND:
+        if (seg_index == 0) {
+            if (cancel_wanted) { eject(); return; }
+            if (input_done && band_next >= bands_total) { eject(); return; }
+            if (!input_done && rows_in < band_rows * (band_next + 1u)) return;   /* the intake fills the rings */
+        }
+        {
+            unsigned n = seg_cols();
+            if (!hybrid_band_params(n, 304u | (mono ? 0u : 0x800u) | ((mono ? 1u : 7u) << 12), 0, false) ||
+                !hybrid_band_params(0, 0, place_for_x(X_START + 16u * seg_index * n), true)) { fail(18); return; }
+            if (!start(5u | (job_fresh ? 0x400u : 0u), AMBIENT, S_PREPARED, 1, 19)) { fail(19); return; }
+            job_fresh = false; return;
+        }
+    case S_PREPARED:
+        if (!fill_band()) { fail(21); return; }
+        if (!start(7u | F_FIRE, AMBIENT, S_FIRED, 1, 22)) fail(22);
+        return;
+    case S_FIRED:
+        ++sweeps;
+        if (++seg_index < segments()) { step = S_BAND; return; }
+        seg_index = 0; ++band_next;
+        if (input_done && band_next >= bands_total) { eject(); return; }
+        if (!start(10u | 0x800u, 2u * band_rows, S_ADVANCED, 0, 24)) fail(24);
+        return;
+    case S_ADVANCED:
+        step = S_BAND; return;
+    case S_EJECTED:
+        sheet_loaded = false;
+        if (!dry && carriage_home_request()) { step = S_HOMING2; return; }
+        step = S_NONE; if (state != PE_FAILED) page_done(); return;
+    case S_HOMING2:
+        if (carriage_busy()) return;
+        step = S_NONE; if (state != PE_FAILED) page_done(); return;
+    }
+}
+
+unsigned print_engine_status(uint8_t *out)
+{
+    put32(out, 0x54525031u);                                 /* "PRT1" */
+    put32(out + 4, (uint32_t)state | (uint32_t)step << 8 | (waiting ? 0x10000u : 0) | (dry ? 0x400000u : 0) | (mono ? 0x20000u : 0) | (page_open ? 0x40000u : 0) | (input_done ? 0x80000u : 0) | (sheet_loaded ? 0x100000u : 0) | (cancel_wanted ? 0x200000u : 0));
+    put32(out + 8, rows_in); put32(out + 12, band_next); put32(out + 16, bands_total); put32(out + 20, seg_index);
+    put32(out + 24, pages); put32(out + 28, sweeps); put32(out + 32, failures); put32(out + 36, last_fail);
+    put32(out + 40, decoder.page.width); put32(out + 44, decoder.page.height); put32(out + 48, decoder.page.index); put32(out + 52, decoder.page.count);
+    put32(out + 56, state == PE_IDLE ? 0 : time_ms() - job_started_ms); put32(out + 60, hybrid_routines_run());
+    return 64;
+}

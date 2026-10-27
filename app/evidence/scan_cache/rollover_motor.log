@@ -1,0 +1,33 @@
+PASS motor elapsed milliseconds remain monotonic past 2^32 ticks
+PASS actual delayed control tick still stops the motor after rollover
+PASS both_usb_jog_polarities_frozen_deadline
+PASS cancel_stops_without_toggling_lamp
+PASS travel_guard_0
+PASS travel_guard_1
+PASS serial_timeout_no_drive
+PASS invalid_direction
+PASS shared_setup_refuses_other_active_motor
+PASS overlap_stops
+ALL MOTOR ASSERTIONS PASSED
+RUN normal
+PASS normal
+RUN frozen
+PASS frozen
+RUN backoff_stuck
+PASS backoff_stuck
+RUN wrong
+PASS wrong
+RUN wrong_return_end
+PASS wrong_return_end
+RUN early_completion
+PASS early_completion
+PASS already_at_home_requires_backoff_and_repeat
+PASS raw_counter_rollover_during_home
+PASS independent_seek_deadline
+PASS stop_button
+PASS stop_usb
+PASS stop_delayed_tick
+PASS serial_failure_no_drive
+PASS live_usb_info_and_reboot
+PASS i2c_rescue_after_failed_home
+ALL HOME ASSERTIONS PASSED

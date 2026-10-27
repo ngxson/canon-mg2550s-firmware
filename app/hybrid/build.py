@@ -34,7 +34,7 @@ HOLE_END = 0x1d8000
 STOCK_END = 0x1f2000                   # last stock byte is below this; tail is erased
 CANDIDATES = ROOT / 'emu/evidence/stockapp/maintenance/flash_free_candidates.json'
 SNAPSHOT = ROOT / 'emu/output/fixture/stock_ram_snapshot'   # .json/.bin from emu/stockapp/ram_snapshot.py
-SNAPSHOT_FLASH = HOLE + 0x20000        # app must end below this (128 KiB); table then blob
+SNAPSHOT_FLASH = HOLE + 0x21000        # app must end below this (132 KiB); table then blob (the blob ends ~3 KiB below HOLE_END)
 SNAPSHOT_MAGIC = 0x50414e53            # 'SNAP'
 
 

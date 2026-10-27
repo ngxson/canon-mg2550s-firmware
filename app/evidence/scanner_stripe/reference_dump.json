@@ -1,0 +1,41 @@
+{
+  "info": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "arrays": {
+    "acc_white": {
+      "address": "0x183c1138",
+      "bytes": 31104
+    },
+    "acc_dark": {
+      "address": "0x183b97b8",
+      "bytes": 31104
+    },
+    "cal_scale": {
+      "address": "0x183c8ab8",
+      "bytes": 31104
+    },
+    "acc_nw": {
+      "address": "0x183b97b4",
+      "bytes": 4
+    },
+    "acc_nd": {
+      "address": "0x183b97b0",
+      "bytes": 4
+    },
+    "line": {
+      "address": "0x181d9694",
+      "bytes": 128
+    }
+  }
+}

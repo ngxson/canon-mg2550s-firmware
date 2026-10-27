@@ -1,0 +1,80 @@
+[
+  {
+    "variant": "C1024A",
+    "requested": {
+      "K": 20598,
+      "C": 8320,
+      "M": 8320,
+      "Y": 8320
+    },
+    "counted": {
+      "K": 20598,
+      "C": 8320,
+      "M": 8320,
+      "Y": 8320
+    },
+    "full_readback_bytes": 457728
+  },
+  {
+    "variant": "C1024B",
+    "requested": {
+      "K": 20630,
+      "C": 8320,
+      "M": 8320,
+      "Y": 8320
+    },
+    "counted": {
+      "K": 20630,
+      "C": 8320,
+      "M": 8320,
+      "Y": 8320
+    },
+    "full_readback_bytes": 457728
+  },
+  {
+    "variant": "K1024",
+    "requested": {
+      "K": 20326
+    },
+    "counted": {
+      "K": 20326
+    },
+    "full_readback_bytes": 81920
+  },
+  {
+    "variant": "K2112",
+    "requested": {
+      "K": 20182
+    },
+    "counted": {
+      "K": 20182
+    },
+    "full_readback_bytes": 168960
+  },
+  {
+    "variant": "K4224",
+    "requested": {
+      "K": 20310
+    },
+    "counted": {
+      "K": 20310
+    },
+    "full_readback_bytes": 337920
+  },
+  {
+    "variant": "C2112",
+    "requested": {
+      "K": 20166,
+      "C": 8320,
+      "M": 8320,
+      "Y": 8320
+    },
+    "counted": {
+      "K": 20166,
+      "C": 8320,
+      "M": 8320,
+      "Y": 8320
+    },
+    "full_readback_bytes": 944064
+  }
+]

@@ -1,0 +1,12 @@
+
+[app] MG2550s open app
+app_flash=0x00010000
+app_ram=0x20020000
+[app] usb up, entering main loop
+[btn] map 2
+[btn] B/W=one stock paper advance; release between presses; Cancel=stop; no firing
+[home] stock PI seek + verified backoff + repeat seek; mechanical reference
+[page] USB stop-and-capture page scan; returns home; Cancel=stop
+[escl] eSCL over IPP-USB (interfaces 2-3)
+[cart] USB 0x62 reads cartridge fuse ROM (read-only); 0x63 status
+[head] USB 0x81 stationary black prefire (stock ID24 list); 0x82 status

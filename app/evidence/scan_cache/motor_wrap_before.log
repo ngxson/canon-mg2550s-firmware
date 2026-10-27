@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/project/app/tests/validate_motor_wrap.py", line 76, in <module>
+    main()
+  File "/project/app/tests/validate_motor_wrap.py", line 62, in main
+    assert e.drive is not None, 'tick-duration wrap falsely triggered the late-tick guard'
+           ^^^^^^^^^^^^^^^^^^^
+AssertionError: tick-duration wrap falsely triggered the late-tick guard

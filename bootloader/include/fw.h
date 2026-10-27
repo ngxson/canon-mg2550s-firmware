@@ -27,6 +27,8 @@ void firmware_main(void) __attribute__((noreturn));
 void cpu_reset(void) __attribute__((noreturn));
 void panel_init(void);
 void leds_tick(void);
+bool app_panel_dark(void);     /* application only: standby darkens the LED frames */
+void power_panel_note(void);   /* application only: logs the first dark frame */
 void delay_ticks(uint32_t ticks);
 void usb_init(void);
 void usb_poll(void);

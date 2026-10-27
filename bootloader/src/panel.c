@@ -1,5 +1,10 @@
 #include "fw.h"
 static unsigned next_led;
+#ifdef APPLICATION_BUILD
+/* Defaults for application builds without a power manager (LED demo). */
+__attribute__((weak)) bool app_panel_dark(void) { return false; }
+__attribute__((weak)) void power_panel_note(void) {}
+#endif
 
 void panel_init(void)
 {
@@ -27,11 +32,15 @@ void leds_tick(void)
 {
     if (rd(TIMER) || (rd(PANEL+0x70)&0x1f)) return;
 #ifdef APPLICATION_BUILD
-    /* Demo application: power, then the other three LEDs, one at a time. */
-    wr(PANEL+0x140,next_led==1?0x20:0);
-    wr(PANEL+0x148,next_led==0?0x10:0);
-    wr(PANEL+0x150,next_led==2?0x20:0);
-    wr(PANEL+0x158,next_led==3?0x10:0);
+    /* Demo application: power, then the other three LEDs, one at a time.
+     * The application's power manager darkens the panel in standby (keys
+     * keep scanning); recovery indications below are unchanged. */
+    bool dark=app_panel_dark();
+    power_panel_note();
+    wr(PANEL+0x140,!dark&&next_led==1?0x20:0);
+    wr(PANEL+0x148,!dark&&next_led==0?0x10:0);
+    wr(PANEL+0x150,!dark&&next_led==2?0x20:0);
+    wr(PANEL+0x158,!dark&&next_led==3?0x10:0);
     next_led=(next_led+1)&3;
 #else
     /* User identified the first sequence LED as power on 2026-10-23.

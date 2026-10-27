@@ -68,16 +68,16 @@ work, keep the bootloader artifacts matching the installed recovery stages.
 Tests combine `bootloader/build/boot_region.bin` and its symbol manifest with
 the new app package and manifest.
 
-Run all fifteen scanner, cartridge, mechanism, head, tunnel, bench and management checks before flashing:
+Run all sixteen scanner, cartridge, mechanism, head, tunnel, bench, power and management checks before flashing:
 
 ```sh
-for check in app home motor buttons scanner page cartridge printregs feed carriage page_job head_fire stamp tunnel bench; do
+for check in app home motor buttons scanner page cartridge printregs feed carriage page_job head_fire stamp tunnel bench power; do
   docker run --rm --network none -v "$PWD:/project:rw" \
     mg2550s-emu "app/tests/validate_${check}.py" || break
 done
 ```
 
-Proceed only after all fifteen pass. Reports are written under `app/build/`.
+Proceed only after all sixteen pass. Reports are written under `app/build/`.
 Tests execute the linked ARM instructions, including boot and recovery, and
 check motion sequencing, capture/transfer failures, Cancel and management
 liveness. No stock dump is needed for these tests. Native execution is also
@@ -240,6 +240,86 @@ Copy B/W picks up a sheet and places it (hold, then 8000 counts); Copy
 Colour advances it 1024 counts per press; Power moves the carriage between
 park and 60000 counts; Cancel ejects a held sheet, otherwise stops. Map 0
 restores the default keys (feeder and transport toggles, Cancel stops).
+
+## Print from the host over IPP (on-device page printer)
+
+On a hybrid board the application accepts IPP Print-Job (and Create-Job +
+Send-Document) over IPP-USB and prints the document itself: `src/ippusb.c`
+buffers the IPP attributes and streams the document bytes with backpressure,
+`src/ipp.c` keeps one job (id, state, Get-Jobs / Get-Job-Attributes /
+Cancel-Job), `src/urf.c` decodes Apple URF (W8 grey or SRGB24, 300 dpi) and
+`src/print_engine.c` turns rows into 600 dpi K/C/M/Y bit rows (grey
+component replacement, 8x8 ordered dither, the measured 1.024 width
+compensation applied before halftoning) and drives the stock band path
+through the shim: home, head prepare,
+stock load, first-line advance, per band prepare / tile raster into the stock
+managers / executor / advance, eject. Colour pages print in stock mode 7 with
+152-row bands (black leads the colour arrays by 128 rows), grey pages in mode
+1 with 304-row bands. Each segment now uses two disjoint row passes, 16 rows
+apart, to avoid the repeating weak nozzle rows measured on Q272125. The
+remaining feed is shortened by the same amount, preserving page scale.
+Q272212 physically verifies removal of the recurring K/C/Y white strips;
+this workaround costs a second sweep per segment. Raster conversion pauses
+while stock routines run so it cannot delay their polled motor controllers.
+See [the print-quality evidence](evidence/print_quality/README.md) for physical
+results and remaining limits. Boards without the hybrid band path still answer
+`server-error-not-accepting-jobs`, draining the document instead of 413.
+
+```sh
+python3 tools/ipp_print.py photo.png            # URF Print-Job over IPP-USB, follows the job to completion
+python3 tools/ipp_print.py text.png --grey      # W8 grey page: mode-1 black bands
+python3 tools/ipp_print.py --status             # USB 0xa2 engine status; --cancel = USB 0xa3 op 2
+```
+
+macOS/Linux hosts print through their own IPP-USB daemon to the same path
+once they list the printer (`printer-is-accepting-jobs` is true on hybrid
+boards). Emulator: `HYBRID_IPP_PRINT=1 app/hybrid/validate_hybrid.py` runs a
+Print-Job end to end in the engine's dry mode (USB 0xa3 op 1: no homing, head
+or sheet checks, dry executor) and asserts two colour bands in eight sweeps
+with no allocation inside a live band. Add `HYBRID_IPP_QUALITY=1` to check
+every emitted paper dot, both segments, the band seam and trailing blanks;
+add `HYBRID_IPP_MONO=1` for the four-sweep mono case. These tests also forbid
+row conversion during stock routines. `tests/test_urf.c` is the native decoder test.
+The shim keeps a prepared band's allocations live until the next prepare
+(`band_mark`), the fix for the per-pass pattern-buffer overwrite found by the
+brief 22 helper; the validator asserts it on every executed band.
+
+## Power manager
+
+`src/power.c` keeps USB and management alive while unused hardware rests
+([brief](../../fw_dump/gpt/BREIF_POWER_MANAGEMENT.md)). States: ready,
+active (a hardware owner works), quiescing, standby, waking, fault. Automatic
+standby fires after an idle timeout (60 s development default, RAM only;
+`fwctl.py power timeout N`, 0 = never) measured from the last moment any owner
+was busy: scanner motor/page/lamp/armed capture, paper feed, carriage, page
+job, stamp, hybrid routine, cartridge read, head fire, LF jog, print or raster
+reception. Status polling, log reads and rejected requests never restart the
+timer. Standby runs a bounded, reversible quiesce inside one main-loop poll:
+illumination/SCNIO stop and scanner analog power off (unread scan rows are
+kept), scanner motor outputs neutral (no reboot inhibit; the next move
+re-initialises), panel LEDs dark (keys keep scanning). Readbacks that
+disagree put the manager in `fault` with the stage and error; nothing is
+reported as reached that was not. Any admitted job wakes automatically
+(waking → active) and relights the panel; nothing is energised merely by a
+wake, a status read or USB enumeration. The Power key requests standby when
+idle and wakes when asleep in button maps 0 and 2 (map 1 keeps its bench
+role). Explicit standby while an owner works is refused as busy and cancels
+nothing. Not done yet, and reported as unsupported: print-side parking and
+head capping, driver-IC sleep, supply-rail switching, CPU sleep/clock changes.
+
+```sh
+python3 tools/fwctl.py power status       # USB 0xa0: state, owners, idle age, readbacks, capabilities
+python3 tools/fwctl.py power standby      # USB 0xa1 op 1; busy -> accepted: false
+python3 tools/fwctl.py power wake         # op 2
+python3 tools/fwctl.py power timeout 300  # op 3, seconds (0 = never, max 3600)
+```
+
+`tests/validate_power.py` covers the timer with continuous polling, busy
+refusal, idempotent standby/wake, automatic wake, the Power key, parameter
+validation and rebase, timer disable, the millisecond-clock wrap, an injected
+readback failure and INFO/reboot while asleep. Physical qualification
+(idle readbacks, repeated standby → eSCL scan → standby, wall power) is still
+pending; see the brief's qualification list.
 
 ## Register tunnel for hardware-in-the-loop emulation
 

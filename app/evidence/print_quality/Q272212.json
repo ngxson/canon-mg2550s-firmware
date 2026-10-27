@@ -1,0 +1,586 @@
+{
+  "label": "Q272212",
+  "created_utc": "2026-10-27T22:12:07Z",
+  "x_start": 35008,
+  "first_ulf": 650,
+  "pitch_ulf": 640,
+  "passes": [
+    {
+      "name": "SINGLE",
+      "cols": 2112,
+      "colour": true,
+      "phase": null,
+      "advance_ulf": 0,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 81,
+            "width": 2112,
+            "stride": 1296,
+            "size": 171072,
+            "base": 539933056,
+            "raster": 539935040,
+            "raster_unaligned": 539935000
+          },
+          "bytes": 171072,
+          "seconds": 0.09,
+          "raster": "0x182ec140",
+          "checked": 171072,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "C": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539155552,
+            "raster": 539157056,
+            "raster_unaligned": 539157016
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1822e240",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "M": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539414720,
+            "raster": 539416192,
+            "raster_unaligned": 539416184
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1826d680",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "Y": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539673888,
+            "raster": 539675392,
+            "raster_unaligned": 539675352
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x182acb00",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 20582,
+        "C": 8320,
+        "M": 8320,
+        "Y": 8320
+      },
+      "counters_before_cleared": {
+        "0": 4200,
+        "1": 4200,
+        "2": 2520,
+        "3": 5880,
+        "5": 2520,
+        "4": 5880,
+        "7": 2520,
+        "6": 5880
+      },
+      "counters": {
+        "0": 10496,
+        "1": 10086,
+        "2": 8320,
+        "3": 0,
+        "5": 8320,
+        "4": 0,
+        "7": 8320,
+        "6": 0
+      }
+    },
+    {
+      "name": "ALT16",
+      "cols": 2112,
+      "colour": true,
+      "phase": 0,
+      "advance_ulf": 640,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 81,
+            "width": 2112,
+            "stride": 1296,
+            "size": 171072,
+            "base": 539933056,
+            "raster": 539935040,
+            "raster_unaligned": 539935000
+          },
+          "bytes": 171072,
+          "seconds": 0.09,
+          "raster": "0x182ec140",
+          "checked": 171072,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "C": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539155552,
+            "raster": 539157056,
+            "raster_unaligned": 539157016
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1822e240",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "M": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539414720,
+            "raster": 539416192,
+            "raster_unaligned": 539416184
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1826d680",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "Y": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539673888,
+            "raster": 539675392,
+            "raster_unaligned": 539675352
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x182acb00",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 11286,
+        "C": 4160,
+        "M": 4160,
+        "Y": 4160
+      },
+      "counters_before_cleared": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      },
+      "counters": {
+        "0": 5848,
+        "1": 5438,
+        "2": 4160,
+        "3": 0,
+        "5": 4160,
+        "4": 0,
+        "7": 4160,
+        "6": 0
+      }
+    },
+    {
+      "name": "ALT16",
+      "cols": 2112,
+      "colour": true,
+      "phase": 16,
+      "advance_ulf": 32,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 81,
+            "width": 2112,
+            "stride": 1296,
+            "size": 171072,
+            "base": 539933056,
+            "raster": 539935040,
+            "raster_unaligned": 539935000
+          },
+          "bytes": 171072,
+          "seconds": 0.1,
+          "raster": "0x182ec140",
+          "checked": 171072,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "C": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539155552,
+            "raster": 539157056,
+            "raster_unaligned": 539157016
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1822e240",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "M": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539414720,
+            "raster": 539416192,
+            "raster_unaligned": 539416184
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1826d680",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "Y": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539673888,
+            "raster": 539675392,
+            "raster_unaligned": 539675352
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x182acb00",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 8896,
+        "C": 4160,
+        "M": 4160,
+        "Y": 4160
+      },
+      "counters_before_cleared": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      },
+      "counters": {
+        "0": 4448,
+        "1": 4448,
+        "2": 4160,
+        "3": 0,
+        "5": 4160,
+        "4": 0,
+        "7": 4160,
+        "6": 0
+      }
+    }
+  ],
+  "steps": [
+    {
+      "routine": 8,
+      "flags": 6400,
+      "index": 50,
+      "status": [
+        1314214472,
+        0,
+        22,
+        5,
+        77,
+        6,
+        2688,
+        62,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0
+      ],
+      "seconds": 5.2
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 650,
+      "status": [
+        1314214472,
+        0,
+        23,
+        5,
+        9,
+        4,
+        2688,
+        62,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0
+      ],
+      "seconds": 0.75
+    },
+    {
+      "routine": 5,
+      "flags": 1024,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        24,
+        5,
+        6,
+        4,
+        2688,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 0.37
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        25,
+        6,
+        31,
+        6,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 6.3
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 640,
+      "status": [
+        1314214472,
+        0,
+        26,
+        6,
+        9,
+        4,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 0.75
+    },
+    {
+      "routine": 5,
+      "flags": 0,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        27,
+        6,
+        6,
+        4,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 0.11
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        28,
+        6,
+        21,
+        6,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 3.66
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 32,
+      "status": [
+        1314214472,
+        0,
+        29,
+        6,
+        9,
+        4,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 0.71
+    },
+    {
+      "routine": 5,
+      "flags": 0,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        30,
+        6,
+        6,
+        4,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 0.11
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        31,
+        6,
+        21,
+        6,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 4.75
+    },
+    {
+      "routine": 9,
+      "flags": 3328,
+      "index": 50,
+      "status": [
+        1314214472,
+        0,
+        32,
+        6,
+        26,
+        6,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0
+      ],
+      "seconds": 3.29
+    }
+  ],
+  "alternate_nozzles": true,
+  "completed": true
+}

@@ -1,0 +1,45 @@
+{
+  "ipp_usb_interfaces": [
+    2,
+    3
+  ],
+  "ipp": {
+    "http": 200,
+    "status": 0,
+    "make_and_model": [
+      "OpenFW MG2550s"
+    ],
+    "uuid": [
+      "urn:uuid:4f50454e-4657-4d47-3235-353073000001"
+    ]
+  },
+  "capabilities": {
+    "http": 200,
+    "make_and_model": "OpenFW MG2550s",
+    "color_modes": [
+      "BlackAndWhite1",
+      "Grayscale8",
+      "RGB24"
+    ],
+    "resolutions": [
+      75,
+      150,
+      300
+    ],
+    "formats": [
+      "image/jpeg",
+      "image/png"
+    ]
+  },
+  "status_before": "Idle",
+  "scan": {
+    "location": "http://localhost/eSCL/ScanJobs/1",
+    "content_type": "image/png",
+    "bytes": 5220672,
+    "seconds": 22.928,
+    "mbytes_per_second": 0.23,
+    "file": "app/evidence/print_quality/scan_QI272229B_rgb300.png"
+  },
+  "next_document_after_page": 404,
+  "job_state_after": "Completed"
+}

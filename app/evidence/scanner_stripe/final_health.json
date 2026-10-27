@@ -1,0 +1,99 @@
+{
+  "info": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "home_words": [
+    1296582477,
+    1,
+    2,
+    0,
+    7340045,
+    7340045,
+    7340033,
+    7350646,
+    109265059,
+    3867361509,
+    1,
+    1
+  ],
+  "power": {
+    "protocol": "PWR1",
+    "state": "standby",
+    "reason": "timeout",
+    "last_result": "none",
+    "fail_stage": 0,
+    "idle_timeout_s": 60,
+    "idle_age_ms": 93673,
+    "owners": [],
+    "last_error": "none",
+    "capabilities": [
+      "scanner",
+      "scan_motor",
+      "panel",
+      "timeout"
+    ],
+    "logical_outputs": {
+      "scanner_power_reg": 0,
+      "panel_dark": true,
+      "head_prepared": false,
+      "scan_rows_unread": true,
+      "paper_held": false,
+      "scan_motor_ctrl": 0,
+      "scan_motor_compare": 2000
+    },
+    "transitions": 4,
+    "standby_count": 1,
+    "wake_count": 0,
+    "uptime_ms": 129763,
+    "unsupported": [
+      "print parking/head capping",
+      "driver-IC sleep",
+      "rail switching",
+      "CPU sleep"
+    ]
+  },
+  "engine": {
+    "state": "idle",
+    "step": "none",
+    "waiting": false,
+    "mono": false,
+    "page_open": false,
+    "input_done": false,
+    "sheet": false,
+    "dry": false,
+    "rows_in": 0,
+    "band": 0,
+    "bands": 0,
+    "segment": 0,
+    "pages": 0,
+    "sweeps": 0,
+    "failures": 0,
+    "last_fail": 0,
+    "urf": [
+      0,
+      0,
+      0,
+      0
+    ],
+    "ms": 0,
+    "routines": 0
+  },
+  "canaries": {
+    "canary_a": true,
+    "canary_b": true
+  },
+  "reference_counts": {
+    "acc_nw": 36,
+    "acc_nd": 16
+  }
+}

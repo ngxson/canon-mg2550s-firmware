@@ -362,7 +362,7 @@ def main():
     e = IppUsbHost(image=factory, metadata=metadata)
     e.run(app_mode)
     interfaces = config_interfaces(e)
-    assert [i['class'] for i in interfaces] == [(0xff, 0, 0), (7, 1, 2), (7, 1, 4), (7, 1, 4)]
+    assert [i['class'] for i in interfaces] == [(0xff, 0, 0), (0xff, 0, 0), (7, 1, 4), (7, 1, 4)]   # bulk tool interface is vendor class: only IPP-USB makes a printer
     assert interfaces[2]['endpoints'] == [(0x02, 2, 512), (0x81, 2, 512)]
     assert interfaces[3]['endpoints'] == [(0x03, 2, 512), (0x83, 2, 512)]
     # Print (bit 1), Scan (bit 2), Any HTTP/1.1 (bit 5) on every IPP-USB interface.
@@ -396,6 +396,12 @@ def main():
     assert attrs['copies-supported'] == [(0x33, struct.pack('>II', 1, 1))]
     operations = {struct.unpack('>I', v)[0] for _, v in attrs['operations-supported']}
     assert {0x02, 0x0a, 0x0b} <= operations
+    big = ipp_request(0x0002, 9)
+    big = big[:-1] + b'\x49\x00\x0fdocument-format\x00\x09image/urf' + b'\x03' + b'UNIRAST\x00' + b'\x00\x00\x00\x01' + bytes(50000)
+    status, headers, body, _ = http(e, 1, 'POST', '/ipp/print', big, headers=('Content-Type: application/ipp',))
+    _, ipp_status, _, _, attrs = ipp_parse(body)
+    assert status == 200 and ipp_status == 0x0506, (status, ipp_status)
+    record('print_job_document_streamed_and_refused', body_bytes=len(big))
     for operation, expected in ((0x0002, 0x0506), (0x0004, 0x0506), (0x000a, 0), (0x0009, 0x0406), (0x0023, 0x0501)):
         _, _, body, _ = http(e, 1, 'POST', '/ipp/print', ipp_request(operation, 8),
                              headers=('Content-Type: application/ipp',))

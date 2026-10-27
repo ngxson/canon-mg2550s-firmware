@@ -1,0 +1,14 @@
+HTTP probe 0 OK
+HTTP probe 1 OK
+HTTP probe 2 OK
+HTTP probe 3 OK
+HTTP probe 4 OK
+full300 created /eSCL/ScanJobs/1
+{'name': 'full300', 'dpi': 300, 'download_seconds': 91.14665929111652, 'pixels': (2480, 3507), 'bytes': 26155278, 'mode': 'RGB'}
+full300 idle audit 0 0 0 phase 7
+full150 created /eSCL/ScanJobs/2
+{'name': 'full150', 'dpi': 150, 'download_seconds': 19.118595625041053, 'pixels': (1240, 1753), 'bytes': 6552786, 'mode': 'RGB'}
+full150 idle audit 0 0 0 phase 7
+full75 created /eSCL/ScanJobs/3
+{'name': 'full75', 'dpi': 75, 'download_seconds': 12.873575416160747, 'pixels': (620, 876), 'bytes': 1645200, 'mode': 'RGB'}
+full75 idle audit 0 0 0 phase 7

@@ -275,6 +275,10 @@ static void burst_stop(void)
  * exact register deltas stock writes for component count 3 (fixture case
  * p0-three-components versus p0-gray-4). Each of the three illumination
  * windows spans the whole 0x99..0x7e0 range; `eighths` scales that width. */
+static unsigned line_colour_eighths[3] = {5u, 6u, 3u};   /* per-LED window eighths: paper ~42,000 each, lid strip < 65,535 (sweep 2026-10-27) */
+static unsigned line_afe_offset = 0x80u;                    /* AFE offset slot (regs 1/4): +203 counts per unit; 0x80 puts no-light at ~1,200 instead of clamping at 0 */
+/* `eighths` 0 closes all three windows (dark reference); otherwise each LED
+ * uses its own width from line_colour_eighths. */
 static void scnio_colour_config(unsigned eighths)
 {
     wr(0xc0d600e0u, 7u);
@@ -283,7 +287,7 @@ static void scnio_colour_config(unsigned eighths)
     wr(0xc0d601c0u, 1u); wr(0xc0d601c4u, 2u); wr(0xc0d601c8u, 4u);
     for (unsigned c = 0; c < 3u; ++c) {
         modify(0xc0d60264u + 8u * c, 0xfffffu, 0x99u);
-        modify(0xc0d60268u + 8u * c, 0xfffffu, 0x99u + (0x7e0u - 0x99u) * eighths / 8u);
+        modify(0xc0d60268u + 8u * c, 0xfffffu, 0x99u + (0x7e0u - 0x99u) * (eighths ? line_colour_eighths[c] : 0u) / 8u);
     }
 }
 
@@ -460,8 +464,8 @@ static void line_exposure(unsigned eighths)
 #define LINE_ATTEMPTS 3u
 #define LINE_WARMUP 128u                    /* stationary P0 periods before any request */
 #define LINE_AFE_GAIN 13u
-#define LINE_AFE_OFFSET 0x00u
-#define LINE_EXPOSURE 6u                    /* eighths of the P0 window widths (grey) */
+#define LINE_AFE_OFFSET 0x00u                /* initial value of line_afe_offset */
+#define LINE_EXPOSURE 4u                    /* eighths of the P0 window widths (grey); 6/8 clipped the lid strip at offset 0x80 */
 #define LINE_COLOUR_EXPOSURE 8u             /* eighths of the full-window colour exposure */
 static struct {
     bool running, done, failed, gate_pending, validated, overrun;
@@ -476,9 +480,22 @@ static unsigned line_exposure_eighths = LINE_EXPOSURE, line_colour_exposure = LI
 
 bool scanner_line_set_afe(unsigned exposure, unsigned gain)
 {
-    if (line.running || line.gate_pending || exposure < 1u || exposure > 8u || gain < 1u || gain > 13u) return false;
+    if (line.running || line.gate_pending || exposure < 1u || exposure > 8u || gain < 1u || gain > 63u) return false;
     line_exposure_eighths = exposure; line_gain = gain;
     dbg_puts("[line] afe exposure="); dbg_dec(exposure); dbg_puts("/8 gain="); dbg_dec(gain); dbg_putc('\n');
+    return true;
+}
+
+/* Colour optics (USB 0x9e): per-LED window eighths r | g << 4 | b << 8 (1..8 each), AFE offset 0..255. */
+bool scanner_line_set_colour(unsigned windows, unsigned offset)
+{
+    unsigned w[3] = {windows & 15u, windows >> 4 & 15u, windows >> 8 & 15u};
+    if (line.running || line.gate_pending || offset > 255u) return false;
+    for (unsigned c = 0; c < 3u; ++c) if (w[c] < 1u || w[c] > 8u) return false;
+    for (unsigned c = 0; c < 3u; ++c) line_colour_eighths[c] = w[c];
+    line_afe_offset = offset;
+    dbg_puts("[line] colour windows="); dbg_dec(w[0]); dbg_putc('/'); dbg_dec(w[1]); dbg_putc('/'); dbg_dec(w[2]);
+    dbg_puts(" /8 offset=0x"); dbg_u32(offset); dbg_putc('\n');
     return true;
 }
 
@@ -545,7 +562,7 @@ static bool line_setup(unsigned components, unsigned lines, unsigned pitch, unsi
     if (C == 3u) scnio_colour_config(line_colour_exposure);
     else line_exposure(line_exposure_eighths);
     delay_ticks(CLOCK_TICKS_PER_MS * 2u);
-    if (!afe_operating_gain(line_gain, LINE_AFE_OFFSET)) goto failed;
+    if (!afe_operating_gain(line_gain, line_afe_offset)) goto failed;
     for (unsigned c = 0; c < 2u; ++c) {
         uint32_t b = 0xc0d50000u + c * 0x100u;
         if (rd(b + 0x14u) != R + c * BURST_SEG || rd(b + 0x18u) != R || rd(b + 0x1cu) != R + window ||
@@ -787,7 +804,7 @@ bool scanner_calibrate(unsigned components)
     cal_valid = false; cal_components = components;
     unsigned saved_n = burst_n, saved_e = burst_exposure, saved_g = burst_gain, saved_s = burst_skip, saved_o = burst_offset;
     unsigned saved_c = burst_components, saved_r = burst_repeat, saved_w = burst_window; uint32_t saved_p = burst_period;
-    burst_n = CAL_LINES; burst_gain = line_gain; burst_skip = 0; burst_offset = LINE_AFE_OFFSET;
+    burst_n = CAL_LINES; burst_gain = line_gain; burst_skip = 0; burst_offset = line_afe_offset;
     burst_components = components; burst_repeat = 1; burst_window = 0; burst_period = 0x1a748u; burst_keep_power = true;
     bool ok = true;
     burst_exposure = 0;                                   /* windows closed: dark reference */
@@ -909,6 +926,8 @@ bool scanner_capture_row(bool first)
 }
 
 void scanner_lamp_toggle(void) { if (illum_on) illum_stop(); else illum_start(); }
+bool scanner_lamp_on(void) { return illum_on; }
+bool scanner_armed(void) { return capture2_pending || burst_pending; }
 
 void scanner_lamp_poll(void)
 {

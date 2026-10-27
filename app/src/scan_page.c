@@ -25,7 +25,15 @@ enum page_error { PAGE_OK, ERR_HOME, ERR_STEP, ERR_CAPTURE, ERR_HOST_TIMEOUT,
  * RGB 300 dpi and far more at 75/150 (149,687), above what our scan controller
  * allows (60,000) and what was physically verified (28,000 full page, 100,000
  * fast return). 40,000 at 75/150 dpi is the first operating point to verify. */
-static uint32_t cruise_for_pitch(unsigned p) { return p >= 256u ? 40000u : 37000u; }
+static uint32_t cruise_for_pitch(unsigned p, unsigned c)
+{
+    /* Full-width calibrated RGB conversion + PNG takes about 9 ms/row at
+     * 150 dpi and 18 ms/row at 300 dpi on the board. Set the acquisition
+     * period and travel speed together at page start, with processing margin.
+     * Motor throttling alone does not slow the current IRQ-driven producer. */
+    if (c == 3u && p < 512u) return p >= 256u ? 26000u : 6000u;
+    return p >= 256u ? 40000u : 37000u;
+}
 #define CONT_CRAWL 3000u            /* ring backpressure cruise (above the stall detector's 1000 counts / 500 ms) */
 #define CONT_START 4096u
 #define CONT_RUNOUT 4096u
@@ -60,7 +68,7 @@ static bool continuous;                 /* this page uses moving acquisition */
 static uint32_t cont_speed = CONT_SPEED_DEFAULT;
 static unsigned components = 1, next_components = 1;
 static bool crawling;
-static bool calibrate_pages = true;     /* USB 0x9c bit 6 clears it (A/B tests) */
+static bool calibrate_pages = false;    /* home bursts superseded by the page run-in references; USB 0x9c bit 6 controls it (A/B tests) */
 void scan_page_set_calibration(bool on) { calibrate_pages = on; }
 
 void scan_page_set_components(unsigned c) { next_components = c == 3u ? 3u : 1u; }
@@ -81,6 +89,7 @@ static void transition(enum page_phase next)
 
 static void end_page(enum page_phase result, enum page_error error)
 {
+    cpu_dcache_set(false);
     static const char *const names[] = {"idle", "home", "settle", "capture", "ready", "step", "return",
                                         "done", "failed", "cancelled", "scan", "calibrate"};
     scanner_motor_cancel(); scanner_line_stop(); scanner_lamp_off();
@@ -112,11 +121,13 @@ void scan_page_cancel(void)
 bool scan_page_start(unsigned count, unsigned spacing, uint32_t start, bool owned)
 {
     bool adopt = page_phase == PAGE_RETURN;
-    if (!count || count > (owned ? 3508u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > 450048u ||
-        (count - 1u) * spacing > 450048u - start || (scan_page_busy() && !adopt) ||
+    uint32_t travel = owned ? 470016u : 450048u;   /* owned pages run in from the mechanical start: stock's 3508 rows lie 156/300 in later */
+    if (!count || count > (owned ? 3680u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > travel ||
+        (count - 1u) * spacing > travel - start || (scan_page_busy() && !adopt) ||
         (scanner_motor_busy() && !adopt) || print_is_active()) return false;
     rows = count; pitch = spacing; offset = start; internal = owned; park = false; retries = 0;
     scanner_line_reset(); scratch_pattern_fill();
+    if (owned && cpu_dcache_set(true)) dbg_puts("[page] data cache on\n");
     components = owned ? next_components : 1u; next_components = 1u;
     /* Moving acquisition for the eSCL pitches; the vendor page protocol keeps stop-and-capture. */
     continuous = owned && (spacing == 128u || spacing == 256u || spacing == 512u) && count * components <= 65535u;
@@ -206,7 +217,7 @@ static void scan_continuous(uint32_t now)
     if (!action_started) {
         uint32_t endpoint = first + (rows - 1u) * pitch + CONT_RUNOUT;
         /* Budget covers a page crawled from the start (host backpressure). */
-        uint32_t speed = cont_speed ? cont_speed : cruise_for_pitch(pitch);
+        uint32_t speed = cont_speed ? cont_speed : cruise_for_pitch(pitch, components);
         uint32_t budget = 3000u + motor_divide((uint64_t)(endpoint - origin) * 1000u, CONT_CRAWL);
         /* Line period T x d = 96 MHz x pitch x 0.98 / v (stock B.2); T per sub-period. */
         uint32_t period = motor_divide((uint64_t)96000000u * pitch * 49u, speed * 50u * components);
@@ -252,7 +263,7 @@ static void scan_continuous(uint32_t now)
          * (host, encoder) slows the carriage instead of losing lines. */
         unsigned backlog = scanner_line_backlog(), ring = scanner_line_ring();
         if (!crawling && backlog > ring / 2u) { crawling = scanner_motor_scan_throttle(CONT_CRAWL); if (crawling) dbg_puts("[page] crawl\n"); }
-        else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch)); if (!crawling) dbg_puts("[page] cruise\n"); }
+        else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch, components)); if (!crawling) dbg_puts("[page] cruise\n"); }
         return;
     }
     if (!scanner_motor_move_ok()) { end_page(PAGE_FAILED, ERR_STEP); return; }

@@ -1,0 +1,18 @@
+== leftbars
+K bar at x=  0.1 y=  0.3 mm,  1.7 x 29.8 mm (704 rows), coverage 1.00, white lines 0
+M bar at x=  7.4 y=  1.9 mm,  2.1 x 27.7 mm (654 rows), coverage 1.00, white lines 1
+Y bar at x= 15.2 y=  1.9 mm,  2.0 x 27.6 mm (652 rows), coverage 1.00, white lines 24, spacing rows [6, 32, 32, 32, 34, 28, 4, 33, 33, 26, 6, 28]
+== lower
+C bar at x=  2.5 y=  2.6 mm,  2.0 x  6.9 mm (164 rows), coverage 1.00, white lines 1
+C bar at x=  2.5 y= 16.5 mm,  2.1 x  6.9 mm (162 rows), coverage 1.00, white lines 1
+M bar at x= 10.3 y=  2.6 mm,  1.9 x  6.9 mm (164 rows), coverage 1.00, white lines 0
+M bar at x= 10.3 y= 16.5 mm,  2.0 x  6.9 mm (162 rows), coverage 1.00, white lines 0
+Y bar at x= 18.2 y=  2.5 mm,  2.0 x  6.9 mm (164 rows), coverage 1.00, white lines 4, spacing rows [56, 66, 32]
+Y bar at x= 18.2 y= 16.4 mm,  2.0 x  6.9 mm (162 rows), coverage 1.00, white lines 4, spacing rows [32, 32, 32]
+== n0
+C bar at x=  1.1 y=  0.3 mm,  2.7 x 12.9 mm (304 rows), coverage 0.90, white lines 6, spacing rows [16, 52, 23, 11, 144]
+C bar at x=  5.8 y=  6.0 mm,  2.0 x  6.9 mm (164 rows), coverage 1.00, white lines 2, spacing rows [32]
+M bar at x=  9.3 y=  0.3 mm,  2.0 x 12.9 mm (304 rows), coverage 0.47, white lines 21, spacing rows [9, 6, 5, 8, 13, 8, 6, 6, 6, 5, 9, 12]
+M bar at x= 13.5 y=  6.0 mm,  2.0 x  6.9 mm (164 rows), coverage 1.00, white lines 0
+Y bar at x= 17.2 y=  0.3 mm,  2.0 x 12.9 mm (304 rows), coverage 1.00, white lines 4, spacing rows [34, 66, 164]
+Y bar at x= 21.4 y=  5.9 mm,  2.1 x  6.9 mm (164 rows), coverage 1.00, white lines 5, spacing rows [56, 34, 58, 6]

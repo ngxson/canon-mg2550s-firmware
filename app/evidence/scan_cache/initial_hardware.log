@@ -1,0 +1,17 @@
+HTTP probe 0 OK
+HTTP probe 1 OK
+HTTP probe 2 OK
+HTTP probe 3 OK
+HTTP probe 4 OK
+short75 created /eSCL/ScanJobs/1
+{'name': 'short75', 'dpi': 75, 'download_seconds': 5.347480959026143, 'pixels': (620, 32), 'bytes': 60168, 'mode': 'RGB'}
+short75 idle audit 0 0 0 phase 7
+full75a created /eSCL/ScanJobs/2
+{'name': 'full75a', 'dpi': 75, 'download_seconds': 12.873489917023107, 'pixels': (620, 876), 'bytes': 1645200, 'mode': 'RGB'}
+full75a idle audit 0 0 0 phase 7
+full75b created /eSCL/ScanJobs/3
+{'name': 'full75b', 'dpi': 75, 'download_seconds': 12.876896625151858, 'pixels': (620, 876), 'bytes': 1645200, 'mode': 'RGB'}
+full75b idle audit 0 0 0 phase 7
+crop150 created /eSCL/ScanJobs/4
+{'name': 'crop150', 'dpi': 150, 'download_seconds': 4.430215917062014, 'pixels': (1240, 300), 'bytes': 1121472, 'mode': 'RGB'}
+crop150 idle audit 0 0 0 phase 7

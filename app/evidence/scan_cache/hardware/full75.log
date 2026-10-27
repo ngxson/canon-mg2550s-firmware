@@ -1,0 +1,133 @@
+[http] c1 GET /eSCL/ScannerStatus
+[http] c1 -> 200
+[http] c1 POST /eSCL/ScanJobs
+[escl] ScanSettings InputSource=Platen Intent=- ColorMode=RGB24 XResolution=75 DocumentFormatExt=image/png DocumentFormat=- XOffset=0 YOffset=0 Width=2480 Height=3507
+[page] data cache on
+[page] start rows=915 pitch=512 offset=0 internal
+[escl] job 3 RGB24 75dpi 620x876 image/png
+[http] c1 -> 201
+[line] priming setup
+[line] start lines=915 comp=3 ring=219 first=006bf7f2 at=006be7f2 gate
+[motor] jog forward start=006be7f2 target=00732bf2
+[http] c1 GET /eSCL/ScanJobs/3/NextDocument
+[http] c1 -> 200
+[page] alive row=0 taken=0 backlog=0 pos=006be7f2 loops=2 ch0=20420000/00000000/00000004/00000000/00000ab8 ch1=20420a20/00000000/00000000/00000000/00000ab8
+[home] phase=10 ms=100 pos=006bf214 compare=2517 speed=39702
+[line] request 1 at 006bf886
+[line] request 2 at 006bfa7b
+[home] phase=10 ms=200 pos=006c01b4 compare=2506 speed=39768
+[home] phase=10 ms=300 pos=006c1154 compare=2505 speed=39800
+[home] phase=10 ms=400 pos=006c20f3 compare=2490 speed=39867
+[home] phase=10 ms=500 pos=006c3092 compare=2498 speed=39800
+[page] alive row=27 taken=27 backlog=2 pos=006c30be loops=20321 ch0=2048a500/00000001/00000004/00000000/00000a64 ch1=2048af20/00000001/00000000/00000000/00000a64
+[home] phase=10 ms=600 pos=006c4032 compare=2486 speed=39900
+[cal] run-in white lines=18 dark lines=4 mid-sample white/dark: 56674/1823 56481/3217 47163/1788
+[home] phase=10 ms=700 pos=006c4fd2 compare=2482 speed=39933
+[home] phase=10 ms=800 pos=006c5f72 compare=2502 speed=39800
+[home] phase=10 ms=900 pos=006c6f11 compare=2496 speed=39834
+[home] phase=10 ms=1000 pos=006c7eb2 compare=2478 speed=39966
+[page] alive row=67 taken=67 backlog=2 pos=006c7f06 loops=34460 ch0=20521560/00000001/00000004/00000000/000009ed ch1=20522000/00000001/00000000/00000000/000009ed
+[home] phase=10 ms=1500 pos=006cccdb compare=2486 speed=39900
+[page] alive row=107 taken=107 backlog=2 pos=006ccd4c loops=47423 ch0=205b8cc0/00000001/00000004/00000000/00000975 ch1=205b96e0/00000001/00000000/00000000/00000975
+[home] phase=10 ms=2000 pos=006d1af4 compare=2502 speed=39768
+[page] alive row=147 taken=147 backlog=2 pos=006d1b94 loops=60390 ch0=20650ac0/00000001/00000004/00000000/000008fd ch1=206514e0/00000001/00000000/00000000/000008fd
+[home] phase=10 ms=2500 pos=006d6915 compare=2498 speed=39800
+[page] alive row=187 taken=187 backlog=2 pos=006d69df loops=73347 ch0=206e88c0/00000001/00000004/00000000/00000885 ch1=206e92e0/00000001/00000000/00000000/00000885
+[home] phase=10 ms=3000 pos=006db730 compare=2490 speed=39867
+[page] alive row=227 taken=227 backlog=2 pos=006db842 loops=86339 ch0=20440e80/00000009/00000004/00000000/0000080d ch1=204418a0/00000009/00000000/00000000/0000080d
+[line] request 256 at 006dec50
+[home] phase=10 ms=3500 pos=006e0550 compare=2499 speed=39800
+[page] alive row=267 taken=267 backlog=2 pos=006e06a9 loops=99317 ch0=204d8c80/00000009/00000004/00000000/00000795 ch1=204d96a0/00000009/00000000/00000000/00000795
+[home] phase=10 ms=4000 pos=006e5370 compare=2488 speed=39867
+[page] alive row=307 taken=307 backlog=2 pos=006e550f loops=112304 ch0=20570a80/00000009/00000004/00000000/0000071d ch1=205714a0/00000009/00000000/00000000/0000071d
+[home] phase=10 ms=4500 pos=006ea190 compare=2482 speed=39900
+[page] alive row=347 taken=347 backlog=2 pos=006ea375 loops=125301 ch0=20608880/00000009/00000004/00000000/000006a5 ch1=206092a0/00000009/00000000/00000000/000006a5
+[home] phase=10 ms=5000 pos=006eefb1 compare=2487 speed=39867
+[page] alive row=387 taken=387 backlog=2 pos=006ef1db loops=138293 ch0=206a0680/00000009/00000004/00000000/0000062d ch1=206a10a0/00000009/00000000/00000000/0000062d
+[home] phase=10 ms=5500 pos=006f3dd3 compare=2487 speed=39867
+[page] alive row=427 taken=427 backlog=2 pos=006f4041 loops=151291 ch0=20738480/00000009/00000004/00000000/000005b5 ch1=20738ea0/00000009/00000000/00000000/000005b5
+[home] phase=10 ms=6000 pos=006f8bf4 compare=2505 speed=39735
+[page] alive row=467 taken=467 backlog=2 pos=006f8ea9 loops=164282 ch0=20490a40/00000009/00000004/00000000/0000053d ch1=20491460/00000009/00000000/00000000/0000053d
+[home] phase=10 ms=6500 pos=006fda11 compare=2503 speed=39735
+[page] alive row=507 taken=507 backlog=2 pos=006fdd10 loops=177277 ch0=20528840/00000009/00000004/00000000/000004c5 ch1=20529260/00000009/00000000/00000000/000004c5
+[line] request 512 at 006fe212
+[home] phase=10 ms=7000 pos=00702831 compare=2494 speed=39800
+[page] alive row=547 taken=547 backlog=2 pos=00702b77 loops=190260 ch0=205c0640/00000009/00000004/00000000/0000044d ch1=205c1060/00000009/00000000/00000000/0000044d
+[home] phase=10 ms=7500 pos=00707651 compare=2490 speed=39834
+[page] alive row=587 taken=587 backlog=2 pos=007079dc loops=203259 ch0=20658440/00000009/00000004/00000000/000003d5 ch1=20658e60/00000009/00000000/00000000/000003d5
+[home] phase=10 ms=8000 pos=0070c470 compare=2492 speed=39834
+[page] alive row=627 taken=627 backlog=2 pos=0070c842 loops=216255 ch0=206f0240/00000009/00000004/00000000/0000035d ch1=206f0c60/00000009/00000000/00000000/0000035d
+[home] phase=10 ms=8500 pos=00711293 compare=2491 speed=39834
+[page] alive row=667 taken=667 backlog=2 pos=007116aa loops=229247 ch0=20448800/00000009/00000004/00000000/000002e5 ch1=20449220/00000009/00000000/00000000/000002e5
+[home] phase=10 ms=9000 pos=007160b3 compare=2495 speed=39800
+[page] alive row=707 taken=707 backlog=2 pos=0071650f loops=242243 ch0=204e0600/00000009/00000004/00000000/0000026d ch1=204e1020/00000009/00000000/00000000/0000026d
+[home] phase=10 ms=9500 pos=0071aed3 compare=2504 speed=39735
+[page] alive row=747 taken=747 backlog=2 pos=0071b376 loops=255244 ch0=20578400/00000009/00000004/00000000/000001f5 ch1=20578e20/00000009/00000000/00000000/000001f5
+[line] request 768 at 0071d7d4
+[home] phase=10 ms=10000 pos=0071fcf0 compare=2498 speed=39800
+[page] alive row=787 taken=787 backlog=2 pos=007201dc loops=268237 ch0=20610200/00000009/00000004/00000000/0000017d ch1=20610c20/00000009/00000000/00000000/0000017d
+[home] phase=10 ms=10500 pos=00724b10 compare=2498 speed=39800
+[page] alive row=827 taken=827 backlog=2 pos=00725043 loops=281224 ch0=206a8000/00000009/00000004/00000000/00000105 ch1=206a8a20/00000009/00000000/00000000/00000105
+[home] phase=10 ms=11000 pos=00729930 compare=2500 speed=39768
+[page] alive row=867 taken=867 backlog=2 pos=00729ea7 loops=294212 ch0=2073fe00/00000009/00000004/00000000/0000008d ch1=20740820/00000009/00000000/00000000/0000008d
+[home] phase=10 ms=11500 pos=0072e750 compare=2498 speed=39800
+[page] alive row=907 taken=907 backlog=2 pos=0072ed0e loops=307203 ch0=204983c0/00000009/00000004/00000000/00000015 ch1=20498de0/00000009/00000000/00000000/00000015
+[escl] job 3 Completed rows=876
+[escl] profile calls=308508 produce_ms=6559 rows_ms=4306 max_gap_ms=1 wall_ms=12872 rows=876 loops=309764 loop_max_us=1229180
+[line] done
+[motor] stop: cancelled pos=0072fdd6 elapsed_ms=11644 compare=2497
+[home] fast return start=0073046a target=006c45b2
+[home] phase=12 ms=100 pos=0073014f compare=1687 speed=20270
+[home] phase=12 ms=200 pos=0072f1d2 compare=1283 speed=60913
+[home] phase=12 ms=300 pos=0072d2fc compare=787 speed=93203
+[home] phase=12 ms=400 pos=0072ac4b compare=962 speed=100418
+[home] phase=12 ms=500 pos=00728533 compare=855 speed=99585
+[home] phase=12 ms=600 pos=00725e1c compare=883 speed=99792
+[home] phase=12 ms=700 pos=0072370c compare=886 speed=99792
+[home] phase=12 ms=800 pos=00720ffb compare=994 speed=100628
+[home] phase=12 ms=900 pos=0071e8ec compare=889 speed=99792
+[home] phase=12 ms=1000 pos=0071c1dc compare=942 speed=100208
+[home] phase=12 ms=1500 pos=0070fe8c compare=864 speed=99585
+[home] phase=12 ms=2000 pos=00703b3c compare=944 speed=100208
+[home] phase=12 ms=2500 pos=006f77eb compare=845 speed=99378
+[home] phase=12 ms=3000 pos=006eb49c compare=998 speed=100628
+[home] phase=12 ms=3500 pos=006df14b compare=869 speed=99585
+[home] phase=12 ms=4000 pos=006d2dfc compare=975 speed=100418
+[home] phase=12 ms=4500 pos=006c6f27 compare=1313 speed=66481
+[home] phase=12 ms=5000 pos=006c4762 compare=1821 speed=3544
+[home] seek left start=006c45a2 target=006432b4
+[home] phase=4 ms=100 pos=006c3da8 compare=1642 speed=28004
+[home] phase=4 ms=200 pos=006c32b8 compare=1611 speed=27777
+[home] phase=4 ms=300 pos=006c27c8 compare=1635 speed=27955
+[home] phase=4 ms=400 pos=006c1cd7 compare=1643 speed=28021
+[home] phase=4 ms=500 pos=006c11e7 compare=1652 speed=28086
+[home] phase=4 ms=600 pos=006c06f7 compare=1638 speed=28004
+[home] phase=4 ms=700 pos=006bfc08 compare=1647 speed=28086
+[home] phase=4 ms=800 pos=006bf117 compare=1645 speed=28053
+[home] phase=4 ms=900 pos=006be7f5 compare=1400 speed=1000
+[home] phase=4 ms=1000 pos=006be7f5 compare=1400 speed=38
+[home] phase=4 ms=1500 pos=006be7f5 compare=1400 speed=6
+[home] backoff start=006be7f6 target=006c114c
+[home] phase=5 ms=100 pos=006bed26 compare=2235 speed=20210
+[home] phase=5 ms=200 pos=006bf4f5 compare=2244 speed=20236
+[home] phase=5 ms=300 pos=006bfcc4 compare=2258 speed=20151
+[home] phase=5 ms=400 pos=006c0494 compare=2243 speed=20236
+[home] phase=5 ms=500 pos=006c076c compare=2118 speed=4014
+[home] phase=5 ms=600 pos=006c08fc compare=2118 speed=4054
+[home] phase=5 ms=700 pos=006c0a8c compare=2118 speed=4010
+[home] phase=5 ms=800 pos=006c0c1c compare=2122 speed=4007
+[home] phase=5 ms=900 pos=006c0dac compare=2118 speed=4005
+[home] phase=5 ms=1000 pos=006c0f3c compare=2122 speed=4030
+[home] repeat left seek start=006c1167 target=006bdc59
+[home] phase=6 ms=100 pos=006c096d compare=1654 speed=28135
+[home] phase=6 ms=200 pos=006bfe7e compare=1640 speed=28070
+[home] phase=6 ms=300 pos=006bf38e compare=1644 speed=28103
+[home] phase=6 ms=400 pos=006be8c5 compare=1400 speed=21947
+[home] phase=6 ms=500 pos=006be7f4 compare=1400 speed=49
+[home] phase=6 ms=600 pos=006be7f4 compare=1400 speed=22
+[home] phase=6 ms=700 pos=006be7f4 compare=1400 speed=14
+[home] phase=6 ms=800 pos=006be7f4 compare=1400 speed=10
+[home] phase=6 ms=900 pos=006be7f4 compare=1400 speed=8
+[home] phase=6 ms=1000 pos=006be7f4 compare=1400 speed=6
+[home] stop: mechanical reference established; optical calibration pending pos=006be7f5 elapsed_ms=0 compare=2000
+[page] end state=7 error=0 rows=915 ms: home=0 settle=0 capture=0 ready=0 step=0 return=9560 scan=12874 calibrate=0

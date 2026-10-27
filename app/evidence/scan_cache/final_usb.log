@@ -1,0 +1,21 @@
+PASS all mutable USB DMA buffers outside cached RAM and inside app reservation
+PASS repeated cache transitions, inherited regions, and both HTTP interfaces
+PASS descriptor_has_two_ipp_usb_interfaces {"interfaces": [[255, 0, 0], [7, 1, 2], [7, 1, 4], [7, 1, 4]]}
+PASS set_interface_and_device_id_on_ipp_interface 
+PASS ipp_get_printer_attributes {"attributes": 51}
+PASS escl_capabilities {"modes": ["BlackAndWhite1", "Grayscale8", "RGB24"], "resolutions": [75, 150, 300], "formats": ["image/jpeg", "image/png"]}
+PASS status_root_page_and_errors 
+PASS legacy_printer_interface_discards_stray_data {"bytes": 2304}
+PASS full_page_grayscale_75dpi {"pixels": [637, 876], "png_bytes": 573852, "transfers": 76}
+PASS rgb_region_150dpi_chunked_post_concurrent_status {"pixels": [300, 150], "png_bytes": 137772}
+PASS expect_100_continue_and_cancel_before_transfer 
+PASS cancel_mid_stream_truncates_image {"png_bytes": 76736}
+PASS unsupported_settings_conflict 
+PASS macos_overview_settings_bilevel_jpeg_defaults {"result": [637, 876, 51.4], "jpeg_bytes": 33288}
+PASS jpeg_rgb24_150dpi {"result": [503, 235, 42.7], "jpeg_bytes": 16487}
+PASS jpeg_grayscale8_75dpi {"result": [251, 117, 47.4], "jpeg_bytes": 3327}
+PASS unfetched_job_times_out 
+PASS management_alive_and_reboots_into_rescue {"zero_length_packets": 0, "info_replies": 1029}
+PASS full_speed_64_byte_packets {"pixels": [160, 32]}
+PASS packet_boundary_response_ends_with_zero_length_packet {"response_bytes": 128}
+ALL ESCL ASSERTIONS PASSED

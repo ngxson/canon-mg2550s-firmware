@@ -1,0 +1,28 @@
+PASS boot: bootloader -> hole app, INFO mode 2 app RAM 0x201a8fe0
+PASS stock calls: 0xe8610 and 0xc763e executed in place; RAM effects match brief 16 §2
+PASS cold RAM: all 14 CR profiles restored before any band or loader call
+PASS cold RAM: relocated USB DMA buffers preserved across stock initialization
+IPP print: URF 90553 bytes, request 90745 bytes
+quality progress {'rows_in': 0, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0} captured sweeps 0
+quality progress {'rows_in': 160, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0} captured sweeps 0
+quality progress {'rows_in': 160, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0} captured sweeps 0
+quality progress {'rows_in': 160, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0} captured sweeps 0
+quality progress {'rows_in': 160, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0} captured sweeps 0
+quality progress {'rows_in': 160, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0} captured sweeps 0
+quality progress {'rows_in': 160, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0} captured sweeps 0
+Traceback (most recent call last):
+  File "/project/canon-mg2550s-firmware/app/hybrid/validate_hybrid.py", line 941, in <module>
+    main()
+  File "/project/canon-mg2550s-firmware/app/hybrid/validate_hybrid.py", line 400, in main
+    status, headers, resp, _ = v.receive(e, 0, budget=3_000_000_000)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/canon-mg2550s-firmware/app/tests/validate_escl.py", line 152, in receive
+    e.run(done, resume=True, budget=budget)
+  File "/project/canon-mg2550s-firmware/bootloader/tests/model.py", line 263, in run
+    assert self.cut or predicate(self), {'pc': hex(self.uc.reg_read(UC_ARM_REG_PC)),
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: {'pc': '0x201b7c4c', 'entered': [536936448, 537001984], 'identities': [5997, 4862], 'info': (1464223565, 2, 2, 4, 0, 128, 65536, 2031616), 'results': []}
+DEBUG pc 0x201b7c4c lr 0x201b7b2c shim {'trace_n': 0, 'routines_run': 1, 'routine_pending': 0, 'last_result': 17039360, 'errors': 1, 'ram_ready': 16777217}
+reset seen: False
+last pcs: []
+mode transitions (pc, mode, lr): []

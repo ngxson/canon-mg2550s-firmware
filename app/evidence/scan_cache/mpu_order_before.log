@@ -1,0 +1,20 @@
+PASS all mutable USB DMA buffers outside cached RAM and inside app reservation
+Traceback (most recent call last):
+  File "/project/app/tests/validate_cache_dma.py", line 116, in <module>
+    main()
+  File "/project/app/tests/validate_cache_dma.py", line 89, in main
+    assert call(e, 'cpu_dcache_set', 1)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/project/app/tests/validate_colour_continuous.py", line 48, in call
+    e.uc.emu_start(int(e.meta['symbols']['application'][name], 16), 0x207fe000, count=budget)
+  File "/usr/local/lib/python3.12/site-packages/unicorn/unicorn_py3/unicorn.py", line 769, in emu_start
+    raise self._hook_exception
+  File "/usr/local/lib/python3.12/site-packages/unicorn/unicorn_py3/unicorn.py", line 363, in wrapper
+    return func(uc, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.12/site-packages/unicorn/unicorn_py3/unicorn.py", line 1063, in __hook_code_cb
+    callback(uc, address, size, user_data)
+  File "/project/app/tests/validate_cache_dma.py", line 71, in observe
+    assert full_access(address + size, True), ('code lost access during MPU setup', key, hex(address))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ('code lost access during MPU setup', (6, 1, 0), '0x20037a5c')

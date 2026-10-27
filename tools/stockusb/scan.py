@@ -115,7 +115,9 @@ class Scanner:
         self.write(body)
         response=self.reply(1024)
         if b'<ivec:response>OK</ivec:response>' not in response:
-            raise ProtocolError(f'Scanner refused {label}')
+            text=response.decode('ascii','replace')[:300]
+            self.trace('scan_xml_refused',operation=label,response=text)
+            raise ProtocolError(f'Scanner refused {label}: {text!r}')
 
     def drain(self):
         # Bounded cleanup, unlike an unbounded timeout/retry loop.

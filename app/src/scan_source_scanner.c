@@ -1,18 +1,18 @@
-/* Scan source backed by the scanner: the page sequencer (scan_page.c) homes,
- * steps to each line and captures it stationary with optical profile 0; this
- * file turns each 2592-sample line into output pixels.
+/* Scan source backed by the scanner: the page sequencer (scan_page.c) homes
+ * and acquires lines during continuous travel or stationary steps; this file
+ * turns each 2592-sample line into output pixels.
  *
  * Geometry: 38400 encoder counts per inch along travel (128 per 1/300 inch),
  * so 75 and 150 dpi are pitches of 512 and 256 counts (the sequencer's limits).
  * Across, the 2592 samples are assumed to span the 216 mm platen width (as the
  * page PoC assumed); each output pixel averages the samples it covers.
  *
- * Levels are not yet calibrated per sample: no dark/white shading (next step). A fixed linear map per
- * mode takes a measured dark level to black and a measured paper-white level
- * to white, followed by a gamma 1/2.2 curve (the sensor is linear; viewers
+ * Run-in dark/white references provide per-sample shading, with fixed levels
+ * as a fallback, followed by a gamma 1/2.2 curve (the sensor is linear; viewers
  * expect sRGB-like encoding, without it paper looks grey). Colour uses the
  * three-phase illumination (one component row per LED); grey the combined
  * exposure. */
+#include <string.h>
 #include "app.h"
 
 #define SAMPLES 2592u
@@ -24,8 +24,25 @@
  * ~31,000..48,000 (150-row runs, 2026-10-24; no shading correction yet). */
 #define STEP_BLACK 26000u
 #define STEP_WHITE 65000u
-#define CONT_BLACK 1000u
-#define CONT_WHITE 36000u
+#define CONT_BLACK 1200u           /* AFE offset 0x80 pedestal: no-light level (platen edge bar) */
+#define CONT_WHITE 48000u          /* fallback only; the run-in references below normally apply */
+/* Run-in references (2026-10-27 raw ring dumps, 1/300 inch from the mechanical
+ * scan start): the lid's white strip spans ~12..100, the platen-edge dark bar
+ * ~128..152, stock's document origin lies 156 later than our start (swatch
+ * edges against the stock scan), and stock's first column is 8 units right of
+ * sample 0. Every page scans from the mechanical start; the run-in lines give
+ * the per-sample white/dark arrays (stock's calibration, brief 21 §5).
+ * The strip's central notch remains dark through ~30 units. Sampling
+ * 20..90 averaged that notch into the centre columns, creating a bright
+ * vertical stripe. Raw full-width reference captures show 40..75 is white
+ * across the whole sensor and precedes the strip's trailing falloff. */
+#define DOC_ORIGIN 156u
+#define SAMPLE_ORIGIN 4u
+#define STRIP_FROM 40u
+#define STRIP_TO 76u
+#define DARK_FROM 132u
+#define DARK_TO 148u
+#define TRAVEL_UNITS 3672u         /* mechanical start to the end of travel, 1/300 inch (stock's 3508 rows from its origin) */
 /* gamma[i] = round(255 * (i / 255) ** (1 / 2.2)); mirrored by the emulator tests. */
 static const uint8_t gamma_lut[256] = {
       0,  21,  28,  34,  39,  43,  46,  50,  53,  56,  59,  61,  64,  66,  68,  70,
@@ -48,7 +65,7 @@ static const uint8_t gamma_lut[256] = {
 
 static const uint16_t resolutions[] = {75, 150, 300};
 const struct scan_caps scan_caps = {
-    .max_width = 2550, .max_height = 3507,          /* 216 x 297 mm platen */
+    .max_width = 2480, .max_height = 3507,          /* 210 x 297 mm, stock's output size */
     .min_size = 16, .optical = 300,
     .resolutions = resolutions, .resolution_count = ARRAY_SIZE(resolutions),
     .gray = true, .color = true,
@@ -64,9 +81,16 @@ static unsigned pixels, components;
  * dark[x]) * WHITE_TARGET / 255; a sample whose references are unusable keeps
  * scale 0 and falls back to the fixed levels. 16.16 products fit 32 bits. */
 #define CAL_MIN_SPAN 1024u
-#define WHITE_TARGET 250u           /* the reference strip maps to this, paper slightly below */
+#define WHITE_TARGET 250u           /* home-burst path: the reference strip maps to this */
+/* Stock match (2026-10-27 fit of the stock scan against ours on the swatch
+ * sheet): stock keeps a black floor of ~5 % linear and maps the lid strip to
+ * ~0.90 (red/green) and ~0.85 (blue) of full scale. value = floor + span. */
+#define BLACK_FLOOR 14u
+static const uint16_t white_span[3] = {230u, 230u, 217u};   /* per component, strip level above the floor */
 static uint16_t cal_dark[3][SAMPLES];
 static uint32_t cal_scale[3][SAMPLES];
+static uint32_t acc_white[3][SAMPLES], acc_dark[3][SAMPLES];
+static unsigned acc_nw, acc_nd, runin_total, runin_done, step_units, pad_rows;
 static bool cal_built, cal_on;
 
 static void cal_build(void)
@@ -100,7 +124,7 @@ bool scan_source_start(const struct scan_params *p)
     for (unsigned n = 1; n < ARRAY_SIZE(reciprocal); ++n) reciprocal[n] = (65536u + n - 1u) / n;
     for (unsigned i = 0; i < pixels; ++i) {
         if (!(i & 127u)) app_yield();
-        unsigned u = p->x + i * step;
+        unsigned u = p->x + i * step + SAMPLE_ORIGIN;
         unsigned s0 = u * SAMPLES / SAMPLE_SPAN, s1 = (u + step) * SAMPLES / SAMPLE_SPAN;
         if (s0 >= SAMPLES) s0 = SAMPLES - 1u;
         if (s1 > SAMPLES) s1 = SAMPLES;
@@ -109,7 +133,12 @@ bool scan_source_start(const struct scan_params *p)
         first_sample[i] = (uint16_t)s0; sample_count[i] = (uint8_t)(s1 - s0);
     }
     scan_page_set_components(components);
-    if (!scan_page_start(p->lines, step * COUNTS_PER_UNIT, p->y * COUNTS_PER_UNIT, true)) return false;
+    step_units = step; runin_total = (DOC_ORIGIN + p->y + step - 1u) / step; runin_done = 0; acc_nw = acc_nd = 0; pad_rows = 0;
+    for (unsigned c = 0; c < 3u; ++c)
+        for (unsigned x = 0; x < SAMPLES; ++x) { if (!(x & 255u)) app_yield(); acc_white[c][x] = 0; acc_dark[c][x] = 0; }
+    unsigned count = p->lines + runin_total, max_count = TRAVEL_UNITS / step;
+    if (count > max_count) { pad_rows = count - max_count; count = max_count; }   /* beyond the travel: white rows */
+    if (!scan_page_start(count, step * COUNTS_PER_UNIT, 0, true)) return false;
     bool cont = scan_page_continuous();
     black_level = cont ? CONT_BLACK : STEP_BLACK;
     level_scale = 255u * 65536u / ((cont ? CONT_WHITE : STEP_WHITE) - black_level);
@@ -122,7 +151,7 @@ static inline uint8_t convert(const uint16_t *s, unsigned s0, unsigned n, unsign
     if (cal_on && cal_scale[c][s0]) {
         const uint16_t *d = cal_dark[c] + s0; const uint32_t *g = cal_scale[c] + s0;
         for (unsigned k = 0; k < n; ++k) { unsigned v = s[k] > d[k] ? (unsigned)(s[k] - d[k]) : 0u; sum += (v * g[k]) >> 16; }
-        value = (sum * reciprocal[n]) >> 16;
+        value = BLACK_FLOOR + ((sum * reciprocal[n]) >> 16);
     } else {
         for (unsigned k = 0; k < n; ++k) sum += s[k];
         unsigned level = (unsigned)(((unsigned long long)sum * reciprocal[n]) >> 16);
@@ -131,11 +160,54 @@ static inline uint8_t convert(const uint16_t *s, unsigned s0, unsigned n, unsign
     return gamma_lut[value > 255u ? 255u : value];
 }
 
+/* Per-sample references from the run-in: mean strip line as white, mean dark
+ * bar as black; samples without a usable span fall back to the fixed levels. */
+static void cal_from_runin(void)
+{
+    cal_on = acc_nw >= 2u && acc_nd >= 1u;
+    for (unsigned c = 0; cal_on && c < components; ++c)
+        for (unsigned x = 0; x < SAMPLES; ++x) {
+            if (!(x & 15u)) app_yield();                      /* two software divisions per sample */
+            uint32_t d = acc_dark[c][x] / acc_nd, w = acc_white[c][x] / acc_nw;
+            cal_dark[c][x] = (uint16_t)(d > 65535u ? 65535u : d);
+            cal_scale[c][x] = w > d + CAL_MIN_SPAN ? ((uint32_t)white_span[c] * 65536u) / (w - d) : 0u;
+        }
+    cal_built = true;
+    dbg_puts("[cal] run-in white lines="); dbg_dec(acc_nw); dbg_puts(" dark lines="); dbg_dec(acc_nd);
+    if (cal_on) { dbg_puts(" mid-sample white/dark:"); for (unsigned c = 0; c < components; ++c) { dbg_putc(' '); dbg_dec(acc_white[c][SAMPLES / 2u] / acc_nw); dbg_putc('/'); dbg_dec(acc_dark[c][SAMPLES / 2u] / acc_nd); } }
+    dbg_puts(cal_on ? "\n" : " (fixed levels)\n");
+}
+
+static void accumulate(unsigned row, const uint16_t *samples, uint32_t (*acc)[SAMPLES])
+{
+    for (unsigned c = 0; c < components; ++c) {
+        const uint16_t *s = components == 3u ? scan_page_component(row, c) : samples;
+        if (!s) return;
+        for (unsigned x = 0; x < SAMPLES; ++x) { if (!(x & 255u)) app_yield(); acc[c][x] += s[x]; }
+    }
+}
+
 int scan_source_row(uint8_t *out)
 {
     unsigned row;
-    const uint16_t *samples = scan_page_take(&row);
-    if (!samples) return scan_page_failed() ? -1 : 0;
+    const uint16_t *samples;
+    for (;;) {
+        samples = scan_page_take(&row);
+        if (!samples) {
+            if (scan_page_failed()) return -1;
+            if (pad_rows && runin_done >= runin_total && !scan_page_busy()) {   /* travel ended before the region: white */
+                memset(out, 255, pixels * components); --pad_rows; return 1;
+            }
+            return 0;
+        }
+        if (runin_done >= runin_total) break;
+        unsigned u = runin_done * step_units;                 /* 1/300 inch from the mechanical start */
+        app_section = "run-in"; app_yield();
+        if (u >= STRIP_FROM && u < STRIP_TO) { accumulate(row, samples, acc_white); ++acc_nw; }
+        else if (u >= DARK_FROM && u < DARK_TO) { accumulate(row, samples, acc_dark); ++acc_nd; }
+        if (!scan_page_release(row)) return -1;
+        if (++runin_done == runin_total) cal_from_runin();
+    }
     app_section = "convert";
     if (!cal_built) cal_build();
     if (components == 1u) {

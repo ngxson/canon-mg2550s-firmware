@@ -1,0 +1,63 @@
+PASS boot: bootloader -> hole app, INFO mode 2 app RAM 0x201a8fe0
+PASS stock calls: 0xe8610 and 0xc763e executed in place; RAM effects match brief 16 §2
+PASS cold RAM: all 14 CR profiles restored before any band or loader call
+PASS cold RAM: relocated USB DMA buffers preserved across stock initialization
+c2112_pass1: prepare result 0x1 errors 0 Q 0x2031a020
+  managers (group, slots, width, stride, size, base): [(0, 61, 4224, 976, 257664, '0x2022dc60'), (1, 0, 0, 0, 0, '0x0'), (2, 61, 4224, 976, 257664, '0x2026d0c0'), (3, 0, 0, 0, 0, '0x0'), (4, 61, 4224, 976, 257664, '0x202ac520'), (5, 0, 0, 0, 0, '0x0'), (6, 81, 2112, 1296, 171072, '0x202eb980')]
+  Q lane 0: start 0x202ec120 end 0x202ec630 stride 1296 count 80 masks ['0xfffffffc', '0xff', '0x0']
+  Q lane 1: start 0x202ec120 end 0x202ec630 stride 1296 count 80 masks ['0xfffffffc', '0xff', '0x0']
+  Q lane 2: start 0x20321e50 end 0x2022de50 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q lane 5: start 0x203612b0 end 0x2026d2b0 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q lane 7: start 0x203a0710 end 0x202ac710 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q+350/354: ['0x2d', '0x2f']
+PASS band lifetime c2112_pass1: 9 executor allocations above the live band (1091816 bytes), 3 pattern buffers unchanged
+  executor result 0x1 errors 2; lane active bytes 0101010000010001000001
+  DMA lane 0: addr    539935040 stride 1296 second 539935040 extent 80 masks ['0x3', '0xffffff00', '0xffffffff']
+  DMA lane 1: addr    539935040 stride 1296 second 539935040 extent 80 masks ['0x3', '0xffffff00', '0xffffffff']
+  DMA lane 2: addr    539157056 stride 976 second 539157056 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  DMA lane 5: addr    539416192 stride 976 second 539416192 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  DMA lane 7: addr    539675392 stride 976 second 539675392 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  window 0x5140 0x10ec0 lane windows ['0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0']
+  feed offsets 28300.. [0, 40, 80, 120, 160, 200, 240, 280, 0, 0] sizes 28400.. [40, 40, 40, 40, 40, 40, 40, 40, 0, 0]
+  trace: [('CR_MOVE', 66196, 259, 5), ('WAIT_TIMEOUT', 29, 10, 1), ('WAIT_TIMEOUT', 29, 2, 1)]
+c2112_pass2: prepare result 0x1 errors 2 Q 0x2031a020
+  managers (group, slots, width, stride, size, base): [(0, 61, 4224, 976, 257664, '0x2022dc60'), (1, 0, 0, 0, 0, '0x0'), (2, 61, 4224, 976, 257664, '0x2026d0c0'), (3, 0, 0, 0, 0, '0x0'), (4, 61, 4224, 976, 257664, '0x202ac520'), (5, 0, 0, 0, 0, '0x0'), (6, 81, 2112, 1296, 171072, '0x202eb980')]
+  Q lane 0: start 0x202ec120 end 0x202ec630 stride 1296 count 80 masks ['0xfffffffc', '0xff', '0x0']
+  Q lane 1: start 0x202ec120 end 0x202ec630 stride 1296 count 80 masks ['0xfffffffc', '0xff', '0x0']
+  Q lane 2: start 0x20321e50 end 0x2022de50 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q lane 5: start 0x203612b0 end 0x2026d2b0 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q lane 7: start 0x203a0710 end 0x202ac710 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q+350/354: ['0x2d', '0x2f']
+PASS band lifetime c2112_pass2: 6 executor allocations above the live band (1091816 bytes), 3 pattern buffers unchanged
+  executor result 0x1 errors 9; lane active bytes 0101010000010001000001
+  DMA lane 0: addr    539935040 stride 1296 second 539935040 extent 80 masks ['0x3', '0xffffff00', '0xffffffff']
+  DMA lane 1: addr    539935040 stride 1296 second 539935040 extent 80 masks ['0x3', '0xffffff00', '0xffffffff']
+  DMA lane 2: addr    539157056 stride 976 second 539157056 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  DMA lane 5: addr    539416192 stride 976 second 539416192 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  DMA lane 7: addr    539675392 stride 976 second 539675392 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  window 0x5140 0x10ec0 lane windows ['0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0']
+  feed offsets 28300.. [0, 40, 80, 120, 160, 200, 240, 280, 0, 0] sizes 28400.. [40, 40, 40, 40, 40, 40, 40, 40, 0, 0]
+  trace: [('WAIT_TIMEOUT', 27, 1, 1), ('CR_MOVE', 15986, 1, 5), ('WAIT_TIMEOUT', 29, 10, 1), ('WAIT_TIMEOUT', 29, 2, 1), ('WAIT_TIMEOUT', 26, 16, 1), ('WAIT_TIMEOUT', 26, 16, 1), ('CR_MOVE', 66196, 259, 5), ('WAIT_TIMEOUT', 29, 10, 1), ('WAIT_TIMEOUT', 29, 2, 1)]
+c2112_pass3: prepare result 0x1 errors 9 Q 0x2031a020
+  managers (group, slots, width, stride, size, base): [(0, 61, 4224, 976, 257664, '0x2022dc60'), (1, 0, 0, 0, 0, '0x0'), (2, 61, 4224, 976, 257664, '0x2026d0c0'), (3, 0, 0, 0, 0, '0x0'), (4, 61, 4224, 976, 257664, '0x202ac520'), (5, 0, 0, 0, 0, '0x0'), (6, 81, 2112, 1296, 171072, '0x202eb980')]
+  Q lane 0: start 0x202ec120 end 0x202ec630 stride 1296 count 80 masks ['0xfffffffc', '0xff', '0x0']
+  Q lane 1: start 0x202ec120 end 0x202ec630 stride 1296 count 80 masks ['0xfffffffc', '0xff', '0x0']
+  Q lane 2: start 0x20321e50 end 0x2022de50 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q lane 5: start 0x203612b0 end 0x2026d2b0 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q lane 7: start 0x203a0710 end 0x202ac710 stride 976 count 60 masks ['0xfffff', '0x0', '0x0']
+  Q+350/354: ['0x2d', '0x2f']
+PASS band lifetime c2112_pass3: 4 executor allocations above the live band (1091816 bytes), 3 pattern buffers unchanged
+  executor result 0x1 errors 13; lane active bytes 0101010000010001000001
+  DMA lane 0: addr    539935040 stride 1296 second 539935040 extent 80 masks ['0x3', '0xffffff00', '0xffffffff']
+  DMA lane 1: addr    539935040 stride 1296 second 539935040 extent 80 masks ['0x3', '0xffffff00', '0xffffffff']
+  DMA lane 2: addr    539157056 stride 976 second 539157056 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  DMA lane 5: addr    539416192 stride 976 second 539416192 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  DMA lane 7: addr    539675392 stride 976 second 539675392 extent 60 masks ['0xfff00000', '0xffffffff', '0xffffffff']
+  window 0x5140 0x10ec0 lane windows ['0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0', '0x0']
+  feed offsets 28300.. [0, 40, 80, 120, 160, 200, 240, 280, 0, 0] sizes 28400.. [40, 40, 40, 40, 40, 40, 40, 40, 0, 0]
+  trace: [('CR_MOVE', 15986, 1, 5), ('WAIT_TIMEOUT', 29, 10, 1), ('WAIT_TIMEOUT', 29, 2, 1), ('WAIT_TIMEOUT', 26, 16, 1), ('CR_MOVE', 66196, 259, 5), ('WAIT_TIMEOUT', 29, 2, 1)]
+pool allocations: [{'request': 1089248, 'result': '0x0'}, {'request': 1089248, 'result': '0x0'}, {'request': 1089248, 'result': '0x0'}]
+DEBUG pc 0x201abc68 lr 0x201b843c shim {'trace_n': 17, 'routines_run': 7, 'routine_pending': 0, 'last_result': 262144, 'errors': 13, 'ram_ready': 65793}
+reset seen: False
+last pcs: [('0x201b8ab8', '0x13'), ('0x201b8abc', '0x13'), ('0x201b8ac0', '0x13'), ('0x201b8ac4', '0x13'), ('0x201b8ac8', '0x13'), ('0x201b8acc', '0x13'), ('0x201b8ad0', '0x13'), ('0x201b8ad4', '0x13'), ('0x201b8ad8', '0x13'), ('0x201b8adc', '0x13'), ('0x201b8ae0', '0x13'), ('0x201b8ae4', '0x13'), ('0x201b8ae8', '0x13'), ('0x201b91d4', '0x13'), ('0x201b91d8', '0x13'), ('0x201b91dc', '0x13'), ('0x201b9250', '0x13'), ('0x201b9254', '0x13'), ('0x201b9258', '0x13'), ('0x201b925c', '0x13'), ('0x201b9260', '0x13'), ('0x201b9264', '0x13'), ('0x201b9268', '0x13'), ('0x201b926c', '0x13'), ('0x201b9270', '0x13'), ('0x201b9274', '0x13'), ('0x201b9278', '0x13'), ('0x201b927c', '0x13'), ('0x201baf38', '0x13'), ('0x201baf3c', '0x13'), ('0x201baf40', '0x13'), ('0x201baf44', '0x13'), ('0x201baf48', '0x13'), ('0x201b842c', '0x13'), ('0x201b8430', '0x13'), ('0x201b8434', '0x13'), ('0x201b0044', '0x13'), ('0x201b0048', '0x13'), ('0x201b004c', '0x13'), ('0x201b0050', '0x13'), ('0x201b0054', '0x13'), ('0x201b0058', '0x13'), ('0x201b005c', '0x13'), ('0x201b0060', '0x13'), ('0x201b01d8', '0x13'), ('0x201af01c', '0x13'), ('0x201af020', '0x13'), ('0x201af024', '0x13'), ('0x201af028', '0x13'), ('0x201af02c', '0x13'), ('0x201af030', '0x13'), ('0x201af034', '0x13'), ('0x201af038', '0x13'), ('0x201af03c', '0x13'), ('0x201af040', '0x13'), ('0x201b01dc', '0x13'), ('0x201b01e0', '0x13'), ('0x201b07a8', '0x13'), ('0x201b07ac', '0x13'), ('0x201b8438', '0x13')]
+mode transitions (pc, mode, lr): [('0x150b20', '0x1f', '0x1540d1'), ('0x20700004', '0x13', '0x0'), ('0x150858', '0x1f', '0x1540d1'), ('0x1540d0', '0x3f', '0x1540d1'), ('0x150b28', '0x1f', '0x154117'), ('0x20700004', '0x13', '0x0'), ('0x15087c', '0x1f', '0x154117'), ('0x154116', '0x3f', '0x154117'), ('0x201bfdb8', '0x1f', '0xd5213'), ('0xd5212', '0x3f', '0xd5213'), ('0x14f690', '0x1f', '0xd5223'), ('0xd5222', '0x3f', '0xd5223'), ('0x14f690', '0x1f', '0xd5245'), ('0xd5244', '0x3f', '0xd5245'), ('0x14f690', '0x1f', '0xd52a3'), ('0xd52a2', '0x3f', '0xd52a3'), ('0x14f690', '0x1f', '0xd52ff'), ('0xd52fe', '0x3f', '0xd52ff'), ('0x150b20', '0x1f', '0x1540d1'), ('0x20700004', '0x13', '0x0'), ('0x150858', '0x1f', '0x1540d1'), ('0x1540d0', '0x3f', '0x1540d1'), ('0x150b28', '0x1f', '0x154117'), ('0x20700004', '0x13', '0x0'), ('0x15087c', '0x1f', '0x154117'), ('0x154116', '0x3f', '0x154117'), ('0x201bfdb8', '0x1f', '0xd5b3f'), ('0xd5b3e', '0x3f', '0xd5b3f'), ('0x201bd7b4', '0x1f', '0xd5bcd'), ('0x201bd7e4', '0x13', '0x0')]

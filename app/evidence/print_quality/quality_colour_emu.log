@@ -1,0 +1,63 @@
+PASS boot: bootloader -> hole app, INFO mode 2 app RAM 0x201a8fe0
+PASS stock calls: 0xe8610 and 0xc763e executed in place; RAM effects match brief 16 §2
+PASS cold RAM: all 14 CR profiles restored before any band or loader call
+PASS cold RAM: relocated USB DMA buffers preserved across stock initialization
+IPP print: URF 90553 bytes, request 90745 bytes
+quality progress {'rows_in': 0, 'band_next': 0, 'seg_index': 0, 'nozzle_phase': 0, 'state': 0, 'step': 0, 'waiting': 0, 'page_open': 0, 'dry': 1, 'running': 0, 'routine_pending': 0} captured sweeps 0
+quality emitted {'paper_row': 0, 'x': 0, 'dots': [6488, 38022, 36140, 40032]}
+quality emitted {'paper_row': 0, 'x': 2112, 'dots': [9488, 38670, 37412, 36786]}
+quality emitted {'paper_row': 16, 'x': 0, 'dots': [4188, 32150, 34638, 33232]}
+quality emitted {'paper_row': 16, 'x': 2112, 'dots': [4340, 35226, 33842, 33276]}
+Print-Job: HTTP 200 IPP 0x0000 attrs job-id [(33, b'\x00\x00\x00\x01')] job-state [(35, b'\x00\x00\x00\x05')]
+quality emitted {'paper_row': 152, 'x': 0, 'dots': [37452, 9322, 8844, 6276]}
+quality emitted {'paper_row': 152, 'x': 2112, 'dots': [37124, 5644, 8192, 9420]}
+quality emitted {'paper_row': 168, 'x': 0, 'dots': [32736, 1494, 2836, 1830]}
+quality emitted {'paper_row': 168, 'x': 2112, 'dots': [31016, 1406, 1410, 2438]}
+engine: completed/none rows_in 0 bands 0 sweeps 8 pages 1 failures 0 last_fail 0 routines 23
+shim/print log:
+    [print] dry mode
+    [print] job start
+    [print] page 1/1 2480x124 colour
+    [shim] routine 8 returned 0 errors=16
+    [shim] routine 10 returned 47834 errors=16
+    [print] dry: advance result ignored
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=16
+    [shim] routine 7 returned 1 errors=18
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=18
+    [shim] routine 7 returned 1 errors=23
+    [shim] routine 10 returned 47834 errors=23
+    [print] dry: advance result ignored
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=23
+    [shim] routine 7 returned 1 errors=26
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=26
+    [shim] routine 7 returned 1 errors=29
+    [shim] routine 10 returned 47834 errors=29
+    [print] dry: advance result ignored
+    [print] page data complete: 172 rows, 2 bands
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=29
+    [shim] routine 7 returned 1 errors=32
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=32
+    [shim] routine 7 returned 1 errors=35
+    [shim] routine 10 returned 47834 errors=35
+    [print] dry: advance result ignored
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=35
+    [shim] routine 7 returned 1 errors=38
+    [shim] band arena 1091816 bytes live
+    [shim] routine 5 returned 1 errors=38
+    [shim] routine 7 returned 1 errors=41
+    [shim] routine 9 returned 0 errors=45
+    [print] page printed, sweeps so far 8
+    [print] job complete: 1 pages, 8 sweeps, 29389 ms
+PASS quality raster: colour all paper dots exact, no duplicates or stray rows; all segments, band seam and final partial band; feed pitch unchanged
+PASS ipp print: Print-Job accepted (job 1 processing), engine completed 1 page in 8 sweeps over 2 bands, no allocation inside a live band, Get-Job-Attributes reports completed
+DEBUG pc 0x201abc68 lr 0x201b844c shim {'trace_n': 17, 'routines_run': 23, 'routine_pending': 0, 'last_result': 262144, 'errors': 45, 'ram_ready': 16777217}
+reset seen: False
+last pcs: []
+mode transitions (pc, mode, lr): []

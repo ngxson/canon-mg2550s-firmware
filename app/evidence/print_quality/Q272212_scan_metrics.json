@@ -1,0 +1,94 @@
+{
+  "SINGLE": {
+    "K": {
+      "roi": [
+        633,
+        19,
+        643,
+        163
+      ],
+      "median_intensity": 95.41666666666667,
+      "maximum_row_intensity": 183.6,
+      "light_rows_over_median_plus_40": 10
+    },
+    "C": {
+      "roi": [
+        377,
+        78,
+        385,
+        152
+      ],
+      "median_intensity": 106.25,
+      "maximum_row_intensity": 159.75,
+      "light_rows_over_median_plus_40": 2
+    },
+    "M": {
+      "roi": [
+        460,
+        79,
+        468,
+        153
+      ],
+      "median_intensity": 114.9375,
+      "maximum_row_intensity": 120.5,
+      "light_rows_over_median_plus_40": 0
+    },
+    "Y": {
+      "roi": [
+        541,
+        80,
+        550,
+        154
+      ],
+      "median_intensity": 136.6111111111111,
+      "maximum_row_intensity": 183.0,
+      "light_rows_over_median_plus_40": 2
+    }
+  },
+  "ALT16": {
+    "K": {
+      "roi": [
+        630,
+        180,
+        640,
+        325
+      ],
+      "median_intensity": 94.76666666666667,
+      "maximum_row_intensity": 103.96666666666667,
+      "light_rows_over_median_plus_40": 0
+    },
+    "C": {
+      "roi": [
+        374,
+        242,
+        382,
+        315
+      ],
+      "median_intensity": 104.75,
+      "maximum_row_intensity": 115.375,
+      "light_rows_over_median_plus_40": 0
+    },
+    "M": {
+      "roi": [
+        457,
+        243,
+        465,
+        316
+      ],
+      "median_intensity": 114.875,
+      "maximum_row_intensity": 121.5,
+      "light_rows_over_median_plus_40": 0
+    },
+    "Y": {
+      "roi": [
+        540,
+        244,
+        548,
+        317
+      ],
+      "median_intensity": 130.375,
+      "maximum_row_intensity": 152.125,
+      "light_rows_over_median_plus_40": 0
+    }
+  }
+}

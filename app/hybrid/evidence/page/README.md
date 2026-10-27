@@ -523,3 +523,59 @@ bars (first pass, each range alone, all, none) on one sheet to find the
 block that carries the policy. Candidates from the pass-1/pass-2 RAM diff:
 `0x180cd570/574` (±94), `0x180cd5c0/5c4` (`01010106`, `00020000`),
 `0x180cd404`, `0x180cd444`, `0x180cdc9c/ca0`.
+
+## CV2127: six bar sweeps on package `560e16c8…` (allocator lifetime fix, I-cache on) — 2026-10-27 21:27
+
+Package `560e16c8…` keeps a prepared band's allocations live until the next
+prepare (`band_mark`; brief 22 answer §1: executor/status messages used to
+overwrite the pattern buffers from the second pass on), arena 1.25 MiB, the
+on-device IPP print engine, the power manager, and the I-cache enabled at
+boot (scanner package lineage). `colour_variants.py` default run (A first
+pass, B after 320 Ulf, C same position, D after a blank pass, E tail skipped,
+F tail partial), reused sheet (ghost of a mirrored DOC print underneath).
+Scan `scan_CV2127_rgb300.png` (300 dpi RGB, the improved scanner),
+[bars ×2](scan_CV2127_bars_x2.jpg), counts in `scan_CV2127_lines.txt`
+(`bar_lines.py`):
+
+| Bar (B..F stacked, 800 rows) | white lines | spacing (600 dpi rows) |
+|---|---|---|
+| K | 20 | 32-33 (one 64, one 99/66 pair = merged/missed) |
+| Y | 25 | 32-34 mostly |
+| C | 16 | irregular, several 32 |
+| M | 8 | ~20, weak |
+
+**The 32-row lines survive the allocator fix** on every pass B..F (as the
+helper cautioned: the overwrite was real, not proven to be the cause).
+**New: pass A printed only its label (left 8 mm of the sweep) and none of
+its four bars.** Routine results were nominal (prepare 1, fire 1, errors
+2→3, no exceptions). Timing versus CT0142: fresh prepare 0.4 s (was 3.2 s),
+later prepares 0.1 s (0.6 s), first fire 5.8 s (5.7 s), later fires 2.9 s
+(2.8 s): this is the first print with the instruction cache on. Open: is
+the label-only first pass a cache/timing effect or a package change; the
+next batch repeats the first pass with the cache off and runs the
+restore-range bisect (`--restore-variants`) now that the allocator no longer
+corrupts live bands.
+
+## CR2146: restore-range bisect with the I-cache off — 2026-10-27 21:46 (inconclusive)
+
+Same sheet, `colour_variants.py --restore-variants --extra-advance 2`, cache
+off (USB 0x8c 0: 26,000 vs 906,000 instructions per 10 ms). Scan
+`scan_CR2146_rgb300.png`, [left half](scan_CR2146_left.jpg), counts in
+`scan_CR2146_lines.txt`. The placement went wrong, so the bisect cannot be
+read: the two 1200 Ulf extra advances moved the paper only a few mm (each
+routine 10 returned 0 after 1.0-1.1 s, the same as a 320 Ulf step), the
+sweeps that restored snapshot ranges 0..3 before their prepare (N1, N2, N4,
+N8) printed 37 mm further left with their labels off the sheet, N16 landed
+on top of N0, and only N32 and N0b sat where expected. Restoring stock RAM
+ranges therefore moves stock's CR placement state (expected; those ranges
+hold it), and LF advances with the cache off are suspect on this package.
+
+What is still readable: **the first pass (N0) printed all four bars** with
+the cache off, unlike CV2127's pass A with the cache on; **yellow shows the
+32-row lines in every sweep** (24 lines over the four stacked left sweeps,
+4 per 164-row bar in N32/N0b, spacing 32), **magenta never** (0-1), cyan
+rarely (1-2), black not measurable here (bars overlapped). Across CV2127
+and CR2146 the lines are independent of the allocator fix, the cache
+state, the tail, the LF, the restored ranges, and the pass index; they are
+lane-dependent (K lanes 0/1 and Y lane 7 strong, C lane 2 weak, M lane 5
+clean).

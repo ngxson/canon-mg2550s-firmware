@@ -1,0 +1,23 @@
+
+[app] MG2550s open app
+[hb] previous run: loops=21536384 usb_reattach=1 section=main page=0x00083808 line=0x00000000 motor=0x4182b200
+app_flash=0x00010000
+app_ram=0x20020000
+[app] usb up, entering main loop
+[btn] map 2
+[btn] B/W=one stock paper advance; release between presses; Cancel=stop; no firing
+[home] stock PI seek + verified backoff + repeat seek; mechanical reference
+[page] USB stop-and-capture page scan; returns home; Cancel=stop
+[escl] eSCL over IPP-USB (interfaces 2-3)
+[cart] USB 0x62 reads cartridge fuse ROM (read-only); 0x63 status
+[head] USB 0x81 stationary black prefire (stock ID24 list); 0x82 status
+[http] c0 POST /ipp/print
+[ipp] operation 0x0000000b status 0x00000000
+[http] c0 -> 200
+[http] c1 POST /ipp/faxout
+[http] c1 -> 404
+[http] c1 GET /eSCL/ScannerCapabilities
+[http] c1 -> 200
+[http] c1 POST /
+[ipp] operation 0x0000000b status 0x00000000
+[http] c1 -> 200

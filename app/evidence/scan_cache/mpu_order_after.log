@@ -1,0 +1,2 @@
+PASS all mutable USB DMA buffers outside cached RAM and inside app reservation
+PASS repeated cache transitions, inherited regions, and both HTTP interfaces

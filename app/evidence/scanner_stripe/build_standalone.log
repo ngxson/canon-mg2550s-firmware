@@ -1,0 +1,4 @@
+/Users/ngxson/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld: warning: /Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/build/application.elf has a LOAD segment with RWX permissions
+/Users/ngxson/.platformio/packages/toolchain-gccarmnoneeabi/bin/../lib/gcc/arm-none-eabi/14.2.1/../../../../arm-none-eabi/bin/ld: warning: /Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/build/dummy/application.elf has a LOAD segment with RWX permissions
+scanner {"application.bin": {"bytes": 133088, "sha256": "0e5982f7f39e74570a6b1bfd8f6661c2bfeed0ef07220872fc6ec80dad1cd4e0"}}
+dummy {"application.bin": {"bytes": 130656, "sha256": "3a94eaee51973bee34c4db8c4a2021099d03cdc211d67abbe19678c651805a81"}}

@@ -3,9 +3,9 @@
  * The bootloader hands the app over with the protection unit and both caches
  * off (bootloader/src/cpu.c, cpu_quiesce; CP15 control reads 0x78 on this
  * board, ARM946E-S id 0x41059461, no TCM). DMA engines (LDMAC pixel rows, the
- * USB core, the print engines) write and read DRAM behind the CPU, so the DATA
- * cache stays off and the write buffer disabled: every load and store still
- * goes straight to memory. Only instruction fetches are cached; no DMA ever
+ * USB core, the print engines) write and read DRAM behind the CPU. Their
+ * mutable buffers must remain outside the data-cacheable regions below.
+ * At boot only instruction fetches are cached; no DMA ever
  * produces code, and the app image is copied by the bootloader before the
  * cache is enabled, so the cache cannot hold stale instructions.
  *
@@ -31,6 +31,45 @@ static uint32_t control_read(void)
 
 uint32_t cpu_icache_state(void) { return control_read(); }
 
+/* Data cache, write-through, for the app's own DRAM only (2026-10-27: a 300 dpi
+ * colour row took ~90 ms with every load going to DRAM/flash). Region 1 =
+ * 0x20000000 + 4 MiB (code, data, bss, tables; the scan ring at 0x20420000 and
+ * USB buffers at 0x20400000 and stock's 0x18xxxxxx alias stay outside, so DMA rows and stock's writes are
+ * never cached), region 2 = 0x20780000 + 512 KiB (stack, exception record).
+ * Cacheable with the bufferable attribute clear = write-through, so
+ * writes reach memory without dirty cache lines; drain the write buffer on
+ * transitions before invalidating. Enabled
+ * by the page scan while it converts rows and switched off at its end. */
+bool cpu_dcache_set(bool on)
+{
+    uint32_t control = control_read(), zero = 0;
+    if (!(control & CP15_CONTROL_ICACHE)) return false;         /* needs the protection unit (I-cache switch) */
+    if (!!(control & CP15_CONTROL_DCACHE) == on) return true;
+    __asm__ volatile("mcr p15, 0, %0, c7, c10, 4" :: "r"(zero) : "memory");
+    if (on) {
+        /* The MPU is already live. Establish permissions and attributes
+         * BEFORE enabling overriding regions, including the current code
+         * and stack. The opposite order can fault between MCRs, depending
+         * on the instruction-cache/prefetch state and function alignment. */
+        __asm__ volatile(
+            "mcr p15, 0, %5, c5, c0, 2\n"      /* data access permission, extended: regions 0..2 full */
+            "mcr p15, 0, %5, c5, c0, 3\n"      /* instruction access permission, extended: regions 0..2 full */
+            "mcr p15, 0, %2, c2, c0, 1\n"      /* instruction cacheable: regions 0..2 */
+            "mcr p15, 0, %3, c2, c0, 0\n"      /* data cacheable: regions 1, 2 */
+            "mcr p15, 0, %4, c3, c0, 0\n"      /* write buffer: none (write-through) */
+            "mcr p15, 0, %0, c6, c1, 0\n"      /* region 1: 0x20000000, 4 MiB, enabled */
+            "mcr p15, 0, %1, c6, c2, 0\n"      /* region 2: 0x20780000, 512 KiB, enabled */
+            "mcr p15, 0, %4, c7, c6, 0\n"      /* invalidate the data cache */
+            :: "r"(0x20000000u | 0x2bu), "r"(0x20780000u | 0x25u), "r"(7u), "r"(6u), "r"(zero), "r"(0x333u) : "memory");
+        control |= CP15_CONTROL_DCACHE;
+    } else {
+        control &= ~CP15_CONTROL_DCACHE;
+    }
+    __asm__ volatile("mcr p15, 0, %0, c1, c0, 0\n"
+                     "mcr p15, 0, %1, c7, c6, 0\n" :: "r"(control), "r"(zero) : "memory");
+    return true;
+}
+
 bool cpu_icache_set(bool on)
 {
     uint32_t control = control_read(), zero = 0;
@@ -41,6 +80,16 @@ bool cpu_icache_set(bool on)
          * bits all clear; access permission 3 (full) for region 0 in both the
          * instruction and data permission registers. */
         __asm__ volatile(
+            /* An earlier scan or RAM-to-RAM app restart can leave enabled
+             * regions behind. Higher-numbered regions override region 0;
+             * clearing their permissions alone would fault on app/stack RAM. */
+            "mcr p15, 0, %2, c6, c1, 0\n"
+            "mcr p15, 0, %2, c6, c2, 0\n"
+            "mcr p15, 0, %2, c6, c3, 0\n"
+            "mcr p15, 0, %2, c6, c4, 0\n"
+            "mcr p15, 0, %2, c6, c5, 0\n"
+            "mcr p15, 0, %2, c6, c6, 0\n"
+            "mcr p15, 0, %2, c6, c7, 0\n"
             "mcr p15, 0, %0, c6, c0, 0\n"      /* region 0 base/size/enable */
             "mcr p15, 0, %1, c2, c0, 1\n"      /* instruction cacheable: region 0 */
             "mcr p15, 0, %2, c2, c0, 0\n"      /* data cacheable: none */

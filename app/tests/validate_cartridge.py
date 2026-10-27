@@ -84,6 +84,12 @@ def main():
         heads = value & 0xff
         seq = status(e)[5] if status(e) else 0
         e.requests.appendleft(('cart_read', setup(0x40, 0x62, value, wait)))
+        # Deliver the read before polling: a status queued ahead of it on every
+        # slice can starve the request indefinitely (host_step issues one
+        # request per EP0 round; the slice stops at the next service_poll).
+        n_read = sum(1 for _, name, _ in e.responses if name == 'cart_read')
+        e.run(lambda x, n=n_read: sum(1 for _, name, _ in x.responses if name == 'cart_read') > n or 'cart_read' in x.stalls[n_read:],
+              resume=True, budget=50000000)
         done = lambda x: status(x) is not None and status(x)[2] == 2 and status(x)[3] == heads and status(x)[5] == seq + 1
         for _ in range(400):                       # status is answered during the sequence's long waits
             n = sum(1 for _, name, _ in e.responses if name == 'cart_status')

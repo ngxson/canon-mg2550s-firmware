@@ -1,0 +1,15 @@
+{
+  "bytes_changed_after_header": 2,
+  "changes": [
+    {
+      "package_offset": "0x1a4054",
+      "old": 20,
+      "new": 40
+    },
+    {
+      "package_offset": "0x1a4058",
+      "old": 69,
+      "new": 35
+    }
+  ]
+}

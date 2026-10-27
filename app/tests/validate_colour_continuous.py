@@ -13,7 +13,7 @@ import struct
 from pathlib import Path
 
 import validate_escl as v
-from validate_escl_scan import ScanHost, expected_row, fetch_while_polling
+from validate_escl_scan import ScanHost, expected_row, fetch_while_polling, document_lines
 from unicorn.arm_const import (UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2,
                                UC_ARM_REG_R3, UC_ARM_REG_SP, UC_ARM_REG_LR,
                                UC_ARM_REG_PC)
@@ -81,14 +81,17 @@ def main():
         assert call(e, 'scan_page_start', lines, 128, 0, 1), ('300 dpi rejected', lines)
         call(e, 'scan_page_cancel')
     assert not call(e, 'scan_page_start', 32, 128, 0, 0), 'vendor limits unexpectedly broadened'
-    assert not call(e, 'scan_page_start', 3508, 128, 4096, 1), 'travel bound lost'
+    assert not call(e, 'scan_page_start', 3680, 128, 4096, 1), 'travel bound lost'
     record('300dpi_admission_and_bounds', rows=[32, 3507, 3508])
 
     capacity = call(e, 'scanner_line_capacity', 3)
     # Include a complete 75 dpi page: shorter tests missed the physical hang
     # around row 555. Synthetic DMA cannot establish its hardware cause.
-    for res, count in ((75, 24), (150, 24), (300, 32), (300, capacity + 12), (75, 876)):
-        x, y, width = (0, 0, 2550) if count == 876 else (120, 0, 180)
+    for res, count in ((300, 16), (75, 24), (150, 24), (300, 32), (300, capacity + 12), (75, 876)):
+        # The short first region crosses both sides of the measured reference
+        # notch. It catches calibration averaging that brightens central columns.
+        x, y, width = (0, 0, 2480) if count == 876 else (1100, 0, 400) if count == 16 else (120, 0, 180)
+        e.reference_notch_probe = count == 16
         step = 300 // res
         pixels, height = width // step, count * step
         before = len(e.lines)
@@ -99,14 +102,24 @@ def main():
         assert status == 200, (res, status)
         w, h, ctype, rows, _, depth = v.decode_png(body)
         assert (w, h, ctype, depth) == (pixels, count, 2, 8)
-        optical = [line for line, moving in zip(e.lines[before:], e.moving[before:]) if moving]
-        assert len(optical) == count, (len(optical), count)
+        optical, _ = document_lines(e, before, y, count)
         for j, line in enumerate(optical):
             planes = [expected_row([max(raw - 2000 * k, 0) for raw in line],
-                                  x, step, pixels, 1000, 36000, plane=k) for k in range(3)]
+                                  x, step, pixels, plane=k) for k in range(3)]
             expected = bytes(b for i in range(pixels) for b in (planes[0][i], planes[1][i], planes[2][i]))
-            assert rows[j] == expected, ('RGB samples differ', res, j,
-                                        list(rows[j][:24]), list(expected[:24]))
+            if rows[j] != expected:
+                log = b''
+                for _ in range(80):
+                    e.requests.appendleft(('log', v.setup(0xc0, 0x50, 0, 0, 256))); before_n = len(e.responses)
+                    e.run(lambda q: len(q.responses) > before_n, resume=True)
+                    part = e.responses[-1][2]
+                    if not part: break
+                    log += bytes(part)
+                print('FIRMWARE LOG:', [l for l in log.decode('latin1').splitlines() if '[cal]' in l or '[line] start' in l][-8:])
+                at = next(k for k, (got, want) in enumerate(zip(rows[j], expected)) if got != want)
+                raise AssertionError(('RGB samples differ', res, j, 'input x', x + at // 3 * step,
+                                      'byte', at, 'got', list(rows[j][at:at + 12]),
+                                      'expected', list(expected[at:at + 12])))
         e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
         assert phase(e) == 7 and e.drive is None
         assert e.regs.get(0xc0c85614, 0) == 0

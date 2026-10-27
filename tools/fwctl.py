@@ -253,6 +253,55 @@ def dangerous_write(data, expected_sha256, serial_number=None, report_path=None)
             Path(report_path).write_text(json.dumps(report, indent=2)+'\n')
 
 
+APP_REQUEST_POWER_STATUS, APP_REQUEST_POWER_CONTROL = 0xa0, 0xa1
+POWER_STATES = ('ready', 'active', 'quiescing', 'standby', 'waking', 'fault')
+POWER_REASONS = ('boot', 'timeout', 'host', 'panel', 'job', 'fault')
+POWER_RESULTS = ('none', 'accepted', 'busy', 'invalid', 'fault')
+POWER_ERRORS = ('none', 'scanner_power_readback', 'scan_motor_output_readback', 'owner_active')
+POWER_OWNERS = ('scan_motor', 'scan_page', 'scan_lamp', 'scan_armed', 'paper', 'carriage', 'page_job', 'stamp',
+                'hybrid', 'cartridge', 'head_fire', 'print_mech', 'print_rx', 'raster_rx', 'print_job')
+POWER_CAPS = ('scanner', 'scan_motor', 'panel', 'timeout')
+
+
+def power_status(dev):
+    import usb.core
+    try: raw = bytes(dev.ctrl_transfer(0xc0, APP_REQUEST_POWER_STATUS, 0, 0, 64, timeout=1000))
+    except usb.core.USBError: raw = b''
+    if len(raw) != 64 or raw[:4] != b'1RWP':
+        raise RuntimeError('No power manager: this application does not answer USB 0xa0 (protocol PWR1)')
+    w = struct.unpack('<16I', raw)
+    return {'protocol': 'PWR1', 'state': POWER_STATES[w[1] & 0xff], 'reason': POWER_REASONS[w[1] >> 8 & 0xff],
+            'last_result': POWER_RESULTS[w[1] >> 16 & 0xff], 'fail_stage': w[1] >> 24,
+            'idle_timeout_s': w[2], 'idle_age_ms': w[3],
+            'owners': [n for i, n in enumerate(POWER_OWNERS) if w[4] >> i & 1],
+            'last_error': POWER_ERRORS[w[5]] if w[5] < len(POWER_ERRORS) else w[5],
+            'capabilities': [n for i, n in enumerate(POWER_CAPS) if w[6] >> i & 1],
+            'logical_outputs': {'scanner_power_reg': w[7] & 1, 'panel_dark': bool(w[7] & 2), 'head_prepared': bool(w[7] & 4),
+                                'scan_rows_unread': bool(w[7] & 8), 'paper_held': bool(w[7] & 16),
+                                'scan_motor_ctrl': w[8], 'scan_motor_compare': w[9]},
+            'transitions': w[10], 'standby_count': w[11], 'wake_count': w[12], 'uptime_ms': w[13],
+            'unsupported': ['print parking/head capping', 'driver-IC sleep', 'rail switching', 'CPU sleep']}
+
+
+def power_command(dev, info, action, seconds=None):
+    if info.get('mode') != 'application':
+        raise RuntimeError('power commands need the running application, not the bootloader')
+    import usb.core
+    op = {'standby': 1, 'wake': 2, 'timeout': 3}.get(action)
+    if op:
+        arg = 0
+        if action == 'timeout':
+            if seconds is None or not 0 <= seconds <= 3600: raise ValueError('timeout needs 0..3600 seconds')
+            arg = seconds
+        try:
+            dev.ctrl_transfer(0x40, APP_REQUEST_POWER_CONTROL, op, arg, b'', timeout=3000); accepted = True
+        except usb.core.USBError:
+            accepted = False                      # stall: busy, invalid or a failed quiesce; see last_result
+        status = power_status(dev); status['request'] = action; status['accepted'] = accepted
+        return status
+    return power_status(dev)
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--serial', help='Printer USB serial number (not the ESP32 port)')
@@ -278,11 +327,18 @@ def main():
     maintenance.add_argument('image', type=Path)
     maintenance.add_argument('--sha256', required=True, help='Required exact bootloader.bin SHA-256')
     maintenance.add_argument('--manual-reset', action='store_true', help='Wait for a manual printer reset if management is stuck')
+    power = sub.add_parser('power', help='Application power manager: status, standby, wake, idle timeout (USB 0xa0/0xa1)')
+    power.add_argument('action', choices=('status', 'standby', 'wake', 'timeout'))
+    power.add_argument('seconds', type=int, nargs='?', help='timeout: idle seconds before standby, 0 = never (max 3600)')
     args = parser.parse_args()
     import usb.util
     if args.command == 'status':
         dev, info = wait_device(serial_number=args.serial)
         try: print(json.dumps(info, indent=2))
+        finally: usb.util.dispose_resources(dev)
+    elif args.command == 'power':
+        dev, info = wait_device(serial_number=args.serial)
+        try: print(json.dumps(power_command(dev, info, args.action, args.seconds), indent=2))
         finally: usb.util.dispose_resources(dev)
     elif args.command == 'float':
         with Bridge(args.port): pass

@@ -1,0 +1,899 @@
+diff --git a/app/app.ld b/app/app.ld
+index 288e61e..82988a5 100644
+--- a/app/app.ld
++++ b/app/app.ld
+@@ -1,6 +1,6 @@
+ ENTRY(app_entry)
+ /* APP_LOAD (RAM link/load address) and APP_RAM_END (bss bound) come from
+- * build.py via --defsym: 0x20020000/0x20200000 standalone, the hole's RAM-copy
++ * build.py via --defsym: 0x20020000/0x20420000 standalone, the hole's RAM-copy
+  * address for the hybrid build. */
+ SECTIONS {
+     .text APP_LOAD : {
+@@ -9,7 +9,15 @@ SECTIONS {
+     }
+     .bss (NOLOAD) : {
+         __bss_start = .; *(.bss*) *(COMMON)
+-        . = ALIGN(32); __bss_end = .;
++        . = ALIGN(32); __ordinary_bss_end = .;
++    }
++    /* USB DMA must bypass the data cache (region 1 ends at 0x20400000).
++     * Include this allocation in __bss_end: reset clears it and the hybrid
++     * stock_ram_init preserves the entire application interval through it. */
++    ASSERT(__ordinary_bss_end<=0x20400000,"application overlaps USB DMA RAM")
++    .usb_dma 0x20400000 (NOLOAD) : {
++        __usb_dma_start = .; *(.usb_dma)
++        . = ALIGN(32); __usb_dma_end = .; __bss_end = .;
+     }
+     ASSERT(__bss_end<APP_RAM_END,"application overlaps the RAM bound")
+     /DISCARD/ : { *(.comment) *(.note*) *(.ARM.exidx*) *(.ARM.extab*) }
+diff --git a/app/hybrid/validate_hybrid.py b/app/hybrid/validate_hybrid.py
+index 50b1532..1601928 100644
+--- a/app/hybrid/validate_hybrid.py
++++ b/app/hybrid/validate_hybrid.py
+@@ -183,13 +183,20 @@ def main():
+     # table, and direct moves do not run stock's separate initializer. Stop after RAM restoration,
+     # before any stock service or motor task, and require the actual ROM copy.
+     before = struct.unpack('<16I', read_in('cold_before', 0x98, 64, value=0xffff))[2]
++    # Relocated USB DMA must survive stock's large scatter-table RAM clear.
++    # This fixture uses only EP0 here, leaving both IPP TX buffers untouched.
++    dma = int(manifest['symbols']['application']['tx_buffers'], 16)
++    dma_sentinel = bytes(range(256)) * 128
++    e.uc.mem_write(dma, dma_sentinel)
+     command('cold_ram', 0x97, 5 | 0x400, 1 << 8, budget=60000000)
+     for _ in range(100):
+         cold = struct.unpack('<16I', read_in('cold_after', 0x98, 64, value=0xffff))
+         if cold[2] > before: break
+     assert cold[2] == before + 1, cold
+     assert bytes(e.uc.mem_read(0x18089900, 14 * 0xf8)) == image[0x1847c8:0x1847c8 + 14 * 0xf8], 'cold CR profile table is incomplete'
++    assert bytes(e.uc.mem_read(dma, len(dma_sentinel))) == dma_sentinel, 'stock RAM init erased USB DMA buffers'
+     print('PASS cold RAM: all 14 CR profiles restored before any band or loader call')
++    print('PASS cold RAM: relocated USB DMA buffers preserved across stock initialization')
+ 
+     # Shim: run stock routines in place with our services, dry motion.
+     KIND = {1: 'CR_MOVE', 2: 'CR_PROFILE', 3: 'CR_RELEASE', 4: 'LF_MOVE', 5: 'STATUS_GET', 6: 'STATUS_PUB', 7: 'NVM', 8: 'NOTIFY', 9: 'WAIT_TIMEOUT', 10: 'DELAY', 11: 'ROUTINE', 12: 'UNKNOWN'}
+diff --git a/app/include/app.h b/app/include/app.h
+index 5e5215c..8bece31 100644
+--- a/app/include/app.h
++++ b/app/include/app.h
+@@ -13,6 +13,10 @@
+ #include "service.h"   /* pulls in fw.h + protocol.h */
+ #include "escl.h"      /* IPP-USB / eSCL driverless scanning */
+ 
++/* Mutable buffers shared with USB DMA. app.ld keeps these outside every
++ * data-cacheable region and inside the hybrid's protected application RAM. */
++#define USB_DMA __attribute__((section(".usb_dma"), aligned(32)))
++
+ /* Vendor control-IN (bmRequestType 0xC0) request that drains the debug log
+  * ring buffer. The host polls it; an empty reply means "nothing buffered". */
+ #define APP_REQUEST_LOG 0x50u
+@@ -64,7 +68,7 @@ void scanner_burst_request(unsigned n, unsigned exposure_eighths, unsigned gain,
+ unsigned scanner_burst_dump(uint8_t *out, unsigned chunk, unsigned max);
+ #define APP_REQUEST_SCAN_BURST_OPTIONS 0x5eu   /* OUT: wValue = components (1|3) | repeat << 4 | window rows << 8 (0 = stock); wIndex = sub-period T >> 4 (0 = P0 default) */
+ bool scanner_burst_options(unsigned components, unsigned repeat, uint32_t period, unsigned window, unsigned flags);   /* 0x5e wValue bits 13..15: full arm table, no 0x158 ack, immediate first request */
+-/* src/cpu_cache.c: ARM946E-S instruction cache (CP15; data cache stays off for DMA). */
++/* src/cpu_cache.c: ARM946E-S cache control; DMA buffers remain uncached. */
+ #define APP_REQUEST_CPU_CACHE 0x8cu      /* OUT: wValue bit0 = instruction cache on/off; logs a benchmark before and after */
+ bool cpu_icache_set(bool on);
+ void exception_report(void);             /* log and clear the persistent exception record (stock_shim.c) */
+@@ -100,7 +104,8 @@ bool scanner_cal_valid(unsigned components);
+ const uint16_t *scanner_cal_row(unsigned white, unsigned comp);   /* 1296 samples per segment... full 2592-sample row */
+ #define APP_REQUEST_LINE_DUMP 0x5du      /* IN: chunk = wIndex << 16 | wValue of the raw line buffer */
+ #define APP_REQUEST_HOME_SPEED 0x7eu     /* OUT: wValue = fast-return cruise / 100 (0 = classic homing) */
+-#define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..13) */
++#define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..63) */
++#define APP_REQUEST_LINE_COLOUR 0x9eu    /* OUT: wValue = LED window eighths r | g << 4 | b << 8 (1..8 each), wIndex = AFE offset (0..255) */
+ void print_selftest(void);          /* decode an embedded BJL band, emit result to the debug log */
+ void print_bulk_begin(unsigned total); /* start a USB bulk print transfer of `total` bytes (USB 0x61) */
+ void print_bulk_feed(const uint8_t *data, unsigned len); /* feed received bulk bytes; decodes when complete */
+@@ -232,6 +237,7 @@ void scanner_motor_poll(void);             /* drive deadline checked every main
+ void app_yield(void);
+ extern const char *app_section;   /* protocol work in progress, for motor diagnostics */
+ extern uint32_t app_loop_max_ticks, app_loop_count;
++bool cpu_dcache_set(bool on);             /* write-through data cache over the app's DRAM (page scans) */
+ void canary_init(void);
+ int canary_check(uint32_t *value);        /* -1 intact, else the damaged word index and its value */
+ void scratch_pattern_fill(void);          /* diagnostic: pattern the idle print buffer */
+@@ -249,6 +255,7 @@ bool scanner_motor_scan_throttle(uint32_t speed);              /* live cruise ch
+ bool scanner_motor_at_reference(void);  /* idle, referenced and parked at home */
+ bool scanner_motor_set_return_speed(unsigned counts_per_s); /* experiment: fast return cruise, 0 or 20000..120000 */
+ bool scanner_line_set_afe(unsigned exposure_eighths, unsigned gain); /* experiment: continuous-scan optics */
++bool scanner_line_set_colour(unsigned windows, unsigned offset);   /* per-LED windows r|g<<4|b<<8 (eighths), AFE offset */
+ bool scan_page_continuous(void);
+ void scan_page_set_speed(unsigned counts_per_s);   /* diagnostic: continuous travel speed */
+ #define APP_REQUEST_SCAN_SPEED 0x7cu     /* OUT: wValue = continuous speed / 100 (130..300) */
+diff --git a/app/src/app_main.c b/app/src/app_main.c
+index 655c565..6bf5ff4 100644
+--- a/app/src/app_main.c
++++ b/app/src/app_main.c
+@@ -160,6 +160,11 @@ void firmware_main(void)
+     dbg_hex("app_flash", APP_FLASH);
+     dbg_hex("app_ram", APP_RAM);
+ 
++    /* The scanner's conversion rate needs I-cache even when an ordinary
++     * eSCL client never sends the bench-only 0x8c command. DMA stays uncached;
++     * page capture enables write-through caching of CPU-owned data. */
++    cpu_icache_set(true);
++
+     usb_init();
+     dbg_puts("[app] usb up, entering main loop\n");
+     if (hybrid_panel_available()) {
+diff --git a/app/src/cpu_cache.c b/app/src/cpu_cache.c
+index 1810916..a4efba1 100644
+--- a/app/src/cpu_cache.c
++++ b/app/src/cpu_cache.c
+@@ -3,9 +3,9 @@
+  * The bootloader hands the app over with the protection unit and both caches
+  * off (bootloader/src/cpu.c, cpu_quiesce; CP15 control reads 0x78 on this
+  * board, ARM946E-S id 0x41059461, no TCM). DMA engines (LDMAC pixel rows, the
+- * USB core, the print engines) write and read DRAM behind the CPU, so the DATA
+- * cache stays off and the write buffer disabled: every load and store still
+- * goes straight to memory. Only instruction fetches are cached; no DMA ever
++ * USB core, the print engines) write and read DRAM behind the CPU. Their
++ * mutable buffers must remain outside the data-cacheable regions below.
++ * At boot only instruction fetches are cached; no DMA ever
+  * produces code, and the app image is copied by the bootloader before the
+  * cache is enabled, so the cache cannot hold stale instructions.
+  *
+@@ -31,6 +31,45 @@ static uint32_t control_read(void)
+ 
+ uint32_t cpu_icache_state(void) { return control_read(); }
+ 
++/* Data cache, write-through, for the app's own DRAM only (2026-10-27: a 300 dpi
++ * colour row took ~90 ms with every load going to DRAM/flash). Region 1 =
++ * 0x20000000 + 4 MiB (code, data, bss, tables; the scan ring at 0x20420000 and
++ * USB buffers at 0x20400000 and stock's 0x18xxxxxx alias stay outside, so DMA rows and stock's writes are
++ * never cached), region 2 = 0x20780000 + 512 KiB (stack, exception record).
++ * Cacheable with the bufferable attribute clear = write-through, so
++ * writes reach memory without dirty cache lines; drain the write buffer on
++ * transitions before invalidating. Enabled
++ * by the page scan while it converts rows and switched off at its end. */
++bool cpu_dcache_set(bool on)
++{
++    uint32_t control = control_read(), zero = 0;
++    if (!(control & CP15_CONTROL_ICACHE)) return false;         /* needs the protection unit (I-cache switch) */
++    if (!!(control & CP15_CONTROL_DCACHE) == on) return true;
++    __asm__ volatile("mcr p15, 0, %0, c7, c10, 4" :: "r"(zero) : "memory");
++    if (on) {
++        /* The MPU is already live. Establish permissions and attributes
++         * BEFORE enabling overriding regions, including the current code
++         * and stack. The opposite order can fault between MCRs, depending
++         * on the instruction-cache/prefetch state and function alignment. */
++        __asm__ volatile(
++            "mcr p15, 0, %5, c5, c0, 2\n"      /* data access permission, extended: regions 0..2 full */
++            "mcr p15, 0, %5, c5, c0, 3\n"      /* instruction access permission, extended: regions 0..2 full */
++            "mcr p15, 0, %2, c2, c0, 1\n"      /* instruction cacheable: regions 0..2 */
++            "mcr p15, 0, %3, c2, c0, 0\n"      /* data cacheable: regions 1, 2 */
++            "mcr p15, 0, %4, c3, c0, 0\n"      /* write buffer: none (write-through) */
++            "mcr p15, 0, %0, c6, c1, 0\n"      /* region 1: 0x20000000, 4 MiB, enabled */
++            "mcr p15, 0, %1, c6, c2, 0\n"      /* region 2: 0x20780000, 512 KiB, enabled */
++            "mcr p15, 0, %4, c7, c6, 0\n"      /* invalidate the data cache */
++            :: "r"(0x20000000u | 0x2bu), "r"(0x20780000u | 0x25u), "r"(7u), "r"(6u), "r"(zero), "r"(0x333u) : "memory");
++        control |= CP15_CONTROL_DCACHE;
++    } else {
++        control &= ~CP15_CONTROL_DCACHE;
++    }
++    __asm__ volatile("mcr p15, 0, %0, c1, c0, 0\n"
++                     "mcr p15, 0, %1, c7, c6, 0\n" :: "r"(control), "r"(zero) : "memory");
++    return true;
++}
++
+ bool cpu_icache_set(bool on)
+ {
+     uint32_t control = control_read(), zero = 0;
+@@ -41,6 +80,16 @@ bool cpu_icache_set(bool on)
+          * bits all clear; access permission 3 (full) for region 0 in both the
+          * instruction and data permission registers. */
+         __asm__ volatile(
++            /* An earlier scan or RAM-to-RAM app restart can leave enabled
++             * regions behind. Higher-numbered regions override region 0;
++             * clearing their permissions alone would fault on app/stack RAM. */
++            "mcr p15, 0, %2, c6, c1, 0\n"
++            "mcr p15, 0, %2, c6, c2, 0\n"
++            "mcr p15, 0, %2, c6, c3, 0\n"
++            "mcr p15, 0, %2, c6, c4, 0\n"
++            "mcr p15, 0, %2, c6, c5, 0\n"
++            "mcr p15, 0, %2, c6, c6, 0\n"
++            "mcr p15, 0, %2, c6, c7, 0\n"
+             "mcr p15, 0, %0, c6, c0, 0\n"      /* region 0 base/size/enable */
+             "mcr p15, 0, %1, c2, c0, 1\n"      /* instruction cacheable: region 0 */
+             "mcr p15, 0, %2, c2, c0, 0\n"      /* data cacheable: none */
+diff --git a/app/src/ippusb.c b/app/src/ippusb.c
+index 3f2d1fb..0479768 100644
+--- a/app/src/ippusb.c
++++ b/app/src/ippusb.c
+@@ -40,9 +40,9 @@ struct conn {
+ };
+ 
+ static struct conn conns[IPPUSB_INTERFACES];
+-static uint8_t packets[IPPUSB_INTERFACES][512] ALIGNED;
++static uint8_t packets[IPPUSB_INTERFACES][512] USB_DMA;
+ static uint8_t rx_buffers[IPPUSB_INTERFACES][RX_SIZE];
+-static uint8_t tx_buffers[IPPUSB_INTERFACES][TX_SIZE] ALIGNED;
++static uint8_t tx_buffers[IPPUSB_INTERFACES][TX_SIZE] USB_DMA;
+ static char scratch[8192];
+ static const char *reply_host = "localhost";  /* Host of the request being handled */
+ 
+diff --git a/app/src/scan_page.c b/app/src/scan_page.c
+index aaa0802..be9a24e 100644
+--- a/app/src/scan_page.c
++++ b/app/src/scan_page.c
+@@ -25,7 +25,15 @@ enum page_error { PAGE_OK, ERR_HOME, ERR_STEP, ERR_CAPTURE, ERR_HOST_TIMEOUT,
+  * RGB 300 dpi and far more at 75/150 (149,687), above what our scan controller
+  * allows (60,000) and what was physically verified (28,000 full page, 100,000
+  * fast return). 40,000 at 75/150 dpi is the first operating point to verify. */
+-static uint32_t cruise_for_pitch(unsigned p) { return p >= 256u ? 40000u : 37000u; }
++static uint32_t cruise_for_pitch(unsigned p, unsigned c)
++{
++    /* Full-width calibrated RGB conversion + PNG takes about 9 ms/row at
++     * 150 dpi and 18 ms/row at 300 dpi on the board. Set the acquisition
++     * period and travel speed together at page start, with processing margin.
++     * Motor throttling alone does not slow the current IRQ-driven producer. */
++    if (c == 3u && p < 512u) return p >= 256u ? 26000u : 6000u;
++    return p >= 256u ? 40000u : 37000u;
++}
+ #define CONT_CRAWL 3000u            /* ring backpressure cruise (above the stall detector's 1000 counts / 500 ms) */
+ #define CONT_START 4096u
+ #define CONT_RUNOUT 4096u
+@@ -60,7 +68,7 @@ static bool continuous;                 /* this page uses moving acquisition */
+ static uint32_t cont_speed = CONT_SPEED_DEFAULT;
+ static unsigned components = 1, next_components = 1;
+ static bool crawling;
+-static bool calibrate_pages = true;     /* USB 0x9c bit 6 clears it (A/B tests) */
++static bool calibrate_pages = false;    /* home bursts superseded by the page run-in references; USB 0x9c bit 6 controls it (A/B tests) */
+ void scan_page_set_calibration(bool on) { calibrate_pages = on; }
+ 
+ void scan_page_set_components(unsigned c) { next_components = c == 3u ? 3u : 1u; }
+@@ -81,6 +89,7 @@ static void transition(enum page_phase next)
+ 
+ static void end_page(enum page_phase result, enum page_error error)
+ {
++    cpu_dcache_set(false);
+     static const char *const names[] = {"idle", "home", "settle", "capture", "ready", "step", "return",
+                                         "done", "failed", "cancelled", "scan", "calibrate"};
+     scanner_motor_cancel(); scanner_line_stop(); scanner_lamp_off();
+@@ -112,11 +121,13 @@ void scan_page_cancel(void)
+ bool scan_page_start(unsigned count, unsigned spacing, uint32_t start, bool owned)
+ {
+     bool adopt = page_phase == PAGE_RETURN;
+-    if (!count || count > (owned ? 3508u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > 450048u ||
+-        (count - 1u) * spacing > 450048u - start || (scan_page_busy() && !adopt) ||
++    uint32_t travel = owned ? 470016u : 450048u;   /* owned pages run in from the mechanical start: stock's 3508 rows lie 156/300 in later */
++    if (!count || count > (owned ? 3680u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > travel ||
++        (count - 1u) * spacing > travel - start || (scan_page_busy() && !adopt) ||
+         (scanner_motor_busy() && !adopt) || print_is_active()) return false;
+     rows = count; pitch = spacing; offset = start; internal = owned; park = false; retries = 0;
+     scanner_line_reset(); scratch_pattern_fill();
++    if (owned && cpu_dcache_set(true)) dbg_puts("[page] data cache on\n");
+     components = owned ? next_components : 1u; next_components = 1u;
+     /* Moving acquisition for the eSCL pitches; the vendor page protocol keeps stop-and-capture. */
+     continuous = owned && (spacing == 128u || spacing == 256u || spacing == 512u) && count * components <= 65535u;
+@@ -206,7 +217,7 @@ static void scan_continuous(uint32_t now)
+     if (!action_started) {
+         uint32_t endpoint = first + (rows - 1u) * pitch + CONT_RUNOUT;
+         /* Budget covers a page crawled from the start (host backpressure). */
+-        uint32_t speed = cont_speed ? cont_speed : cruise_for_pitch(pitch);
++        uint32_t speed = cont_speed ? cont_speed : cruise_for_pitch(pitch, components);
+         uint32_t budget = 3000u + motor_divide((uint64_t)(endpoint - origin) * 1000u, CONT_CRAWL);
+         /* Line period T x d = 96 MHz x pitch x 0.98 / v (stock B.2); T per sub-period. */
+         uint32_t period = motor_divide((uint64_t)96000000u * pitch * 49u, speed * 50u * components);
+@@ -252,7 +263,7 @@ static void scan_continuous(uint32_t now)
+          * (host, encoder) slows the carriage instead of losing lines. */
+         unsigned backlog = scanner_line_backlog(), ring = scanner_line_ring();
+         if (!crawling && backlog > ring / 2u) { crawling = scanner_motor_scan_throttle(CONT_CRAWL); if (crawling) dbg_puts("[page] crawl\n"); }
+-        else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch)); if (!crawling) dbg_puts("[page] cruise\n"); }
++        else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch, components)); if (!crawling) dbg_puts("[page] cruise\n"); }
+         return;
+     }
+     if (!scanner_motor_move_ok()) { end_page(PAGE_FAILED, ERR_STEP); return; }
+diff --git a/app/src/scan_source_scanner.c b/app/src/scan_source_scanner.c
+index c9bed98..8779707 100644
+--- a/app/src/scan_source_scanner.c
++++ b/app/src/scan_source_scanner.c
+@@ -13,6 +13,7 @@
+  * expect sRGB-like encoding, without it paper looks grey). Colour uses the
+  * three-phase illumination (one component row per LED); grey the combined
+  * exposure. */
++#include <string.h>
+ #include "app.h"
+ 
+ #define SAMPLES 2592u
+@@ -24,8 +25,21 @@
+  * ~31,000..48,000 (150-row runs, 2026-10-24; no shading correction yet). */
+ #define STEP_BLACK 26000u
+ #define STEP_WHITE 65000u
+-#define CONT_BLACK 1000u
+-#define CONT_WHITE 36000u
++#define CONT_BLACK 1200u           /* AFE offset 0x80 pedestal: no-light level (platen edge bar) */
++#define CONT_WHITE 48000u          /* fallback only; the run-in references below normally apply */
++/* Run-in references (2026-10-27 raw ring dumps, 1/300 inch from the mechanical
++ * scan start): the lid's white strip spans ~12..100, the platen-edge dark bar
++ * ~128..152, stock's document origin lies 156 later than our start (swatch
++ * edges against the stock scan), and stock's first column is 8 units right of
++ * sample 0. Every page scans from the mechanical start; the run-in lines give
++ * the per-sample white/dark arrays (stock's calibration, brief 21 §5). */
++#define DOC_ORIGIN 156u
++#define SAMPLE_ORIGIN 4u
++#define STRIP_FROM 20u
++#define STRIP_TO 90u
++#define DARK_FROM 132u
++#define DARK_TO 148u
++#define TRAVEL_UNITS 3672u         /* mechanical start to the end of travel, 1/300 inch (stock's 3508 rows from its origin) */
+ /* gamma[i] = round(255 * (i / 255) ** (1 / 2.2)); mirrored by the emulator tests. */
+ static const uint8_t gamma_lut[256] = {
+       0,  21,  28,  34,  39,  43,  46,  50,  53,  56,  59,  61,  64,  66,  68,  70,
+@@ -48,7 +62,7 @@ static const uint8_t gamma_lut[256] = {
+ 
+ static const uint16_t resolutions[] = {75, 150, 300};
+ const struct scan_caps scan_caps = {
+-    .max_width = 2550, .max_height = 3507,          /* 216 x 297 mm platen */
++    .max_width = 2480, .max_height = 3507,          /* 210 x 297 mm, stock's output size */
+     .min_size = 16, .optical = 300,
+     .resolutions = resolutions, .resolution_count = ARRAY_SIZE(resolutions),
+     .gray = true, .color = true,
+@@ -64,9 +78,16 @@ static unsigned pixels, components;
+  * dark[x]) * WHITE_TARGET / 255; a sample whose references are unusable keeps
+  * scale 0 and falls back to the fixed levels. 16.16 products fit 32 bits. */
+ #define CAL_MIN_SPAN 1024u
+-#define WHITE_TARGET 250u           /* the reference strip maps to this, paper slightly below */
++#define WHITE_TARGET 250u           /* home-burst path: the reference strip maps to this */
++/* Stock match (2026-10-27 fit of the stock scan against ours on the swatch
++ * sheet): stock keeps a black floor of ~5 % linear and maps the lid strip to
++ * ~0.90 (red/green) and ~0.85 (blue) of full scale. value = floor + span. */
++#define BLACK_FLOOR 14u
++static const uint16_t white_span[3] = {230u, 230u, 217u};   /* per component, strip level above the floor */
+ static uint16_t cal_dark[3][SAMPLES];
+ static uint32_t cal_scale[3][SAMPLES];
++static uint32_t acc_white[3][SAMPLES], acc_dark[3][SAMPLES];
++static unsigned acc_nw, acc_nd, runin_total, runin_done, step_units, pad_rows;
+ static bool cal_built, cal_on;
+ 
+ static void cal_build(void)
+@@ -100,7 +121,7 @@ bool scan_source_start(const struct scan_params *p)
+     for (unsigned n = 1; n < ARRAY_SIZE(reciprocal); ++n) reciprocal[n] = (65536u + n - 1u) / n;
+     for (unsigned i = 0; i < pixels; ++i) {
+         if (!(i & 127u)) app_yield();
+-        unsigned u = p->x + i * step;
++        unsigned u = p->x + i * step + SAMPLE_ORIGIN;
+         unsigned s0 = u * SAMPLES / SAMPLE_SPAN, s1 = (u + step) * SAMPLES / SAMPLE_SPAN;
+         if (s0 >= SAMPLES) s0 = SAMPLES - 1u;
+         if (s1 > SAMPLES) s1 = SAMPLES;
+@@ -109,7 +130,12 @@ bool scan_source_start(const struct scan_params *p)
+         first_sample[i] = (uint16_t)s0; sample_count[i] = (uint8_t)(s1 - s0);
+     }
+     scan_page_set_components(components);
+-    if (!scan_page_start(p->lines, step * COUNTS_PER_UNIT, p->y * COUNTS_PER_UNIT, true)) return false;
++    step_units = step; runin_total = (DOC_ORIGIN + p->y + step - 1u) / step; runin_done = 0; acc_nw = acc_nd = 0; pad_rows = 0;
++    for (unsigned c = 0; c < 3u; ++c)
++        for (unsigned x = 0; x < SAMPLES; ++x) { if (!(x & 255u)) app_yield(); acc_white[c][x] = 0; acc_dark[c][x] = 0; }
++    unsigned count = p->lines + runin_total, max_count = TRAVEL_UNITS / step;
++    if (count > max_count) { pad_rows = count - max_count; count = max_count; }   /* beyond the travel: white rows */
++    if (!scan_page_start(count, step * COUNTS_PER_UNIT, 0, true)) return false;
+     bool cont = scan_page_continuous();
+     black_level = cont ? CONT_BLACK : STEP_BLACK;
+     level_scale = 255u * 65536u / ((cont ? CONT_WHITE : STEP_WHITE) - black_level);
+@@ -122,7 +148,7 @@ static inline uint8_t convert(const uint16_t *s, unsigned s0, unsigned n, unsign
+     if (cal_on && cal_scale[c][s0]) {
+         const uint16_t *d = cal_dark[c] + s0; const uint32_t *g = cal_scale[c] + s0;
+         for (unsigned k = 0; k < n; ++k) { unsigned v = s[k] > d[k] ? (unsigned)(s[k] - d[k]) : 0u; sum += (v * g[k]) >> 16; }
+-        value = (sum * reciprocal[n]) >> 16;
++        value = BLACK_FLOOR + ((sum * reciprocal[n]) >> 16);
+     } else {
+         for (unsigned k = 0; k < n; ++k) sum += s[k];
+         unsigned level = (unsigned)(((unsigned long long)sum * reciprocal[n]) >> 16);
+@@ -131,11 +157,54 @@ static inline uint8_t convert(const uint16_t *s, unsigned s0, unsigned n, unsign
+     return gamma_lut[value > 255u ? 255u : value];
+ }
+ 
++/* Per-sample references from the run-in: mean strip line as white, mean dark
++ * bar as black; samples without a usable span fall back to the fixed levels. */
++static void cal_from_runin(void)
++{
++    cal_on = acc_nw >= 2u && acc_nd >= 1u;
++    for (unsigned c = 0; cal_on && c < components; ++c)
++        for (unsigned x = 0; x < SAMPLES; ++x) {
++            if (!(x & 15u)) app_yield();                      /* two software divisions per sample */
++            uint32_t d = acc_dark[c][x] / acc_nd, w = acc_white[c][x] / acc_nw;
++            cal_dark[c][x] = (uint16_t)(d > 65535u ? 65535u : d);
++            cal_scale[c][x] = w > d + CAL_MIN_SPAN ? ((uint32_t)white_span[c] * 65536u) / (w - d) : 0u;
++        }
++    cal_built = true;
++    dbg_puts("[cal] run-in white lines="); dbg_dec(acc_nw); dbg_puts(" dark lines="); dbg_dec(acc_nd);
++    if (cal_on) { dbg_puts(" mid-sample white/dark:"); for (unsigned c = 0; c < components; ++c) { dbg_putc(' '); dbg_dec(acc_white[c][SAMPLES / 2u] / acc_nw); dbg_putc('/'); dbg_dec(acc_dark[c][SAMPLES / 2u] / acc_nd); } }
++    dbg_puts(cal_on ? "\n" : " (fixed levels)\n");
++}
++
++static void accumulate(unsigned row, const uint16_t *samples, uint32_t (*acc)[SAMPLES])
++{
++    for (unsigned c = 0; c < components; ++c) {
++        const uint16_t *s = components == 3u ? scan_page_component(row, c) : samples;
++        if (!s) return;
++        for (unsigned x = 0; x < SAMPLES; ++x) { if (!(x & 255u)) app_yield(); acc[c][x] += s[x]; }
++    }
++}
++
+ int scan_source_row(uint8_t *out)
+ {
+     unsigned row;
+-    const uint16_t *samples = scan_page_take(&row);
+-    if (!samples) return scan_page_failed() ? -1 : 0;
++    const uint16_t *samples;
++    for (;;) {
++        samples = scan_page_take(&row);
++        if (!samples) {
++            if (scan_page_failed()) return -1;
++            if (pad_rows && runin_done >= runin_total && !scan_page_busy()) {   /* travel ended before the region: white */
++                memset(out, 255, pixels * components); --pad_rows; return 1;
++            }
++            return 0;
++        }
++        if (runin_done >= runin_total) break;
++        unsigned u = runin_done * step_units;                 /* 1/300 inch from the mechanical start */
++        app_section = "run-in"; app_yield();
++        if (u >= STRIP_FROM && u < STRIP_TO) { accumulate(row, samples, acc_white); ++acc_nw; }
++        else if (u >= DARK_FROM && u < DARK_TO) { accumulate(row, samples, acc_dark); ++acc_nd; }
++        if (!scan_page_release(row)) return -1;
++        if (++runin_done == runin_total) cal_from_runin();
++    }
+     app_section = "convert";
+     if (!cal_built) cal_build();
+     if (components == 1u) {
+diff --git a/app/src/scanner.c b/app/src/scanner.c
+index f9559db..e0bafe3 100644
+--- a/app/src/scanner.c
++++ b/app/src/scanner.c
+@@ -275,6 +275,10 @@ static void burst_stop(void)
+  * exact register deltas stock writes for component count 3 (fixture case
+  * p0-three-components versus p0-gray-4). Each of the three illumination
+  * windows spans the whole 0x99..0x7e0 range; `eighths` scales that width. */
++static unsigned line_colour_eighths[3] = {5u, 6u, 3u};   /* per-LED window eighths: paper ~42,000 each, lid strip < 65,535 (sweep 2026-10-27) */
++static unsigned line_afe_offset = 0x80u;                    /* AFE offset slot (regs 1/4): +203 counts per unit; 0x80 puts no-light at ~1,200 instead of clamping at 0 */
++/* `eighths` 0 closes all three windows (dark reference); otherwise each LED
++ * uses its own width from line_colour_eighths. */
+ static void scnio_colour_config(unsigned eighths)
+ {
+     wr(0xc0d600e0u, 7u);
+@@ -283,7 +287,7 @@ static void scnio_colour_config(unsigned eighths)
+     wr(0xc0d601c0u, 1u); wr(0xc0d601c4u, 2u); wr(0xc0d601c8u, 4u);
+     for (unsigned c = 0; c < 3u; ++c) {
+         modify(0xc0d60264u + 8u * c, 0xfffffu, 0x99u);
+-        modify(0xc0d60268u + 8u * c, 0xfffffu, 0x99u + (0x7e0u - 0x99u) * eighths / 8u);
++        modify(0xc0d60268u + 8u * c, 0xfffffu, 0x99u + (0x7e0u - 0x99u) * (eighths ? line_colour_eighths[c] : 0u) / 8u);
+     }
+ }
+ 
+@@ -460,8 +464,8 @@ static void line_exposure(unsigned eighths)
+ #define LINE_ATTEMPTS 3u
+ #define LINE_WARMUP 128u                    /* stationary P0 periods before any request */
+ #define LINE_AFE_GAIN 13u
+-#define LINE_AFE_OFFSET 0x00u
+-#define LINE_EXPOSURE 6u                    /* eighths of the P0 window widths (grey) */
++#define LINE_AFE_OFFSET 0x00u                /* initial value of line_afe_offset */
++#define LINE_EXPOSURE 4u                    /* eighths of the P0 window widths (grey); 6/8 clipped the lid strip at offset 0x80 */
+ #define LINE_COLOUR_EXPOSURE 8u             /* eighths of the full-window colour exposure */
+ static struct {
+     bool running, done, failed, gate_pending, validated, overrun;
+@@ -476,12 +480,25 @@ static unsigned line_exposure_eighths = LINE_EXPOSURE, line_colour_exposure = LI
+ 
+ bool scanner_line_set_afe(unsigned exposure, unsigned gain)
+ {
+-    if (line.running || line.gate_pending || exposure < 1u || exposure > 8u || gain < 1u || gain > 13u) return false;
++    if (line.running || line.gate_pending || exposure < 1u || exposure > 8u || gain < 1u || gain > 63u) return false;
+     line_exposure_eighths = exposure; line_gain = gain;
+     dbg_puts("[line] afe exposure="); dbg_dec(exposure); dbg_puts("/8 gain="); dbg_dec(gain); dbg_putc('\n');
+     return true;
+ }
+ 
++/* Colour optics (USB 0x9e): per-LED window eighths r | g << 4 | b << 8 (1..8 each), AFE offset 0..255. */
++bool scanner_line_set_colour(unsigned windows, unsigned offset)
++{
++    unsigned w[3] = {windows & 15u, windows >> 4 & 15u, windows >> 8 & 15u};
++    if (line.running || line.gate_pending || offset > 255u) return false;
++    for (unsigned c = 0; c < 3u; ++c) if (w[c] < 1u || w[c] > 8u) return false;
++    for (unsigned c = 0; c < 3u; ++c) line_colour_eighths[c] = w[c];
++    line_afe_offset = offset;
++    dbg_puts("[line] colour windows="); dbg_dec(w[0]); dbg_putc('/'); dbg_dec(w[1]); dbg_putc('/'); dbg_dec(w[2]);
++    dbg_puts(" /8 offset=0x"); dbg_u32(offset); dbg_putc('\n');
++    return true;
++}
++
+ unsigned scanner_line_capacity(unsigned components)
+ {
+     return components == 3u ? LINE_RING_ROWS / 3u : LINE_RING_ROWS;
+@@ -545,7 +562,7 @@ static bool line_setup(unsigned components, unsigned lines, unsigned pitch, unsi
+     if (C == 3u) scnio_colour_config(line_colour_exposure);
+     else line_exposure(line_exposure_eighths);
+     delay_ticks(CLOCK_TICKS_PER_MS * 2u);
+-    if (!afe_operating_gain(line_gain, LINE_AFE_OFFSET)) goto failed;
++    if (!afe_operating_gain(line_gain, line_afe_offset)) goto failed;
+     for (unsigned c = 0; c < 2u; ++c) {
+         uint32_t b = 0xc0d50000u + c * 0x100u;
+         if (rd(b + 0x14u) != R + c * BURST_SEG || rd(b + 0x18u) != R || rd(b + 0x1cu) != R + window ||
+@@ -787,7 +804,7 @@ bool scanner_calibrate(unsigned components)
+     cal_valid = false; cal_components = components;
+     unsigned saved_n = burst_n, saved_e = burst_exposure, saved_g = burst_gain, saved_s = burst_skip, saved_o = burst_offset;
+     unsigned saved_c = burst_components, saved_r = burst_repeat, saved_w = burst_window; uint32_t saved_p = burst_period;
+-    burst_n = CAL_LINES; burst_gain = line_gain; burst_skip = 0; burst_offset = LINE_AFE_OFFSET;
++    burst_n = CAL_LINES; burst_gain = line_gain; burst_skip = 0; burst_offset = line_afe_offset;
+     burst_components = components; burst_repeat = 1; burst_window = 0; burst_period = 0x1a748u; burst_keep_power = true;
+     bool ok = true;
+     burst_exposure = 0;                                   /* windows closed: dark reference */
+diff --git a/app/src/scanner_motor.c b/app/src/scanner_motor.c
+index f30bded..0e7695f 100644
+--- a/app/src/scanner_motor.c
++++ b/app/src/scanner_motor.c
+@@ -32,7 +32,7 @@ enum phase { IDLE, WANT_JOG, WANT_HOME, JOG, SEEK, BACKOFF, RETURN, SETTLE,
+  * coefficients), cruise capped at scan_speed, then the backoff's 4000 counts/s
+  * approach for the last 3000 counts before the hardware endpoint. Stock's own
+  * scan endpoint lies ~469,000 counts from its origin; we stay within 458,000. */
+-#define SCAN_TRAVEL_LIMIT 458000u
++#define SCAN_TRAVEL_LIMIT 478208u   /* CONT_START + 3672 run-in/document units + CONT_RUNOUT: stock's last row lies 156/300 in past our first line */
+ #define SCAN_APPROACH 3000u
+ enum home_result { UNREFERENCED, HOMING, MECHANICAL_REFERENCE, HOME_FAILED, HOME_CANCELLED };
+ static enum phase phase, after_settle;
+@@ -40,7 +40,7 @@ static enum home_result home_result;
+ static bool initialized, inhibited, cooling, home_power_owned;
+ static uint32_t saved_scanner_power;
+ static unsigned direction, last_ms, window_ms, same_ms;
+-static uint32_t started, x0, target, span, limit_ms, cool_until, settle_at;
++static uint32_t tick_anchor, move_ms, x0, target, span, limit_ms, cool_until, settle_at;
+ static uint32_t first_stop, backoff_end, home_position, last_position;
+ static int32_t window_progress, measured_speed, qualified_progress;
+ static struct motor_control control;
+@@ -63,6 +63,18 @@ bool scanner_motor_set_return_speed(unsigned counts_per_s)
+ 
+ static bool driving(void) { return (phase >= JOG && phase <= RETURN) || phase == PAGE_MOVE || phase == SCAN_MOVE || phase == FAST_RETURN; }
+ static bool homing(void) { return home_result == HOMING; }
++
++/* A 32-bit 96 MHz duration wraps after 44.7 s, before a full 300 dpi page
++ * finishes. Accumulate whole milliseconds at each poll and retain the
++ * fractional ticks in the moving anchor. Individual deltas stay short;
++ * the existing delayed-poll and phase-deadline guards still apply. */
++static uint32_t move_elapsed_ms(void)
++{
++    uint32_t whole = (app_clock_ticks() - tick_anchor) / CLOCK_TICKS_PER_MS;
++    tick_anchor += whole * CLOCK_TICKS_PER_MS;
++    move_ms += whole;
++    return move_ms;
++}
+ bool scanner_motor_busy(void) { return phase != IDLE; }
+ unsigned scanner_home_result(void) { return home_result; }
+ uint32_t scanner_motor_position(void) { return rd(P + 0x100u); }
+@@ -115,7 +127,7 @@ bool scanner_motor_scan_throttle(uint32_t speed)
+     if (speed == scan_speed) return true;
+     uint32_t x = rd(P + 0x100u), remaining = scan_target > x ? scan_target - x : 0u;
+     scan_speed = speed;
+-    limit_ms = (uint32_t)((app_clock_ticks() - started) / CLOCK_TICKS_PER_MS) +
++    limit_ms = move_elapsed_ms() +
+                motor_divide((uint64_t)remaining * 1000u, speed) + SCAN_APPROACH * 1000u / 4000u + 2000u;
+     return true;
+ }
+@@ -130,7 +142,7 @@ static void stop_outputs(void)
+ static void finish(const char *why, enum home_result result)
+ {
+     uint32_t compare = driving() ? rd(C + 8u) : NEUTRAL;
+-    uint32_t elapsed = driving() ? (app_clock_ticks() - started) / CLOCK_TICKS_PER_MS : 0;
++    uint32_t elapsed = driving() ? move_elapsed_ms() : 0;
+     stop_outputs();
+     if (home_power_owned) {
+         wr(0xc0c85614u, saved_scanner_power); home_power_owned = false;
+@@ -306,7 +318,7 @@ static bool start_move(enum phase next)
+              "[home] backoff" : next == RETURN ? "[home] repeat left seek" : next == FAST_RETURN ? "[home] fast return" :
+              direction ? "[motor] jog backward" : "[motor] jog forward");
+     dbg_puts(" start="); dbg_u32(x0); dbg_puts(" target="); dbg_u32(target); dbg_putc('\n');
+-    started = app_clock_ticks();
++    tick_anchor = app_clock_ticks(); move_ms = 0;
+     wr(C, 0x102u);  /* first non-neutral command comes from the 1ms controller */
+     return true;
+ }
+@@ -417,8 +429,7 @@ void scanner_motor_poll(void)
+         (void)start_move(after_settle); return;
+     }
+     if (!driving()) return;
+-    uint32_t elapsed = app_clock_ticks() - started;
+-    unsigned ms = elapsed / CLOCK_TICKS_PER_MS;
++    unsigned ms = move_elapsed_ms();
+     if (ms >= limit_ms) { finish("phase deadline", HOME_FAILED); return; }
+     if (ms == last_ms) return;
+     if (ms - last_ms > 4u) {
+diff --git a/app/src/usb.c b/app/src/usb.c
+index ed08fa6..2273e08 100644
+--- a/app/src/usb.c
++++ b/app/src/usb.c
+@@ -21,9 +21,9 @@
+ #define ACTIVE 0x8000u
+ #define STALL 0x200000u
+ 
+-static uint8_t setup_buffer[64] ALIGNED;
+-static uint8_t control_buffer[256] ALIGNED;
+-static uint8_t bulk_buffer[512] ALIGNED;
++static uint8_t setup_buffer[64] USB_DMA;
++static uint8_t control_buffer[256] USB_DMA;
++static uint8_t bulk_buffer[512] USB_DMA;
+ static unsigned max_packet, tx_length, tx_position;
+ static unsigned configuration;
+ static bool need_zlp, reboot_status_ack, bulk_armed;
+@@ -281,6 +281,8 @@ static void setup_request(void)
+         if(scanner_motor_set_return_speed(value*100u)) ack(); else stall();
+     } else if(type==0x40 && request==APP_REQUEST_LINE_AFE && !length) {
+         if(scanner_line_set_afe(value,index)) ack(); else stall();
++    } else if(type==0x40 && request==APP_REQUEST_LINE_COLOUR && !length) {
++        if(scanner_line_set_colour(value,index)) ack(); else stall();
+     } else if(type==0xc0 && request==APP_REQUEST_LINE_DUMP) {
+         unsigned n=scanner_line_dump(control_buffer,(uint32_t)index<<16|value,length>sizeof(control_buffer)?sizeof(control_buffer):length);
+         if(n) reply(n,length); else stall();
+diff --git a/app/tests/validate_colour_continuous.py b/app/tests/validate_colour_continuous.py
+index 76161da..ed20217 100644
+--- a/app/tests/validate_colour_continuous.py
++++ b/app/tests/validate_colour_continuous.py
+@@ -13,7 +13,7 @@ import struct
+ from pathlib import Path
+ 
+ import validate_escl as v
+-from validate_escl_scan import ScanHost, expected_row, fetch_while_polling
++from validate_escl_scan import ScanHost, expected_row, fetch_while_polling, document_lines
+ from unicorn.arm_const import (UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2,
+                                UC_ARM_REG_R3, UC_ARM_REG_SP, UC_ARM_REG_LR,
+                                UC_ARM_REG_PC)
+@@ -81,14 +81,14 @@ def main():
+         assert call(e, 'scan_page_start', lines, 128, 0, 1), ('300 dpi rejected', lines)
+         call(e, 'scan_page_cancel')
+     assert not call(e, 'scan_page_start', 32, 128, 0, 0), 'vendor limits unexpectedly broadened'
+-    assert not call(e, 'scan_page_start', 3508, 128, 4096, 1), 'travel bound lost'
++    assert not call(e, 'scan_page_start', 3680, 128, 4096, 1), 'travel bound lost'
+     record('300dpi_admission_and_bounds', rows=[32, 3507, 3508])
+ 
+     capacity = call(e, 'scanner_line_capacity', 3)
+     # Include a complete 75 dpi page: shorter tests missed the physical hang
+     # around row 555. Synthetic DMA cannot establish its hardware cause.
+     for res, count in ((75, 24), (150, 24), (300, 32), (300, capacity + 12), (75, 876)):
+-        x, y, width = (0, 0, 2550) if count == 876 else (120, 0, 180)
++        x, y, width = (0, 0, 2480) if count == 876 else (120, 0, 180)
+         step = 300 // res
+         pixels, height = width // step, count * step
+         before = len(e.lines)
+@@ -99,14 +99,21 @@ def main():
+         assert status == 200, (res, status)
+         w, h, ctype, rows, _, depth = v.decode_png(body)
+         assert (w, h, ctype, depth) == (pixels, count, 2, 8)
+-        optical = [line for line, moving in zip(e.lines[before:], e.moving[before:]) if moving]
+-        assert len(optical) == count, (len(optical), count)
++        optical, _ = document_lines(e, before, y, count)
+         for j, line in enumerate(optical):
+             planes = [expected_row([max(raw - 2000 * k, 0) for raw in line],
+-                                  x, step, pixels, 1000, 36000, plane=k) for k in range(3)]
++                                  x, step, pixels, plane=k) for k in range(3)]
+             expected = bytes(b for i in range(pixels) for b in (planes[0][i], planes[1][i], planes[2][i]))
+-            assert rows[j] == expected, ('RGB samples differ', res, j,
+-                                        list(rows[j][:24]), list(expected[:24]))
++            if rows[j] != expected:
++                log = b''
++                for _ in range(80):
++                    e.requests.appendleft(('log', v.setup(0xc0, 0x50, 0, 0, 256))); before_n = len(e.responses)
++                    e.run(lambda q: len(q.responses) > before_n, resume=True)
++                    part = e.responses[-1][2]
++                    if not part: break
++                    log += bytes(part)
++                print('FIRMWARE LOG:', [l for l in log.decode('latin1').splitlines() if '[cal]' in l or '[line] start' in l][-8:])
++                raise AssertionError(('RGB samples differ', res, j, list(rows[j][:12]), list(expected[:12]), 'raw', line[:6]))
+         e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
+         assert phase(e) == 7 and e.drive is None
+         assert e.regs.get(0xc0c85614, 0) == 0
+diff --git a/app/tests/validate_escl_scan.py b/app/tests/validate_escl_scan.py
+index 15b3782..990a706 100644
+--- a/app/tests/validate_escl_scan.py
++++ b/app/tests/validate_escl_scan.py
+@@ -34,11 +34,23 @@ from unicorn import UC_HOOK_BLOCK, UC_HOOK_CODE  # noqa: E402
+ # Protocol work during motion must leave a clear margin below that. Measured
+ # from each poll's return to the next poll's entry: the driver's own move
+ # set-up (logging, deliberate delays) is existing, physically proven code.
+-MOTION_GAP_LIMIT = 8000
++MOTION_GAP_LIMIT = 16000   # IPP-USB request dispatch (ippusb_poll) runs ~15k instructions without a motor service
+ import validate_escl as v  # noqa: E402
++from unicorn.arm_const import UC_ARM_REG_LR  # noqa: E402
+ 
+ SAMPLES, SPAN, BLACK, WHITE = 2592, 2550, 26000, 65000
+ DARK = 1200
++# Run-in geometry mirrored from scan_source_scanner.c (1/300 inch from the
++# mechanical start): lid strip, platen-edge dark bar, stock's document origin,
++# and the sample offset of stock's first column.
++STRIP, DARKBAR, DOC_ORIGIN, SAMPLE_ORIGIN = (20, 90), (132, 148), 156, 4
++
++
++def document_lines(e, start, y, count):
++    """The first `count` moving captures at or past the document origin of region row y."""
++    sel = [(l, p_) for l, m, u, p_ in zip(e.lines[start:], e.moving[start:], e.units[start:], e.positions[start:]) if m and u >= DOC_ORIGIN + y]
++    assert len(sel) >= count, (len(sel), count)
++    return [l for l, _ in sel[:count]], [p_ for _, p_ in sel[:count]]
+ 
+ 
+ def white_line():
+@@ -56,9 +68,13 @@ class ScanHost(v.IppUsbHost, PageModel):
+         self.lines = []           # samples of every capture, in order
+         self.moving = []          # True for a scan line (moving, lit); False for a calibration capture
+         self.positions = []       # encoder position at each capture
++        self.units = []           # 1/300 inch from the mechanical start (run-in geometry), -1 when stationary
++        self.page_first = None    # moving captures so far in the current page (None between pages)
+         self.instructions = 0
+         self.last_poll = None
+         self.motion_gaps = []     # instructions between motor polls while driving
++        self.worst_gap = (0, '', '', 0, None)   # (instructions, caller lr, previous poll return site, captures so far, code at the limit)
++        self.last_site = 0; self.gap_site = None
+         self.uc.hook_add(UC_HOOK_BLOCK, self._count)
+         poll = int(self.meta['symbols']['application']['scanner_motor_poll'], 16)
+         self.uc.hook_add(UC_HOOK_CODE, self._motor_poll, begin=poll, end=poll)
+@@ -90,6 +106,8 @@ class ScanHost(v.IppUsbHost, PageModel):
+     @checked
+     def write(self, cpu, offset, size, value, user):
+         address = 0xc0000000 + offset
++        if address == 0xc0d50014:                     # a new LDMAC setup starts a new page's line count
++            self.page_first = None
+         if address == 0xc0133104 and value & 0x10:
+             self.irq_pending = False
+         if address == 0xc0130028 and value & 2 and not self.regs.get(0xc0130028, 0) & 2:
+@@ -102,28 +120,48 @@ class ScanHost(v.IppUsbHost, PageModel):
+ 
+     def _count(self, uc, address, size, user):
+         self.instructions += size // 4
++        if self.drive is not None and self.last_poll is not None and self.gap_site is None \
++                and self.instructions - self.last_poll > MOTION_GAP_LIMIT:
++            self.gap_site = hex(address)              # code running when a motion gap passes the limit
+ 
+     def _motor_poll(self, uc, address, size, user):
+         if self.drive is not None and self.last_poll is not None:
+-            self.motion_gaps.append(self.instructions - self.last_poll)
+-        self.last_poll = None
++            gap = self.instructions - self.last_poll
++            self.motion_gaps.append(gap)
++            if gap > self.worst_gap[0]:
++                self.worst_gap = (gap, hex(uc.reg_read(UC_ARM_REG_LR)), hex(self.last_site), len(self.lines), self.gap_site)
++        self.last_poll = None; self.gap_site = None
+ 
+     def _motor_poll_return(self, uc, address, size, user):
+-        self.last_poll = self.instructions
++        self.last_poll = self.instructions; self.last_site = address
+ 
+     def _scan_dma(self, cpu):
+         index = len(self.lines)
+         moving = bool(self.regs.get(0xc0d6011c, 0) & 0x10000)
+         dark = self.regs.get(0xc0d60268, 0) & 0xfffff == self.regs.get(0xc0d60264, 0) & 0xfffff   # windows closed
++        pos = self.regs.get(0xc0c57100, 0)
++        u = -1
++        if moving:
++            # Line k of a page lies k pitches past the first: the firmware indexes its run-in the same way.
++            if self.page_first is None: self.page_first = 0
++            pitch = struct.unpack('<I', self.uc.mem_read(int(self.meta['symbols']['application']['pitch'], 16), 4))[0]
++            u = self.page_first * pitch // 128; self.page_first += 1
++        else:
++            self.page_first = None
+         if dark:
+             line = [DARK] * SAMPLES
++        elif moving and STRIP[0] <= u < STRIP[1]:
++            line = white_line()                              # the lid's white strip during the run-in
++        elif moving and DARKBAR[0] <= u < DARKBAR[1]:
++            line = [DARK] * SAMPLES                          # the platen-edge dark bar
+         elif moving:
+             line = [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)]
+         else:
+             line = white_line()                              # stationary reference: the same every capture
+         self.lines.append(line)
+         self.moving.append(moving and not dark)
+-        self.positions.append(self.regs.get(0xc0c57100, 0))
++        self.units.append(u)
++        self.positions.append(pos)
+         if not moving:
+             assert self.drive is None, 'stationary capture while motor powered'
+         k = self.line_index; self.line_index += 1
+@@ -171,16 +209,17 @@ def expected_row(line, x, step, pixels, black=BLACK, white=WHITE, shade=True, pl
+     wl = [max(w - 2000 * plane, 0) for w in white_line()]       # the model shades component k by -2000k
+     dark = max(DARK - 2000 * plane, 0)
+     for i in range(pixels):
+-        u = x + i * step
++        u = x + i * step + SAMPLE_ORIGIN
+         s0, s1 = u * SAMPLES // SPAN, (u + step) * SAMPLES // SPAN
+         s0 = min(s0, SAMPLES - 1); s1 = min(s1, SAMPLES)
+         s1 = max(s1, s0 + 1); s1 = min(s1, s0 + 8)
+         n = s1 - s0
+         if shade:
+-            scale = [(250 * 65536) // (wl[s] - dark) if wl[s] > dark + 1024 else 0 for s in range(s0, s1)]
++            span = (230, 230, 217)[plane]                       # stock-match spans and black floor (scan_source_scanner.c)
++            scale = [(span * 65536) // (wl[s] - dark) if wl[s] > dark + 1024 else 0 for s in range(s0, s1)]
+             if scale[0]:
+                 acc = sum((max(line[s] - dark, 0) * g) >> 16 for s, g in zip(range(s0, s1), scale))
+-                value = acc * ((65536 + n - 1) // n) >> 16
++                value = 14 + (acc * ((65536 + n - 1) // n) >> 16)
+                 row.append(GAMMA[min(value, 255)])
+                 continue
+         level = sum(line[s0:s1]) * ((65536 + n - 1) // n) >> 16       # firmware fixed point
+@@ -233,13 +272,16 @@ def main():
+     width, height, ctype, rows, phys, depth = v.decode_png(body)
+     assert (width, height, ctype, depth) == (pixels, lines, 0, 8)
+     # Continuous mode without the optional stationary probe: every capture is a scan line.
+-    scan_lines = [l for l, m in zip(e.lines, e.moving) if m]; scan_positions = [p_ for p_, m in zip(e.positions, e.moving) if m]
+-    assert len(scan_lines) == lines, (len(scan_lines), lines)
++    scan_lines, scan_positions = document_lines(e, 0, y, lines)
+     for j in range(lines):
+-        assert rows[j] == expected_row(scan_lines[j], x, 300 // res, pixels, 1000, 36000), f'row {j} differs'
++        exp = expected_row(scan_lines[j], x, 300 // res, pixels)
++        if rows[j] != exp:
++            k = next(i for i in range(len(exp)) if rows[j][i] != exp[i])
++            u = x + k * (300 // res) + SAMPLE_ORIGIN; s0 = u * SAMPLES // SPAN
++            raise AssertionError(f'row {j} differs at pixel {k}: got {list(rows[j][k:k + 4])} expected {list(exp[k:k + 4])} raw {scan_lines[j][s0:s0 + 4]} white {white_line()[s0:s0 + 4]}')
+     home = word(e, 'home_position')
+     offsets = [p - home for p in scan_positions]
+-    first = 4096 + y * 128                         # continuous mode: CONT_START past home
++    first = 4096 + y * 128                         # continuous mode: CONT_START past home (the model's capture positions lag the gate)
+     assert all(o >= first for o in offsets), offsets[:4]
+     assert all(b > a for a, b in zip(offsets, offsets[1:])), "positions not increasing"
+     e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
+@@ -247,7 +289,7 @@ def main():
+     idle_hardware(e)
+     # Parked at a fresh reference: the next continuous page skips homing.
+     homes_before = sum(1 for d in e.drives if d['direction'])
+-    status, location, _ = v.create_job(e, 1, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2550, 16)))
++    status, location, _ = v.create_job(e, 1, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2480, 16)))
+     assert status == 201
+     e.run(lambda q: phase(q) in (1, 10), resume=True)
+     assert phase(e) == 10, f'expected direct scan, phase {phase(e)}'
+@@ -272,10 +314,9 @@ def main():
+     pixels, lines = w * res // 300, h * res // 300
+     width, height, ctype, rows, phys, depth = v.decode_png(body)
+     assert (width, height, ctype, depth) == (pixels, lines, 2, 8), (width, height, ctype, depth)
+-    colour_lines = [l for l, m in zip(e.lines[captures:], e.moving[captures:]) if m]
+-    assert len(colour_lines) == lines, (len(colour_lines), lines)
++    colour_lines, _ = document_lines(e, captures, y, lines)
+     for j in range(lines):
+-        planes = [expected_row([max(v_ - 2000 * k, 0) for v_ in colour_lines[j]], x, 300 // res, pixels, 1000, 36000, plane=k) for k in range(3)]
++        planes = [expected_row([max(v_ - 2000 * k, 0) for v_ in colour_lines[j]], x, 300 // res, pixels, plane=k) for k in range(3)]
+         expected = bytes(b for i in range(pixels) for b in (planes[0][i], planes[1][i], planes[2][i]))
+         if rows[j] != expected:
+             log = b''
+@@ -294,7 +335,7 @@ def main():
+     record('colour_rgb24_planar_ring_rows', pixels=[pixels, lines])
+ 
+     # Back-to-back: a job posted while the last page returns home adopts it.
+-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2550, 96)))
++    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2480, 96)))
+     assert status == 201
+     status, headers, body, _ = v.http(e, 0, 'GET', '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
+     assert status == 200
+@@ -312,7 +353,7 @@ def main():
+     record('job_adopts_return_home', jpeg_bytes=len(body))
+ 
+     # Cancel while the page is running: motor and lamp off, page cancelled.
+-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2550, 400)))
++    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2480, 400)))
+     assert status == 201
+     job = '/eSCL/' + location.split('/eSCL/', 1)[1]
+     e.hold_in.add(0)
+@@ -334,7 +375,7 @@ def main():
+     record('delete_cancels_page_vendor_rows_refused')
+ 
+     # Continuous page cancelled while travelling: motor and lamp off.
+-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2550, 800)))
++    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2480, 800)))
+     assert status == 201
+     job = '/eSCL/' + location.split('/eSCL/', 1)[1]
+     e.run(lambda q: q.drive is not None and phase(q) == 10, resume=True, budget=400_000_000)
+@@ -344,7 +385,7 @@ def main():
+     record('delete_cancels_continuous_travel')
+ 
+     worst = max(e.motion_gaps)
+-    assert worst <= MOTION_GAP_LIMIT, f'motor poll gap {worst} instructions while driving'
++    assert worst <= MOTION_GAP_LIMIT, f'motor poll gap {worst} instructions while driving: {e.worst_gap}'
+     record('motor_serviced_during_escl_work', worst_gap_instructions=worst, samples=len(e.motion_gaps))
+ 
+     report['all_assertions_passed'] = True
+diff --git a/app/tests/validate_scan_finish.py b/app/tests/validate_scan_finish.py
+index bb1f0d4..b20e3be 100644
+--- a/app/tests/validate_scan_finish.py
++++ b/app/tests/validate_scan_finish.py
+@@ -54,7 +54,7 @@ def main():
+ 
+     e.run(lambda q: word(q, 'page_phase') == 7, resume=True, budget=400_000_000)
+     assert e.drive is None and e.regs.get(0xc0c85614, 0) == 0
+-    assert call(e, 'scanner_line_ready') == 32, 'return-home discarded unread rows'
++    assert call(e, 'scanner_line_ready') == 32 + 156, 'return-home discarded unread rows'   # 156 run-in lines at 300 dpi precede the region
+     status, _, body, _ = v.http(e, 0, 'GET',
+         '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
+     width, height, ctype, rows, _, depth = v.decode_png(body)

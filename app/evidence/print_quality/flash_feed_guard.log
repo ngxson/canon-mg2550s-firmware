@@ -1,0 +1,10 @@
+Before {'layout_version': 2, 'mode': 'application', 'held': False, 'busy': False, 'app_valid': True, 'dangerous_write': False, 'reboot_blocked': False, 'remaining_ms': 0, 'status': '80', 'application_flash': '0x10000', 'application_capacity': 2031616} scanner (1296582477, 1, 2, 0, 7340038, 7340038, 7340024, 7350635, 239823756, 239823822, 1, 1) power {'protocol': 'PWR1', 'state': 'standby', 'reason': 'timeout', 'last_result': 'none', 'fail_stage': 0, 'idle_timeout_s': 60, 'idle_age_ms': 219704, 'owners': [], 'last_error': 'none', 'capabilities': ['scanner', 'scan_motor', 'panel', 'timeout'], 'logical_outputs': {'scanner_power_reg': 0, 'panel_dark': True, 'head_prepared': True, 'scan_rows_unread': True, 'paper_held': False, 'scan_motor_ctrl': 0, 'scan_motor_compare': 2000}, 'transitions': 6, 'standby_count': 1, 'wake_count': 0, 'uptime_ms': 360412, 'unsupported': ['print parking/head capping', 'driver-IC sleep', 'rail switching', 'CPU sleep']}
+Flashing protected application 62517f311f4adb4993913d287225c7ef8c99841c09934274814304ec6cc7a42b
+Flash result {"layout_version": 2, "mode": "bootloader", "held": true, "busy": false, "app_valid": true, "dangerous_write": true, "reboot_blocked": false, "remaining_ms": 0, "status": "C0", "application_flash": "0x10000", "application_capacity": 2031616}
+Application ready {"layout_version": 2, "mode": "application", "held": false, "busy": false, "app_valid": true, "dangerous_write": false, "reboot_blocked": false, "remaining_ms": 0, "status": "80", "application_flash": "0x10000", "application_capacity": 2031616}
+Starting authorized IPP verification sheet
+Traceback (most recent call last):
+  File "<stdin>", line 25, in <module>
+  File "/opt/homebrew/Cellar/python@3.12/3.12.9/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py", line 573, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['/Users/ngxson/.venv/bin/python', '-u', 'app/tools/quality_ipp.py', '--print', '--out', 'app/evidence/print_quality']' returned non-zero exit status 1.

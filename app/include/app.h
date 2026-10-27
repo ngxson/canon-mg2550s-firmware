@@ -13,6 +13,10 @@
 #include "service.h"   /* pulls in fw.h + protocol.h */
 #include "escl.h"      /* IPP-USB / eSCL driverless scanning */
 
+/* Mutable buffers shared with USB DMA. app.ld keeps these outside every
+ * data-cacheable region and inside the hybrid's protected application RAM. */
+#define USB_DMA __attribute__((section(".usb_dma"), aligned(32)))
+
 /* Vendor control-IN (bmRequestType 0xC0) request that drains the debug log
  * ring buffer. The host polls it; an empty reply means "nothing buffered". */
 #define APP_REQUEST_LOG 0x50u
@@ -64,7 +68,7 @@ void scanner_burst_request(unsigned n, unsigned exposure_eighths, unsigned gain,
 unsigned scanner_burst_dump(uint8_t *out, unsigned chunk, unsigned max);
 #define APP_REQUEST_SCAN_BURST_OPTIONS 0x5eu   /* OUT: wValue = components (1|3) | repeat << 4 | window rows << 8 (0 = stock); wIndex = sub-period T >> 4 (0 = P0 default) */
 bool scanner_burst_options(unsigned components, unsigned repeat, uint32_t period, unsigned window, unsigned flags);   /* 0x5e wValue bits 13..15: full arm table, no 0x158 ack, immediate first request */
-/* src/cpu_cache.c: ARM946E-S instruction cache (CP15; data cache stays off for DMA). */
+/* src/cpu_cache.c: ARM946E-S cache control; DMA buffers remain uncached. */
 #define APP_REQUEST_CPU_CACHE 0x8cu      /* OUT: wValue bit0 = instruction cache on/off; logs a benchmark before and after */
 bool cpu_icache_set(bool on);
 void exception_report(void);             /* log and clear the persistent exception record (stock_shim.c) */
@@ -100,7 +104,8 @@ bool scanner_cal_valid(unsigned components);
 const uint16_t *scanner_cal_row(unsigned white, unsigned comp);   /* 1296 samples per segment... full 2592-sample row */
 #define APP_REQUEST_LINE_DUMP 0x5du      /* IN: chunk = wIndex << 16 | wValue of the raw line buffer */
 #define APP_REQUEST_HOME_SPEED 0x7eu     /* OUT: wValue = fast-return cruise / 100 (0 = classic homing) */
-#define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..13) */
+#define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..63) */
+#define APP_REQUEST_LINE_COLOUR 0x9eu    /* OUT: wValue = LED window eighths r | g << 4 | b << 8 (1..8 each), wIndex = AFE offset (0..255) */
 void print_selftest(void);          /* decode an embedded BJL band, emit result to the debug log */
 void print_bulk_begin(unsigned total); /* start a USB bulk print transfer of `total` bytes (USB 0x61) */
 void print_bulk_feed(const uint8_t *data, unsigned len); /* feed received bulk bytes; decodes when complete */
@@ -168,6 +173,12 @@ unsigned hybrid_trace(uint8_t *out, unsigned index);
 #define APP_REQUEST_HYBRID_BAND 0x9au    /* OUT: wValue = columns (multiple of 32), wIndex = nozzle rows (bits 0..8, multiple of 8, <= 304) | 0x800 colour lanes | stock print mode << 12 (0 = 1) */
 #define APP_REQUEST_HYBRID_PLACE 0x9bu   /* OUT: wValue = stock common horizontal placement (int16, Q+0x3a) for the next band-run */
 bool hybrid_band_params(unsigned cols, unsigned rows, int place, bool set_place);
+uint32_t hybrid_last_result(void);
+unsigned hybrid_routines_run(void);
+bool hybrid_sheet_loaded(void);
+uint8_t *hybrid_manager_raster(unsigned group, unsigned *slots, unsigned *width, unsigned *stride, unsigned *size);
+#define APP_REQUEST_PRINT_JOB_STATUS 0xa2u  /* IN: 16 words "PRT1", see src/print_engine.c */
+#define APP_REQUEST_PRINT_JOB_CONTROL 0xa3u /* OUT: wValue 1 = dry mode (wIndex 0/1, emulator only), 2 = cancel the job */
 bool hybrid_raster_begin(unsigned total, unsigned manager);   /* USB 0x99: start receiving a band raster into print-buffer manager 0..6 (6 = black) */
 void hybrid_raster_feed(const uint8_t *data, unsigned len);
 bool hybrid_raster_active(void);
@@ -232,12 +243,33 @@ void scanner_motor_poll(void);             /* drive deadline checked every main 
 void app_yield(void);
 extern const char *app_section;   /* protocol work in progress, for motor diagnostics */
 extern uint32_t app_loop_max_ticks, app_loop_count;
+bool cpu_dcache_set(bool on);             /* write-through data cache over the app's DRAM (page scans) */
 void canary_init(void);
 int canary_check(uint32_t *value);        /* -1 intact, else the damaged word index and its value */
 void scratch_pattern_fill(void);          /* diagnostic: pattern the idle print buffer */
 int scratch_pattern_check(uint32_t *value); /* -1 intact, else first damaged offset and 4 bytes */
 void scanner_line_dma_report(void);        /* diagnostic: live LDMAC words of the ring channels */
 #define APP_REQUEST_PEEK 0x9du           /* IN: wValue | wIndex << 16 = app RAM address (0x20000000..0x20800000, read-only), 64 bytes */
+/* Power manager (src/power.c): USB and management stay up; unused hardware rests. */
+#define APP_REQUEST_POWER_STATUS 0xa0u   /* IN: 16 words, protocol "PWR1"; read-only, never wakes anything */
+#define APP_REQUEST_POWER_CONTROL 0xa1u  /* OUT: wValue = op (1 standby, 2 wake, 3 idle timeout with wIndex = seconds, 0 = never) */
+#define POWER_OP_STANDBY 1u
+#define POWER_OP_WAKE 2u
+#define POWER_OP_TIMEOUT 3u
+#define POWER_CAP_SCANNER 0x01u          /* scanner analog power + illumination off in standby */
+#define POWER_CAP_SCAN_MOTOR 0x02u       /* scanner motor outputs neutral in standby */
+#define POWER_CAP_PANEL 0x04u            /* panel LEDs dark in standby, keys still scanned */
+#define POWER_CAP_TIMEOUT 0x08u          /* inactivity timer (RAM only) */
+void power_init(void);
+void power_poll(void);
+bool power_request(unsigned op, unsigned arg);
+void power_button(void);
+unsigned power_status(uint8_t *out);
+bool power_asleep(void);
+unsigned power_state_code(void);
+bool scanner_lamp_on(void);              /* continuous illumination active (an owner) */
+bool scanner_armed(void);                /* a stationary capture or burst is queued (an owner) */
+bool scanner_motor_quiesce(void);        /* idle: outputs neutral, reversible; returns true when outputs read idle */
 void scanner_motor_cancel(void);
 void scanner_motor_shutdown(void);         /* stop and inhibit until reset */
 unsigned scanner_home_result(void);
@@ -249,6 +281,7 @@ bool scanner_motor_scan_throttle(uint32_t speed);              /* live cruise ch
 bool scanner_motor_at_reference(void);  /* idle, referenced and parked at home */
 bool scanner_motor_set_return_speed(unsigned counts_per_s); /* experiment: fast return cruise, 0 or 20000..120000 */
 bool scanner_line_set_afe(unsigned exposure_eighths, unsigned gain); /* experiment: continuous-scan optics */
+bool scanner_line_set_colour(unsigned windows, unsigned offset);   /* per-LED windows r|g<<4|b<<8 (eighths), AFE offset */
 bool scan_page_continuous(void);
 void scan_page_set_speed(unsigned counts_per_s);   /* diagnostic: continuous travel speed */
 #define APP_REQUEST_SCAN_SPEED 0x7cu     /* OUT: wValue = continuous speed / 100 (130..300) */

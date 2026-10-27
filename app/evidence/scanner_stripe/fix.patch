@@ -1,0 +1,115 @@
+--- a/app/src/scan_source_scanner.c
++++ b/app/src/scan_source_scanner.c
+@@ -1,15 +1,14 @@
+-/* Scan source backed by the scanner: the page sequencer (scan_page.c) homes,
+- * steps to each line and captures it stationary with optical profile 0; this
+- * file turns each 2592-sample line into output pixels.
++/* Scan source backed by the scanner: the page sequencer (scan_page.c) homes
++ * and acquires lines during continuous travel or stationary steps; this file
++ * turns each 2592-sample line into output pixels.
+  *
+  * Geometry: 38400 encoder counts per inch along travel (128 per 1/300 inch),
+  * so 75 and 150 dpi are pitches of 512 and 256 counts (the sequencer's limits).
+  * Across, the 2592 samples are assumed to span the 216 mm platen width (as the
+  * page PoC assumed); each output pixel averages the samples it covers.
+  *
+- * Levels are not yet calibrated per sample: no dark/white shading (next step). A fixed linear map per
+- * mode takes a measured dark level to black and a measured paper-white level
+- * to white, followed by a gamma 1/2.2 curve (the sensor is linear; viewers
++ * Run-in dark/white references provide per-sample shading, with fixed levels
++ * as a fallback, followed by a gamma 1/2.2 curve (the sensor is linear; viewers
+  * expect sRGB-like encoding, without it paper looks grey). Colour uses the
+  * three-phase illumination (one component row per LED); grey the combined
+  * exposure. */
+@@ -32,11 +31,15 @@
+  * ~128..152, stock's document origin lies 156 later than our start (swatch
+  * edges against the stock scan), and stock's first column is 8 units right of
+  * sample 0. Every page scans from the mechanical start; the run-in lines give
+- * the per-sample white/dark arrays (stock's calibration, brief 21 §5). */
++ * the per-sample white/dark arrays (stock's calibration, brief 21 §5).
++ * The strip's central notch remains dark through ~30 units. Sampling
++ * 20..90 averaged that notch into the centre columns, creating a bright
++ * vertical stripe. Raw full-width reference captures show 40..75 is white
++ * across the whole sensor and precedes the strip's trailing falloff. */
+ #define DOC_ORIGIN 156u
+ #define SAMPLE_ORIGIN 4u
+-#define STRIP_FROM 20u
+-#define STRIP_TO 90u
++#define STRIP_FROM 40u
++#define STRIP_TO 76u
+ #define DARK_FROM 132u
+ #define DARK_TO 148u
+ #define TRAVEL_UNITS 3672u         /* mechanical start to the end of travel, 1/300 inch (stock's 3508 rows from its origin) */
+--- a/app/src/ippusb.c
++++ b/app/src/ippusb.c
+@@ -283,6 +283,9 @@
+ {
+     struct conn *k = &conns[conn];
+     while (k->rx != RX_DONE && k->packet_position < k->packet_length) {
++        /* A whole HTTP packet can exceed the scanner servo's polling budget,
++         * even when its body is only settings/status traffic. */
++        if (!(k->packet_position & 63u)) app_yield();
+         uint8_t b = packets[conn][k->packet_position++];
+         switch (k->rx) {
+         case RX_HEAD:
+--- a/app/tests/validate_escl_scan.py
++++ b/app/tests/validate_escl_scan.py
+@@ -40,9 +40,9 @@
+ 
+ SAMPLES, SPAN, BLACK, WHITE = 2592, 2550, 26000, 65000
+ DARK = 1200
+-# Run-in geometry mirrored from scan_source_scanner.c (1/300 inch from the
+-# mechanical start): lid strip, platen-edge dark bar, stock's document origin,
+-# and the sample offset of stock's first column.
++# Optical geometry, independent of the firmware's chosen calibration window
++# (1/300 inch from mechanical start). The strip has a central dark notch
++# through row 31, measured in scanner_stripe/reference_rows_0_171.bin.
+ STRIP, DARKBAR, DOC_ORIGIN, SAMPLE_ORIGIN = (20, 90), (132, 148), 156, 4
+ 
+ 
+@@ -152,10 +152,16 @@
+             line = [DARK] * SAMPLES
+         elif moving and STRIP[0] <= u < STRIP[1]:
+             line = white_line()                              # the lid's white strip during the run-in
++            if u < 32:
++                line[1180:1416] = [DARK] * (1416 - 1180)
+         elif moving and DARKBAR[0] <= u < DARKBAR[1]:
+             line = [DARK] * SAMPLES                          # the platen-edge dark bar
+         elif moving:
+-            line = [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)]
++            # Midtones expose a wrong reference gain; saturated white would
++            # hide it. Enabled by the focused central-notch colour case.
++            line = ([18000 + (s % 97) * 41 for s in range(SAMPLES)]
++                    if getattr(self, 'reference_notch_probe', False)
++                    else [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)])
+         else:
+             line = white_line()                              # stationary reference: the same every capture
+         self.lines.append(line)
+--- a/app/tests/validate_colour_continuous.py
++++ b/app/tests/validate_colour_continuous.py
+@@ -87,8 +87,11 @@
+     capacity = call(e, 'scanner_line_capacity', 3)
+     # Include a complete 75 dpi page: shorter tests missed the physical hang
+     # around row 555. Synthetic DMA cannot establish its hardware cause.
+-    for res, count in ((75, 24), (150, 24), (300, 32), (300, capacity + 12), (75, 876)):
+-        x, y, width = (0, 0, 2480) if count == 876 else (120, 0, 180)
++    for res, count in ((300, 16), (75, 24), (150, 24), (300, 32), (300, capacity + 12), (75, 876)):
++        # The short first region crosses both sides of the measured reference
++        # notch. It catches calibration averaging that brightens central columns.
++        x, y, width = (0, 0, 2480) if count == 876 else (1100, 0, 400) if count == 16 else (120, 0, 180)
++        e.reference_notch_probe = count == 16
+         step = 300 // res
+         pixels, height = width // step, count * step
+         before = len(e.lines)
+@@ -113,7 +116,10 @@
+                     if not part: break
+                     log += bytes(part)
+                 print('FIRMWARE LOG:', [l for l in log.decode('latin1').splitlines() if '[cal]' in l or '[line] start' in l][-8:])
+-                raise AssertionError(('RGB samples differ', res, j, list(rows[j][:12]), list(expected[:12]), 'raw', line[:6]))
++                at = next(k for k, (got, want) in enumerate(zip(rows[j], expected)) if got != want)
++                raise AssertionError(('RGB samples differ', res, j, 'input x', x + at // 3 * step,
++                                      'byte', at, 'got', list(rows[j][at:at + 12]),
++                                      'expected', list(expected[at:at + 12])))
+         e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
+         assert phase(e) == 7 and e.drive is None
+         assert e.regs.get(0xc0c85614, 0) == 0

@@ -16,6 +16,7 @@
  * (HTTP/1.0 gets 505), and the request's Host value is echoed as the Server
  * header and in self-referencing URLs (see escl.c and ipp.c). */
 #include "app.h"
+#include "print_job.h"
 
 #define RX_SIZE 8192u
 #define TX_SIZE 16384u
@@ -37,12 +38,14 @@ struct conn {
     bool armed, sending, unterminated;
     unsigned pending;                  /* complete bytes waiting in tx */
     const struct http_stream *stream;
+    bool ipp, doc;                     /* POST application/ipp: attributes buffered, the document streamed to ipp.c */
+    struct ipp_scan scan;
 };
 
 static struct conn conns[IPPUSB_INTERFACES];
-static uint8_t packets[IPPUSB_INTERFACES][512] ALIGNED;
+static uint8_t packets[IPPUSB_INTERFACES][512] USB_DMA;
 static uint8_t rx_buffers[IPPUSB_INTERFACES][RX_SIZE];
-static uint8_t tx_buffers[IPPUSB_INTERFACES][TX_SIZE] ALIGNED;
+static uint8_t tx_buffers[IPPUSB_INTERFACES][TX_SIZE] USB_DMA;
 static char scratch[8192];
 static const char *reply_host = "localhost";  /* Host of the request being handled */
 
@@ -237,6 +240,24 @@ static void parse_head(unsigned conn, unsigned *content_length, bool *chunked, b
     }
 }
 
+static const char *rq_method(const struct conn *k) { return k->request.method ? k->request.method : ""; }
+
+/* A body byte of a request: IPP attributes are stored; once their end tag has
+ * passed, the document that follows streams to ipp.c (which accepts it into
+ * the print engine or drains it). Returns false when the engine cannot take
+ * more right now: the packet stays where it is and is retried next poll. */
+static bool body_byte(unsigned conn, uint8_t b)
+{
+    struct conn *k = &conns[conn];
+    if (k->doc) return ipp_document_feed(conn, &b, 1) == 1;
+    store(conn, b);
+    if (k->ipp && ipp_scan_byte(&k->scan, b)) {
+        k->doc = true;
+        ipp_document_begin(conn, rx_buffers[conn] + k->head_length, k->rx_length - k->head_length);
+    }
+    return true;
+}
+
 static void header_complete(unsigned conn)
 {
     struct conn *k = &conns[conn];
@@ -248,6 +269,8 @@ static void header_complete(unsigned conn)
     if (chunked) { k->rx = RX_CHUNK_SIZE; k->left = 0; k->extension = false; }
     else if (length) { k->rx = RX_BODY; k->left = length; }
     else { k->rx = RX_DONE; return; }
+    k->ipp = same(rq_method(k), "POST") && k->request.content_type && contains(k->request.content_type, "application/ipp");
+    k->doc = false; k->scan = (struct ipp_scan){0};
     if (expect) {
         static const char interim[] = "HTTP/1.1 100 Continue\r\n\r\n";
         memcpy(tx_buffers[conn], interim, sizeof(interim) - 1u);
@@ -260,6 +283,9 @@ static void consume(unsigned conn)
 {
     struct conn *k = &conns[conn];
     while (k->rx != RX_DONE && k->packet_position < k->packet_length) {
+        /* A whole HTTP packet can exceed the scanner servo's polling budget,
+         * even when its body is only settings/status traffic. */
+        if (!(k->packet_position & 63u)) app_yield();
         uint8_t b = packets[conn][k->packet_position++];
         switch (k->rx) {
         case RX_HEAD:
@@ -269,7 +295,19 @@ static void consume(unsigned conn)
             if (k->tail == 0x0d0a0d0au || (k->tail & 0xffffu) == 0x0a0au) header_complete(conn);
             break;
         case RX_BODY:
-            store(conn, b);
+            if (k->doc) {                                     /* document bytes: hand over the whole run */
+                unsigned n = k->packet_length - k->packet_position + 1u;
+                if (n > k->left) n = k->left;
+                unsigned taken = ipp_document_feed(conn, packets[conn] + k->packet_position - 1u, n);
+                k->packet_position += taken - 1u; k->left -= taken;
+                if (!k->left) k->rx = RX_DONE;
+                /* Position already points at the first unconsumed byte.
+                 * Rewinding here duplicates data (or underflows at offset 0)
+                 * whenever a full print ring applies backpressure. */
+                if (taken < n) return;
+                break;
+            }
+            if (!body_byte(conn, b)) { --k->packet_position; return; }
             if (!--k->left) k->rx = RX_DONE;
             break;
         case RX_CHUNK_SIZE:
@@ -286,7 +324,7 @@ static void consume(unsigned conn)
             }
             break;
         case RX_CHUNK_DATA:
-            store(conn, b);
+            if (!body_byte(conn, b)) { --k->packet_position; return; }
             if (!--k->left) k->rx = RX_CHUNK_END;
             break;
         case RX_CHUNK_END:
@@ -328,6 +366,8 @@ static void dispatch(unsigned conn)
     rq.body_length = k->rx_length - k->head_length;
     k->rx = RX_HEAD; k->rx_length = k->head_length = 0; k->tail = 0;
     k->overflow = k->bad = k->http10 = false;
+    if (k->doc && overflow) overflow = false;                 /* the document never touched the receive buffer */
+    k->ipp = k->doc = false;
     /* Request trace for host-interoperability work (status follows on reply). */
     dbg_puts("[http] c"); dbg_dec(conn); dbg_putc(' ');
     dbg_puts(bad ? "(bad request)" : rq.method); dbg_putc(' ');
@@ -353,6 +393,7 @@ static void drop(unsigned conn, bool endpoints_reset)
 {
     struct conn *k = &conns[conn];
     if (k->stream && k->stream->abort) k->stream->abort();
+    if (k->doc) ipp_document_abort(conn);
     bool armed = k->armed, sending = k->sending;
     memset(k, 0, sizeof(*k));
     /* A transfer still owned by the controller completes later as usual. */

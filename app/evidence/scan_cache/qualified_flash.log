@@ -1,0 +1,3 @@
+Uploading protected app c26c1e321319b4f00d47177e81089133089a483372a7b710cb281f1075987fff
+Verified upload {"layout_version": 2, "mode": "bootloader", "held": true, "busy": false, "app_valid": true, "dangerous_write": true, "reboot_blocked": false, "remaining_ms": 0, "status": "C0", "application_flash": "0x10000", "application_capacity": 2031616}
+Application running {"layout_version": 2, "mode": "application", "held": false, "busy": false, "app_valid": true, "dangerous_write": false, "reboot_blocked": false, "remaining_ms": 0, "status": "80", "application_flash": "0x10000", "application_capacity": 2031616}

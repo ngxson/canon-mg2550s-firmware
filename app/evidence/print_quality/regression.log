@@ -1,0 +1,175 @@
+CHECK app
+PASS app_boots_and_reports_management
+PASS usb_debug_log_drains
+PASS app_reboots_into_held_rescue
+ALL APP ASSERTIONS PASSED
+CHECK home
+RUN normal
+PASS normal
+RUN frozen
+PASS frozen
+RUN backoff_stuck
+PASS backoff_stuck
+RUN wrong
+PASS wrong
+RUN wrong_return_end
+PASS wrong_return_end
+RUN early_completion
+PASS early_completion
+PASS already_at_home_requires_backoff_and_repeat
+PASS raw_counter_rollover_during_home
+PASS independent_seek_deadline
+PASS stop_button
+PASS stop_usb
+PASS stop_delayed_tick
+PASS serial_failure_no_drive
+PASS live_usb_info_and_reboot
+PASS i2c_rescue_after_failed_home
+ALL HOME ASSERTIONS PASSED
+CHECK motor
+PASS both_usb_jog_polarities_frozen_deadline
+PASS cancel_stops_without_toggling_lamp
+PASS travel_guard_0
+PASS travel_guard_1
+PASS serial_timeout_no_drive
+PASS invalid_direction
+PASS shared_setup_refuses_other_active_motor
+PASS overlap_stops
+ALL MOTOR ASSERTIONS PASSED
+CHECK buttons
+PASS buttons_probe: reported ['0x00000000', '0x00000040', '0x00000000']
+PASS lamp_toggle: illumination ON/OFF via Cancel, 0xc0c85614 1->0, motor untouched
+ALL BUTTON PROBE ASSERTIONS PASSED
+CHECK scanner
+PASS scanner_capture_emulated: 3072 samples match the synthetic image
+ALL SCANNER EMU ASSERTIONS PASSED
+CHECK page
+PASS full_sequence_fresh_rows_return_home
+PASS missing_dma_rejected
+PASS abandoned_host_stops
+PASS stuck_forward_step
+PASS cancel_during_step
+PASS usb_cancel
+PASS button_cancel
+PASS live_management_conflict_and_reboot
+ALL PAGE ASSERTIONS PASSED
+CHECK cartridge
+PASS both_heads_power_sequence {'id': 5, 'dest': 21, 'rank1': 42, 'rank2': None, 'inklvl': 63, 'high': 0} {'id': 9, 'dest': 44, 'rank1': 19, 'rank2': 11, 'inklvl': 127, 'high': 48879}
+PASS keep_prepared_then_shutdown
+PASS raw_mode_matches_first_attempt
+PASS colour_connection_failure_reported
+PASS head_block_init_and_retention
+PASS captured_words_fixture
+PASS invalid_requests_stall
+PASS management_during_and_after
+PASS head_adc_read 1007 2007
+ALL CARTRIDGE ASSERTIONS PASSED
+CHECK printregs
+PASS prep_variant 1 writes 9
+PASS prep_variant 3 writes 9
+PASS prep_variant 7 writes 18
+PASS prep_variant 9 writes 78
+PASS prep_rejections
+PASS gpio_snapshot
+PASS lf_jog_bounded ['0x70000', '0x7004b', '0x19']
+PASS fourth_channel_jog_bounded
+PASS carriage_channel_jog_bounded
+PASS print_regs_dump_read_only ['0x0', '0x0', '0x0', '0x0', '0x0']
+ALL PRINT REGS ASSERTIONS PASSED
+CHECK feed
+PASS feed_and_eject (1, 22980, 3878, 8120)
+PASS feed_and_hold (1, 22980, 8197, 0)
+PASS eject_only (0, 0, 0, 3808)
+PASS no_paper_three_attempts (3, 270000, 0, 0)
+PASS usb_stop_cancels
+PASS jam_detected (1, 22980, 3878, 60004)
+PASS manual_run_switch_stop
+PASS invalid_mode_and_reboot
+ALL FEED ASSERTIONS PASSED
+CHECK carriage
+PASS home reference 0x61580
+PASS move_left x= 49856
+PASS move_right x= 1152
+PASS limits_refused
+PASS stall_detected
+PASS short_moves errors [328, 264, 328, 328, 328, 264, 328, 328, 328, 264, 328, 328]
+PASS usb_stop
+ALL CARRIAGE ASSERTIONS PASSED
+CHECK page_job
+PASS three_bands sweep_ms 22474 states [1, 2, 3, 4, 3, 4, 3, 5, 6, 0]
+PASS no_paper_feed_failed
+PASS stop_during_sweep
+ALL PAGE JOB ASSERTIONS PASSED
+CHECK head_fire
+PASS refusals (no rank, no carriage reference, parameters)
+PASS default_prefire: 141 ordered engine writes match the brief, 2 completions mask 3 count 100
+PASS ambient_bins {30: (4, 4), 40: (3, 3), 50: (3, 2), 55: (2, 2), 70: (2, 1)}
+PASS dry_run (no arm, interface left prepared)
+PASS single_record_options
+PASS colour_list_id25
+PASS custom_record_words
+PASS pattern_override
+PASS wrong_rank_refused
+PASS timeout_cleanup wait_ms=1000
+PASS management_during_and_after
+ALL HEAD FIRE ASSERTIONS PASSED
+CHECK stamp
+#...####
+#...#.#.
+#...#.#.
+#####.#.
+#...#.#.
+#...#.#.
+#...####
+PASS text 'HI': 8 entries fired while crawling, lag counts [-45, -45, -49, -49, -41, -45, -45, -45], job 6584 ms
+PASS dry_job
+PASS cancel_during_crawl
+PASS refusals
+ALL STAMP ASSERTIONS PASSED
+CHECK tunnel
+PASS reads and allowlist
+PASS writes, lock and counters (4, 2, 10, 0)
+ALL TUNNEL ASSERTIONS PASSED
+CHECK bench
+PASS power_toggles_carriage
+PASS bw_places_sheet
+PASS colour_advances_1024
+PASS cancel_ejects
+PASS default_map_restored
+ALL BENCH ASSERTIONS PASSED
+CHECK power
+PASS boot: ready, 60 s default, caps 0x0f, no owners
+PASS control: invalid timeout/op stalled (result=invalid), 2 s accepted and rebased
+PASS idle standby: after 2005 ms idle with status polling; panel dark; 0xc0c85614=0; motor untouched
+PASS asleep: INFO answers, repeated standby is a no-op
+PASS wake: ready, panel relit, scanner/motor still off, idempotent
+PASS busy: standby refused (result=busy, owners=0x4), lamp stays on past the timeout
+PASS auto wake: job admitted in standby -> waking -> active, panel relit; release -> ready
+PASS power key: standby / wake from the panel
+PASS timer: 0 disables (100 s idle stays ready); new setting rebases the idle age
+PASS wrap: standby fired across the millisecond wrap (now=0x7e5 idle=3022)
+PASS fault: injected scanner-power readback -> fault(stage 2, error 1), wake clears, standby again ok
+PASS rescue: reboot request honoured while asleep
+ALL POWER ASSERTIONS PASSED
+CHECK escl
+PASS descriptor_has_two_ipp_usb_interfaces {"interfaces": [[255, 0, 0], [255, 0, 0], [7, 1, 4], [7, 1, 4]]}
+PASS set_interface_and_device_id_on_ipp_interface 
+PASS print_job_document_streamed_and_refused {"body_bytes": 50154}
+PASS ipp_get_printer_attributes {"attributes": 2}
+PASS escl_capabilities {"modes": ["BlackAndWhite1", "Grayscale8", "RGB24"], "resolutions": [75, 150, 300], "formats": ["image/jpeg", "image/png"]}
+PASS status_root_page_and_errors 
+PASS legacy_printer_interface_discards_stray_data {"bytes": 2304}
+PASS full_page_grayscale_75dpi {"pixels": [637, 876], "png_bytes": 573852, "transfers": 76}
+PASS rgb_region_150dpi_chunked_post_concurrent_status {"pixels": [300, 150], "png_bytes": 137772}
+PASS expect_100_continue_and_cancel_before_transfer 
+PASS cancel_mid_stream_truncates_image {"png_bytes": 76736}
+PASS unsupported_settings_conflict 
+PASS macos_overview_settings_bilevel_jpeg_defaults {"result": [637, 876, 51.4], "jpeg_bytes": 33288}
+PASS jpeg_rgb24_150dpi {"result": [503, 235, 42.7], "jpeg_bytes": 16487}
+PASS jpeg_grayscale8_75dpi {"result": [251, 117, 47.4], "jpeg_bytes": 3327}
+PASS unfetched_job_times_out 
+PASS management_alive_and_reboots_into_rescue {"zero_length_packets": 0, "info_replies": 1061}
+PASS full_speed_64_byte_packets {"pixels": [160, 32]}
+PASS packet_boundary_response_ends_with_zero_length_packet {"response_bytes": 128}
+ALL ESCL ASSERTIONS PASSED
+ALL 17 CHECKS PASSED

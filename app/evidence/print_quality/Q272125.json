@@ -1,0 +1,936 @@
+{
+  "label": "Q272125",
+  "created_utc": "2026-10-27T21:25:43Z",
+  "x_start": 35008,
+  "first_ulf": 650,
+  "pitch_ulf": 640,
+  "passes": [
+    {
+      "name": "C1024A",
+      "cols": 1024,
+      "colour": true,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 81,
+            "width": 1024,
+            "stride": 1296,
+            "size": 82944,
+            "base": 539534848,
+            "raster": 539536832,
+            "raster_unaligned": 539536792
+          },
+          "bytes": 82944,
+          "seconds": 0.05,
+          "raster": "0x1828adc0",
+          "checked": 82944,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "C": {
+          "manager": {
+            "slots": 61,
+            "width": 2048,
+            "stride": 976,
+            "size": 124928,
+            "base": 539155552,
+            "raster": 539157056,
+            "raster_unaligned": 539157016
+          },
+          "bytes": 124928,
+          "seconds": 0.07,
+          "raster": "0x1822e240",
+          "checked": 124928,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "M": {
+          "manager": {
+            "slots": 61,
+            "width": 2048,
+            "stride": 976,
+            "size": 124928,
+            "base": 539281984,
+            "raster": 539283456,
+            "raster_unaligned": 539283448
+          },
+          "bytes": 124928,
+          "seconds": 0.07,
+          "raster": "0x1824d000",
+          "checked": 124928,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "Y": {
+          "manager": {
+            "slots": 61,
+            "width": 2048,
+            "stride": 976,
+            "size": 124928,
+            "base": 539408416,
+            "raster": 539409920,
+            "raster_unaligned": 539409880
+          },
+          "bytes": 124928,
+          "seconds": 0.07,
+          "raster": "0x1826be00",
+          "checked": 124928,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 20598,
+        "C": 8320,
+        "M": 8320,
+        "Y": 8320
+      },
+      "counters_before_cleared": {
+        "0": 4200,
+        "1": 4200,
+        "2": 2520,
+        "3": 5880,
+        "5": 2520,
+        "4": 5880,
+        "7": 2520,
+        "6": 5880
+      },
+      "counters": {
+        "0": 10504,
+        "1": 10094,
+        "2": 8320,
+        "3": 0,
+        "5": 8320,
+        "4": 0,
+        "7": 8320,
+        "6": 0
+      }
+    },
+    {
+      "name": "C1024B",
+      "cols": 1024,
+      "colour": true,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 81,
+            "width": 1024,
+            "stride": 1296,
+            "size": 82944,
+            "base": 539534848,
+            "raster": 539536832,
+            "raster_unaligned": 539536792
+          },
+          "bytes": 82944,
+          "seconds": 0.04,
+          "raster": "0x1828adc0",
+          "checked": 82944,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "C": {
+          "manager": {
+            "slots": 61,
+            "width": 2048,
+            "stride": 976,
+            "size": 124928,
+            "base": 539155552,
+            "raster": 539157056,
+            "raster_unaligned": 539157016
+          },
+          "bytes": 124928,
+          "seconds": 0.07,
+          "raster": "0x1822e240",
+          "checked": 124928,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "M": {
+          "manager": {
+            "slots": 61,
+            "width": 2048,
+            "stride": 976,
+            "size": 124928,
+            "base": 539281984,
+            "raster": 539283456,
+            "raster_unaligned": 539283448
+          },
+          "bytes": 124928,
+          "seconds": 0.07,
+          "raster": "0x1824d000",
+          "checked": 124928,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "Y": {
+          "manager": {
+            "slots": 61,
+            "width": 2048,
+            "stride": 976,
+            "size": 124928,
+            "base": 539408416,
+            "raster": 539409920,
+            "raster_unaligned": 539409880
+          },
+          "bytes": 124928,
+          "seconds": 0.07,
+          "raster": "0x1826be00",
+          "checked": 124928,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 20630,
+        "C": 8320,
+        "M": 8320,
+        "Y": 8320
+      },
+      "counters_before_cleared": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      },
+      "counters": {
+        "0": 10520,
+        "1": 10110,
+        "2": 8320,
+        "3": 0,
+        "5": 8320,
+        "4": 0,
+        "7": 8320,
+        "6": 0
+      }
+    },
+    {
+      "name": "K1024",
+      "cols": 1024,
+      "colour": false,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 80,
+            "width": 1024,
+            "stride": 1280,
+            "size": 81920,
+            "base": 539032608,
+            "raster": 539034560,
+            "raster_unaligned": 539034528
+          },
+          "bytes": 81920,
+          "seconds": 0.04,
+          "raster": "0x182103c0",
+          "checked": 81920,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 20326
+      },
+      "counters_before_cleared": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      },
+      "counters": {
+        "0": 10368,
+        "1": 9958,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      }
+    },
+    {
+      "name": "K2112",
+      "cols": 2112,
+      "colour": false,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 80,
+            "width": 2112,
+            "stride": 1280,
+            "size": 168960,
+            "base": 539032608,
+            "raster": 539034560,
+            "raster_unaligned": 539034528
+          },
+          "bytes": 168960,
+          "seconds": 0.09,
+          "raster": "0x182103c0",
+          "checked": 168960,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 20182
+      },
+      "counters_before_cleared": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      },
+      "counters": {
+        "0": 10296,
+        "1": 9886,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      }
+    },
+    {
+      "name": "K4224",
+      "cols": 4224,
+      "colour": false,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 80,
+            "width": 4224,
+            "stride": 1280,
+            "size": 337920,
+            "base": 539032608,
+            "raster": 539034560,
+            "raster_unaligned": 539034528
+          },
+          "bytes": 337920,
+          "seconds": 0.18,
+          "raster": "0x182103c0",
+          "checked": 337920,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 20310
+      },
+      "counters_before_cleared": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      },
+      "counters": {
+        "0": 10360,
+        "1": 9950,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      }
+    },
+    {
+      "name": "C2112",
+      "cols": 2112,
+      "colour": true,
+      "uploads": {
+        "K": {
+          "manager": {
+            "slots": 81,
+            "width": 2112,
+            "stride": 1296,
+            "size": 171072,
+            "base": 539933056,
+            "raster": 539935040,
+            "raster_unaligned": 539935000
+          },
+          "bytes": 171072,
+          "seconds": 0.09,
+          "raster": "0x182ec140",
+          "checked": 171072,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "C": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539155552,
+            "raster": 539157056,
+            "raster_unaligned": 539157016
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1822e240",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "M": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539414720,
+            "raster": 539416192,
+            "raster_unaligned": 539416184
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x1826d680",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        },
+        "Y": {
+          "manager": {
+            "slots": 61,
+            "width": 4224,
+            "stride": 976,
+            "size": 257664,
+            "base": 539673888,
+            "raster": 539675392,
+            "raster_unaligned": 539675352
+          },
+          "bytes": 257664,
+          "seconds": 0.14,
+          "raster": "0x182acb00",
+          "checked": 257664,
+          "mismatches": 0,
+          "first_bad": []
+        }
+      },
+      "expected_plane_dots": {
+        "K": 20166,
+        "C": 8320,
+        "M": 8320,
+        "Y": 8320
+      },
+      "counters_before_cleared": {
+        "0": 0,
+        "1": 0,
+        "2": 0,
+        "3": 0,
+        "5": 0,
+        "4": 0,
+        "7": 0,
+        "6": 0
+      },
+      "counters": {
+        "0": 10288,
+        "1": 9878,
+        "2": 8320,
+        "3": 0,
+        "5": 8320,
+        "4": 0,
+        "7": 8320,
+        "6": 0
+      }
+    }
+  ],
+  "steps": [
+    {
+      "routine": 8,
+      "flags": 6400,
+      "index": 50,
+      "status": [
+        1314214472,
+        0,
+        2,
+        2,
+        80,
+        6,
+        2688,
+        62,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 5.21
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 650,
+      "status": [
+        1314214472,
+        0,
+        3,
+        2,
+        10,
+        4,
+        2688,
+        62,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      "seconds": 0.79
+    },
+    {
+      "routine": 5,
+      "flags": 1024,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        4,
+        2,
+        6,
+        4,
+        2688,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539629472,
+        539534848,
+        8,
+        0
+      ],
+      "seconds": 0.34
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        5,
+        3,
+        33,
+        6,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539629472,
+        539534848,
+        8,
+        0
+      ],
+      "seconds": 5.55
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 640,
+      "status": [
+        1314214472,
+        0,
+        6,
+        3,
+        9,
+        4,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539629472,
+        539534848,
+        8,
+        0
+      ],
+      "seconds": 0.75
+    },
+    {
+      "routine": 5,
+      "flags": 0,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        7,
+        3,
+        6,
+        4,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539629472,
+        539534848,
+        8,
+        0
+      ],
+      "seconds": 0.09
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        8,
+        3,
+        23,
+        6,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539629472,
+        539534848,
+        8,
+        0
+      ],
+      "seconds": 2.83
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 640,
+      "status": [
+        1314214472,
+        0,
+        9,
+        3,
+        9,
+        4,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539629472,
+        539534848,
+        8,
+        0
+      ],
+      "seconds": 0.8
+    },
+    {
+      "routine": 5,
+      "flags": 0,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        10,
+        3,
+        6,
+        4,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539120512,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 0.07
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        11,
+        3,
+        23,
+        6,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539120512,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 1.18
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 640,
+      "status": [
+        1314214472,
+        0,
+        12,
+        3,
+        9,
+        4,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539120512,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 0.76
+    },
+    {
+      "routine": 5,
+      "flags": 0,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        13,
+        3,
+        6,
+        4,
+        51604,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539209928,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 0.07
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        14,
+        3,
+        23,
+        6,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539209928,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 1.98
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 640,
+      "status": [
+        1314214472,
+        0,
+        15,
+        3,
+        9,
+        4,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539209928,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 0.75
+    },
+    {
+      "routine": 5,
+      "flags": 0,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        16,
+        3,
+        6,
+        4,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539382912,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 0.08
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        17,
+        3,
+        21,
+        6,
+        102804,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539382912,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 4.51
+    },
+    {
+      "routine": 10,
+      "flags": 2048,
+      "index": 640,
+      "status": [
+        1314214472,
+        0,
+        18,
+        3,
+        9,
+        4,
+        102804,
+        62,
+        0,
+        0,
+        0,
+        0,
+        539382912,
+        539032608,
+        8,
+        0
+      ],
+      "seconds": 0.76
+    },
+    {
+      "routine": 5,
+      "flags": 0,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        19,
+        3,
+        6,
+        4,
+        102804,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 0.11
+    },
+    {
+      "routine": 7,
+      "flags": 4352,
+      "index": 50,
+      "status": [
+        1314214472,
+        1,
+        20,
+        3,
+        21,
+        6,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        540123168,
+        539933056,
+        8,
+        0
+      ],
+      "seconds": 3.97
+    },
+    {
+      "routine": 9,
+      "flags": 3328,
+      "index": 50,
+      "status": [
+        1314214472,
+        0,
+        21,
+        3,
+        22,
+        6,
+        69012,
+        62,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        8,
+        0
+      ],
+      "seconds": 2.77
+    }
+  ],
+  "completed": true
+}

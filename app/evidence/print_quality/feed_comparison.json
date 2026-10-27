@@ -1,0 +1,78 @@
+{
+  "QI272220": [
+    {
+      "ulf": 394,
+      "expected_counts": 2364,
+      "actual_counts": 2364,
+      "error_counts": 0
+    },
+    {
+      "ulf": 32,
+      "expected_counts": 192,
+      "actual_counts": 192,
+      "error_counts": 0
+    },
+    {
+      "ulf": 272,
+      "expected_counts": 1632,
+      "actual_counts": 2016,
+      "error_counts": 384
+    },
+    {
+      "ulf": 32,
+      "expected_counts": 192,
+      "actual_counts": 193,
+      "error_counts": 1
+    },
+    {
+      "ulf": 272,
+      "expected_counts": 1632,
+      "actual_counts": 1632,
+      "error_counts": 0
+    },
+    {
+      "ulf": 32,
+      "expected_counts": 192,
+      "actual_counts": 192,
+      "error_counts": 0
+    }
+  ],
+  "QI272229B": [
+    {
+      "ulf": 394,
+      "expected_counts": 2364,
+      "actual_counts": 2364,
+      "error_counts": 0
+    },
+    {
+      "ulf": 32,
+      "expected_counts": 192,
+      "actual_counts": 192,
+      "error_counts": 0
+    },
+    {
+      "ulf": 272,
+      "expected_counts": 1632,
+      "actual_counts": 1632,
+      "error_counts": 0
+    },
+    {
+      "ulf": 32,
+      "expected_counts": 192,
+      "actual_counts": 192,
+      "error_counts": 0
+    },
+    {
+      "ulf": 272,
+      "expected_counts": 1632,
+      "actual_counts": 1632,
+      "error_counts": 0
+    },
+    {
+      "ulf": 32,
+      "expected_counts": 192,
+      "actual_counts": 192,
+      "error_counts": 0
+    }
+  ]
+}

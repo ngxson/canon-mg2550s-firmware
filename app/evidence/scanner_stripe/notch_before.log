@@ -1,0 +1,8 @@
+PASS 300dpi_admission_and_bounds {"rows": [32, 3507, 3508]}
+Traceback (most recent call last):
+  File "/project/app/tests/validate_colour_continuous.py", line 146, in <module>
+FIRMWARE LOG: []
+    main()
+  File "/project/app/tests/validate_colour_continuous.py", line 120, in main
+    raise AssertionError(('RGB samples differ', res, j, 'input x', x + at // 3 * step,
+AssertionError: ('RGB samples differ', 300, 0, 'input x', 1157, 'byte', 171, 'got', [187, 185, 175, 187, 185, 175, 187, 185, 175, 188, 185, 175], 'expected', [173, 172, 163, 173, 172, 163, 174, 172, 163, 174, 172, 163])

@@ -67,7 +67,12 @@ def main():
             if 0xc0140000 <= address <= 0xc0140700 and address & 0xff == 0:
                 value &= ~0x80000000
             return value
-    e = HybridModel(image=image, metadata=md)
+    if __import__('os').environ.get('HYBRID_IPP_PRINT'):
+        sys.path.insert(0, str(HERE.parent / 'tests')); import validate_escl as v
+        class HybridIppModel(v.IppUsbHost, HybridModel): pass
+        e = HybridIppModel(image=image, metadata=md)
+    else:
+        e = HybridModel(image=image, metadata=md)
     # On the board 0x10000000, 0x18000000 and 0x20000000 are the same DRAM
     # (measured 2026-10-26); stock's allocator relies on the cached/uncached
     # alias arithmetic. Share one buffer across the three windows.
@@ -127,7 +132,10 @@ def main():
         if m != _last_mode[0]:
             _modes.append((hex(a), hex(m), hex(cpu.reg_read(_LR)))); _last_mode[0] = m
         _ring.append((a, m))
-    _ring_handle = e.uc.hook_add(_HC, _ring_hook)
+    # Per-instruction Python tracing dominates long URF/printing tests. Keep
+    # the crash-history hook available explicitly; normal runs still retain
+    # unmapped-access hooks, register assertions and targeted stage captures.
+    _ring_handle = e.uc.hook_add(_HC, _ring_hook) if __import__('os').environ.get('HYBRID_TRACE_PC') else None
     import atexit
     def _dump():
         sym = manifest['symbols']['application']
@@ -183,13 +191,20 @@ def main():
     # table, and direct moves do not run stock's separate initializer. Stop after RAM restoration,
     # before any stock service or motor task, and require the actual ROM copy.
     before = struct.unpack('<16I', read_in('cold_before', 0x98, 64, value=0xffff))[2]
+    # Relocated USB DMA must survive stock's large scatter-table RAM clear.
+    # This fixture uses only EP0 here, leaving both IPP TX buffers untouched.
+    dma = int(manifest['symbols']['application']['tx_buffers'], 16)
+    dma_sentinel = bytes(range(256)) * 128
+    e.uc.mem_write(dma, dma_sentinel)
     command('cold_ram', 0x97, 5 | 0x400, 1 << 8, budget=60000000)
     for _ in range(100):
         cold = struct.unpack('<16I', read_in('cold_after', 0x98, 64, value=0xffff))
         if cold[2] > before: break
     assert cold[2] == before + 1, cold
     assert bytes(e.uc.mem_read(0x18089900, 14 * 0xf8)) == image[0x1847c8:0x1847c8 + 14 * 0xf8], 'cold CR profile table is incomplete'
+    assert bytes(e.uc.mem_read(dma, len(dma_sentinel))) == dma_sentinel, 'stock RAM init erased USB DMA buffers'
     print('PASS cold RAM: all 14 CR profiles restored before any band or loader call')
+    print('PASS cold RAM: relocated USB DMA buffers preserved across stock initialization')
 
     # Shim: run stock routines in place with our services, dry motion.
     KIND = {1: 'CR_MOVE', 2: 'CR_PROFILE', 3: 'CR_RELEASE', 4: 'LF_MOVE', 5: 'STATUS_GET', 6: 'STATUS_PUB', 7: 'NVM', 8: 'NOTIFY', 9: 'WAIT_TIMEOUT', 10: 'DELAY', 11: 'ROUTINE', 12: 'UNKNOWN'}
@@ -244,6 +259,36 @@ def main():
             if not part: break
             log += part
         return [l for l in log.decode(errors='replace').splitlines() if filter_ is None or filter_ in l]
+    # Band allocation lifetime (brief 22 answer §1): nothing allocated while a prepared band
+    # is live may land inside it, and the three pattern buffers Q+0x264.. (20 KiB each) must
+    # reach the executor unchanged. Pool allocations are observed at stock 0xa109a/0xa109e.
+    arena_base = int(manifest['symbols']['application']['arena'], 16)
+    from unicorn.arm_const import UC_ARM_REG_R2 as _R2l
+    pool_allocs = []
+    arena_used_addr = int(manifest['symbols']['application']['arena_used'], 16)
+    pool_entry = int(manifest['symbols']['application']['shim_pool_alloc'], 16) & ~1
+    band_live_addr = int(manifest['symbols']['application']['band_live'], 16); band_mark_addr = int(manifest['symbols']['application']['band_mark'], 16)
+    pool_violations = []
+    def pool_probe(cpu, a, sz, u):
+        # every stock pool request reaches the shim's bump allocator here; the block starts at arena + arena_used
+        rec = {'request': cpu.reg_read(_R2l), 'result': arena_base + struct.unpack('<I', bytes(cpu.mem_read(arena_used_addr, 4)))[0]}
+        pool_allocs.append(rec)
+        if cpu.mem_read(band_live_addr, 1)[0] and rec['result'] < arena_base + struct.unpack('<I', bytes(cpu.mem_read(band_mark_addr, 4)))[0]:
+            pool_violations.append(rec)
+    e.uc.hook_add(UC_HOOK_CODE, pool_probe, begin=pool_entry, end=pool_entry)
+    def band_lifetime_begin(q, used):
+        ranges = [(struct.unpack('<I', bytes(e.uc.mem_read(q + 0x264 + 4 * j, 4)))[0], 20480) for j in range(3)]
+        mark = struct.unpack('<I', bytes(e.uc.mem_read(int(manifest['symbols']['application']['band_mark'], 16), 4)))[0]
+        assert mark == used, (mark, used)
+        del pool_allocs[:]
+        return {'mark': mark, 'patterns': [(p, bytes(e.uc.mem_read(p, n))) for p, n in ranges if p]}
+    def band_lifetime_check(tag, live):
+        bad = [a for a in pool_allocs if 'result' in a and a['result'] and arena_base <= a['result'] < arena_base + live['mark']]
+        assert not bad, f'{tag}: {len(bad)} allocations inside the live band (mark {live["mark"]}): {[hex(a["result"]) for a in bad][:8]}'
+        for j, (p, before) in enumerate(live['patterns']):
+            after = bytes(e.uc.mem_read(p, len(before)))
+            assert after == before, f'{tag}: pattern buffer {j} at {p:#x} changed during execution ({sum(1 for x, y in zip(before, after) if x != y)} bytes)'
+        print(f'PASS band lifetime {tag}: {len(pool_allocs)} executor allocations above the live band ({live["mark"]} bytes), {len(live["patterns"])} pattern buffers unchanged')
     def wide_band(cols, rows, place, tag, budget=80000000, fresh=True):
         """Wide band for page printing: BK selection matrix entries 0..rows/8-1 -> slots, manager
         allocated `cols` wide, host placement. Returns the allocation, builder masks, raster-feed
@@ -289,8 +334,10 @@ def main():
         used = struct.unpack('<I', bytes(e.uc.mem_read(int(manifest['symbols']['application']['arena_used'], 16), 4)))[0]
         print(f'wide band {tag}: arena used {used} bytes after prepare (manager size {size})')
         masks = [struct.unpack('<3I', bytes(e.uc.mem_read(q + 0x2ac + 12 * i, 12))) for i in range(10)]
+        live = band_lifetime_begin(q, used)
         mmio_writes.clear(); rb = run_status()[2]; command(f'fire_{tag}', 0x97, 7 | 0x1000 | 0x2000, 0, budget=budget)
         fire_writes = list(mmio_writes)
+        band_lifetime_check(tag, live)
         Path(f'/project/emu/output/fixture/writes_{tag}.json').write_text(json.dumps([(hex(a), hex(v)) for pc, a, v in fire_writes if 0xc0c20000 <= a < 0xc0c2a000 or 0xc0c51000 <= a < 0xc0c52000]))
         for _ in range(400):
             st = run_status()
@@ -328,6 +375,56 @@ def main():
                 used.append((g, nz[:6], raster.hex()[:32]))
             print(f'plane {plane:#x}: prepare result {st[1]:#x} a8422 -> {st[15]} ; managers with reserved slots: {used}')
         return
+    if os.environ.get('HYBRID_IPP_PRINT'):
+        # End to end: an IPP Print-Job with a small URF page streams into the print engine (dry
+        # mode: no homing, head or sheet checks, dry executor), which runs load, first advance,
+        # per band prepare / tile raster / executor / advance, eject through the shim.
+        sys.path.insert(0, str(HERE.parent.parent / 'tools')); import ipp_print as ip
+        e.requests.extend([('altset2', setup(1, 11, 0, 2)), ('altset3', setup(1, 11, 0, 3))])
+        e.run(lambda x: any(n == 'altset3' for g, n, d in x.responses if g == x.generation), resume=True)
+        command('dry', 0xa3, 1, 1)
+        quality = None
+        mono_quality = bool(os.environ.get('HYBRID_IPP_MONO'))
+        if os.environ.get('HYBRID_IPP_QUALITY'):
+            import print_quality_capture as pq
+            quality = pq.Capture(e, manifest, mono=mono_quality)
+        width, rows_n = 2480, 60                                # 38 rows above the printable area, 22 printable -> 44 output rows -> 2 colour bands
+        row = bytes([90, 150, 200]) * 1200 + bytes([255, 255, 255]) * (width - 1200)   # left: ink in all four planes; right: white
+        if quality:
+            width, rows_n = pq.WIDTH, 200 if mono_quality else pq.HEIGHT
+        document = ip.urf_document([(width, rows_n, 1 if mono_quality else 3, pq.input_rows(mono_quality) if quality else [row] * rows_n)])
+        body = ip.print_job_request(document, 'emu', request_id=11)
+        print(f'IPP print: URF {len(document)} bytes, request {len(body)} bytes')
+        t0 = e.ticks
+        v.send(e, 0, (f'POST /ipp/print HTTP/1.1\r\nHost: {v.HOST}\r\nContent-Type: application/ipp\r\nContent-Length: {len(body)}\r\n\r\n').encode() + body)
+        status, headers, resp, _ = v.receive(e, 0, budget=3_000_000_000)
+        ipp_status, attrs = ip.ipp_parse(resp)
+        print(f'Print-Job: HTTP {status} IPP {ipp_status:#06x} attrs job-id {attrs.get("job-id")} job-state {attrs.get("job-state")}')
+        assert status == 200 and ipp_status == 0, (status, ipp_status)
+        assert attrs['job-id'] == [(0x21, b'\x00\x00\x00\x01')] and attrs['job-state'] == [(0x23, b'\x00\x00\x00\x05')], attrs
+        for _ in range(400):
+            w = struct.unpack('<16I', read_in('prt', 0xa2, 64)); f = w[1]
+            state = ip.ENGINE_STATES[f & 0xff]
+            if state in ('completed', 'canceled', 'failed'): break
+            e.run(lambda x: True, resume=True, budget=20_000_000)
+        print(f'engine: {state}/{ip.STEPS[f >> 8 & 0xff]} rows_in {w[2]} bands {w[4]} sweeps {w[7]} pages {w[6]} failures {w[8]} last_fail {w[9]} routines {w[15]}')
+        lines = shim_log()
+        print('shim/print log:'); [print('   ', l) for l in lines if '[print]' in l or 'returned' in l or 'arena' in l]
+        assert state == 'completed' and w[6] == 1 and w[8] == 0, (state, w)
+        expected_sweeps = 4 if mono_quality else 8             # 2 bands x 1/2 segments x 2 disjoint row passes
+        assert w[7] == expected_sweeps, ('sweeps', w[7])
+        expected_rows = 2 * (rows_n - 38)
+        assert sum(1 for l in lines if 'band arena' in l) == expected_sweeps and any(f'page data complete: {expected_rows} rows, 2 bands' in l for l in lines), lines[-20:]
+        assert not pool_violations, pool_violations[:5]
+        if quality:
+            quality.verify()
+        body = ip.ipp_message(0x0009, 12, [(0x47, b'attributes-charset', b'utf-8'), (0x48, b'attributes-natural-language', b'en'),
+                                           (0x45, b'printer-uri', b'ipp://localhost/ipp/print'), (0x21, b'job-id', b'\x00\x00\x00\x01')])
+        status, headers, resp, _ = v.http(e, 1, 'POST', '/ipp/print', body, headers=('Content-Type: application/ipp',))
+        ipp_status, attrs = ip.ipp_parse(resp)
+        assert ipp_status == 0 and attrs['job-state'] == [(0x23, b'\x00\x00\x00\x09')], (ipp_status, attrs)
+        print(f'PASS ipp print: Print-Job accepted (job 1 processing), engine completed 1 page in {expected_sweeps} sweeps over 2 bands, no allocation inside a live band, Get-Job-Attributes reports completed')
+        return
     if os.environ.get('HYBRID_COLOUR_ONLY'):
         # Colour band: stock print mode 7 (C/M/Y groups 61 slots, black 81, 8-row groups), the
         # C/M/Y selection matrix groups filled, Q lanes 2/5/7 on managers 0/2/4. Records the
@@ -364,10 +461,13 @@ def main():
                 masks = struct.unpack('<3I', bytes(e.uc.mem_read(q + 0x2ac + 12 * i, 12)))
                 print(f'  Q lane {i}: start {rows_q[0]:#x} end {rows_q[1]:#x} stride {rows_q[2]} count {rows_q[3]} masks {[hex(x) for x in masks]}')
             print('  Q+350/354:', [hex(struct.unpack('<I', bytes(e.uc.mem_read(q + o, 4)))[0]) for o in (0x350, 0x354)])
+            used = struct.unpack('<I', bytes(e.uc.mem_read(int(manifest['symbols']['application']['arena_used'], 16), 4)))[0]
+            live = band_lifetime_begin(q, used)
             mmio_writes.clear(); rb = run_status()[2]; command(f'fire_{tag}', 0x97, 7 | 0x1000 | 0x2000, 0, budget=200000000)
             for _ in range(400):
                 st = run_status()
                 if st[2] > rb: break
+            band_lifetime_check(tag, live)
             lanes = bytes(e.uc.mem_read(0x180cda70, 11))
             print(f'  executor result {st[1]:#x} errors {st[3]}; lane active bytes {lanes.hex()}')
             Path(f'/project/emu/output/fixture/writes_{tag}.json').write_text(json.dumps([(hex(a), hex(v)) for pc, a, v in mmio_writes if 0xc0c20000 <= a < 0xc0c2a000 or 0xc0c51000 <= a < 0xc0c52000]))

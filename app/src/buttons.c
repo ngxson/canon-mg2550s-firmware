@@ -1,6 +1,7 @@
 /* Keys are active from boot. Stock PANEL+0x28 bit assignments were physically
  * checked on 2026-10-23. Debounce at 1ms intervals; one action per press. */
 #include "app.h"
+#include "print_job.h"
 
 #define KEY_REG (PANEL + 0x28u)
 #define KEY_CANCEL 0x0020u
@@ -20,7 +21,8 @@
  *                    carriage park <-> 60000 counts; Cancel = eject if a
  *                    sheet is held, else stop.
  *   map 2 (hybrid): B/W = one 400-Ulf stock-controlled forward step.
- *                    No repeat while held; Colour/Power have no action.
+ *                    No repeat while held; Colour has no action.
+ *   maps 0 and 2:   Power = standby when idle / wake when asleep (power.c).
  *                    Cancel is also polled inside the stock step. */
 static unsigned button_map;
 static unsigned place_step;        /* feed bench: 0 idle, 1 hold requested, 2 advance requested */
@@ -83,8 +85,9 @@ void buttons_poll(void)
     next_sample = now + 1u;
     uint32_t v = rd(KEY_REG);
     /* Stop on the first sample; starting motion requires debounce. */
-    if ((scanner_motor_busy() || scan_page_busy() || paper_feed_busy() || carriage_busy() || page_job_busy()) &&
+    if ((scanner_motor_busy() || scan_page_busy() || paper_feed_busy() || carriage_busy() || page_job_busy() || print_engine_busy()) &&
         (((v & KEY_CANCEL) && !cancel_consumed) || (v & COPY_KEYS) == COPY_KEYS)) {
+        print_engine_cancel();               /* an IPP job: finishes the current sweep, ejects, reports canceled */
         page_job_cancel();
         scan_page_cancel();
         scanner_motor_cancel();
@@ -114,6 +117,8 @@ void buttons_poll(void)
         }
         return;
     }
+    /* Normal maps: Power = standby when idle, wake when asleep (power.c). */
+    if (button_map != 1u && (pressed & KEY_POWER)) { power_button(); return; }
     if (button_map == 2u) {
         if ((btn_cand & KEY_CANCEL) || (btn_cand & COPY_KEYS) == COPY_KEYS) return;
         if (pressed & KEY_COPY_BW) {

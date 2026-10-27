@@ -12,6 +12,9 @@ protocol details and recovery limits.
   at every boot; GPIO4/5 return to floating inputs after probing or transfers.
 - `float_esp32.py`: optional independent ROM register check of floating GPIO4/5;
   requires esptool 4.x or PlatformIO's `tool-esptoolpy` package.
+- `ipp_print.py`: print an image through the application's IPP job intake
+  over IPP-USB (URF Print-Job, job status, engine status); see
+  [the app guide](../app/README.md#print-from-the-host-over-ipp-on-device-page-printer).
 - `requirements.txt`: Python host dependencies. USB also requires libusb.
 - `stocktrace.py`: bounded read-only USB software-state snapshots from the
   optional [stock telemetry app](../emu/evidence/stockapp/telemetry/README.md).
@@ -31,7 +34,22 @@ python3 tools/fwctl.py flash bootloader/build/application.bin --transport i2c
 python3 tools/fwctl.py reboot
 python3 tools/fwctl.py reboot --mode application
 python3 tools/fwctl.py --port /dev/cu.usbmodem1201 detect
+python3 tools/fwctl.py power status
+python3 tools/fwctl.py power standby
+python3 tools/fwctl.py power wake
+python3 tools/fwctl.py power timeout 120
 ```
+
+`power` talks to the application's power manager (USB `0xa0` status, `0xa1`
+control, protocol `PWR1`; see [the app guide](../app/README.md#power-manager)).
+It refuses to run against the bootloader and reports "No power manager" on an
+application without the request. `standby` is accepted only while no hardware
+owner is active (`accepted: false` with `last_result: busy` otherwise); an
+acknowledged request means accepted, and the returned status shows the state
+reached. `timeout 0` disables automatic standby for this power cycle only
+(the setting lives in RAM). Readbacks in the status are logical register
+values, not measured rail voltages; `unsupported` lists what standby does not
+switch yet.
 
 Global options such as `--port` and `--serial` go before the subcommand. Normal
 uploads accept MGAP main applications, never raw full-chip dumps. `--stay` keeps

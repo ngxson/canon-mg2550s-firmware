@@ -1,0 +1,3 @@
+[http] c1 GET /eSCL/ScannerStatus
+[http] c1 -> 200
+[cpu] icache 1 ok control=0x00001079 bench before=906000 after=906000 instr/10ms

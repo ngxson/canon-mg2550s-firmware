@@ -1,0 +1,391 @@
+e] phase=10 ms=11000 pos=0071010f compare=2140 speed=5917
+[page] alive row=493 taken=493 backlog=2 pos=0071025f loops=327631 ch0=204f4a00/00000009/00000004/00000000/00000c71 ch1=204f5420/00000009/00000000/00000000/00000c71
+[line] request 512 at 00710a5f
+[home] phase=10 ms=11500 pos=00710cc7 compare=2184 speed=5525
+[page] alive row=517 taken=517 backlog=2 pos=00710e21 loops=333450 ch0=2054fc00/00000009/00000004/00000000/00000c29 ch1=20550620/00000009/00000000/00000000/00000c29
+[home] phase=10 ms=12000 pos=0071187f compare=2125 speed=6015
+[page] alive row=541 taken=541 backlog=2 pos=007119e3 loops=339277 ch0=205aae00/00000009/00000004/00000000/00000be1 ch1=205ab820/00000009/00000000/00000000/00000be1
+[home] phase=10 ms=12500 pos=00712437 compare=2192 speed=5463
+[page] alive row=565 taken=565 backlog=2 pos=007125a6 loops=345098 ch0=20606000/00000009/00000004/00000000/00000b99 ch1=20606a20/00000009/00000000/00000000/00000b99
+[home] phase=10 ms=13000 pos=00712fef compare=2145 speed=5893
+[page] alive row=589 taken=589 backlog=2 pos=00713169 loops=350921 ch0=20661200/00000009/00000004/00000000/00000b51 ch1=20661c20/00000009/00000000/00000000/00000b51
+[home] phase=10 ms=13500 pos=00713ba7 compare=2186 speed=5512
+[page] alive row=613 taken=613 backlog=2 pos=00713d2c loops=356740 ch0=206bc400/00000009/00000004/00000000/00000b09 ch1=206bce20/00000009/00000000/00000000/00000b09
+[home] phase=10 ms=14000 pos=0071475f compare=2125 speed=6005
+[page] alive row=637 taken=637 backlog=2 pos=007148ee loops=362564 ch0=20717600/00000009/00000004/00000000/00000ac1 ch1=20718020/00000009/00000000/00000000/00000ac1
+[home] phase=10 ms=14500 pos=00715317 compare=2187 speed=5496
+[page] alive row=661 taken=661 backlog=2 pos=007154b0 loops=368385 ch0=20432fc0/00000009/00000004/00000000/00000a79 ch1=204339e0/00000009/00000000/00000000/00000a79
+[home] phase=10 ms=15000 pos=00715ecf compare=2137 speed=5941
+[page] alive row=685 taken=685 backlog=2 pos=00716073 loops=374214 ch0=2048e1c0/00000009/00000004/00000000/00000a31 ch1=2048ebe0/00000009/00000000/00000000/00000a31
+[home] phase=10 ms=15500 pos=00716a87 compare=2183 speed=5530
+[page] alive row=709 taken=709 backlog=2 pos=00716c36 loops=380039 ch0=204e93c0/00000009/00000004/00000000/000009e9 ch1=204e9de0/00000009/00000000/00000000/000009e9
+[home] phase=10 ms=16000 pos=0071763f compare=2124 speed=6014
+[page] alive row=733 taken=733 backlog=2 pos=007177f8 loops=385869 ch0=205445c0/00000009/00000004/00000000/000009a1 ch1=20544fe0/00000009/00000000/00000000/000009a1
+[home] phase=10 ms=16500 pos=007181f7 compare=2189 speed=5476
+[page] alive row=757 taken=757 backlog=2 pos=007183bb loops=391687 ch0=2059f7c0/00000009/00000004/00000000/00000959 ch1=205a01e0/00000009/00000000/00000000/00000959
+[line] request 768 at 007187d0
+[home] phase=10 ms=17000 pos=00718daf compare=2138 speed=5933
+[page] alive row=781 taken=781 backlog=2 pos=00718f7e loops=397504 ch0=205fa9c0/00000009/00000004/00000000/00000911 ch1=205fb3e0/00000009/00000000/00000000/00000911
+[home] phase=10 ms=17500 pos=00719967 compare=2185 speed=5522
+[page] alive row=805 taken=805 backlog=2 pos=00719b3f loops=403329 ch0=20655bc0/00000009/00000004/00000000/000008c9 ch1=206565e0/00000009/00000000/00000000/000008c9
+[home] phase=10 ms=18000 pos=0071a51f compare=2128 speed=5991
+[page] alive row=829 taken=829 backlog=2 pos=0071a702 loops=409144 ch0=206b0dc0/00000009/00000004/00000000/00000881 ch1=206b17e0/00000009/00000000/00000000/00000881
+[home] phase=10 ms=18500 pos=0071b0d7 compare=2192 speed=5466
+[page] alive row=853 taken=853 backlog=2 pos=0071b2c4 loops=414962 ch0=2070bfc0/00000009/00000004/00000000/00000839 ch1=2070c9e0/00000009/00000000/00000000/00000839
+[home] phase=10 ms=19000 pos=0071bc8f compare=2126 speed=6034
+[page] alive row=877 taken=877 backlog=2 pos=0071be88 loops=420777 ch0=20427980/00000009/00000004/00000000/000007f1 ch1=204283a0/00000009/00000000/00000000/000007f1
+[home] phase=10 ms=19500 pos=0071c847 compare=2183 speed=5530
+[page] alive row=901 taken=901 backlog=2 pos=0071ca4b loops=426599 ch0=20482b80/00000009/00000004/00000000/000007a9 ch1=204835a0/00000009/00000000/00000000/000007a9
+[home] phase=10 ms=20000 pos=0071d3ff compare=2130 speed=5955
+[page] alive row=925 taken=925 backlog=2 pos=0071d60d loops=432423 ch0=204ddd80/00000009/00000004/00000000/00000761 ch1=204de7a0/00000009/00000000/00000000/00000761
+[home] phase=10 ms=20500 pos=0071dfb7 compare=2190 speed=5478
+[page] alive row=949 taken=949 backlog=2 pos=0071e1cf loops=438244 ch0=20538f80/00000009/00000004/00000000/00000719 ch1=205399a0/00000009/00000000/00000000/00000719
+[home] phase=10 ms=21000 pos=0071eb6f compare=2141 speed=5923
+[page] alive row=973 taken=973 backlog=2 pos=0071ed91 loops=444062 ch0=20594180/00000009/00000004/00000000/000006d1 ch1=20594ba0/00000009/00000000/00000000/000006d1
+[home] phase=10 ms=21500 pos=0071f727 compare=2182 speed=5546
+[page] alive row=997 taken=997 backlog=2 pos=0071f954 loops=449885 ch0=205ef380/00000009/00000004/00000000/00000689 ch1=205efda0/00000009/00000000/00000000/00000689
+[home] phase=10 ms=22000 pos=007202df compare=2126 speed=5997
+[page] alive row=1021 taken=1021 backlog=2 pos=00720517 loops=455707 ch0=2064a580/00000009/00000004/00000000/00000641 ch1=2064afa0/00000009/00000000/00000000/00000641
+[line] request 1024 at 00720540
+[home] phase=10 ms=22500 pos=00720e97 compare=2187 speed=5486
+[page] alive row=1045 taken=1045 backlog=2 pos=007210da loops=461531 ch0=206a5780/00000009/00000004/00000000/000005f9 ch1=206a61a0/00000009/00000000/00000000/000005f9
+[home] phase=10 ms=23000 pos=00721a4f compare=2137 speed=5961
+[page] alive row=1069 taken=1069 backlog=2 pos=00721c9d loops=467356 ch0=20700980/00000009/00000004/00000000/000005b1 ch1=207013a0/00000009/00000000/00000000/000005b1
+[home] phase=10 ms=23500 pos=00722607 compare=2184 speed=5523
+[page] alive row=1093 taken=1093 backlog=2 pos=0072285f loops=473178 ch0=2075bb80/00000009/00000004/00000000/00000569 ch1=2075c5a0/00000009/00000000/00000000/00000569
+[home] phase=10 ms=24000 pos=007231bf compare=2127 speed=6001
+[page] alive row=1117 taken=1117 backlog=2 pos=00723420 loops=478994 ch0=20477540/00000009/00000004/00000000/00000521 ch1=20477f60/00000009/00000000/00000000/00000521
+[home] phase=10 ms=24500 pos=00723d77 compare=2191 speed=5463
+[page] alive row=1141 taken=1141 backlog=2 pos=00723fe4 loops=484816 ch0=204d2740/00000009/00000004/00000000/000004d9 ch1=204d3160/00000009/00000000/00000000/000004d9
+[home] phase=10 ms=25000 pos=0072492f compare=2141 speed=5917
+[page] alive row=1165 taken=1165 backlog=2 pos=00724ba6 loops=490640 ch0=2052d940/00000009/00000004/00000000/00000491 ch1=2052e360/00000009/00000000/00000000/00000491
+[home] phase=10 ms=25500 pos=007254e7 compare=2190 speed=5486
+[page] alive row=1189 taken=1189 backlog=2 pos=00725769 loops=496462 ch0=20588b40/00000009/00000004/00000000/00000449 ch1=20589560/00000009/00000000/00000000/00000449
+[home] phase=10 ms=26000 pos=0072609f compare=2126 speed=5998
+[page] alive row=1213 taken=1213 backlog=2 pos=0072632b loops=502284 ch0=205e3d40/00000009/00000004/00000000/00000401 ch1=205e4760/00000009/00000000/00000000/00000401
+[home] phase=10 ms=26500 pos=00726c57 compare=2187 speed=5502
+[page] alive row=1237 taken=1237 backlog=2 pos=00726eee loops=508097 ch0=2063ef40/00000009/00000004/00000000/000003b9 ch1=2063f960/00000009/00000000/00000000/000003b9
+[home] phase=10 ms=27000 pos=0072780f compare=2141 speed=5938
+[page] alive row=1261 taken=1261 backlog=2 pos=00727ab0 loops=513922 ch0=2069a140/00000009/00000004/00000000/00000371 ch1=2069ab60/00000009/00000000/00000000/00000371
+[line] request 1280 at 007282b2
+[home] phase=10 ms=27500 pos=007283c7 compare=2182 speed=5537
+[page] alive row=1285 taken=1285 backlog=2 pos=00728672 loops=519746 ch0=206f5340/00000009/00000004/00000000/00000329 ch1=206f5d60/00000009/00000000/00000000/00000329
+[home] phase=10 ms=28000 pos=00728f7f compare=2127 speed=5989
+[page] alive row=1309 taken=1309 backlog=2 pos=00729235 loops=525573 ch0=20750540/00000009/00000004/00000000/000002e1 ch1=20750f60/00000009/00000000/00000000/000002e1
+[home] phase=10 ms=28500 pos=00729b37 compare=2186 speed=5498
+[page] alive row=1333 taken=1333 backlog=2 pos=00729df9 loops=531393 ch0=2046bf00/00000009/00000004/00000000/00000299 ch1=2046c920/00000009/00000000/00000000/00000299
+[home] phase=10 ms=29000 pos=0072a6ef compare=2140 speed=5930
+[page] alive row=1357 taken=1357 backlog=2 pos=0072a9bb loops=537216 ch0=204c7100/00000009/00000004/00000000/00000251 ch1=204c7b20/00000009/00000000/00000000/00000251
+[home] phase=10 ms=29500 pos=0072b2a7 compare=2186 speed=5512
+[page] alive row=1381 taken=1381 backlog=2 pos=0072b57d loops=543034 ch0=20522300/00000009/00000004/00000000/00000209 ch1=20522d20/00000009/00000000/00000000/00000209
+[home] phase=10 ms=30000 pos=0072be5f compare=2129 speed=5982
+[page] alive row=1405 taken=1405 backlog=2 pos=0072c140 loops=548861 ch0=2057d500/00000009/00000004/00000000/000001c1 ch1=2057df20/00000009/00000000/00000000/000001c1
+[home] phase=10 ms=30500 pos=0072ca17 compare=2194 speed=5453
+[page] alive row=1429 taken=1429 backlog=2 pos=0072cd02 loops=554688 ch0=205d8700/00000009/00000004/00000000/00000179 ch1=205d9120/00000009/00000000/00000000/00000179
+[home] phase=10 ms=31000 pos=0072d5cf compare=2142 speed=5923
+[page] alive row=1453 taken=1453 backlog=2 pos=0072d8c5 loops=560510 ch0=20633900/00000009/00000004/00000000/00000131 ch1=20634320/00000009/00000000/00000000/00000131
+[home] phase=10 ms=31500 pos=0072e187 compare=2176 speed=5608
+[page] alive row=1477 taken=1477 backlog=2 pos=0072e487 loops=566331 ch0=2068eb00/00000009/00000004/00000000/000000e9 ch1=2068f520/00000009/00000000/00000000/000000e9
+[home] phase=10 ms=32000 pos=0072ed40 compare=2124 speed=6001
+[page] alive row=1501 taken=1501 backlog=2 pos=0072f04b loops=572155 ch0=206e9d00/00000009/00000004/00000000/000000a1 ch1=206ea720/00000009/00000000/00000000/000000a1
+[home] phase=10 ms=32500 pos=0072f8f7 compare=2187 speed=5492
+[page] alive row=1525 taken=1525 backlog=2 pos=0072fc0d loops=577974 ch0=20744f00/00000009/00000004/00000000/00000059 ch1=20745920/00000009/00000000/00000000/00000059
+[line] request 1536 at 00730022
+[home] phase=10 ms=33000 pos=007304af compare=2139 speed=5923
+[page] alive row=1549 taken=1549 backlog=2 pos=007307cf loops=583792 ch0=204608c0/00000009/00000004/00000000/00000011 ch1=204612e0/00000009/00000000/00000000/00000011
+[escl] job 1 Completed rows=1400
+[escl] profile calls=572696 produce_ms=23505 rows_ms=13464 max_gap_ms=1230 wall_ms=37567 rows=1400 loops=585463 loop_max_us=1230309
+[line] done
+[motor] stop: cancelled pos=00730b67 elapsed_ms=33286 compare=2144
+[http] c0 GET /eSCL/ScanJobs/1/NextDocument
+[http] c0 -> 404
+[http] c0 GET /eSCL/ScannerStatus
+[http] c0 -> 200
+[home] fast return start=00730b92 target=00705d8e
+[home] phase=12 ms=100 pos=00730878 compare=1689 speed=20330
+[home] phase=12 ms=200 pos=0072f8f9 compare=1242 speed=60529
+[home] phase=12 ms=300 pos=0072da21 compare=903 speed=94117
+[home] phase=12 ms=400 pos=0072b373 compare=960 speed=100418
+[home] phase=12 ms=500 pos=00728c5d compare=791 speed=99173
+[home] phase=12 ms=600 pos=0072654c compare=910 speed=100000
+[home] phase=12 ms=700 pos=00723e3c compare=845 speed=99585
+[home] phase=12 ms=800 pos=0072172f compare=877 speed=99792
+[home] phase=12 ms=900 pos=0071f01e compare=933 speed=100208
+[home] phase=12 ms=1000 pos=0071c90d compare=931 speed=100208
+[home] phase=12 ms=1500 pos=007105c0 compare=850 speed=99585
+[home] phase=12 ms=2000 pos=00706c5c compare=1667 speed=23529
+[home] seek left start=00705d77 target=00684a89
+[home] phase=4 ms=100 pos=0070557c compare=1605 speed=27729
+[home] phase=4 ms=200 pos=00704a8c compare=1608 speed=27777
+[home] phase=4 ms=300 pos=00703f9c compare=1604 speed=27729
+[home] phase=4 ms=400 pos=007034ac compare=1602 speed=27729
+[home] phase=4 ms=500 pos=007029bc compare=1604 speed=27729
+[home] phase=4 ms=600 pos=00701ecc compare=1599 speed=27713
+[home] phase=4 ms=700 pos=007013dd compare=1620 speed=27874
+[home] phase=4 ms=800 pos=007008ec compare=1600 speed=27729
+[home] phase=4 ms=900 pos=006fffe1 compare=1400 speed=800
+[home] phase=4 ms=1000 pos=006fffe1 compare=1400 speed=38
+[home] phase=4 ms=1500 pos=006fffe1 compare=1400 speed=6
+[home] backoff start=006fffe2 target=00702938
+[home] phase=5 ms=100 pos=00700517 compare=2313 speed=19688
+[home] phase=5 ms=200 pos=00700ce5 compare=2313 speed=19761
+[home] phase=5 ms=300 pos=007014b5 compare=2317 speed=19728
+[home] phase=5 ms=400 pos=00701c84 compare=2323 speed=19672
+[home] phase=5 ms=500 pos=00701f5e compare=2040 speed=4595
+[home] phase=5 ms=600 pos=007020ed compare=2048 speed=4549
+[home] phase=5 ms=700 pos=0070227e compare=2051 speed=4482
+[home] phase=5 ms=800 pos=0070240e compare=2042 speed=4581
+[home] phase=5 ms=900 pos=0070259e compare=2037 speed=4613
+[home] phase=5 ms=1000 pos=0070272e compare=2040 speed=4613
+[home] repeat left seek start=00702957 target=006ff449
+[home] phase=6 ms=100 pos=0070215d compare=1610 speed=27793
+[home] phase=6 ms=200 pos=0070166d compare=1600 speed=27745
+[home] phase=6 ms=300 pos=00700b7d compare=1608 speed=27809
+[home] phase=6 ms=400 pos=007000b6 compare=1400 speed=21828
+[home] phase=6 ms=500 pos=006fffeb compare=1400 speed=48
+[home] phase=6 ms=600 pos=006fffeb compare=1400 speed=21
+[home] phase=6 ms=700 pos=006fffeb compare=1400 speed=14
+[home] phase=6 ms=800 pos=006fffeb compare=1400 speed=10
+[home] phase=6 ms=900 pos=006fffeb compare=1400 speed=8
+[home] phase=6 ms=1000 pos=006fffeb compare=1400 speed=6
+[home] stop: mechanical reference established; optical calibration pending pos=006fffec elapsed_ms=0 compare=2000
+[page] end state=7 error=0 rows=1556 ms: home=3050 settle=0 capture=0 ready=0 step=0 return=6896 scan=34517 calibrate=0
+[power] ready reason=4 owners=0x00000000
+[power] quiescing reason=1 owners=0x00000000
+[power] standby reason=1 owners=0x00000000
+[cr] homing toward the park wall
+[power] waking reason=4 owners=0x00000020
+[power] active reason=4 owners=0x00000020
+[cr] park reference=0x00000a80
+[cr] done result=2 x=0 ms=320 stalls=0
+[power] ready reason=4 owners=0x00000000
+[power] active reason=4 owners=0x00000200
+[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200
+[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5
+[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0
+[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1
+[cart] head interface left prepared
+[power] ready reason=4 owners=0x00000000
+[cr] frame: raw at park=0x00000a80 raw now=0x00000a80
+[power] active reason=4 owners=0x00000100
+[shim] run routine 8 live
+[shim] NVM write offset=0x00000140 len=96 (dropped)
+[shim] NVM write offset=0x000001a8 len=96 (dropped)
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00000a80 cd6b6=1
+[shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=8 51400=0x00000000 28000=1 28080=167 51d04=0 51d0c=0 headticks=23
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x000019c0 ticks=99
+[shim] LF move ulf=2050 dir=1 profile=0x8000020b stock LF task
+[shim] CR motion complete ticks=99 raw=0x000019c0
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=0 ticks=375
+[shim] LF move ulf=12950 dir=1 profile=0x8000020c stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=1 ticks=547
+[shim] receive on empty mailbox 0x0000001b
+[shim] LF move ulf=646 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x000019c0 cd6b6=1
+[shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=8 51400=0x00000100 28000=1 28080=167 51d04=0 51d0c=0 headticks=23
+[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000703 raw=0x000019c0 ticks=0
+[shim] CR motion complete ticks=0 raw=0x000019c0
+[shim] LF motion complete, paper=1 ticks=156
+[shim] event wait timeout id=0x0000001b mask=0x00000001
+[shim] stock load -> 0 servo ticks=156 asf=1
+[shim] routine 8 returned 0 errors=5
+[power] ready reason=4 owners=0x00000000
+[power] active reason=4 owners=0x00000100
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=650 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=151
+[shim] advance ulf=650 raw before=0x00700000 after=0x00700f3c paper=1
+[shim] routine 10 returned 0 errors=5
+[power] ready reason=4 owners=0x00000000
+[power] active reason=4 owners=0x00000100
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202eb980
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x2031a020
+[shim] band arena 1091816 bytes live
+[shim] routine 5 returned 1 errors=5
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 171072 bytes to 0x202ec140
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 171072 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x2022e240
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x2026d680
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x202acb00
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[tunnel] writes unlocked
+[tunnel] writes locked
+[cr] frame: raw at park=0x00000a80 raw now=0x000019c0
+[power] active reason=4 owners=0x00000100
+[shim] run routine 7 live
+[shim] band N=2112 rows=304 place=856 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=69012 profile=0x00000103
+[shim] event wait timeout id=0x0000001b mask=0x00000001
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x000019c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=17
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00011cc0 ticks=1520
+[shim] e6b80 -> 1
+[shim] band finish done, errors=6
+[shim] CR motion complete ticks=1520 raw=0x00011cc0
+[shim] routine 7 returned 1 errors=6
+[power] ready reason=4 owners=0x00000000
+[tunnel] writes unlocked
+[tunnel] writes locked
+[power] active reason=4 owners=0x00000100
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=640 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=156
+[shim] advance ulf=640 raw before=0x00700000 after=0x00700f00 paper=1
+[shim] routine 10 returned 0 errors=6
+[power] ready reason=4 owners=0x00000000
+[power] active reason=4 owners=0x00000100
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202eb980
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x2031a020
+[shim] band arena 1091816 bytes live
+[shim] routine 5 returned 1 errors=6
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 171072 bytes to 0x202ec140
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 171072 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x2022e240
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x2026d680
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x202acb00
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[tunnel] writes unlocked
+[tunnel] writes locked
+[cr] frame: raw at park=0x00000a80 raw now=0x00011cc0
+[power] active reason=4 owners=0x00000100
+[shim] run routine 7 live
+[shim] band N=2112 rows=304 place=856 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=69012 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00011cc0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=18
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00005500 ticks=672
+[shim] CR motion complete ticks=672 raw=0x00005500
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00005500 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=18
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x00011cc0 ticks=1144
+[shim] e6b80 -> 1
+[shim] band finish done, errors=6
+[shim] CR motion complete ticks=1144 raw=0x00011cc0
+[shim] routine 7 returned 1 errors=6
+[power] ready reason=4 owners=0x00000000
+[tunnel] writes unlocked
+[tunnel] writes locked
+[power] active reason=4 owners=0x00000100
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=32 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=70
+[shim] advance ulf=32 raw before=0x00700000 after=0x007000c0 paper=1
+[shim] routine 10 returned 0 errors=6
+[power] ready reason=4 owners=0x00000000
+[power] active reason=4 owners=0x00000100
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202eb980
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x2031a020
+[shim] band arena 1091816 bytes live
+[shim] routine 5 returned 1 errors=6
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 171072 bytes to 0x202ec140
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 171072 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x2022e240
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x2026d680
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[shim] raster upload 257664 bytes to 0x202acb00
+[power] active reason=4 owners=0x00002000
+[shim] raster upload complete: 257664 bytes
+[power] ready reason=4 owners=0x00000000
+[tunnel] writes unlocked
+[tunnel] writes locked
+[cr] frame: raw at park=0x00000a80 raw now=0x00011cc0
+[power] active reason=4 owners=0x00000100
+[shim] run routine 7 live
+[shim] band N=2112 rows=304 place=856 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=69012 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00011cc0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=19
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00005500 ticks=1214
+[shim] CR motion complete ticks=1214 raw=0x00005500
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00005500 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=19
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x00011cc0 ticks=1139
+[shim] e6b80 -> 1
+[shim] band finish done, errors=6
+[shim] CR motion complete ticks=1139 raw=0x00011cc0
+[shim] routine 7 returned 1 errors=6
+[power] ready reason=4 owners=0x00000000
+[tunnel] writes unlocked
+[tunnel] writes locked
+[cr] frame: raw at park=0x00000a80 raw now=0x00011cc0
+[power] active reason=4 owners=0x00000100
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] run routine 9 live
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=457
+[shim] eject move 0 request->0 paper=1
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=1 ticks=457
+[shim] eject move 1 request->0 paper=1
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=1 ticks=452
+[shim] eject move 2 request->0 paper=1
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=0 ticks=446
+[shim] eject move 3 request->0 paper=0
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=0 ticks=463
+[shim] eject move 4 request->0 paper=0
+[shim] routine 9 returned 0 errors=6
+[power] ready reason=4 owners=0x00000000
+[cr] homing toward the park wall
+[power] active reason=4 owners=0x00000020
+[cr] park reference=0x00000a40
+[cr] done result=2 x=64 ms=699 stalls=0
+[power] ready reason=4 owners=0x00000000

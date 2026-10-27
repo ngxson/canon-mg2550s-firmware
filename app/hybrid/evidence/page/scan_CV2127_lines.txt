@@ -1,0 +1,4 @@
+K bar at x= 38.4 y=  4.9 mm,  2.3 x 34.5 mm (816 rows), coverage 1.00, white lines 20, spacing rows [64, 32, 33, 32, 99, 66, 32, 34, 33, 32, 33, 33]
+C bar at x= 12.9 y= 10.2 mm,  2.3 x 34.6 mm (818 rows), coverage 1.00, white lines 16, spacing rows [32, 51, 9, 19, 10, 16, 6, 5, 148, 32, 98, 66]
+M bar at x= 20.7 y= 10.2 mm,  2.3 x 34.6 mm (818 rows), coverage 1.00, white lines 8, spacing rows [15, 25, 26, 23, 21, 14, 19]
+Y bar at x= 28.6 y= 10.2 mm,  2.2 x 34.6 mm (818 rows), coverage 1.00, white lines 25, spacing rows [56, 32, 34, 32, 66, 34, 124, 6, 34, 32, 26, 6]

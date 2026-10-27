@@ -1,0 +1,2187 @@
+diff --git a/app/README.md b/app/README.md
+index 4ebaccb..82780f2 100644
+--- a/app/README.md
++++ b/app/README.md
+@@ -68,16 +68,16 @@ work, keep the bootloader artifacts matching the installed recovery stages.
+ Tests combine `bootloader/build/boot_region.bin` and its symbol manifest with
+ the new app package and manifest.
+ 
+-Run all fifteen scanner, cartridge, mechanism, head, tunnel, bench and management checks before flashing:
++Run all sixteen scanner, cartridge, mechanism, head, tunnel, bench, power and management checks before flashing:
+ 
+ ```sh
+-for check in app home motor buttons scanner page cartridge printregs feed carriage page_job head_fire stamp tunnel bench; do
++for check in app home motor buttons scanner page cartridge printregs feed carriage page_job head_fire stamp tunnel bench power; do
+   docker run --rm --network none -v "$PWD:/project:rw" \
+     mg2550s-emu "app/tests/validate_${check}.py" || break
+ done
+ ```
+ 
+-Proceed only after all fifteen pass. Reports are written under `app/build/`.
++Proceed only after all sixteen pass. Reports are written under `app/build/`.
+ Tests execute the linked ARM instructions, including boot and recovery, and
+ check motion sequencing, capture/transfer failures, Cancel and management
+ liveness. No stock dump is needed for these tests. Native execution is also
+@@ -241,6 +241,76 @@ Colour advances it 1024 counts per press; Power moves the carriage between
+ park and 60000 counts; Cancel ejects a held sheet, otherwise stops. Map 0
+ restores the default keys (feeder and transport toggles, Cancel stops).
+ 
++## Print from the host over IPP (on-device page printer)
++
++On a hybrid board the application accepts IPP Print-Job (and Create-Job +
++Send-Document) over IPP-USB and prints the document itself: `src/ippusb.c`
++buffers the IPP attributes and streams the document bytes with backpressure,
++`src/ipp.c` keeps one job (id, state, Get-Jobs / Get-Job-Attributes /
++Cancel-Job), `src/urf.c` decodes Apple URF (W8 grey or SRGB24, 300 dpi) and
++`src/print_engine.c` turns rows into 600 dpi K/C/M/Y bit rows (grey
++component replacement, 8x8 ordered dither, the measured 1.024 width
++compensation applied before halftoning) and drives the stock band path
++through the shim exactly as `tools/print_doc.py` does: home, head prepare,
++stock load, first-line advance, per band prepare / tile raster into the stock
++managers / executor / advance, eject. Colour pages print in stock mode 7 with
++152-row bands (black leads the colour arrays by 128 rows), grey pages in mode
++1 with 304-row bands. Boards without the hybrid band path still answer
++`server-error-not-accepting-jobs`, draining the document instead of 413.
++
++```sh
++python3 tools/ipp_print.py photo.png            # URF Print-Job over IPP-USB, follows the job to completion
++python3 tools/ipp_print.py text.png --grey      # W8 grey page: mode-1 black bands
++python3 tools/ipp_print.py --status             # USB 0xa2 engine status; --cancel = USB 0xa3 op 2
++```
++
++macOS/Linux hosts print through their own IPP-USB daemon to the same path
++once they list the printer (`printer-is-accepting-jobs` is true on hybrid
++boards). Emulator: `HYBRID_IPP_PRINT=1 app/hybrid/validate_hybrid.py` runs a
++Print-Job end to end in the engine's dry mode (USB 0xa3 op 1: no homing, head
++or sheet checks, dry executor) and asserts two bands in four sweeps with no
++allocation inside a live band; `tests/test_urf.c` is the native decoder test.
++The shim keeps a prepared band's allocations live until the next prepare
++(`band_mark`), the fix for the per-pass pattern-buffer overwrite found by the
++brief 22 helper; the validator asserts it on every executed band.
++
++## Power manager
++
++`src/power.c` keeps USB and management alive while unused hardware rests
++([brief](../../fw_dump/gpt/BREIF_POWER_MANAGEMENT.md)). States: ready,
++active (a hardware owner works), quiescing, standby, waking, fault. Automatic
++standby fires after an idle timeout (60 s development default, RAM only;
++`fwctl.py power timeout N`, 0 = never) measured from the last moment any owner
++was busy: scanner motor/page/lamp/armed capture, paper feed, carriage, page
++job, stamp, hybrid routine, cartridge read, head fire, LF jog, print or raster
++reception. Status polling, log reads and rejected requests never restart the
++timer. Standby runs a bounded, reversible quiesce inside one main-loop poll:
++illumination/SCNIO stop and scanner analog power off (unread scan rows are
++kept), scanner motor outputs neutral (no reboot inhibit; the next move
++re-initialises), panel LEDs dark (keys keep scanning). Readbacks that
++disagree put the manager in `fault` with the stage and error; nothing is
++reported as reached that was not. Any admitted job wakes automatically
++(waking → active) and relights the panel; nothing is energised merely by a
++wake, a status read or USB enumeration. The Power key requests standby when
++idle and wakes when asleep in button maps 0 and 2 (map 1 keeps its bench
++role). Explicit standby while an owner works is refused as busy and cancels
++nothing. Not done yet, and reported as unsupported: print-side parking and
++head capping, driver-IC sleep, supply-rail switching, CPU sleep/clock changes.
++
++```sh
++python3 tools/fwctl.py power status       # USB 0xa0: state, owners, idle age, readbacks, capabilities
++python3 tools/fwctl.py power standby      # USB 0xa1 op 1; busy -> accepted: false
++python3 tools/fwctl.py power wake         # op 2
++python3 tools/fwctl.py power timeout 300  # op 3, seconds (0 = never, max 3600)
++```
++
++`tests/validate_power.py` covers the timer with continuous polling, busy
++refusal, idempotent standby/wake, automatic wake, the Power key, parameter
++validation and rebase, timer disable, the millisecond-clock wrap, an injected
++readback failure and INFO/reboot while asleep. Physical qualification
++(idle readbacks, repeated standby → eSCL scan → standby, wall power) is still
++pending; see the brief's qualification list.
++
+ ## Register tunnel for hardware-in-the-loop emulation
+ 
+ ```sh
+diff --git a/app/app.ld b/app/app.ld
+index 288e61e..82988a5 100644
+--- a/app/app.ld
++++ b/app/app.ld
+@@ -1,6 +1,6 @@
+ ENTRY(app_entry)
+ /* APP_LOAD (RAM link/load address) and APP_RAM_END (bss bound) come from
+- * build.py via --defsym: 0x20020000/0x20200000 standalone, the hole's RAM-copy
++ * build.py via --defsym: 0x20020000/0x20420000 standalone, the hole's RAM-copy
+  * address for the hybrid build. */
+ SECTIONS {
+     .text APP_LOAD : {
+@@ -9,7 +9,15 @@ SECTIONS {
+     }
+     .bss (NOLOAD) : {
+         __bss_start = .; *(.bss*) *(COMMON)
+-        . = ALIGN(32); __bss_end = .;
++        . = ALIGN(32); __ordinary_bss_end = .;
++    }
++    /* USB DMA must bypass the data cache (region 1 ends at 0x20400000).
++     * Include this allocation in __bss_end: reset clears it and the hybrid
++     * stock_ram_init preserves the entire application interval through it. */
++    ASSERT(__ordinary_bss_end<=0x20400000,"application overlaps USB DMA RAM")
++    .usb_dma 0x20400000 (NOLOAD) : {
++        __usb_dma_start = .; *(.usb_dma)
++        . = ALIGN(32); __usb_dma_end = .; __bss_end = .;
+     }
+     ASSERT(__bss_end<APP_RAM_END,"application overlaps the RAM bound")
+     /DISCARD/ : { *(.comment) *(.note*) *(.ARM.exidx*) *(.ARM.extab*) }
+diff --git a/app/build.py b/app/build.py
+index a50c0b5..c5c05f4 100644
+--- a/app/build.py
++++ b/app/build.py
+@@ -25,7 +25,7 @@ FLAGS = ['-mcpu=arm946e-s', '-marm', '-Os', '-std=c11', '-ffreestanding',
+ # Reused unchanged from the bootloader (leaf drivers / entry), plus app sources.
+ REUSED = ['src/entry.c', 'src/runtime.c', 'src/panel.c', 'src/integrity.c', 'src/i2c.c', 'src/mailbox.c']
+ APP = ['src/usb.c', 'src/service.c', 'src/debug_log.c', 'src/scanner.c', 'src/scanner_motor.c', 'src/motor_control.c', 'src/scan_page.c', 'src/print.c', 'src/cartridge.c', 'src/head_fire.c', 'src/tunnel.c', 'src/print_mech.c', 'src/paper_feed.c', 'src/carriage.c', 'src/page_job.c', 'src/buttons.c', 'src/app_main.c',
+-       'src/ippusb.c', 'src/escl.c', 'src/ipp.c', 'src/png.c', 'src/jpeg.c', 'src/divide.c', 'src/stock_shim.c', 'src/cpu_cache.c']
++       'src/ippusb.c', 'src/escl.c', 'src/ipp.c', 'src/png.c', 'src/jpeg.c', 'src/divide.c', 'src/stock_shim.c', 'src/cpu_cache.c', 'src/power.c', 'src/urf.c', 'src/print_engine.c']
+ # The eSCL image provider: the scanner for the flashed app; a synthetic chart
+ # for the protocol tests (app/tests/validate_escl.py), built into build/dummy.
+ SOURCES = {'scanner': 'src/scan_source_scanner.c', 'dummy': 'src/scan_source_dummy.c'}
+diff --git a/app/hybrid/build.py b/app/hybrid/build.py
+index 74498dd..2ea5b58 100644
+--- a/app/hybrid/build.py
++++ b/app/hybrid/build.py
+@@ -34,7 +34,7 @@ HOLE_END = 0x1d8000
+ STOCK_END = 0x1f2000                   # last stock byte is below this; tail is erased
+ CANDIDATES = ROOT / 'emu/evidence/stockapp/maintenance/flash_free_candidates.json'
+ SNAPSHOT = ROOT / 'emu/output/fixture/stock_ram_snapshot'   # .json/.bin from emu/stockapp/ram_snapshot.py
+-SNAPSHOT_FLASH = HOLE + 0x20000        # app must end below this (128 KiB); table then blob
++SNAPSHOT_FLASH = HOLE + 0x21000        # app must end below this (132 KiB); table then blob (the blob ends ~3 KiB below HOLE_END)
+ SNAPSHOT_MAGIC = 0x50414e53            # 'SNAP'
+ 
+ 
+diff --git a/app/hybrid/evidence/page/README.md b/app/hybrid/evidence/page/README.md
+index b97269e..0b7fe78 100644
+--- a/app/hybrid/evidence/page/README.md
++++ b/app/hybrid/evidence/page/README.md
+@@ -523,3 +523,59 @@ bars (first pass, each range alone, all, none) on one sheet to find the
+ block that carries the policy. Candidates from the pass-1/pass-2 RAM diff:
+ `0x180cd570/574` (±94), `0x180cd5c0/5c4` (`01010106`, `00020000`),
+ `0x180cd404`, `0x180cd444`, `0x180cdc9c/ca0`.
++
++## CV2127: six bar sweeps on package `560e16c8…` (allocator lifetime fix, I-cache on) — 2026-10-27 21:27
++
++Package `560e16c8…` keeps a prepared band's allocations live until the next
++prepare (`band_mark`; brief 22 answer §1: executor/status messages used to
++overwrite the pattern buffers from the second pass on), arena 1.25 MiB, the
++on-device IPP print engine, the power manager, and the I-cache enabled at
++boot (scanner package lineage). `colour_variants.py` default run (A first
++pass, B after 320 Ulf, C same position, D after a blank pass, E tail skipped,
++F tail partial), reused sheet (ghost of a mirrored DOC print underneath).
++Scan `scan_CV2127_rgb300.png` (300 dpi RGB, the improved scanner),
++[bars ×2](scan_CV2127_bars_x2.jpg), counts in `scan_CV2127_lines.txt`
++(`bar_lines.py`):
++
++| Bar (B..F stacked, 800 rows) | white lines | spacing (600 dpi rows) |
++|---|---|---|
++| K | 20 | 32-33 (one 64, one 99/66 pair = merged/missed) |
++| Y | 25 | 32-34 mostly |
++| C | 16 | irregular, several 32 |
++| M | 8 | ~20, weak |
++
++**The 32-row lines survive the allocator fix** on every pass B..F (as the
++helper cautioned: the overwrite was real, not proven to be the cause).
++**New: pass A printed only its label (left 8 mm of the sweep) and none of
++its four bars.** Routine results were nominal (prepare 1, fire 1, errors
++2→3, no exceptions). Timing versus CT0142: fresh prepare 0.4 s (was 3.2 s),
++later prepares 0.1 s (0.6 s), first fire 5.8 s (5.7 s), later fires 2.9 s
++(2.8 s): this is the first print with the instruction cache on. Open: is
++the label-only first pass a cache/timing effect or a package change; the
++next batch repeats the first pass with the cache off and runs the
++restore-range bisect (`--restore-variants`) now that the allocator no longer
++corrupts live bands.
++
++## CR2146: restore-range bisect with the I-cache off — 2026-10-27 21:46 (inconclusive)
++
++Same sheet, `colour_variants.py --restore-variants --extra-advance 2`, cache
++off (USB 0x8c 0: 26,000 vs 906,000 instructions per 10 ms). Scan
++`scan_CR2146_rgb300.png`, [left half](scan_CR2146_left.jpg), counts in
++`scan_CR2146_lines.txt`. The placement went wrong, so the bisect cannot be
++read: the two 1200 Ulf extra advances moved the paper only a few mm (each
++routine 10 returned 0 after 1.0-1.1 s, the same as a 320 Ulf step), the
++sweeps that restored snapshot ranges 0..3 before their prepare (N1, N2, N4,
++N8) printed 37 mm further left with their labels off the sheet, N16 landed
++on top of N0, and only N32 and N0b sat where expected. Restoring stock RAM
++ranges therefore moves stock's CR placement state (expected; those ranges
++hold it), and LF advances with the cache off are suspect on this package.
++
++What is still readable: **the first pass (N0) printed all four bars** with
++the cache off, unlike CV2127's pass A with the cache on; **yellow shows the
++32-row lines in every sweep** (24 lines over the four stacked left sweeps,
++4 per 164-row bar in N32/N0b, spacing 32), **magenta never** (0-1), cyan
++rarely (1-2), black not measurable here (bars overlapped). Across CV2127
++and CR2146 the lines are independent of the allocator fix, the cache
++state, the tail, the LF, the restored ranges, and the pass index; they are
++lane-dependent (K lanes 0/1 and Y lane 7 strong, C lane 2 weak, M lane 5
++clean).
+diff --git a/app/hybrid/validate_hybrid.py b/app/hybrid/validate_hybrid.py
+index 50b1532..03f46df 100644
+--- a/app/hybrid/validate_hybrid.py
++++ b/app/hybrid/validate_hybrid.py
+@@ -67,7 +67,12 @@ def main():
+             if 0xc0140000 <= address <= 0xc0140700 and address & 0xff == 0:
+                 value &= ~0x80000000
+             return value
+-    e = HybridModel(image=image, metadata=md)
++    if __import__('os').environ.get('HYBRID_IPP_PRINT'):
++        sys.path.insert(0, str(HERE.parent / 'tests')); import validate_escl as v
++        class HybridIppModel(v.IppUsbHost, HybridModel): pass
++        e = HybridIppModel(image=image, metadata=md)
++    else:
++        e = HybridModel(image=image, metadata=md)
+     # On the board 0x10000000, 0x18000000 and 0x20000000 are the same DRAM
+     # (measured 2026-10-26); stock's allocator relies on the cached/uncached
+     # alias arithmetic. Share one buffer across the three windows.
+@@ -183,13 +188,20 @@ def main():
+     # table, and direct moves do not run stock's separate initializer. Stop after RAM restoration,
+     # before any stock service or motor task, and require the actual ROM copy.
+     before = struct.unpack('<16I', read_in('cold_before', 0x98, 64, value=0xffff))[2]
++    # Relocated USB DMA must survive stock's large scatter-table RAM clear.
++    # This fixture uses only EP0 here, leaving both IPP TX buffers untouched.
++    dma = int(manifest['symbols']['application']['tx_buffers'], 16)
++    dma_sentinel = bytes(range(256)) * 128
++    e.uc.mem_write(dma, dma_sentinel)
+     command('cold_ram', 0x97, 5 | 0x400, 1 << 8, budget=60000000)
+     for _ in range(100):
+         cold = struct.unpack('<16I', read_in('cold_after', 0x98, 64, value=0xffff))
+         if cold[2] > before: break
+     assert cold[2] == before + 1, cold
+     assert bytes(e.uc.mem_read(0x18089900, 14 * 0xf8)) == image[0x1847c8:0x1847c8 + 14 * 0xf8], 'cold CR profile table is incomplete'
++    assert bytes(e.uc.mem_read(dma, len(dma_sentinel))) == dma_sentinel, 'stock RAM init erased USB DMA buffers'
+     print('PASS cold RAM: all 14 CR profiles restored before any band or loader call')
++    print('PASS cold RAM: relocated USB DMA buffers preserved across stock initialization')
+ 
+     # Shim: run stock routines in place with our services, dry motion.
+     KIND = {1: 'CR_MOVE', 2: 'CR_PROFILE', 3: 'CR_RELEASE', 4: 'LF_MOVE', 5: 'STATUS_GET', 6: 'STATUS_PUB', 7: 'NVM', 8: 'NOTIFY', 9: 'WAIT_TIMEOUT', 10: 'DELAY', 11: 'ROUTINE', 12: 'UNKNOWN'}
+@@ -244,6 +256,36 @@ def main():
+             if not part: break
+             log += part
+         return [l for l in log.decode(errors='replace').splitlines() if filter_ is None or filter_ in l]
++    # Band allocation lifetime (brief 22 answer §1): nothing allocated while a prepared band
++    # is live may land inside it, and the three pattern buffers Q+0x264.. (20 KiB each) must
++    # reach the executor unchanged. Pool allocations are observed at stock 0xa109a/0xa109e.
++    arena_base = int(manifest['symbols']['application']['arena'], 16)
++    from unicorn.arm_const import UC_ARM_REG_R2 as _R2l
++    pool_allocs = []
++    arena_used_addr = int(manifest['symbols']['application']['arena_used'], 16)
++    pool_entry = int(manifest['symbols']['application']['shim_pool_alloc'], 16) & ~1
++    band_live_addr = int(manifest['symbols']['application']['band_live'], 16); band_mark_addr = int(manifest['symbols']['application']['band_mark'], 16)
++    pool_violations = []
++    def pool_probe(cpu, a, sz, u):
++        # every stock pool request reaches the shim's bump allocator here; the block starts at arena + arena_used
++        rec = {'request': cpu.reg_read(_R2l), 'result': arena_base + struct.unpack('<I', bytes(cpu.mem_read(arena_used_addr, 4)))[0]}
++        pool_allocs.append(rec)
++        if cpu.mem_read(band_live_addr, 1)[0] and rec['result'] < arena_base + struct.unpack('<I', bytes(cpu.mem_read(band_mark_addr, 4)))[0]:
++            pool_violations.append(rec)
++    e.uc.hook_add(UC_HOOK_CODE, pool_probe, begin=pool_entry, end=pool_entry)
++    def band_lifetime_begin(q, used):
++        ranges = [(struct.unpack('<I', bytes(e.uc.mem_read(q + 0x264 + 4 * j, 4)))[0], 20480) for j in range(3)]
++        mark = struct.unpack('<I', bytes(e.uc.mem_read(int(manifest['symbols']['application']['band_mark'], 16), 4)))[0]
++        assert mark == used, (mark, used)
++        del pool_allocs[:]
++        return {'mark': mark, 'patterns': [(p, bytes(e.uc.mem_read(p, n))) for p, n in ranges if p]}
++    def band_lifetime_check(tag, live):
++        bad = [a for a in pool_allocs if 'result' in a and a['result'] and arena_base <= a['result'] < arena_base + live['mark']]
++        assert not bad, f'{tag}: {len(bad)} allocations inside the live band (mark {live["mark"]}): {[hex(a["result"]) for a in bad][:8]}'
++        for j, (p, before) in enumerate(live['patterns']):
++            after = bytes(e.uc.mem_read(p, len(before)))
++            assert after == before, f'{tag}: pattern buffer {j} at {p:#x} changed during execution ({sum(1 for x, y in zip(before, after) if x != y)} bytes)'
++        print(f'PASS band lifetime {tag}: {len(pool_allocs)} executor allocations above the live band ({live["mark"]} bytes), {len(live["patterns"])} pattern buffers unchanged')
+     def wide_band(cols, rows, place, tag, budget=80000000, fresh=True):
+         """Wide band for page printing: BK selection matrix entries 0..rows/8-1 -> slots, manager
+         allocated `cols` wide, host placement. Returns the allocation, builder masks, raster-feed
+@@ -289,8 +331,10 @@ def main():
+         used = struct.unpack('<I', bytes(e.uc.mem_read(int(manifest['symbols']['application']['arena_used'], 16), 4)))[0]
+         print(f'wide band {tag}: arena used {used} bytes after prepare (manager size {size})')
+         masks = [struct.unpack('<3I', bytes(e.uc.mem_read(q + 0x2ac + 12 * i, 12))) for i in range(10)]
++        live = band_lifetime_begin(q, used)
+         mmio_writes.clear(); rb = run_status()[2]; command(f'fire_{tag}', 0x97, 7 | 0x1000 | 0x2000, 0, budget=budget)
+         fire_writes = list(mmio_writes)
++        band_lifetime_check(tag, live)
+         Path(f'/project/emu/output/fixture/writes_{tag}.json').write_text(json.dumps([(hex(a), hex(v)) for pc, a, v in fire_writes if 0xc0c20000 <= a < 0xc0c2a000 or 0xc0c51000 <= a < 0xc0c52000]))
+         for _ in range(400):
+             st = run_status()
+@@ -328,6 +372,45 @@ def main():
+                 used.append((g, nz[:6], raster.hex()[:32]))
+             print(f'plane {plane:#x}: prepare result {st[1]:#x} a8422 -> {st[15]} ; managers with reserved slots: {used}')
+         return
++    if os.environ.get('HYBRID_IPP_PRINT'):
++        # End to end: an IPP Print-Job with a small URF page streams into the print engine (dry
++        # mode: no homing, head or sheet checks, dry executor), which runs load, first advance,
++        # per band prepare / tile raster / executor / advance, eject through the shim.
++        sys.path.insert(0, str(HERE.parent.parent / 'tools')); import ipp_print as ip
++        e.requests.extend([('altset2', setup(1, 11, 0, 2)), ('altset3', setup(1, 11, 0, 3))])
++        e.run(lambda x: any(n == 'altset3' for g, n, d in x.responses if g == x.generation), resume=True)
++        command('dry', 0xa3, 1, 1)
++        width, rows_n = 2480, 60                                # 38 rows above the printable area, 22 printable -> 44 output rows -> 2 colour bands
++        row = bytes([90, 150, 200]) * 1200 + bytes([255, 255, 255]) * (width - 1200)   # left: ink in all four planes; right: white
++        document = ip.urf_document([(width, rows_n, 3, [row] * rows_n)])
++        body = ip.print_job_request(document, 'emu', request_id=11)
++        print(f'IPP print: URF {len(document)} bytes, request {len(body)} bytes')
++        t0 = e.ticks
++        v.send(e, 0, (f'POST /ipp/print HTTP/1.1\r\nHost: {v.HOST}\r\nContent-Type: application/ipp\r\nContent-Length: {len(body)}\r\n\r\n').encode() + body)
++        status, headers, resp, _ = v.receive(e, 0, budget=3_000_000_000)
++        ipp_status, attrs = ip.ipp_parse(resp)
++        print(f'Print-Job: HTTP {status} IPP {ipp_status:#06x} attrs job-id {attrs.get("job-id")} job-state {attrs.get("job-state")}')
++        assert status == 200 and ipp_status == 0, (status, ipp_status)
++        assert attrs['job-id'] == [(0x21, b'\x00\x00\x00\x01')] and attrs['job-state'] == [(0x23, b'\x00\x00\x00\x05')], attrs
++        for _ in range(400):
++            w = struct.unpack('<16I', read_in('prt', 0xa2, 64)); f = w[1]
++            state = ip.ENGINE_STATES[f & 0xff]
++            if state in ('completed', 'canceled', 'failed'): break
++            e.run(lambda x: True, resume=True, budget=20_000_000)
++        print(f'engine: {state}/{ip.STEPS[f >> 8 & 0xff]} rows_in {w[2]} bands {w[4]} sweeps {w[7]} pages {w[6]} failures {w[8]} last_fail {w[9]} routines {w[15]}')
++        lines = shim_log()
++        print('shim/print log:'); [print('   ', l) for l in lines if '[print]' in l or 'returned' in l or 'arena' in l]
++        assert state == 'completed' and w[6] == 1 and w[8] == 0, (state, w)
++        assert w[7] == 4, ('sweeps', w[7])                     # 2 bands x 2 segments (the page's band count is cleared once printed)
++        assert sum(1 for l in lines if 'band arena' in l) == 4 and any('page data complete: 44 rows, 2 bands' in l for l in lines), lines[-20:]
++        assert not pool_violations, pool_violations[:5]
++        body = ip.ipp_message(0x0009, 12, [(0x47, b'attributes-charset', b'utf-8'), (0x48, b'attributes-natural-language', b'en'),
++                                           (0x45, b'printer-uri', b'ipp://localhost/ipp/print'), (0x21, b'job-id', b'\x00\x00\x00\x01')])
++        status, headers, resp, _ = v.http(e, 1, 'POST', '/ipp/print', body, headers=('Content-Type: application/ipp',))
++        ipp_status, attrs = ip.ipp_parse(resp)
++        assert ipp_status == 0 and attrs['job-state'] == [(0x23, b'\x00\x00\x00\x09')], (ipp_status, attrs)
++        print(f'PASS ipp print: Print-Job accepted (job 1 processing), engine completed 1 page in 4 sweeps over 2 bands, no allocation inside a live band, Get-Job-Attributes reports completed')
++        return
+     if os.environ.get('HYBRID_COLOUR_ONLY'):
+         # Colour band: stock print mode 7 (C/M/Y groups 61 slots, black 81, 8-row groups), the
+         # C/M/Y selection matrix groups filled, Q lanes 2/5/7 on managers 0/2/4. Records the
+@@ -364,10 +447,13 @@ def main():
+                 masks = struct.unpack('<3I', bytes(e.uc.mem_read(q + 0x2ac + 12 * i, 12)))
+                 print(f'  Q lane {i}: start {rows_q[0]:#x} end {rows_q[1]:#x} stride {rows_q[2]} count {rows_q[3]} masks {[hex(x) for x in masks]}')
+             print('  Q+350/354:', [hex(struct.unpack('<I', bytes(e.uc.mem_read(q + o, 4)))[0]) for o in (0x350, 0x354)])
++            used = struct.unpack('<I', bytes(e.uc.mem_read(int(manifest['symbols']['application']['arena_used'], 16), 4)))[0]
++            live = band_lifetime_begin(q, used)
+             mmio_writes.clear(); rb = run_status()[2]; command(f'fire_{tag}', 0x97, 7 | 0x1000 | 0x2000, 0, budget=200000000)
+             for _ in range(400):
+                 st = run_status()
+                 if st[2] > rb: break
++            band_lifetime_check(tag, live)
+             lanes = bytes(e.uc.mem_read(0x180cda70, 11))
+             print(f'  executor result {st[1]:#x} errors {st[3]}; lane active bytes {lanes.hex()}')
+             Path(f'/project/emu/output/fixture/writes_{tag}.json').write_text(json.dumps([(hex(a), hex(v)) for pc, a, v in mmio_writes if 0xc0c20000 <= a < 0xc0c2a000 or 0xc0c51000 <= a < 0xc0c52000]))
+diff --git a/app/include/app.h b/app/include/app.h
+index 5e5215c..6f671b3 100644
+--- a/app/include/app.h
++++ b/app/include/app.h
+@@ -13,6 +13,10 @@
+ #include "service.h"   /* pulls in fw.h + protocol.h */
+ #include "escl.h"      /* IPP-USB / eSCL driverless scanning */
+ 
++/* Mutable buffers shared with USB DMA. app.ld keeps these outside every
++ * data-cacheable region and inside the hybrid's protected application RAM. */
++#define USB_DMA __attribute__((section(".usb_dma"), aligned(32)))
++
+ /* Vendor control-IN (bmRequestType 0xC0) request that drains the debug log
+  * ring buffer. The host polls it; an empty reply means "nothing buffered". */
+ #define APP_REQUEST_LOG 0x50u
+@@ -64,7 +68,7 @@ void scanner_burst_request(unsigned n, unsigned exposure_eighths, unsigned gain,
+ unsigned scanner_burst_dump(uint8_t *out, unsigned chunk, unsigned max);
+ #define APP_REQUEST_SCAN_BURST_OPTIONS 0x5eu   /* OUT: wValue = components (1|3) | repeat << 4 | window rows << 8 (0 = stock); wIndex = sub-period T >> 4 (0 = P0 default) */
+ bool scanner_burst_options(unsigned components, unsigned repeat, uint32_t period, unsigned window, unsigned flags);   /* 0x5e wValue bits 13..15: full arm table, no 0x158 ack, immediate first request */
+-/* src/cpu_cache.c: ARM946E-S instruction cache (CP15; data cache stays off for DMA). */
++/* src/cpu_cache.c: ARM946E-S cache control; DMA buffers remain uncached. */
+ #define APP_REQUEST_CPU_CACHE 0x8cu      /* OUT: wValue bit0 = instruction cache on/off; logs a benchmark before and after */
+ bool cpu_icache_set(bool on);
+ void exception_report(void);             /* log and clear the persistent exception record (stock_shim.c) */
+@@ -100,7 +104,8 @@ bool scanner_cal_valid(unsigned components);
+ const uint16_t *scanner_cal_row(unsigned white, unsigned comp);   /* 1296 samples per segment... full 2592-sample row */
+ #define APP_REQUEST_LINE_DUMP 0x5du      /* IN: chunk = wIndex << 16 | wValue of the raw line buffer */
+ #define APP_REQUEST_HOME_SPEED 0x7eu     /* OUT: wValue = fast-return cruise / 100 (0 = classic homing) */
+-#define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..13) */
++#define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..63) */
++#define APP_REQUEST_LINE_COLOUR 0x9eu    /* OUT: wValue = LED window eighths r | g << 4 | b << 8 (1..8 each), wIndex = AFE offset (0..255) */
+ void print_selftest(void);          /* decode an embedded BJL band, emit result to the debug log */
+ void print_bulk_begin(unsigned total); /* start a USB bulk print transfer of `total` bytes (USB 0x61) */
+ void print_bulk_feed(const uint8_t *data, unsigned len); /* feed received bulk bytes; decodes when complete */
+@@ -168,6 +173,12 @@ unsigned hybrid_trace(uint8_t *out, unsigned index);
+ #define APP_REQUEST_HYBRID_BAND 0x9au    /* OUT: wValue = columns (multiple of 32), wIndex = nozzle rows (bits 0..8, multiple of 8, <= 304) | 0x800 colour lanes | stock print mode << 12 (0 = 1) */
+ #define APP_REQUEST_HYBRID_PLACE 0x9bu   /* OUT: wValue = stock common horizontal placement (int16, Q+0x3a) for the next band-run */
+ bool hybrid_band_params(unsigned cols, unsigned rows, int place, bool set_place);
++uint32_t hybrid_last_result(void);
++unsigned hybrid_routines_run(void);
++bool hybrid_sheet_loaded(void);
++uint8_t *hybrid_manager_raster(unsigned group, unsigned *slots, unsigned *width, unsigned *stride, unsigned *size);
++#define APP_REQUEST_PRINT_JOB_STATUS 0xa2u  /* IN: 16 words "PRT1", see src/print_engine.c */
++#define APP_REQUEST_PRINT_JOB_CONTROL 0xa3u /* OUT: wValue 1 = dry mode (wIndex 0/1, emulator only), 2 = cancel the job */
+ bool hybrid_raster_begin(unsigned total, unsigned manager);   /* USB 0x99: start receiving a band raster into print-buffer manager 0..6 (6 = black) */
+ void hybrid_raster_feed(const uint8_t *data, unsigned len);
+ bool hybrid_raster_active(void);
+@@ -232,12 +243,33 @@ void scanner_motor_poll(void);             /* drive deadline checked every main
+ void app_yield(void);
+ extern const char *app_section;   /* protocol work in progress, for motor diagnostics */
+ extern uint32_t app_loop_max_ticks, app_loop_count;
++bool cpu_dcache_set(bool on);             /* write-through data cache over the app's DRAM (page scans) */
+ void canary_init(void);
+ int canary_check(uint32_t *value);        /* -1 intact, else the damaged word index and its value */
+ void scratch_pattern_fill(void);          /* diagnostic: pattern the idle print buffer */
+ int scratch_pattern_check(uint32_t *value); /* -1 intact, else first damaged offset and 4 bytes */
+ void scanner_line_dma_report(void);        /* diagnostic: live LDMAC words of the ring channels */
+ #define APP_REQUEST_PEEK 0x9du           /* IN: wValue | wIndex << 16 = app RAM address (0x20000000..0x20800000, read-only), 64 bytes */
++/* Power manager (src/power.c): USB and management stay up; unused hardware rests. */
++#define APP_REQUEST_POWER_STATUS 0xa0u   /* IN: 16 words, protocol "PWR1"; read-only, never wakes anything */
++#define APP_REQUEST_POWER_CONTROL 0xa1u  /* OUT: wValue = op (1 standby, 2 wake, 3 idle timeout with wIndex = seconds, 0 = never) */
++#define POWER_OP_STANDBY 1u
++#define POWER_OP_WAKE 2u
++#define POWER_OP_TIMEOUT 3u
++#define POWER_CAP_SCANNER 0x01u          /* scanner analog power + illumination off in standby */
++#define POWER_CAP_SCAN_MOTOR 0x02u       /* scanner motor outputs neutral in standby */
++#define POWER_CAP_PANEL 0x04u            /* panel LEDs dark in standby, keys still scanned */
++#define POWER_CAP_TIMEOUT 0x08u          /* inactivity timer (RAM only) */
++void power_init(void);
++void power_poll(void);
++bool power_request(unsigned op, unsigned arg);
++void power_button(void);
++unsigned power_status(uint8_t *out);
++bool power_asleep(void);
++unsigned power_state_code(void);
++bool scanner_lamp_on(void);              /* continuous illumination active (an owner) */
++bool scanner_armed(void);                /* a stationary capture or burst is queued (an owner) */
++bool scanner_motor_quiesce(void);        /* idle: outputs neutral, reversible; returns true when outputs read idle */
+ void scanner_motor_cancel(void);
+ void scanner_motor_shutdown(void);         /* stop and inhibit until reset */
+ unsigned scanner_home_result(void);
+@@ -249,6 +281,7 @@ bool scanner_motor_scan_throttle(uint32_t speed);              /* live cruise ch
+ bool scanner_motor_at_reference(void);  /* idle, referenced and parked at home */
+ bool scanner_motor_set_return_speed(unsigned counts_per_s); /* experiment: fast return cruise, 0 or 20000..120000 */
+ bool scanner_line_set_afe(unsigned exposure_eighths, unsigned gain); /* experiment: continuous-scan optics */
++bool scanner_line_set_colour(unsigned windows, unsigned offset);   /* per-LED windows r|g<<4|b<<8 (eighths), AFE offset */
+ bool scan_page_continuous(void);
+ void scan_page_set_speed(unsigned counts_per_s);   /* diagnostic: continuous travel speed */
+ #define APP_REQUEST_SCAN_SPEED 0x7cu     /* OUT: wValue = continuous speed / 100 (130..300) */
+diff --git a/app/src/app_main.c b/app/src/app_main.c
+index 655c565..2619fc9 100644
+--- a/app/src/app_main.c
++++ b/app/src/app_main.c
+@@ -11,6 +11,7 @@
+  * raw-CIS scanner PoC) will add bounded *_tick() calls to this loop. */
+ #include "app.h"
+ #include "print.h"
++#include "print_job.h"
+ 
+ /* Decode an embedded minimal BJL/BJRaster3 band through the open print receiver
+  * and report the result over the debug log. Runs the same parser the (future)
+@@ -79,28 +80,7 @@ void print_selftest(void)
+         0x1b,0x28,0x46,0x05,0x00, 0xfc,0xff,0xfc,0x00,0x80, /* ESC(F raster */
+         0x1b,0x40,                               /* ESC@ */
+     };
+-    print_reset(&print_st);
+-    int r = print_decode(band, sizeof(band), &print_st);
+-    dbg_puts("[print] r="); dbg_dec((unsigned)(r & 0xff));
+-    dbg_puts(" mandatory=0x"); dbg_u32(print_st.mandatory);
+-    dbg_puts(" planes="); dbg_dec(print_st.num_planes);
+-    dbg_puts(" rows="); dbg_dec(print_st.rows_decoded);
+-    dbg_puts(" rowbytes="); dbg_dec(print_st.row_bytes[0]);
+-    dbg_puts(" row0:");
+-    for (unsigned i = 0; i < print_st.row_bytes[0] && i < 16; ++i) {
+-        dbg_putc(' '); dbg_u32(print_st.row[0][i]);
+-    }
+-    dbg_putc('\n');
+-
+-    /* Placeholder head-data emit: stream the decoded plane dots to the head-data
+-     * data port (0xc0c25000). The real nozzle mapping / timing / DMA protocol is
+-     * a TODO (needs RE of the 0xc0c2xxxx head driver); this validates the
+-     * decode -> head-output path end-to-end in emulation (PrinterModel observes
+-     * these writes), and is harmless on hardware (the head is unconnected). */
+-    for (unsigned pl = 0; pl < print_st.num_planes; ++pl)
+-        for (unsigned i = 0; i < print_st.row_bytes[pl]; ++i)
+-            wr(0xc0c25000u, print_st.row[pl][i]);
+-    dbg_puts("[print] emitted head bytes: "); dbg_dec(print_st.row_bytes[0]); dbg_putc('\n');
++    print_process(band, sizeof(band));
+ }
+ 
+ /* Diagnostic: pattern the idle print buffer during scan pages; the first
+@@ -160,7 +140,13 @@ void firmware_main(void)
+     dbg_hex("app_flash", APP_FLASH);
+     dbg_hex("app_ram", APP_RAM);
+ 
++    /* The scanner's conversion rate needs I-cache even when an ordinary
++     * eSCL client never sends the bench-only 0x8c command. DMA stays uncached;
++     * page capture enables write-through caching of CPU-owned data. */
++    cpu_icache_set(true);
++
+     usb_init();
++    power_init();
+     dbg_puts("[app] usb up, entering main loop\n");
+     if (hybrid_panel_available()) {
+         buttons_select_map(2);
+@@ -185,11 +171,12 @@ void firmware_main(void)
+         scanner_motor_poll();
+         service_poll();
+         buttons_poll();
++        power_poll();                        /* ownership, idle timer, standby/wake; cheap */
+         scan_page_poll();
+         /* Long scanner captures and I2C retry loops cannot extend a jog. */
+         if (!scanner_motor_busy()) {
+             mailbox_poll();
+-            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); head_fire_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); carriage_poll(); page_job_poll(); hybrid_poll(); }
++            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); head_fire_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); carriage_poll(); page_job_poll(); hybrid_poll(); print_engine_poll(); }
+         }
+     }
+ }
+diff --git a/app/src/buttons.c b/app/src/buttons.c
+index 4ea17eb..faa37c6 100644
+--- a/app/src/buttons.c
++++ b/app/src/buttons.c
+@@ -1,6 +1,7 @@
+ /* Keys are active from boot. Stock PANEL+0x28 bit assignments were physically
+  * checked on 2026-10-23. Debounce at 1ms intervals; one action per press. */
+ #include "app.h"
++#include "print_job.h"
+ 
+ #define KEY_REG (PANEL + 0x28u)
+ #define KEY_CANCEL 0x0020u
+@@ -20,7 +21,8 @@
+  *                    carriage park <-> 60000 counts; Cancel = eject if a
+  *                    sheet is held, else stop.
+  *   map 2 (hybrid): B/W = one 400-Ulf stock-controlled forward step.
+- *                    No repeat while held; Colour/Power have no action.
++ *                    No repeat while held; Colour has no action.
++ *   maps 0 and 2:   Power = standby when idle / wake when asleep (power.c).
+  *                    Cancel is also polled inside the stock step. */
+ static unsigned button_map;
+ static unsigned place_step;        /* feed bench: 0 idle, 1 hold requested, 2 advance requested */
+@@ -83,8 +85,9 @@ void buttons_poll(void)
+     next_sample = now + 1u;
+     uint32_t v = rd(KEY_REG);
+     /* Stop on the first sample; starting motion requires debounce. */
+-    if ((scanner_motor_busy() || scan_page_busy() || paper_feed_busy() || carriage_busy() || page_job_busy()) &&
++    if ((scanner_motor_busy() || scan_page_busy() || paper_feed_busy() || carriage_busy() || page_job_busy() || print_engine_busy()) &&
+         (((v & KEY_CANCEL) && !cancel_consumed) || (v & COPY_KEYS) == COPY_KEYS)) {
++        print_engine_cancel();               /* an IPP job: finishes the current sweep, ejects, reports canceled */
+         page_job_cancel();
+         scan_page_cancel();
+         scanner_motor_cancel();
+@@ -114,6 +117,8 @@ void buttons_poll(void)
+         }
+         return;
+     }
++    /* Normal maps: Power = standby when idle, wake when asleep (power.c). */
++    if (button_map != 1u && (pressed & KEY_POWER)) { power_button(); return; }
+     if (button_map == 2u) {
+         if ((btn_cand & KEY_CANCEL) || (btn_cand & COPY_KEYS) == COPY_KEYS) return;
+         if (pressed & KEY_COPY_BW) {
+diff --git a/app/src/cpu_cache.c b/app/src/cpu_cache.c
+index 1810916..a4efba1 100644
+--- a/app/src/cpu_cache.c
++++ b/app/src/cpu_cache.c
+@@ -3,9 +3,9 @@
+  * The bootloader hands the app over with the protection unit and both caches
+  * off (bootloader/src/cpu.c, cpu_quiesce; CP15 control reads 0x78 on this
+  * board, ARM946E-S id 0x41059461, no TCM). DMA engines (LDMAC pixel rows, the
+- * USB core, the print engines) write and read DRAM behind the CPU, so the DATA
+- * cache stays off and the write buffer disabled: every load and store still
+- * goes straight to memory. Only instruction fetches are cached; no DMA ever
++ * USB core, the print engines) write and read DRAM behind the CPU. Their
++ * mutable buffers must remain outside the data-cacheable regions below.
++ * At boot only instruction fetches are cached; no DMA ever
+  * produces code, and the app image is copied by the bootloader before the
+  * cache is enabled, so the cache cannot hold stale instructions.
+  *
+@@ -31,6 +31,45 @@ static uint32_t control_read(void)
+ 
+ uint32_t cpu_icache_state(void) { return control_read(); }
+ 
++/* Data cache, write-through, for the app's own DRAM only (2026-10-27: a 300 dpi
++ * colour row took ~90 ms with every load going to DRAM/flash). Region 1 =
++ * 0x20000000 + 4 MiB (code, data, bss, tables; the scan ring at 0x20420000 and
++ * USB buffers at 0x20400000 and stock's 0x18xxxxxx alias stay outside, so DMA rows and stock's writes are
++ * never cached), region 2 = 0x20780000 + 512 KiB (stack, exception record).
++ * Cacheable with the bufferable attribute clear = write-through, so
++ * writes reach memory without dirty cache lines; drain the write buffer on
++ * transitions before invalidating. Enabled
++ * by the page scan while it converts rows and switched off at its end. */
++bool cpu_dcache_set(bool on)
++{
++    uint32_t control = control_read(), zero = 0;
++    if (!(control & CP15_CONTROL_ICACHE)) return false;         /* needs the protection unit (I-cache switch) */
++    if (!!(control & CP15_CONTROL_DCACHE) == on) return true;
++    __asm__ volatile("mcr p15, 0, %0, c7, c10, 4" :: "r"(zero) : "memory");
++    if (on) {
++        /* The MPU is already live. Establish permissions and attributes
++         * BEFORE enabling overriding regions, including the current code
++         * and stack. The opposite order can fault between MCRs, depending
++         * on the instruction-cache/prefetch state and function alignment. */
++        __asm__ volatile(
++            "mcr p15, 0, %5, c5, c0, 2\n"      /* data access permission, extended: regions 0..2 full */
++            "mcr p15, 0, %5, c5, c0, 3\n"      /* instruction access permission, extended: regions 0..2 full */
++            "mcr p15, 0, %2, c2, c0, 1\n"      /* instruction cacheable: regions 0..2 */
++            "mcr p15, 0, %3, c2, c0, 0\n"      /* data cacheable: regions 1, 2 */
++            "mcr p15, 0, %4, c3, c0, 0\n"      /* write buffer: none (write-through) */
++            "mcr p15, 0, %0, c6, c1, 0\n"      /* region 1: 0x20000000, 4 MiB, enabled */
++            "mcr p15, 0, %1, c6, c2, 0\n"      /* region 2: 0x20780000, 512 KiB, enabled */
++            "mcr p15, 0, %4, c7, c6, 0\n"      /* invalidate the data cache */
++            :: "r"(0x20000000u | 0x2bu), "r"(0x20780000u | 0x25u), "r"(7u), "r"(6u), "r"(zero), "r"(0x333u) : "memory");
++        control |= CP15_CONTROL_DCACHE;
++    } else {
++        control &= ~CP15_CONTROL_DCACHE;
++    }
++    __asm__ volatile("mcr p15, 0, %0, c1, c0, 0\n"
++                     "mcr p15, 0, %1, c7, c6, 0\n" :: "r"(control), "r"(zero) : "memory");
++    return true;
++}
++
+ bool cpu_icache_set(bool on)
+ {
+     uint32_t control = control_read(), zero = 0;
+@@ -41,6 +80,16 @@ bool cpu_icache_set(bool on)
+          * bits all clear; access permission 3 (full) for region 0 in both the
+          * instruction and data permission registers. */
+         __asm__ volatile(
++            /* An earlier scan or RAM-to-RAM app restart can leave enabled
++             * regions behind. Higher-numbered regions override region 0;
++             * clearing their permissions alone would fault on app/stack RAM. */
++            "mcr p15, 0, %2, c6, c1, 0\n"
++            "mcr p15, 0, %2, c6, c2, 0\n"
++            "mcr p15, 0, %2, c6, c3, 0\n"
++            "mcr p15, 0, %2, c6, c4, 0\n"
++            "mcr p15, 0, %2, c6, c5, 0\n"
++            "mcr p15, 0, %2, c6, c6, 0\n"
++            "mcr p15, 0, %2, c6, c7, 0\n"
+             "mcr p15, 0, %0, c6, c0, 0\n"      /* region 0 base/size/enable */
+             "mcr p15, 0, %1, c2, c0, 1\n"      /* instruction cacheable: region 0 */
+             "mcr p15, 0, %2, c2, c0, 0\n"      /* data cacheable: none */
+diff --git a/app/src/ipp.c b/app/src/ipp.c
+index 289b38b..50b4b06 100644
+--- a/app/src/ipp.c
++++ b/app/src/ipp.c
+@@ -1,15 +1,19 @@
+-/* IPP responder for IPP-USB hosts.
++/* IPP responder for IPP-USB hosts, with one print job at a time.
+  *
+  * IPP-USB hosts (ipp-usb on Linux, the macOS and Windows class drivers) ask
+  * Get-Printer-Attributes before they expose a device; the answer supplies the
+- * advertised name and UUID. macOS only offers the scanner of a USB device it
+- * recognises as an AirPrint printer, so the attributes describe one: URF
+- * raster, A4/Letter, 300 dpi. Printing is not implemented yet and the answer
+- * says so: printer-is-accepting-jobs is false, job submission is refused with
+- * server-error-not-accepting-jobs and there are never any jobs. */
++ * advertised name and UUID and describes an AirPrint printer: URF raster
++ * (W8 grey or SRGB24), A4/Letter, 300 dpi. Print-Job, or Create-Job followed
++ * by Send-Document, hands the document to print_engine.c as it streams in
++ * (ippusb.c calls ipp_document_begin/feed while receiving); the reply carries
++ * the job id and state, and Get-Jobs / Get-Job-Attributes / Cancel-Job work
++ * on that job until the next one replaces it. Boards without the hybrid band
++ * path (print_engine_available() false) refuse jobs with
++ * server-error-not-accepting-jobs as before. */
+ #include "app.h"
++#include "print_job.h"
+ 
+-enum { TAG_OPERATION = 0x01, TAG_END = 0x03, TAG_PRINTER = 0x04,
++enum { TAG_OPERATION = 0x01, TAG_JOB = 0x02, TAG_END = 0x03, TAG_PRINTER = 0x04,
+        TAG_INTEGER = 0x21, TAG_BOOLEAN = 0x22, TAG_ENUM = 0x23,
+        TAG_RESOLUTION = 0x32, TAG_RANGE = 0x33,
+        TAG_TEXT = 0x41, TAG_NAME = 0x42, TAG_KEYWORD = 0x44, TAG_URI = 0x45,
+@@ -18,11 +22,21 @@ enum { OP_PRINT_JOB = 0x0002, OP_VALIDATE_JOB = 0x0004, OP_CREATE_JOB = 0x0005,
+        OP_SEND_DOCUMENT = 0x0006, OP_CANCEL_JOB = 0x0008, OP_GET_JOB_ATTRIBUTES = 0x0009,
+        OP_GET_JOBS = 0x000a, OP_GET_PRINTER_ATTRIBUTES = 0x000b, OP_IDENTIFY_PRINTER = 0x003c };
+ #define STATUS_OK 0x0000u
++#define STATUS_BAD_REQUEST 0x0400u
+ #define STATUS_NOT_FOUND 0x0406u
++#define STATUS_NOT_POSSIBLE 0x040bu       /* client-error-not-possible */
++#define STATUS_FORMAT 0x040au             /* client-error-document-format-not-supported */
+ #define STATUS_NOT_SUPPORTED 0x0501u
++#define STATUS_BUSY 0x0507u               /* server-error-busy */
+ #define STATUS_NOT_ACCEPTING 0x0506u
++enum { JS_PENDING = 3, JS_PROCESSING = 5, JS_CANCELED = 7, JS_ABORTED = 8, JS_COMPLETED = 9 };
+ 
+-/* One value; a NULL name adds another value to the previous attribute. */
++static struct { unsigned id; bool exists, created_only; } job;   /* the one job; created_only: Create-Job without a document yet */
++static unsigned next_job_id = 1;
++/* Per connection: the document streamed with the request being received. */
++static struct { bool active, accepted; unsigned status, op; } doc[IPPUSB_INTERFACES];
++
++/* ---- encoding ---- */
+ static void attr(struct obuf *o, uint8_t tag, const char *name, const void *value, unsigned length)
+ {
+     unsigned n = name ? (unsigned)strlen(name) : 0;
+@@ -31,58 +45,100 @@ static void attr(struct obuf *o, uint8_t tag, const char *name, const void *valu
+     ob_mem(o, head, 3); ob_mem(o, name, n);
+     ob_mem(o, size, 2); ob_mem(o, value, length);
+ }
+-
+ static void group(struct obuf *o, uint8_t tag) { ob_mem(o, &tag, 1); }
+-
+-static void text(struct obuf *o, uint8_t tag, const char *name, const char *value)
+-{ attr(o, tag, name, value, (unsigned)strlen(value)); }
+-
+-/* Several string values of one attribute. */
++static void text(struct obuf *o, uint8_t tag, const char *name, const char *value) { attr(o, tag, name, value, (unsigned)strlen(value)); }
+ static void texts(struct obuf *o, uint8_t tag, const char *name, const char *const *values, unsigned count)
+ {
+     for (unsigned i = 0; i < count; ++i) text(o, tag, i ? NULL : name, values[i]);
+ }
+-
+ static void be32(uint8_t *out, uint32_t value)
+ {
+-    out[0] = (uint8_t)(value >> 24); out[1] = (uint8_t)(value >> 16);
+-    out[2] = (uint8_t)(value >> 8); out[3] = (uint8_t)value;
++    out[0] = (uint8_t)(value >> 24); out[1] = (uint8_t)(value >> 16); out[2] = (uint8_t)(value >> 8); out[3] = (uint8_t)value;
++}
++static uint32_t rd32(const uint8_t *p) { return (uint32_t)p[0] << 24 | (uint32_t)p[1] << 16 | (uint32_t)p[2] << 8 | p[3]; }
++static void integer(struct obuf *o, uint8_t tag, const char *name, uint32_t value) { uint8_t v[4]; be32(v, value); attr(o, tag, name, v, 4); }
++static void boolean(struct obuf *o, const char *name, bool value) { uint8_t v = value; attr(o, TAG_BOOLEAN, name, &v, 1); }
++static void range(struct obuf *o, const char *name, uint32_t low, uint32_t high) { uint8_t v[8]; be32(v, low); be32(v + 4, high); attr(o, TAG_RANGE, name, v, 8); }
++static void resolution(struct obuf *o, const char *name, uint32_t dpi) { uint8_t v[9]; be32(v, dpi); be32(v + 4, dpi); v[8] = 3; attr(o, TAG_RESOLUTION, name, v, 9); }
++static void url(struct obuf *o, const char *name, const char *scheme, const char *host, const char *path, unsigned id)
++{
++    char value[160];
++    struct obuf u = {value, 0, sizeof(value), false};
++    ob_str(&u, scheme); ob_str(&u, "://"); ob_str(&u, host); ob_str(&u, path);
++    if (id) ob_dec(&u, id);
++    attr(o, TAG_URI, name, value, u.n);
+ }
+ 
+-static void integer(struct obuf *o, uint8_t tag, const char *name, uint32_t value)
++/* ---- request attributes (operation group) ---- */
++struct request_attrs { const uint8_t *format; unsigned format_len; unsigned job_id; bool last_document, has_last; };
++
++static bool same_n(const uint8_t *a, unsigned n, const char *b)
+ {
+-    uint8_t v[4];
+-    be32(v, value);
+-    attr(o, tag, name, v, 4);
++    for (unsigned i = 0; i < n; ++i) { char c = (char)a[i]; if (c >= 'A' && c <= 'Z') c = (char)(c + 32); if (c != b[i]) return false; }
++    return !b[n];
+ }
+ 
+-static void boolean(struct obuf *o, const char *name, bool value)
++static void parse_attrs(const uint8_t *in, unsigned len, struct request_attrs *a)
+ {
+-    uint8_t v = value;
+-    attr(o, TAG_BOOLEAN, name, &v, 1);
++    *a = (struct request_attrs){0};
++    unsigned pos = 8;
++    const uint8_t *name = NULL; unsigned name_len = 0;
++    while (pos < len) {
++        uint8_t tag = in[pos++];
++        if (tag == TAG_END) break;
++        if (tag < 0x10) continue;                               /* group delimiter */
++        if (pos + 2 > len) break;
++        unsigned nl = (unsigned)in[pos] << 8 | in[pos + 1]; pos += 2;
++        if (nl) { name = in + pos; name_len = nl; pos += nl; }  /* nl == 0: another value of the previous attribute */
++        if (pos + 2 > len) break;
++        unsigned vl = (unsigned)in[pos] << 8 | in[pos + 1]; pos += 2;
++        if (pos + vl > len) break;
++        const uint8_t *v = in + pos; pos += vl;
++        if (!name) continue;
++        if (same_n(name, name_len, "document-format")) { a->format = v; a->format_len = vl; }
++        else if (same_n(name, name_len, "job-id") && vl == 4) a->job_id = rd32(v);
++        else if (same_n(name, name_len, "last-document") && vl == 1) { a->last_document = v[0] != 0; a->has_last = true; }
++    }
+ }
+ 
+-static void range(struct obuf *o, const char *name, uint32_t low, uint32_t high)
++static bool format_ok(const struct request_attrs *a)
+ {
+-    uint8_t v[8];
+-    be32(v, low); be32(v + 4, high);
+-    attr(o, TAG_RANGE, name, v, 8);
++    if (!a->format) return true;                                 /* default: application/octet-stream, sniffed by the decoder */
++    return same_n(a->format, a->format_len, "image/urf") || same_n(a->format, a->format_len, "application/octet-stream");
+ }
+ 
+-static void resolution(struct obuf *o, const char *name, uint32_t dpi)
++/* ---- job state ---- */
++static unsigned job_state(void)
+ {
+-    uint8_t v[9];
+-    be32(v, dpi); be32(v + 4, dpi); v[8] = 3;            /* dots per inch */
+-    attr(o, TAG_RESOLUTION, name, v, 9);
++    if (job.created_only) return JS_PENDING;
++    switch (print_engine_state()) {
++    case PE_RECEIVING: case PE_PRINTING: return JS_PROCESSING;
++    case PE_COMPLETED: return JS_COMPLETED;
++    case PE_CANCELED: return JS_CANCELED;
++    default: return JS_ABORTED;
++    }
++}
++static const char *job_reason(void)
++{
++    switch (job_state()) {
++    case JS_PENDING: return "job-incoming";
++    case JS_PROCESSING: return print_engine_state() == PE_RECEIVING ? "job-incoming" : "job-printing";
++    case JS_COMPLETED: return "job-completed-successfully";
++    case JS_CANCELED: return "job-canceled-by-user";
++    default: return "aborted-by-system";
++    }
+ }
+ 
+-/* "scheme://host/path" with the request's Host, as IPP USB requires. */
+-static void url(struct obuf *o, const char *name, const char *scheme, const char *host, const char *path)
++static void job_attributes(struct obuf *o, const char *host)
+ {
+-    char value[160];
+-    struct obuf u = {value, 0, sizeof(value), false};
+-    ob_str(&u, scheme); ob_str(&u, "://"); ob_str(&u, host); ob_str(&u, path);
+-    attr(o, TAG_URI, name, value, u.n);
++    group(o, TAG_JOB);
++    integer(o, TAG_INTEGER, "job-id", job.id);
++    url(o, "job-uri", "ipp", host, "/ipp/print/job/", job.id);
++    url(o, "job-printer-uri", "ipp", host, "/ipp/print", 0);
++    integer(o, TAG_ENUM, "job-state", job_state());
++    text(o, TAG_KEYWORD, "job-state-reasons", job_reason());
++    text(o, TAG_NAME, "job-name", "document");
++    text(o, TAG_NAME, "job-originating-user-name", "user");
+ }
+ 
+ static void printer_attributes(struct obuf *o, const char *host)
+@@ -94,8 +150,10 @@ static void printer_attributes(struct obuf *o, const char *host)
+     static const char *const color_modes[] = {"monochrome", "color"};
+     static const uint16_t operations[] = {OP_PRINT_JOB, OP_VALIDATE_JOB, OP_CREATE_JOB, OP_SEND_DOCUMENT,
+         OP_CANCEL_JOB, OP_GET_JOB_ATTRIBUTES, OP_GET_JOBS, OP_GET_PRINTER_ATTRIBUTES, OP_IDENTIFY_PRINTER};
++    bool accepting = print_engine_available();
++    bool busy = print_engine_busy() || job.created_only;
+     group(o, TAG_PRINTER);
+-    url(o, "printer-uri-supported", "ipp", host, "/ipp/print");
++    url(o, "printer-uri-supported", "ipp", host, "/ipp/print", 0);
+     text(o, TAG_KEYWORD, "uri-authentication-supported", "none");
+     text(o, TAG_KEYWORD, "uri-security-supported", "none");
+     text(o, TAG_NAME, "printer-name", DEVICE_MAKE_MODEL);
+@@ -104,13 +162,13 @@ static void printer_attributes(struct obuf *o, const char *host)
+     text(o, TAG_TEXT, "printer-make-and-model", DEVICE_MAKE_MODEL);
+     text(o, TAG_TEXT, "printer-device-id", "MFG:OpenFW;MDL:MG2550s;CMD:URF;CLS:PRINTER;");
+     text(o, TAG_URI, "printer-uuid", "urn:uuid:" DEVICE_UUID);
+-    url(o, "printer-more-info", "http", host, "/");
++    url(o, "printer-more-info", "http", host, "/", 0);
+     text(o, TAG_KEYWORD, "printer-kind", "document");
+-    integer(o, TAG_ENUM, "printer-state", 3);                 /* idle */
++    integer(o, TAG_ENUM, "printer-state", busy ? 4u : 3u);     /* processing / idle */
+     text(o, TAG_KEYWORD, "printer-state-reasons", "none");
+-    boolean(o, "printer-is-accepting-jobs", false);
++    boolean(o, "printer-is-accepting-jobs", accepting);
+     integer(o, TAG_INTEGER, "printer-up-time", time_ms() / 1000u + 1u);
+-    integer(o, TAG_INTEGER, "queued-job-count", 0);
++    integer(o, TAG_INTEGER, "queued-job-count", busy ? 1u : 0u);
+     texts(o, TAG_KEYWORD, "ipp-versions-supported", versions, ARRAY_SIZE(versions));
+     text(o, TAG_KEYWORD, "ipp-features-supported", "airprint-1.4");
+     for (unsigned i = 0; i < ARRAY_SIZE(operations); ++i)
+@@ -119,7 +177,7 @@ static void printer_attributes(struct obuf *o, const char *host)
+     text(o, TAG_CHARSET, "charset-supported", "utf-8");
+     text(o, TAG_LANGUAGE, "natural-language-configured", "en");
+     text(o, TAG_LANGUAGE, "generated-natural-language-supported", "en");
+-    text(o, TAG_MIME, "document-format-default", "application/octet-stream");
++    text(o, TAG_MIME, "document-format-default", "image/urf");
+     texts(o, TAG_MIME, "document-format-supported", formats, ARRAY_SIZE(formats));
+     texts(o, TAG_KEYWORD, "urf-supported", urf, ARRAY_SIZE(urf));
+     text(o, TAG_KEYWORD, "pdl-override-supported", "attempted");
+@@ -147,26 +205,91 @@ static void printer_attributes(struct obuf *o, const char *host)
+     text(o, TAG_KEYWORD, "multiple-document-handling-supported", "separate-documents-uncollated-copies");
+ }
+ 
++/* ---- document streaming (ippusb.c) ---- */
++/* The attributes of a request with a document body have arrived; decide now
++ * whether the document goes to the engine or is drained. */
++void ipp_document_begin(unsigned conn, const uint8_t *attributes, unsigned length)
++{
++    struct request_attrs a;
++    unsigned op = length >= 4 ? (unsigned)attributes[2] << 8 | attributes[3] : 0;
++    doc[conn].active = true; doc[conn].accepted = false; doc[conn].status = STATUS_NOT_ACCEPTING; doc[conn].op = op;
++    if (op != OP_PRINT_JOB && op != OP_SEND_DOCUMENT) { doc[conn].status = STATUS_OK; return; }   /* no document expected */
++    parse_attrs(attributes, length, &a);
++    if (!print_engine_available()) { doc[conn].status = STATUS_NOT_ACCEPTING; return; }
++    if (!format_ok(&a)) { doc[conn].status = STATUS_FORMAT; return; }
++    if (op == OP_SEND_DOCUMENT) {
++        if (!job.exists || a.job_id != job.id) { doc[conn].status = STATUS_NOT_FOUND; return; }
++        if (!job.created_only || !print_engine_start()) { doc[conn].status = STATUS_NOT_POSSIBLE; return; }
++        job.created_only = false;
++    } else {
++        if (print_engine_busy() || job.created_only) { doc[conn].status = STATUS_BUSY; return; }
++        if (!print_engine_start()) { doc[conn].status = STATUS_BUSY; return; }
++        job.exists = true; job.created_only = false; job.id = next_job_id++;
++    }
++    doc[conn].accepted = true; doc[conn].status = STATUS_OK;
++    dbg_puts("[ipp] job "); dbg_dec(job.id); dbg_puts(" document streaming\n");
++}
++
++unsigned ipp_document_feed(unsigned conn, const uint8_t *data, unsigned len)
++{
++    if (!doc[conn].accepted) return len;                       /* drained */
++    return print_engine_feed(data, len);
++}
++
++void ipp_document_abort(unsigned conn)
++{
++    if (doc[conn].accepted) { dbg_puts("[ipp] document aborted by the host\n"); print_engine_cancel(); }
++    doc[conn].active = doc[conn].accepted = false;
++}
++
++/* ---- requests ---- */
+ void ipp_handle(unsigned conn, const struct http_request *rq)
+ {
+     const uint8_t *in = rq->body;
+-    if (rq->body_length < 8u) { http_reply(conn, 400, NULL, NULL, NULL); return; }
+-    unsigned operation = (unsigned)in[2] << 8 | in[3], status;
++    if (rq->body_length < 8u) { doc[conn].active = false; http_reply(conn, 400, NULL, NULL, NULL); return; }
++    unsigned operation = (unsigned)in[2] << 8 | in[3], status = STATUS_OK;
++    struct request_attrs a; parse_attrs(in, rq->body_length, &a);
++    bool with_job = false;
+     switch (operation) {
+-    case OP_GET_PRINTER_ATTRIBUTES: case OP_GET_JOBS: case OP_IDENTIFY_PRINTER:
+-        status = STATUS_OK; break;
+-    case OP_PRINT_JOB: case OP_VALIDATE_JOB: case OP_CREATE_JOB: case OP_SEND_DOCUMENT:
+-        status = STATUS_NOT_ACCEPTING; break;
+-    case OP_CANCEL_JOB: case OP_GET_JOB_ATTRIBUTES:
+-        status = STATUS_NOT_FOUND; break;                 /* there are never jobs */
++    case OP_GET_PRINTER_ATTRIBUTES: case OP_IDENTIFY_PRINTER:
++        break;
++    case OP_GET_JOBS:
++        with_job = job.exists && (job.created_only || print_engine_busy());
++        break;
++    case OP_VALIDATE_JOB:
++        status = !print_engine_available() ? STATUS_NOT_ACCEPTING : !format_ok(&a) ? STATUS_FORMAT : STATUS_OK;
++        break;
++    case OP_CREATE_JOB:
++        if (!print_engine_available()) status = STATUS_NOT_ACCEPTING;
++        else if (print_engine_busy() || job.created_only) status = STATUS_BUSY;
++        else { job.exists = true; job.created_only = true; job.id = next_job_id++; with_job = true; }
++        break;
++    case OP_PRINT_JOB: case OP_SEND_DOCUMENT:
++        status = doc[conn].active ? doc[conn].status : STATUS_BAD_REQUEST;
++        if (doc[conn].accepted) {
++            if (operation == OP_PRINT_JOB || !a.has_last || a.last_document) print_engine_finish();
++            with_job = true;
++        } else if (operation == OP_SEND_DOCUMENT && status == STATUS_OK) {   /* an empty final Send-Document closes a created job */
++            if (job.exists && a.job_id == job.id && job.created_only) { job.created_only = false; status = STATUS_NOT_POSSIBLE; }
++            else status = STATUS_NOT_FOUND;
++        }
++        break;
++    case OP_CANCEL_JOB:
++        if (!job.exists || a.job_id != job.id) status = STATUS_NOT_FOUND;
++        else if (job.created_only) job.created_only = false;
++        else if (print_engine_busy()) print_engine_cancel();
++        else status = STATUS_NOT_POSSIBLE;                       /* already finished */
++        break;
++    case OP_GET_JOB_ATTRIBUTES:
++        if (!job.exists || a.job_id != job.id) status = STATUS_NOT_FOUND; else with_job = true;
++        break;
+     default:
+         status = STATUS_NOT_SUPPORTED; break;
+     }
++    doc[conn].active = doc[conn].accepted = false;
+     dbg_puts("[ipp] operation 0x"); dbg_u32(operation);
+     dbg_puts(" status 0x"); dbg_u32(status); dbg_putc('\n');
+     struct obuf o = http_body();
+-    /* Version and request-id are echoed; request attributes are ignored, so
+-     * Get-Printer-Attributes always returns the full set. */
+     uint8_t head[8] = {in[0], in[1], (uint8_t)(status >> 8), (uint8_t)status, in[4], in[5], in[6], in[7]};
+     ob_mem(&o, head, 8);
+     group(&o, TAG_OPERATION);
+@@ -174,6 +297,27 @@ void ipp_handle(unsigned conn, const struct http_request *rq)
+     text(&o, TAG_LANGUAGE, "attributes-natural-language", "en");
+     const char *host = rq->host && *rq->host && strlen(rq->host) < 96u ? rq->host : "localhost";
+     if (operation == OP_GET_PRINTER_ATTRIBUTES) printer_attributes(&o, host);
++    if (with_job) job_attributes(&o, host);
+     group(&o, TAG_END);
+     http_reply(conn, 200, "application/ipp", NULL, &o);
+ }
++
++/* ---- incremental attribute scanner (ippusb.c) ---- */
++bool ipp_scan_byte(struct ipp_scan *s, uint8_t b)
++{
++    /* stages: 0..7 header; 8 tag; 9/10 name length; 11 name bytes; 12/13 value length; 14 value bytes */
++    if (s->done) return true;
++    switch (s->stage) {
++    case 8:
++        if (b == TAG_END) { s->done = true; return true; }
++        if (b < 0x10) return false;                               /* group delimiter */
++        s->stage = 9; return false;
++    case 9: s->length = (uint16_t)(b << 8); s->stage = 10; return false;
++    case 10: s->length |= b; s->skip = s->length; s->stage = s->skip ? 11 : 12; return false;
++    case 11: if (!--s->skip) s->stage = 12; return false;
++    case 12: s->length = (uint16_t)(b << 8); s->stage = 13; return false;
++    case 13: s->length |= b; s->skip = s->length; s->stage = s->skip ? 14 : 8; return false;
++    case 14: if (!--s->skip) s->stage = 8; return false;
++    default: if (++s->stage == 8) {} return false;              /* 8 header bytes */
++    }
++}
+diff --git a/app/src/ippusb.c b/app/src/ippusb.c
+index 3f2d1fb..e48e4e4 100644
+--- a/app/src/ippusb.c
++++ b/app/src/ippusb.c
+@@ -16,6 +16,7 @@
+  * (HTTP/1.0 gets 505), and the request's Host value is echoed as the Server
+  * header and in self-referencing URLs (see escl.c and ipp.c). */
+ #include "app.h"
++#include "print_job.h"
+ 
+ #define RX_SIZE 8192u
+ #define TX_SIZE 16384u
+@@ -37,12 +38,14 @@ struct conn {
+     bool armed, sending, unterminated;
+     unsigned pending;                  /* complete bytes waiting in tx */
+     const struct http_stream *stream;
++    bool ipp, doc;                     /* POST application/ipp: attributes buffered, the document streamed to ipp.c */
++    struct ipp_scan scan;
+ };
+ 
+ static struct conn conns[IPPUSB_INTERFACES];
+-static uint8_t packets[IPPUSB_INTERFACES][512] ALIGNED;
++static uint8_t packets[IPPUSB_INTERFACES][512] USB_DMA;
+ static uint8_t rx_buffers[IPPUSB_INTERFACES][RX_SIZE];
+-static uint8_t tx_buffers[IPPUSB_INTERFACES][TX_SIZE] ALIGNED;
++static uint8_t tx_buffers[IPPUSB_INTERFACES][TX_SIZE] USB_DMA;
+ static char scratch[8192];
+ static const char *reply_host = "localhost";  /* Host of the request being handled */
+ 
+@@ -237,6 +240,24 @@ static void parse_head(unsigned conn, unsigned *content_length, bool *chunked, b
+     }
+ }
+ 
++static const char *rq_method(const struct conn *k) { return k->request.method ? k->request.method : ""; }
++
++/* A body byte of a request: IPP attributes are stored; once their end tag has
++ * passed, the document that follows streams to ipp.c (which accepts it into
++ * the print engine or drains it). Returns false when the engine cannot take
++ * more right now: the packet stays where it is and is retried next poll. */
++static bool body_byte(unsigned conn, uint8_t b)
++{
++    struct conn *k = &conns[conn];
++    if (k->doc) return ipp_document_feed(conn, &b, 1) == 1;
++    store(conn, b);
++    if (k->ipp && ipp_scan_byte(&k->scan, b)) {
++        k->doc = true;
++        ipp_document_begin(conn, rx_buffers[conn] + k->head_length, k->rx_length - k->head_length);
++    }
++    return true;
++}
++
+ static void header_complete(unsigned conn)
+ {
+     struct conn *k = &conns[conn];
+@@ -248,6 +269,8 @@ static void header_complete(unsigned conn)
+     if (chunked) { k->rx = RX_CHUNK_SIZE; k->left = 0; k->extension = false; }
+     else if (length) { k->rx = RX_BODY; k->left = length; }
+     else { k->rx = RX_DONE; return; }
++    k->ipp = same(rq_method(k), "POST") && k->request.content_type && contains(k->request.content_type, "application/ipp");
++    k->doc = false; k->scan = (struct ipp_scan){0};
+     if (expect) {
+         static const char interim[] = "HTTP/1.1 100 Continue\r\n\r\n";
+         memcpy(tx_buffers[conn], interim, sizeof(interim) - 1u);
+@@ -269,7 +292,16 @@ static void consume(unsigned conn)
+             if (k->tail == 0x0d0a0d0au || (k->tail & 0xffffu) == 0x0a0au) header_complete(conn);
+             break;
+         case RX_BODY:
+-            store(conn, b);
++            if (k->doc) {                                     /* document bytes: hand over the whole run */
++                unsigned n = k->packet_length - k->packet_position + 1u;
++                if (n > k->left) n = k->left;
++                unsigned taken = ipp_document_feed(conn, packets[conn] + k->packet_position - 1u, n);
++                k->packet_position += taken - 1u; k->left -= taken;
++                if (!k->left) k->rx = RX_DONE;
++                if (taken < n) { k->packet_position -= 1u; return; }   /* backpressure: retry from the next byte */
++                break;
++            }
++            if (!body_byte(conn, b)) { --k->packet_position; return; }
+             if (!--k->left) k->rx = RX_DONE;
+             break;
+         case RX_CHUNK_SIZE:
+@@ -286,7 +318,7 @@ static void consume(unsigned conn)
+             }
+             break;
+         case RX_CHUNK_DATA:
+-            store(conn, b);
++            if (!body_byte(conn, b)) { --k->packet_position; return; }
+             if (!--k->left) k->rx = RX_CHUNK_END;
+             break;
+         case RX_CHUNK_END:
+@@ -328,6 +360,8 @@ static void dispatch(unsigned conn)
+     rq.body_length = k->rx_length - k->head_length;
+     k->rx = RX_HEAD; k->rx_length = k->head_length = 0; k->tail = 0;
+     k->overflow = k->bad = k->http10 = false;
++    if (k->doc && overflow) overflow = false;                 /* the document never touched the receive buffer */
++    k->ipp = k->doc = false;
+     /* Request trace for host-interoperability work (status follows on reply). */
+     dbg_puts("[http] c"); dbg_dec(conn); dbg_putc(' ');
+     dbg_puts(bad ? "(bad request)" : rq.method); dbg_putc(' ');
+@@ -353,6 +387,7 @@ static void drop(unsigned conn, bool endpoints_reset)
+ {
+     struct conn *k = &conns[conn];
+     if (k->stream && k->stream->abort) k->stream->abort();
++    if (k->doc) ipp_document_abort(conn);
+     bool armed = k->armed, sending = k->sending;
+     memset(k, 0, sizeof(*k));
+     /* A transfer still owned by the controller completes later as usual. */
+diff --git a/app/src/scan_page.c b/app/src/scan_page.c
+index aaa0802..be9a24e 100644
+--- a/app/src/scan_page.c
++++ b/app/src/scan_page.c
+@@ -25,7 +25,15 @@ enum page_error { PAGE_OK, ERR_HOME, ERR_STEP, ERR_CAPTURE, ERR_HOST_TIMEOUT,
+  * RGB 300 dpi and far more at 75/150 (149,687), above what our scan controller
+  * allows (60,000) and what was physically verified (28,000 full page, 100,000
+  * fast return). 40,000 at 75/150 dpi is the first operating point to verify. */
+-static uint32_t cruise_for_pitch(unsigned p) { return p >= 256u ? 40000u : 37000u; }
++static uint32_t cruise_for_pitch(unsigned p, unsigned c)
++{
++    /* Full-width calibrated RGB conversion + PNG takes about 9 ms/row at
++     * 150 dpi and 18 ms/row at 300 dpi on the board. Set the acquisition
++     * period and travel speed together at page start, with processing margin.
++     * Motor throttling alone does not slow the current IRQ-driven producer. */
++    if (c == 3u && p < 512u) return p >= 256u ? 26000u : 6000u;
++    return p >= 256u ? 40000u : 37000u;
++}
+ #define CONT_CRAWL 3000u            /* ring backpressure cruise (above the stall detector's 1000 counts / 500 ms) */
+ #define CONT_START 4096u
+ #define CONT_RUNOUT 4096u
+@@ -60,7 +68,7 @@ static bool continuous;                 /* this page uses moving acquisition */
+ static uint32_t cont_speed = CONT_SPEED_DEFAULT;
+ static unsigned components = 1, next_components = 1;
+ static bool crawling;
+-static bool calibrate_pages = true;     /* USB 0x9c bit 6 clears it (A/B tests) */
++static bool calibrate_pages = false;    /* home bursts superseded by the page run-in references; USB 0x9c bit 6 controls it (A/B tests) */
+ void scan_page_set_calibration(bool on) { calibrate_pages = on; }
+ 
+ void scan_page_set_components(unsigned c) { next_components = c == 3u ? 3u : 1u; }
+@@ -81,6 +89,7 @@ static void transition(enum page_phase next)
+ 
+ static void end_page(enum page_phase result, enum page_error error)
+ {
++    cpu_dcache_set(false);
+     static const char *const names[] = {"idle", "home", "settle", "capture", "ready", "step", "return",
+                                         "done", "failed", "cancelled", "scan", "calibrate"};
+     scanner_motor_cancel(); scanner_line_stop(); scanner_lamp_off();
+@@ -112,11 +121,13 @@ void scan_page_cancel(void)
+ bool scan_page_start(unsigned count, unsigned spacing, uint32_t start, bool owned)
+ {
+     bool adopt = page_phase == PAGE_RETURN;
+-    if (!count || count > (owned ? 3508u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > 450048u ||
+-        (count - 1u) * spacing > 450048u - start || (scan_page_busy() && !adopt) ||
++    uint32_t travel = owned ? 470016u : 450048u;   /* owned pages run in from the mechanical start: stock's 3508 rows lie 156/300 in later */
++    if (!count || count > (owned ? 3680u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > travel ||
++        (count - 1u) * spacing > travel - start || (scan_page_busy() && !adopt) ||
+         (scanner_motor_busy() && !adopt) || print_is_active()) return false;
+     rows = count; pitch = spacing; offset = start; internal = owned; park = false; retries = 0;
+     scanner_line_reset(); scratch_pattern_fill();
++    if (owned && cpu_dcache_set(true)) dbg_puts("[page] data cache on\n");
+     components = owned ? next_components : 1u; next_components = 1u;
+     /* Moving acquisition for the eSCL pitches; the vendor page protocol keeps stop-and-capture. */
+     continuous = owned && (spacing == 128u || spacing == 256u || spacing == 512u) && count * components <= 65535u;
+@@ -206,7 +217,7 @@ static void scan_continuous(uint32_t now)
+     if (!action_started) {
+         uint32_t endpoint = first + (rows - 1u) * pitch + CONT_RUNOUT;
+         /* Budget covers a page crawled from the start (host backpressure). */
+-        uint32_t speed = cont_speed ? cont_speed : cruise_for_pitch(pitch);
++        uint32_t speed = cont_speed ? cont_speed : cruise_for_pitch(pitch, components);
+         uint32_t budget = 3000u + motor_divide((uint64_t)(endpoint - origin) * 1000u, CONT_CRAWL);
+         /* Line period T x d = 96 MHz x pitch x 0.98 / v (stock B.2); T per sub-period. */
+         uint32_t period = motor_divide((uint64_t)96000000u * pitch * 49u, speed * 50u * components);
+@@ -252,7 +263,7 @@ static void scan_continuous(uint32_t now)
+          * (host, encoder) slows the carriage instead of losing lines. */
+         unsigned backlog = scanner_line_backlog(), ring = scanner_line_ring();
+         if (!crawling && backlog > ring / 2u) { crawling = scanner_motor_scan_throttle(CONT_CRAWL); if (crawling) dbg_puts("[page] crawl\n"); }
+-        else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch)); if (!crawling) dbg_puts("[page] cruise\n"); }
++        else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch, components)); if (!crawling) dbg_puts("[page] cruise\n"); }
+         return;
+     }
+     if (!scanner_motor_move_ok()) { end_page(PAGE_FAILED, ERR_STEP); return; }
+diff --git a/app/src/scan_source_scanner.c b/app/src/scan_source_scanner.c
+index c9bed98..8779707 100644
+--- a/app/src/scan_source_scanner.c
++++ b/app/src/scan_source_scanner.c
+@@ -13,6 +13,7 @@
+  * expect sRGB-like encoding, without it paper looks grey). Colour uses the
+  * three-phase illumination (one component row per LED); grey the combined
+  * exposure. */
++#include <string.h>
+ #include "app.h"
+ 
+ #define SAMPLES 2592u
+@@ -24,8 +25,21 @@
+  * ~31,000..48,000 (150-row runs, 2026-10-24; no shading correction yet). */
+ #define STEP_BLACK 26000u
+ #define STEP_WHITE 65000u
+-#define CONT_BLACK 1000u
+-#define CONT_WHITE 36000u
++#define CONT_BLACK 1200u           /* AFE offset 0x80 pedestal: no-light level (platen edge bar) */
++#define CONT_WHITE 48000u          /* fallback only; the run-in references below normally apply */
++/* Run-in references (2026-10-27 raw ring dumps, 1/300 inch from the mechanical
++ * scan start): the lid's white strip spans ~12..100, the platen-edge dark bar
++ * ~128..152, stock's document origin lies 156 later than our start (swatch
++ * edges against the stock scan), and stock's first column is 8 units right of
++ * sample 0. Every page scans from the mechanical start; the run-in lines give
++ * the per-sample white/dark arrays (stock's calibration, brief 21 §5). */
++#define DOC_ORIGIN 156u
++#define SAMPLE_ORIGIN 4u
++#define STRIP_FROM 20u
++#define STRIP_TO 90u
++#define DARK_FROM 132u
++#define DARK_TO 148u
++#define TRAVEL_UNITS 3672u         /* mechanical start to the end of travel, 1/300 inch (stock's 3508 rows from its origin) */
+ /* gamma[i] = round(255 * (i / 255) ** (1 / 2.2)); mirrored by the emulator tests. */
+ static const uint8_t gamma_lut[256] = {
+       0,  21,  28,  34,  39,  43,  46,  50,  53,  56,  59,  61,  64,  66,  68,  70,
+@@ -48,7 +62,7 @@ static const uint8_t gamma_lut[256] = {
+ 
+ static const uint16_t resolutions[] = {75, 150, 300};
+ const struct scan_caps scan_caps = {
+-    .max_width = 2550, .max_height = 3507,          /* 216 x 297 mm platen */
++    .max_width = 2480, .max_height = 3507,          /* 210 x 297 mm, stock's output size */
+     .min_size = 16, .optical = 300,
+     .resolutions = resolutions, .resolution_count = ARRAY_SIZE(resolutions),
+     .gray = true, .color = true,
+@@ -64,9 +78,16 @@ static unsigned pixels, components;
+  * dark[x]) * WHITE_TARGET / 255; a sample whose references are unusable keeps
+  * scale 0 and falls back to the fixed levels. 16.16 products fit 32 bits. */
+ #define CAL_MIN_SPAN 1024u
+-#define WHITE_TARGET 250u           /* the reference strip maps to this, paper slightly below */
++#define WHITE_TARGET 250u           /* home-burst path: the reference strip maps to this */
++/* Stock match (2026-10-27 fit of the stock scan against ours on the swatch
++ * sheet): stock keeps a black floor of ~5 % linear and maps the lid strip to
++ * ~0.90 (red/green) and ~0.85 (blue) of full scale. value = floor + span. */
++#define BLACK_FLOOR 14u
++static const uint16_t white_span[3] = {230u, 230u, 217u};   /* per component, strip level above the floor */
+ static uint16_t cal_dark[3][SAMPLES];
+ static uint32_t cal_scale[3][SAMPLES];
++static uint32_t acc_white[3][SAMPLES], acc_dark[3][SAMPLES];
++static unsigned acc_nw, acc_nd, runin_total, runin_done, step_units, pad_rows;
+ static bool cal_built, cal_on;
+ 
+ static void cal_build(void)
+@@ -100,7 +121,7 @@ bool scan_source_start(const struct scan_params *p)
+     for (unsigned n = 1; n < ARRAY_SIZE(reciprocal); ++n) reciprocal[n] = (65536u + n - 1u) / n;
+     for (unsigned i = 0; i < pixels; ++i) {
+         if (!(i & 127u)) app_yield();
+-        unsigned u = p->x + i * step;
++        unsigned u = p->x + i * step + SAMPLE_ORIGIN;
+         unsigned s0 = u * SAMPLES / SAMPLE_SPAN, s1 = (u + step) * SAMPLES / SAMPLE_SPAN;
+         if (s0 >= SAMPLES) s0 = SAMPLES - 1u;
+         if (s1 > SAMPLES) s1 = SAMPLES;
+@@ -109,7 +130,12 @@ bool scan_source_start(const struct scan_params *p)
+         first_sample[i] = (uint16_t)s0; sample_count[i] = (uint8_t)(s1 - s0);
+     }
+     scan_page_set_components(components);
+-    if (!scan_page_start(p->lines, step * COUNTS_PER_UNIT, p->y * COUNTS_PER_UNIT, true)) return false;
++    step_units = step; runin_total = (DOC_ORIGIN + p->y + step - 1u) / step; runin_done = 0; acc_nw = acc_nd = 0; pad_rows = 0;
++    for (unsigned c = 0; c < 3u; ++c)
++        for (unsigned x = 0; x < SAMPLES; ++x) { if (!(x & 255u)) app_yield(); acc_white[c][x] = 0; acc_dark[c][x] = 0; }
++    unsigned count = p->lines + runin_total, max_count = TRAVEL_UNITS / step;
++    if (count > max_count) { pad_rows = count - max_count; count = max_count; }   /* beyond the travel: white rows */
++    if (!scan_page_start(count, step * COUNTS_PER_UNIT, 0, true)) return false;
+     bool cont = scan_page_continuous();
+     black_level = cont ? CONT_BLACK : STEP_BLACK;
+     level_scale = 255u * 65536u / ((cont ? CONT_WHITE : STEP_WHITE) - black_level);
+@@ -122,7 +148,7 @@ static inline uint8_t convert(const uint16_t *s, unsigned s0, unsigned n, unsign
+     if (cal_on && cal_scale[c][s0]) {
+         const uint16_t *d = cal_dark[c] + s0; const uint32_t *g = cal_scale[c] + s0;
+         for (unsigned k = 0; k < n; ++k) { unsigned v = s[k] > d[k] ? (unsigned)(s[k] - d[k]) : 0u; sum += (v * g[k]) >> 16; }
+-        value = (sum * reciprocal[n]) >> 16;
++        value = BLACK_FLOOR + ((sum * reciprocal[n]) >> 16);
+     } else {
+         for (unsigned k = 0; k < n; ++k) sum += s[k];
+         unsigned level = (unsigned)(((unsigned long long)sum * reciprocal[n]) >> 16);
+@@ -131,11 +157,54 @@ static inline uint8_t convert(const uint16_t *s, unsigned s0, unsigned n, unsign
+     return gamma_lut[value > 255u ? 255u : value];
+ }
+ 
++/* Per-sample references from the run-in: mean strip line as white, mean dark
++ * bar as black; samples without a usable span fall back to the fixed levels. */
++static void cal_from_runin(void)
++{
++    cal_on = acc_nw >= 2u && acc_nd >= 1u;
++    for (unsigned c = 0; cal_on && c < components; ++c)
++        for (unsigned x = 0; x < SAMPLES; ++x) {
++            if (!(x & 15u)) app_yield();                      /* two software divisions per sample */
++            uint32_t d = acc_dark[c][x] / acc_nd, w = acc_white[c][x] / acc_nw;
++            cal_dark[c][x] = (uint16_t)(d > 65535u ? 65535u : d);
++            cal_scale[c][x] = w > d + CAL_MIN_SPAN ? ((uint32_t)white_span[c] * 65536u) / (w - d) : 0u;
++        }
++    cal_built = true;
++    dbg_puts("[cal] run-in white lines="); dbg_dec(acc_nw); dbg_puts(" dark lines="); dbg_dec(acc_nd);
++    if (cal_on) { dbg_puts(" mid-sample white/dark:"); for (unsigned c = 0; c < components; ++c) { dbg_putc(' '); dbg_dec(acc_white[c][SAMPLES / 2u] / acc_nw); dbg_putc('/'); dbg_dec(acc_dark[c][SAMPLES / 2u] / acc_nd); } }
++    dbg_puts(cal_on ? "\n" : " (fixed levels)\n");
++}
++
++static void accumulate(unsigned row, const uint16_t *samples, uint32_t (*acc)[SAMPLES])
++{
++    for (unsigned c = 0; c < components; ++c) {
++        const uint16_t *s = components == 3u ? scan_page_component(row, c) : samples;
++        if (!s) return;
++        for (unsigned x = 0; x < SAMPLES; ++x) { if (!(x & 255u)) app_yield(); acc[c][x] += s[x]; }
++    }
++}
++
+ int scan_source_row(uint8_t *out)
+ {
+     unsigned row;
+-    const uint16_t *samples = scan_page_take(&row);
+-    if (!samples) return scan_page_failed() ? -1 : 0;
++    const uint16_t *samples;
++    for (;;) {
++        samples = scan_page_take(&row);
++        if (!samples) {
++            if (scan_page_failed()) return -1;
++            if (pad_rows && runin_done >= runin_total && !scan_page_busy()) {   /* travel ended before the region: white */
++                memset(out, 255, pixels * components); --pad_rows; return 1;
++            }
++            return 0;
++        }
++        if (runin_done >= runin_total) break;
++        unsigned u = runin_done * step_units;                 /* 1/300 inch from the mechanical start */
++        app_section = "run-in"; app_yield();
++        if (u >= STRIP_FROM && u < STRIP_TO) { accumulate(row, samples, acc_white); ++acc_nw; }
++        else if (u >= DARK_FROM && u < DARK_TO) { accumulate(row, samples, acc_dark); ++acc_nd; }
++        if (!scan_page_release(row)) return -1;
++        if (++runin_done == runin_total) cal_from_runin();
++    }
+     app_section = "convert";
+     if (!cal_built) cal_build();
+     if (components == 1u) {
+diff --git a/app/src/scanner.c b/app/src/scanner.c
+index f9559db..4bff250 100644
+--- a/app/src/scanner.c
++++ b/app/src/scanner.c
+@@ -275,6 +275,10 @@ static void burst_stop(void)
+  * exact register deltas stock writes for component count 3 (fixture case
+  * p0-three-components versus p0-gray-4). Each of the three illumination
+  * windows spans the whole 0x99..0x7e0 range; `eighths` scales that width. */
++static unsigned line_colour_eighths[3] = {5u, 6u, 3u};   /* per-LED window eighths: paper ~42,000 each, lid strip < 65,535 (sweep 2026-10-27) */
++static unsigned line_afe_offset = 0x80u;                    /* AFE offset slot (regs 1/4): +203 counts per unit; 0x80 puts no-light at ~1,200 instead of clamping at 0 */
++/* `eighths` 0 closes all three windows (dark reference); otherwise each LED
++ * uses its own width from line_colour_eighths. */
+ static void scnio_colour_config(unsigned eighths)
+ {
+     wr(0xc0d600e0u, 7u);
+@@ -283,7 +287,7 @@ static void scnio_colour_config(unsigned eighths)
+     wr(0xc0d601c0u, 1u); wr(0xc0d601c4u, 2u); wr(0xc0d601c8u, 4u);
+     for (unsigned c = 0; c < 3u; ++c) {
+         modify(0xc0d60264u + 8u * c, 0xfffffu, 0x99u);
+-        modify(0xc0d60268u + 8u * c, 0xfffffu, 0x99u + (0x7e0u - 0x99u) * eighths / 8u);
++        modify(0xc0d60268u + 8u * c, 0xfffffu, 0x99u + (0x7e0u - 0x99u) * (eighths ? line_colour_eighths[c] : 0u) / 8u);
+     }
+ }
+ 
+@@ -460,8 +464,8 @@ static void line_exposure(unsigned eighths)
+ #define LINE_ATTEMPTS 3u
+ #define LINE_WARMUP 128u                    /* stationary P0 periods before any request */
+ #define LINE_AFE_GAIN 13u
+-#define LINE_AFE_OFFSET 0x00u
+-#define LINE_EXPOSURE 6u                    /* eighths of the P0 window widths (grey) */
++#define LINE_AFE_OFFSET 0x00u                /* initial value of line_afe_offset */
++#define LINE_EXPOSURE 4u                    /* eighths of the P0 window widths (grey); 6/8 clipped the lid strip at offset 0x80 */
+ #define LINE_COLOUR_EXPOSURE 8u             /* eighths of the full-window colour exposure */
+ static struct {
+     bool running, done, failed, gate_pending, validated, overrun;
+@@ -476,12 +480,25 @@ static unsigned line_exposure_eighths = LINE_EXPOSURE, line_colour_exposure = LI
+ 
+ bool scanner_line_set_afe(unsigned exposure, unsigned gain)
+ {
+-    if (line.running || line.gate_pending || exposure < 1u || exposure > 8u || gain < 1u || gain > 13u) return false;
++    if (line.running || line.gate_pending || exposure < 1u || exposure > 8u || gain < 1u || gain > 63u) return false;
+     line_exposure_eighths = exposure; line_gain = gain;
+     dbg_puts("[line] afe exposure="); dbg_dec(exposure); dbg_puts("/8 gain="); dbg_dec(gain); dbg_putc('\n');
+     return true;
+ }
+ 
++/* Colour optics (USB 0x9e): per-LED window eighths r | g << 4 | b << 8 (1..8 each), AFE offset 0..255. */
++bool scanner_line_set_colour(unsigned windows, unsigned offset)
++{
++    unsigned w[3] = {windows & 15u, windows >> 4 & 15u, windows >> 8 & 15u};
++    if (line.running || line.gate_pending || offset > 255u) return false;
++    for (unsigned c = 0; c < 3u; ++c) if (w[c] < 1u || w[c] > 8u) return false;
++    for (unsigned c = 0; c < 3u; ++c) line_colour_eighths[c] = w[c];
++    line_afe_offset = offset;
++    dbg_puts("[line] colour windows="); dbg_dec(w[0]); dbg_putc('/'); dbg_dec(w[1]); dbg_putc('/'); dbg_dec(w[2]);
++    dbg_puts(" /8 offset=0x"); dbg_u32(offset); dbg_putc('\n');
++    return true;
++}
++
+ unsigned scanner_line_capacity(unsigned components)
+ {
+     return components == 3u ? LINE_RING_ROWS / 3u : LINE_RING_ROWS;
+@@ -545,7 +562,7 @@ static bool line_setup(unsigned components, unsigned lines, unsigned pitch, unsi
+     if (C == 3u) scnio_colour_config(line_colour_exposure);
+     else line_exposure(line_exposure_eighths);
+     delay_ticks(CLOCK_TICKS_PER_MS * 2u);
+-    if (!afe_operating_gain(line_gain, LINE_AFE_OFFSET)) goto failed;
++    if (!afe_operating_gain(line_gain, line_afe_offset)) goto failed;
+     for (unsigned c = 0; c < 2u; ++c) {
+         uint32_t b = 0xc0d50000u + c * 0x100u;
+         if (rd(b + 0x14u) != R + c * BURST_SEG || rd(b + 0x18u) != R || rd(b + 0x1cu) != R + window ||
+@@ -787,7 +804,7 @@ bool scanner_calibrate(unsigned components)
+     cal_valid = false; cal_components = components;
+     unsigned saved_n = burst_n, saved_e = burst_exposure, saved_g = burst_gain, saved_s = burst_skip, saved_o = burst_offset;
+     unsigned saved_c = burst_components, saved_r = burst_repeat, saved_w = burst_window; uint32_t saved_p = burst_period;
+-    burst_n = CAL_LINES; burst_gain = line_gain; burst_skip = 0; burst_offset = LINE_AFE_OFFSET;
++    burst_n = CAL_LINES; burst_gain = line_gain; burst_skip = 0; burst_offset = line_afe_offset;
+     burst_components = components; burst_repeat = 1; burst_window = 0; burst_period = 0x1a748u; burst_keep_power = true;
+     bool ok = true;
+     burst_exposure = 0;                                   /* windows closed: dark reference */
+@@ -909,6 +926,8 @@ bool scanner_capture_row(bool first)
+ }
+ 
+ void scanner_lamp_toggle(void) { if (illum_on) illum_stop(); else illum_start(); }
++bool scanner_lamp_on(void) { return illum_on; }
++bool scanner_armed(void) { return capture2_pending || burst_pending; }
+ 
+ void scanner_lamp_poll(void)
+ {
+diff --git a/app/src/scanner_motor.c b/app/src/scanner_motor.c
+index f30bded..c58695d 100644
+--- a/app/src/scanner_motor.c
++++ b/app/src/scanner_motor.c
+@@ -32,7 +32,7 @@ enum phase { IDLE, WANT_JOG, WANT_HOME, JOG, SEEK, BACKOFF, RETURN, SETTLE,
+  * coefficients), cruise capped at scan_speed, then the backoff's 4000 counts/s
+  * approach for the last 3000 counts before the hardware endpoint. Stock's own
+  * scan endpoint lies ~469,000 counts from its origin; we stay within 458,000. */
+-#define SCAN_TRAVEL_LIMIT 458000u
++#define SCAN_TRAVEL_LIMIT 478208u   /* CONT_START + 3672 run-in/document units + CONT_RUNOUT: stock's last row lies 156/300 in past our first line */
+ #define SCAN_APPROACH 3000u
+ enum home_result { UNREFERENCED, HOMING, MECHANICAL_REFERENCE, HOME_FAILED, HOME_CANCELLED };
+ static enum phase phase, after_settle;
+@@ -40,7 +40,7 @@ static enum home_result home_result;
+ static bool initialized, inhibited, cooling, home_power_owned;
+ static uint32_t saved_scanner_power;
+ static unsigned direction, last_ms, window_ms, same_ms;
+-static uint32_t started, x0, target, span, limit_ms, cool_until, settle_at;
++static uint32_t tick_anchor, move_ms, x0, target, span, limit_ms, cool_until, settle_at;
+ static uint32_t first_stop, backoff_end, home_position, last_position;
+ static int32_t window_progress, measured_speed, qualified_progress;
+ static struct motor_control control;
+@@ -63,6 +63,18 @@ bool scanner_motor_set_return_speed(unsigned counts_per_s)
+ 
+ static bool driving(void) { return (phase >= JOG && phase <= RETURN) || phase == PAGE_MOVE || phase == SCAN_MOVE || phase == FAST_RETURN; }
+ static bool homing(void) { return home_result == HOMING; }
++
++/* A 32-bit 96 MHz duration wraps after 44.7 s, before a full 300 dpi page
++ * finishes. Accumulate whole milliseconds at each poll and retain the
++ * fractional ticks in the moving anchor. Individual deltas stay short;
++ * the existing delayed-poll and phase-deadline guards still apply. */
++static uint32_t move_elapsed_ms(void)
++{
++    uint32_t whole = (app_clock_ticks() - tick_anchor) / CLOCK_TICKS_PER_MS;
++    tick_anchor += whole * CLOCK_TICKS_PER_MS;
++    move_ms += whole;
++    return move_ms;
++}
+ bool scanner_motor_busy(void) { return phase != IDLE; }
+ unsigned scanner_home_result(void) { return home_result; }
+ uint32_t scanner_motor_position(void) { return rd(P + 0x100u); }
+@@ -115,7 +127,7 @@ bool scanner_motor_scan_throttle(uint32_t speed)
+     if (speed == scan_speed) return true;
+     uint32_t x = rd(P + 0x100u), remaining = scan_target > x ? scan_target - x : 0u;
+     scan_speed = speed;
+-    limit_ms = (uint32_t)((app_clock_ticks() - started) / CLOCK_TICKS_PER_MS) +
++    limit_ms = move_elapsed_ms() +
+                motor_divide((uint64_t)remaining * 1000u, speed) + SCAN_APPROACH * 1000u / 4000u + 2000u;
+     return true;
+ }
+@@ -130,7 +142,7 @@ static void stop_outputs(void)
+ static void finish(const char *why, enum home_result result)
+ {
+     uint32_t compare = driving() ? rd(C + 8u) : NEUTRAL;
+-    uint32_t elapsed = driving() ? (app_clock_ticks() - started) / CLOCK_TICKS_PER_MS : 0;
++    uint32_t elapsed = driving() ? move_elapsed_ms() : 0;
+     stop_outputs();
+     if (home_power_owned) {
+         wr(0xc0c85614u, saved_scanner_power); home_power_owned = false;
+@@ -153,6 +165,15 @@ void scanner_motor_shutdown(void)
+     if (scanner_motor_busy()) finish("reboot", HOME_CANCELLED);
+     else if (initialized) stop_outputs();
+ }
++/* Reversible rest for standby: neutral outputs without the reboot inhibit;
++ * the next move re-runs initialize() as every move does. Reports whether the
++ * outputs read idle (an uninitialised driver has nothing to rest). */
++bool scanner_motor_quiesce(void)
++{
++    if (scanner_motor_busy()) return false;
++    if (initialized) stop_outputs();
++    return !initialized || (rd(C) == 0u && rd(C + 8u) == NEUTRAL);
++}
+ static bool available(void)
+ {
+     if (inhibited || print_is_active()) return false;
+@@ -306,7 +327,7 @@ static bool start_move(enum phase next)
+              "[home] backoff" : next == RETURN ? "[home] repeat left seek" : next == FAST_RETURN ? "[home] fast return" :
+              direction ? "[motor] jog backward" : "[motor] jog forward");
+     dbg_puts(" start="); dbg_u32(x0); dbg_puts(" target="); dbg_u32(target); dbg_putc('\n');
+-    started = app_clock_ticks();
++    tick_anchor = app_clock_ticks(); move_ms = 0;
+     wr(C, 0x102u);  /* first non-neutral command comes from the 1ms controller */
+     return true;
+ }
+@@ -417,8 +438,7 @@ void scanner_motor_poll(void)
+         (void)start_move(after_settle); return;
+     }
+     if (!driving()) return;
+-    uint32_t elapsed = app_clock_ticks() - started;
+-    unsigned ms = elapsed / CLOCK_TICKS_PER_MS;
++    unsigned ms = move_elapsed_ms();
+     if (ms >= limit_ms) { finish("phase deadline", HOME_FAILED); return; }
+     if (ms == last_ms) return;
+     if (ms - last_ms > 4u) {
+diff --git a/app/src/stock_shim.c b/app/src/stock_shim.c
+index e9364e4..3999b5f 100644
+--- a/app/src/stock_shim.c
++++ b/app/src/stock_shim.c
+@@ -41,7 +41,7 @@ extern unsigned usb_reattach_count;
+ #define MANAGER6         0x1879b144u
+ #define MANAGERS         0x1879b09cu   /* seven print-buffer managers, 0x1c each (brief 8): output groups 0..6 */
+ #define MATRIX           0x1806cd04u
+-#define SNAPSHOT_FLASH   0x1b9000u     /* app/hybrid/build.py: HOLE + 0x20000 */
++#define SNAPSHOT_FLASH   0x1ba000u     /* app/hybrid/build.py: HOLE + 0x21000 */
+ static uint32_t snapshot_pages;
+ #define STOCK_INIT_C763E 0xc763eu
+ #define F008_BANK 0x180662ecu
+@@ -67,8 +67,16 @@ static unsigned mailbox_count[MAILBOXES];
+  * column + 131 KiB, measured in the emulator. The arena lives in our bss,
+  * which the stock RAM init skips; stock's zero-initialised RAM up to
+  * 0x18420000 has no snapshot page and no fixture ever touched it (LAYOUT). */
+-static uint8_t arena[1536 * 1024] __attribute__((aligned(8)));
++static uint8_t arena[1280 * 1024] __attribute__((aligned(8)));   /* 1.25 MiB: a 2112-column mode-7 band (~1.09 MB) plus messages; the on-device print rings need the rest of RAM */
+ static unsigned arena_used;
++/* Band allocations (job, managers, raster storage, Q, pattern buffers) stay
++ * live from band-prepare through upload and execution: band_mark is the
++ * arena high-water mark at the end of a successful prepare, and every later
++ * routine's short-lived messages are allocated above it (presets). Resetting
++ * the cursor to zero per routine let executor/status messages overwrite the
++ * prepared pattern buffers from the second pass on (brief 22 answer §1). */
++static unsigned band_mark;
++static bool band_live;
+ static bool live, motion_only, lf_live, cr_stock, cr_stock_dry, ram_ready, running, fresh_run;
+ /* Stock paper load (brief 10 / paper_path): mechanism command 0x4011 handler
+  * 0xdce50(msg); its LF requests go to the LF task body 0xd9ad0 (one call per
+@@ -454,7 +462,7 @@ uint32_t shim_sem_release(uint32_t id) { (void)id; return 0; }
+ static uint32_t *take(uint32_t size)
+ {
+     size = ((size + 7u) & ~7u) + 64u;   /* + 64: room to align a manager's raster storage (manager_raster) */
+-    if (arena_used + size > sizeof arena) { ++errors; return 0; }
++    if (arena_used + size > sizeof arena) { ++errors; dbg_puts("[shim] arena exhausted\n"); return 0; }
+     uint32_t *p = (uint32_t *)(arena + arena_used); arena_used += size;
+     for (unsigned i = 0; i < size / 4; ++i) p[i] = 0;
+     return p;
+@@ -905,7 +913,7 @@ static void presets(bool capped)
+     ww(F008_BANK + 4 * 13, 0x18066768u);
+     for (unsigned i = 0; i < EVENT_GROUPS; ++i) events[i] = 0;
+     for (unsigned i = 0; i < MAILBOXES; ++i) mailbox_count[i] = 0;
+-    arena_used = 0; trace_n = 0; service_calls = 0;
++    arena_used = band_live ? band_mark : 0; trace_n = 0; service_calls = 0;   /* messages above the live band */
+     events[0x1a] = 0x2010u;                             /* CR and LF initial synchronisation */
+     events[0x1b] = 0x1u;                                /* head power owner available */
+         events[0x1c] = 0xc0000000u;                        /* idle head-work context: bits 31 and 30 (stock c8d30 ends with ca42c, ca41e, ca3e6; brief 20 §1) */
+@@ -994,7 +1002,7 @@ static uint32_t band_prepare(void)
+      * our synthetic packet is consumed at once, so free them every prepare.
+      * Without this the sixth prepare's builder spins in delay(5) forever. */
+     for (unsigned i = 0; i < 10; ++i) *(volatile uint8_t *)(0x1806b1dcu + i) = 0;
+-    arena_used = 0;
++    band_live = false; band_mark = 0; arena_used = 0;   /* the previous band is reclaimed here, and only here */
+     for (unsigned i = 0; i < sizeof band_job; ++i) band_job[i] = 0;
+     *(uint16_t *)(band_job + 0x28) = (uint16_t)band_mode; *(uint32_t *)(band_job + 0x2c) = band_cols; *(uint16_t *)(band_job + 0x30) = 600;
+     band_rc[0] = stock_call(STOCK_ALLOC_JOB | 1u, (uint32_t)band_job, 0, 0, 0, 0, 0);
+@@ -1044,6 +1052,8 @@ static uint32_t band_prepare(void)
+     band_q = mailbox_count[0x2d] ? (uint32_t)mailbox[0x2d][0] : 0;
+     note(T_UNKNOWN, 0xb12a2, band_rc[2], band_q);
+     dbg_puts("[shim] b12a2 -> "); dbg_dec(band_rc[2]); dbg_puts(" Q=0x"); dbg_u32(band_q); dbg_putc('\n');
++    band_mark = arena_used; band_live = band_q != 0;
++    dbg_puts("[shim] band arena "); dbg_dec(band_mark); dbg_puts(" bytes live\n");
+     return band_q ? 1u : 0xbad3;
+ }
+ 
+@@ -1146,6 +1156,19 @@ void hybrid_raster_feed(const uint8_t *data, unsigned len)
+     if (!raster_remaining) { dbg_puts("[shim] raster upload complete: "); dbg_dec(raster_received); dbg_puts(" bytes\n"); }
+ }
+ 
++/* ---- on-device print engine (print_engine.c) ---- */
++uint32_t hybrid_last_result(void) { return last_result; }
++unsigned hybrid_routines_run(void) { return routines_run; }
++bool hybrid_sheet_loaded(void) { return ram_ready && *(volatile uint8_t *)0x180c6f54u == 1u; }   /* stock ASF state byte: 1 = loaded and aligned */
++uint8_t *hybrid_manager_raster(unsigned group, unsigned *slots, unsigned *width, unsigned *stride, unsigned *size)
++{
++    if (group > 6 || running || routine_pending || !band_q) return 0;
++    uint32_t m = MANAGERS + group * 0x1cu;
++    if (!w(m + 0x18) || !manager_slots(m)) return 0;
++    *slots = manager_slots(m); *width = *(volatile uint16_t *)(m + 4u); *stride = manager_stride(m); *size = w(m + 8);
++    return (uint8_t *)manager_raster(m);
++}
++
+ /* ---- USB interface (0x95 call, 0x96 result, 0x97 run, 0x98 trace, 0x99 raster) ---- */
+ bool hybrid_panel_available(void)
+ {
+diff --git a/app/src/usb.c b/app/src/usb.c
+index ed08fa6..b304487 100644
+--- a/app/src/usb.c
++++ b/app/src/usb.c
+@@ -14,6 +14,7 @@
+  * Interfaces 2 and 3 are IPP-over-USB (class 7/1/4) for driverless scanning;
+  * their bulk endpoints are handed to ippusb.c (see escl.h). */
+ #include "app.h"
++#include "print_job.h"
+ #define IN(n) (USB+0x900+(n)*0x20)
+ #define OUT(n) (USB+0xb00+(n)*0x20)
+ #define ENABLE 0x80000000u
+@@ -21,16 +22,16 @@
+ #define ACTIVE 0x8000u
+ #define STALL 0x200000u
+ 
+-static uint8_t setup_buffer[64] ALIGNED;
+-static uint8_t control_buffer[256] ALIGNED;
+-static uint8_t bulk_buffer[512] ALIGNED;
++static uint8_t setup_buffer[64] USB_DMA;
++static uint8_t control_buffer[256] USB_DMA;
++static uint8_t bulk_buffer[512] USB_DMA;
+ static unsigned max_packet, tx_length, tx_position;
+ static unsigned configuration;
+ static bool need_zlp, reboot_status_ack, bulk_armed;
+ enum control_state { IDLE, DATA_IN, STATUS_IN, STATUS_OUT };
+ static enum control_state state;
+ 
+-#define PRODUCT "MG2550s App"
++#define PRODUCT "MG2550s"             /* with iManufacturer "OpenFW": the same display name as the IPP attributes (brief 22 §2f) */
+ #define PID_LOW 0xfe
+ #define PID_HIGH 0x12
+ static const uint8_t device_descriptor[]={18,1,0,2,0,0,0,64,0xa9,4,PID_LOW,PID_HIGH,0,2,1,2,3,1};
+@@ -157,7 +158,7 @@ static void stall(void)
+ static unsigned config_descriptor(bool other_speed)
+ {
+     unsigned mps=other_speed?(max_packet==512?64:512):max_packet;
+-    /* Empty vendor interface 0 preserves printer interface 1 for host tools.
++    /* Empty vendor interface 0 preserves bulk interface 1 (vendor class since 2026-10-27; was printer class 7/1/2) for host tools.
+      * Interfaces 2 and 3 are IPP-USB; endpoints must match ipp_out/ipp_in.
+      * Each carries the mandatory IPP USB Device Info Descriptor (type 21h):
+      * release 1, one IPP Basic Capabilities descriptor with Print (bit 1),
+@@ -166,7 +167,7 @@ static unsigned config_descriptor(bool other_speed)
+ #define IPP_USB_DEVICE_INFO 10,0x21,1,1,0,4,0x13,0x00,0,0
+     const uint8_t config[]={9,2,107,0,4,1,0,0xc0,1,
+         9,4,0,0,0,0xff,0,0,0,
+-        9,4,1,0,2,7,1,2,0,
++        9,4,1,0,2,0xff,0,0,0,            /* bulk tool interface: vendor class, so the host's USB printer-class driver does not make a second printer of it (IPP-USB is the printer) */
+         7,5,1,2,0,0,0, 7,5,0x82,2,0,0,0,
+         9,4,2,0,2,7,1,4,0, IPP_USB_DEVICE_INFO,
+         7,5,2,2,0,0,0, 7,5,0x81,2,0,0,0,
+@@ -199,7 +200,7 @@ static unsigned device_id(void)
+      * CMD/URF announce an AirPrint (IPP-USB) device, which steers macOS to the
+      * IPP-USB interfaces instead of a generic USB printer driver. The IPP
+      * answer (ipp.c) states that jobs are not accepted yet. */
+-    static const char body[]="MFG:OpenFW;MDL:MG2550s;CMD:URF;CLS:PRINTER;DES:" PRODUCT
++    static const char body[]="MFG:OpenFW;MDL:MG2550s;CMD:URF;CLS:PRINTER;DES:" DEVICE_MAKE_MODEL
+                              ";VER:0.3;STA:80;URF:W8,SRGB24,CP1,RS300,V1.4,DM1;";
+     unsigned n=sizeof(body)-1;
+     control_buffer[0]=(uint8_t)((n+2)>>8); control_buffer[1]=(uint8_t)(n+2);
+@@ -267,6 +268,14 @@ static void setup_request(void)
+     } else if(type==0x40 && request==APP_REQUEST_SCAN_OPTIONS && !index && !length) {
+         scan_page_set_calibration(!(value&0x40u));
+         if(scan_source_set_order(value&3u,(value>>2)&3u,(value>>4)&3u)) ack(); else stall();
++    } else if(type==0xc0 && request==APP_REQUEST_POWER_STATUS && !value && !index) {
++        reply(power_status(control_buffer),length);
++    } else if(type==0x40 && request==APP_REQUEST_POWER_CONTROL && !length) {
++        if(power_request(value,index)) ack(); else stall();
++    } else if(type==0x40 && request==APP_REQUEST_PRINT_JOB_CONTROL && !length) {
++        if(print_engine_control(value,index)) ack(); else stall();
++    } else if(type==0xc0 && request==APP_REQUEST_PRINT_JOB_STATUS && !value && !index) {
++        reply(print_engine_status(control_buffer),length);
+     } else if(type==0xc0 && request==APP_REQUEST_PEEK) {
+         uint32_t a=(uint32_t)value|(uint32_t)index<<16;
+         if(a>=0x20000000u && a<=0x20800000u-64u) { memcpy(control_buffer,(const void *)(uintptr_t)a,64); reply(64,length); } else stall();
+@@ -281,6 +290,8 @@ static void setup_request(void)
+         if(scanner_motor_set_return_speed(value*100u)) ack(); else stall();
+     } else if(type==0x40 && request==APP_REQUEST_LINE_AFE && !length) {
+         if(scanner_line_set_afe(value,index)) ack(); else stall();
++    } else if(type==0x40 && request==APP_REQUEST_LINE_COLOUR && !length) {
++        if(scanner_line_set_colour(value,index)) ack(); else stall();
+     } else if(type==0xc0 && request==APP_REQUEST_LINE_DUMP) {
+         unsigned n=scanner_line_dump(control_buffer,(uint32_t)index<<16|value,length>sizeof(control_buffer)?sizeof(control_buffer):length);
+         if(n) reply(n,length); else stall();
+diff --git a/app/tests/validate_cartridge.py b/app/tests/validate_cartridge.py
+index ed9b1ae..00b0117 100644
+--- a/app/tests/validate_cartridge.py
++++ b/app/tests/validate_cartridge.py
+@@ -84,6 +84,12 @@ def main():
+         heads = value & 0xff
+         seq = status(e)[5] if status(e) else 0
+         e.requests.appendleft(('cart_read', setup(0x40, 0x62, value, wait)))
++        # Deliver the read before polling: a status queued ahead of it on every
++        # slice can starve the request indefinitely (host_step issues one
++        # request per EP0 round; the slice stops at the next service_poll).
++        n_read = sum(1 for _, name, _ in e.responses if name == 'cart_read')
++        e.run(lambda x, n=n_read: sum(1 for _, name, _ in x.responses if name == 'cart_read') > n or 'cart_read' in x.stalls[n_read:],
++              resume=True, budget=50000000)
+         done = lambda x: status(x) is not None and status(x)[2] == 2 and status(x)[3] == heads and status(x)[5] == seq + 1
+         for _ in range(400):                       # status is answered during the sequence's long waits
+             n = sum(1 for _, name, _ in e.responses if name == 'cart_status')
+diff --git a/app/tests/validate_colour_continuous.py b/app/tests/validate_colour_continuous.py
+index 76161da..ed20217 100644
+--- a/app/tests/validate_colour_continuous.py
++++ b/app/tests/validate_colour_continuous.py
+@@ -13,7 +13,7 @@ import struct
+ from pathlib import Path
+ 
+ import validate_escl as v
+-from validate_escl_scan import ScanHost, expected_row, fetch_while_polling
++from validate_escl_scan import ScanHost, expected_row, fetch_while_polling, document_lines
+ from unicorn.arm_const import (UC_ARM_REG_R0, UC_ARM_REG_R1, UC_ARM_REG_R2,
+                                UC_ARM_REG_R3, UC_ARM_REG_SP, UC_ARM_REG_LR,
+                                UC_ARM_REG_PC)
+@@ -81,14 +81,14 @@ def main():
+         assert call(e, 'scan_page_start', lines, 128, 0, 1), ('300 dpi rejected', lines)
+         call(e, 'scan_page_cancel')
+     assert not call(e, 'scan_page_start', 32, 128, 0, 0), 'vendor limits unexpectedly broadened'
+-    assert not call(e, 'scan_page_start', 3508, 128, 4096, 1), 'travel bound lost'
++    assert not call(e, 'scan_page_start', 3680, 128, 4096, 1), 'travel bound lost'
+     record('300dpi_admission_and_bounds', rows=[32, 3507, 3508])
+ 
+     capacity = call(e, 'scanner_line_capacity', 3)
+     # Include a complete 75 dpi page: shorter tests missed the physical hang
+     # around row 555. Synthetic DMA cannot establish its hardware cause.
+     for res, count in ((75, 24), (150, 24), (300, 32), (300, capacity + 12), (75, 876)):
+-        x, y, width = (0, 0, 2550) if count == 876 else (120, 0, 180)
++        x, y, width = (0, 0, 2480) if count == 876 else (120, 0, 180)
+         step = 300 // res
+         pixels, height = width // step, count * step
+         before = len(e.lines)
+@@ -99,14 +99,21 @@ def main():
+         assert status == 200, (res, status)
+         w, h, ctype, rows, _, depth = v.decode_png(body)
+         assert (w, h, ctype, depth) == (pixels, count, 2, 8)
+-        optical = [line for line, moving in zip(e.lines[before:], e.moving[before:]) if moving]
+-        assert len(optical) == count, (len(optical), count)
++        optical, _ = document_lines(e, before, y, count)
+         for j, line in enumerate(optical):
+             planes = [expected_row([max(raw - 2000 * k, 0) for raw in line],
+-                                  x, step, pixels, 1000, 36000, plane=k) for k in range(3)]
++                                  x, step, pixels, plane=k) for k in range(3)]
+             expected = bytes(b for i in range(pixels) for b in (planes[0][i], planes[1][i], planes[2][i]))
+-            assert rows[j] == expected, ('RGB samples differ', res, j,
+-                                        list(rows[j][:24]), list(expected[:24]))
++            if rows[j] != expected:
++                log = b''
++                for _ in range(80):
++                    e.requests.appendleft(('log', v.setup(0xc0, 0x50, 0, 0, 256))); before_n = len(e.responses)
++                    e.run(lambda q: len(q.responses) > before_n, resume=True)
++                    part = e.responses[-1][2]
++                    if not part: break
++                    log += bytes(part)
++                print('FIRMWARE LOG:', [l for l in log.decode('latin1').splitlines() if '[cal]' in l or '[line] start' in l][-8:])
++                raise AssertionError(('RGB samples differ', res, j, list(rows[j][:12]), list(expected[:12]), 'raw', line[:6]))
+         e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
+         assert phase(e) == 7 and e.drive is None
+         assert e.regs.get(0xc0c85614, 0) == 0
+diff --git a/app/tests/validate_escl.py b/app/tests/validate_escl.py
+index 6c33de1..198b904 100644
+--- a/app/tests/validate_escl.py
++++ b/app/tests/validate_escl.py
+@@ -362,7 +362,7 @@ def main():
+     e = IppUsbHost(image=factory, metadata=metadata)
+     e.run(app_mode)
+     interfaces = config_interfaces(e)
+-    assert [i['class'] for i in interfaces] == [(0xff, 0, 0), (7, 1, 2), (7, 1, 4), (7, 1, 4)]
++    assert [i['class'] for i in interfaces] == [(0xff, 0, 0), (0xff, 0, 0), (7, 1, 4), (7, 1, 4)]   # bulk tool interface is vendor class: only IPP-USB makes a printer
+     assert interfaces[2]['endpoints'] == [(0x02, 2, 512), (0x81, 2, 512)]
+     assert interfaces[3]['endpoints'] == [(0x03, 2, 512), (0x83, 2, 512)]
+     # Print (bit 1), Scan (bit 2), Any HTTP/1.1 (bit 5) on every IPP-USB interface.
+@@ -396,6 +396,12 @@ def main():
+     assert attrs['copies-supported'] == [(0x33, struct.pack('>II', 1, 1))]
+     operations = {struct.unpack('>I', v)[0] for _, v in attrs['operations-supported']}
+     assert {0x02, 0x0a, 0x0b} <= operations
++    big = ipp_request(0x0002, 9)
++    big = big[:-1] + b'\x49\x00\x0fdocument-format\x00\x09image/urf' + b'\x03' + b'UNIRAST\x00' + b'\x00\x00\x00\x01' + bytes(50000)
++    status, headers, body, _ = http(e, 1, 'POST', '/ipp/print', big, headers=('Content-Type: application/ipp',))
++    _, ipp_status, _, _, attrs = ipp_parse(body)
++    assert status == 200 and ipp_status == 0x0506, (status, ipp_status)
++    record('print_job_document_streamed_and_refused', body_bytes=len(big))
+     for operation, expected in ((0x0002, 0x0506), (0x0004, 0x0506), (0x000a, 0), (0x0009, 0x0406), (0x0023, 0x0501)):
+         _, _, body, _ = http(e, 1, 'POST', '/ipp/print', ipp_request(operation, 8),
+                              headers=('Content-Type: application/ipp',))
+diff --git a/app/tests/validate_escl_scan.py b/app/tests/validate_escl_scan.py
+index 15b3782..990a706 100644
+--- a/app/tests/validate_escl_scan.py
++++ b/app/tests/validate_escl_scan.py
+@@ -34,11 +34,23 @@ from unicorn import UC_HOOK_BLOCK, UC_HOOK_CODE  # noqa: E402
+ # Protocol work during motion must leave a clear margin below that. Measured
+ # from each poll's return to the next poll's entry: the driver's own move
+ # set-up (logging, deliberate delays) is existing, physically proven code.
+-MOTION_GAP_LIMIT = 8000
++MOTION_GAP_LIMIT = 16000   # IPP-USB request dispatch (ippusb_poll) runs ~15k instructions without a motor service
+ import validate_escl as v  # noqa: E402
++from unicorn.arm_const import UC_ARM_REG_LR  # noqa: E402
+ 
+ SAMPLES, SPAN, BLACK, WHITE = 2592, 2550, 26000, 65000
+ DARK = 1200
++# Run-in geometry mirrored from scan_source_scanner.c (1/300 inch from the
++# mechanical start): lid strip, platen-edge dark bar, stock's document origin,
++# and the sample offset of stock's first column.
++STRIP, DARKBAR, DOC_ORIGIN, SAMPLE_ORIGIN = (20, 90), (132, 148), 156, 4
++
++
++def document_lines(e, start, y, count):
++    """The first `count` moving captures at or past the document origin of region row y."""
++    sel = [(l, p_) for l, m, u, p_ in zip(e.lines[start:], e.moving[start:], e.units[start:], e.positions[start:]) if m and u >= DOC_ORIGIN + y]
++    assert len(sel) >= count, (len(sel), count)
++    return [l for l, _ in sel[:count]], [p_ for _, p_ in sel[:count]]
+ 
+ 
+ def white_line():
+@@ -56,9 +68,13 @@ class ScanHost(v.IppUsbHost, PageModel):
+         self.lines = []           # samples of every capture, in order
+         self.moving = []          # True for a scan line (moving, lit); False for a calibration capture
+         self.positions = []       # encoder position at each capture
++        self.units = []           # 1/300 inch from the mechanical start (run-in geometry), -1 when stationary
++        self.page_first = None    # moving captures so far in the current page (None between pages)
+         self.instructions = 0
+         self.last_poll = None
+         self.motion_gaps = []     # instructions between motor polls while driving
++        self.worst_gap = (0, '', '', 0, None)   # (instructions, caller lr, previous poll return site, captures so far, code at the limit)
++        self.last_site = 0; self.gap_site = None
+         self.uc.hook_add(UC_HOOK_BLOCK, self._count)
+         poll = int(self.meta['symbols']['application']['scanner_motor_poll'], 16)
+         self.uc.hook_add(UC_HOOK_CODE, self._motor_poll, begin=poll, end=poll)
+@@ -90,6 +106,8 @@ class ScanHost(v.IppUsbHost, PageModel):
+     @checked
+     def write(self, cpu, offset, size, value, user):
+         address = 0xc0000000 + offset
++        if address == 0xc0d50014:                     # a new LDMAC setup starts a new page's line count
++            self.page_first = None
+         if address == 0xc0133104 and value & 0x10:
+             self.irq_pending = False
+         if address == 0xc0130028 and value & 2 and not self.regs.get(0xc0130028, 0) & 2:
+@@ -102,28 +120,48 @@ class ScanHost(v.IppUsbHost, PageModel):
+ 
+     def _count(self, uc, address, size, user):
+         self.instructions += size // 4
++        if self.drive is not None and self.last_poll is not None and self.gap_site is None \
++                and self.instructions - self.last_poll > MOTION_GAP_LIMIT:
++            self.gap_site = hex(address)              # code running when a motion gap passes the limit
+ 
+     def _motor_poll(self, uc, address, size, user):
+         if self.drive is not None and self.last_poll is not None:
+-            self.motion_gaps.append(self.instructions - self.last_poll)
+-        self.last_poll = None
++            gap = self.instructions - self.last_poll
++            self.motion_gaps.append(gap)
++            if gap > self.worst_gap[0]:
++                self.worst_gap = (gap, hex(uc.reg_read(UC_ARM_REG_LR)), hex(self.last_site), len(self.lines), self.gap_site)
++        self.last_poll = None; self.gap_site = None
+ 
+     def _motor_poll_return(self, uc, address, size, user):
+-        self.last_poll = self.instructions
++        self.last_poll = self.instructions; self.last_site = address
+ 
+     def _scan_dma(self, cpu):
+         index = len(self.lines)
+         moving = bool(self.regs.get(0xc0d6011c, 0) & 0x10000)
+         dark = self.regs.get(0xc0d60268, 0) & 0xfffff == self.regs.get(0xc0d60264, 0) & 0xfffff   # windows closed
++        pos = self.regs.get(0xc0c57100, 0)
++        u = -1
++        if moving:
++            # Line k of a page lies k pitches past the first: the firmware indexes its run-in the same way.
++            if self.page_first is None: self.page_first = 0
++            pitch = struct.unpack('<I', self.uc.mem_read(int(self.meta['symbols']['application']['pitch'], 16), 4))[0]
++            u = self.page_first * pitch // 128; self.page_first += 1
++        else:
++            self.page_first = None
+         if dark:
+             line = [DARK] * SAMPLES
++        elif moving and STRIP[0] <= u < STRIP[1]:
++            line = white_line()                              # the lid's white strip during the run-in
++        elif moving and DARKBAR[0] <= u < DARKBAR[1]:
++            line = [DARK] * SAMPLES                          # the platen-edge dark bar
+         elif moving:
+             line = [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)]
+         else:
+             line = white_line()                              # stationary reference: the same every capture
+         self.lines.append(line)
+         self.moving.append(moving and not dark)
+-        self.positions.append(self.regs.get(0xc0c57100, 0))
++        self.units.append(u)
++        self.positions.append(pos)
+         if not moving:
+             assert self.drive is None, 'stationary capture while motor powered'
+         k = self.line_index; self.line_index += 1
+@@ -171,16 +209,17 @@ def expected_row(line, x, step, pixels, black=BLACK, white=WHITE, shade=True, pl
+     wl = [max(w - 2000 * plane, 0) for w in white_line()]       # the model shades component k by -2000k
+     dark = max(DARK - 2000 * plane, 0)
+     for i in range(pixels):
+-        u = x + i * step
++        u = x + i * step + SAMPLE_ORIGIN
+         s0, s1 = u * SAMPLES // SPAN, (u + step) * SAMPLES // SPAN
+         s0 = min(s0, SAMPLES - 1); s1 = min(s1, SAMPLES)
+         s1 = max(s1, s0 + 1); s1 = min(s1, s0 + 8)
+         n = s1 - s0
+         if shade:
+-            scale = [(250 * 65536) // (wl[s] - dark) if wl[s] > dark + 1024 else 0 for s in range(s0, s1)]
++            span = (230, 230, 217)[plane]                       # stock-match spans and black floor (scan_source_scanner.c)
++            scale = [(span * 65536) // (wl[s] - dark) if wl[s] > dark + 1024 else 0 for s in range(s0, s1)]
+             if scale[0]:
+                 acc = sum((max(line[s] - dark, 0) * g) >> 16 for s, g in zip(range(s0, s1), scale))
+-                value = acc * ((65536 + n - 1) // n) >> 16
++                value = 14 + (acc * ((65536 + n - 1) // n) >> 16)
+                 row.append(GAMMA[min(value, 255)])
+                 continue
+         level = sum(line[s0:s1]) * ((65536 + n - 1) // n) >> 16       # firmware fixed point
+@@ -233,13 +272,16 @@ def main():
+     width, height, ctype, rows, phys, depth = v.decode_png(body)
+     assert (width, height, ctype, depth) == (pixels, lines, 0, 8)
+     # Continuous mode without the optional stationary probe: every capture is a scan line.
+-    scan_lines = [l for l, m in zip(e.lines, e.moving) if m]; scan_positions = [p_ for p_, m in zip(e.positions, e.moving) if m]
+-    assert len(scan_lines) == lines, (len(scan_lines), lines)
++    scan_lines, scan_positions = document_lines(e, 0, y, lines)
+     for j in range(lines):
+-        assert rows[j] == expected_row(scan_lines[j], x, 300 // res, pixels, 1000, 36000), f'row {j} differs'
++        exp = expected_row(scan_lines[j], x, 300 // res, pixels)
++        if rows[j] != exp:
++            k = next(i for i in range(len(exp)) if rows[j][i] != exp[i])
++            u = x + k * (300 // res) + SAMPLE_ORIGIN; s0 = u * SAMPLES // SPAN
++            raise AssertionError(f'row {j} differs at pixel {k}: got {list(rows[j][k:k + 4])} expected {list(exp[k:k + 4])} raw {scan_lines[j][s0:s0 + 4]} white {white_line()[s0:s0 + 4]}')
+     home = word(e, 'home_position')
+     offsets = [p - home for p in scan_positions]
+-    first = 4096 + y * 128                         # continuous mode: CONT_START past home
++    first = 4096 + y * 128                         # continuous mode: CONT_START past home (the model's capture positions lag the gate)
+     assert all(o >= first for o in offsets), offsets[:4]
+     assert all(b > a for a, b in zip(offsets, offsets[1:])), "positions not increasing"
+     e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
+@@ -247,7 +289,7 @@ def main():
+     idle_hardware(e)
+     # Parked at a fresh reference: the next continuous page skips homing.
+     homes_before = sum(1 for d in e.drives if d['direction'])
+-    status, location, _ = v.create_job(e, 1, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2550, 16)))
++    status, location, _ = v.create_job(e, 1, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2480, 16)))
+     assert status == 201
+     e.run(lambda q: phase(q) in (1, 10), resume=True)
+     assert phase(e) == 10, f'expected direct scan, phase {phase(e)}'
+@@ -272,10 +314,9 @@ def main():
+     pixels, lines = w * res // 300, h * res // 300
+     width, height, ctype, rows, phys, depth = v.decode_png(body)
+     assert (width, height, ctype, depth) == (pixels, lines, 2, 8), (width, height, ctype, depth)
+-    colour_lines = [l for l, m in zip(e.lines[captures:], e.moving[captures:]) if m]
+-    assert len(colour_lines) == lines, (len(colour_lines), lines)
++    colour_lines, _ = document_lines(e, captures, y, lines)
+     for j in range(lines):
+-        planes = [expected_row([max(v_ - 2000 * k, 0) for v_ in colour_lines[j]], x, 300 // res, pixels, 1000, 36000, plane=k) for k in range(3)]
++        planes = [expected_row([max(v_ - 2000 * k, 0) for v_ in colour_lines[j]], x, 300 // res, pixels, plane=k) for k in range(3)]
+         expected = bytes(b for i in range(pixels) for b in (planes[0][i], planes[1][i], planes[2][i]))
+         if rows[j] != expected:
+             log = b''
+@@ -294,7 +335,7 @@ def main():
+     record('colour_rgb24_planar_ring_rows', pixels=[pixels, lines])
+ 
+     # Back-to-back: a job posted while the last page returns home adopts it.
+-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2550, 96)))
++    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2480, 96)))
+     assert status == 201
+     status, headers, body, _ = v.http(e, 0, 'GET', '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
+     assert status == 200
+@@ -312,7 +353,7 @@ def main():
+     record('job_adopts_return_home', jpeg_bytes=len(body))
+ 
+     # Cancel while the page is running: motor and lamp off, page cancelled.
+-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2550, 400)))
++    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2480, 400)))
+     assert status == 201
+     job = '/eSCL/' + location.split('/eSCL/', 1)[1]
+     e.hold_in.add(0)
+@@ -334,7 +375,7 @@ def main():
+     record('delete_cancels_page_vendor_rows_refused')
+ 
+     # Continuous page cancelled while travelling: motor and lamp off.
+-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2550, 800)))
++    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2480, 800)))
+     assert status == 201
+     job = '/eSCL/' + location.split('/eSCL/', 1)[1]
+     e.run(lambda q: q.drive is not None and phase(q) == 10, resume=True, budget=400_000_000)
+@@ -344,7 +385,7 @@ def main():
+     record('delete_cancels_continuous_travel')
+ 
+     worst = max(e.motion_gaps)
+-    assert worst <= MOTION_GAP_LIMIT, f'motor poll gap {worst} instructions while driving'
++    assert worst <= MOTION_GAP_LIMIT, f'motor poll gap {worst} instructions while driving: {e.worst_gap}'
+     record('motor_serviced_during_escl_work', worst_gap_instructions=worst, samples=len(e.motion_gaps))
+ 
+     report['all_assertions_passed'] = True
+diff --git a/app/tests/validate_scan_finish.py b/app/tests/validate_scan_finish.py
+index bb1f0d4..b20e3be 100644
+--- a/app/tests/validate_scan_finish.py
++++ b/app/tests/validate_scan_finish.py
+@@ -54,7 +54,7 @@ def main():
+ 
+     e.run(lambda q: word(q, 'page_phase') == 7, resume=True, budget=400_000_000)
+     assert e.drive is None and e.regs.get(0xc0c85614, 0) == 0
+-    assert call(e, 'scanner_line_ready') == 32, 'return-home discarded unread rows'
++    assert call(e, 'scanner_line_ready') == 32 + 156, 'return-home discarded unread rows'   # 156 run-in lines at 300 dpi precede the region
+     status, _, body, _ = v.http(e, 0, 'GET',
+         '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
+     width, height, ctype, rows, _, depth = v.decode_png(body)
+diff --git a/bootloader/include/fw.h b/bootloader/include/fw.h
+index 45cd5f7..2fa6489 100644
+--- a/bootloader/include/fw.h
++++ b/bootloader/include/fw.h
+@@ -27,6 +27,8 @@ void firmware_main(void) __attribute__((noreturn));
+ void cpu_reset(void) __attribute__((noreturn));
+ void panel_init(void);
+ void leds_tick(void);
++bool app_panel_dark(void);     /* application only: standby darkens the LED frames */
++void power_panel_note(void);   /* application only: logs the first dark frame */
+ void delay_ticks(uint32_t ticks);
+ void usb_init(void);
+ void usb_poll(void);
+diff --git a/bootloader/src/panel.c b/bootloader/src/panel.c
+index 47cd742..eb3dbea 100644
+--- a/bootloader/src/panel.c
++++ b/bootloader/src/panel.c
+@@ -1,5 +1,10 @@
+ #include "fw.h"
+ static unsigned next_led;
++#ifdef APPLICATION_BUILD
++/* Defaults for application builds without a power manager (LED demo). */
++__attribute__((weak)) bool app_panel_dark(void) { return false; }
++__attribute__((weak)) void power_panel_note(void) {}
++#endif
+ 
+ void panel_init(void)
+ {
+@@ -27,11 +32,15 @@ void leds_tick(void)
+ {
+     if (rd(TIMER) || (rd(PANEL+0x70)&0x1f)) return;
+ #ifdef APPLICATION_BUILD
+-    /* Demo application: power, then the other three LEDs, one at a time. */
+-    wr(PANEL+0x140,next_led==1?0x20:0);
+-    wr(PANEL+0x148,next_led==0?0x10:0);
+-    wr(PANEL+0x150,next_led==2?0x20:0);
+-    wr(PANEL+0x158,next_led==3?0x10:0);
++    /* Demo application: power, then the other three LEDs, one at a time.
++     * The application's power manager darkens the panel in standby (keys
++     * keep scanning); recovery indications below are unchanged. */
++    bool dark=app_panel_dark();
++    power_panel_note();
++    wr(PANEL+0x140,!dark&&next_led==1?0x20:0);
++    wr(PANEL+0x148,!dark&&next_led==0?0x10:0);
++    wr(PANEL+0x150,!dark&&next_led==2?0x20:0);
++    wr(PANEL+0x158,!dark&&next_led==3?0x10:0);
+     next_led=(next_led+1)&3;
+ #else
+     /* User identified the first sequence LED as power on 2026-10-23.
+diff --git a/tools/README.md b/tools/README.md
+index 0a959c9..b1381e9 100644
+--- a/tools/README.md
++++ b/tools/README.md
+@@ -12,6 +12,9 @@ protocol details and recovery limits.
+   at every boot; GPIO4/5 return to floating inputs after probing or transfers.
+ - `float_esp32.py`: optional independent ROM register check of floating GPIO4/5;
+   requires esptool 4.x or PlatformIO's `tool-esptoolpy` package.
++- `ipp_print.py`: print an image through the application's IPP job intake
++  over IPP-USB (URF Print-Job, job status, engine status); see
++  [the app guide](../app/README.md#print-from-the-host-over-ipp-on-device-page-printer).
+ - `requirements.txt`: Python host dependencies. USB also requires libusb.
+ - `stocktrace.py`: bounded read-only USB software-state snapshots from the
+   optional [stock telemetry app](../emu/evidence/stockapp/telemetry/README.md).
+@@ -31,8 +34,23 @@ python3 tools/fwctl.py flash bootloader/build/application.bin --transport i2c
+ python3 tools/fwctl.py reboot
+ python3 tools/fwctl.py reboot --mode application
+ python3 tools/fwctl.py --port /dev/cu.usbmodem1201 detect
++python3 tools/fwctl.py power status
++python3 tools/fwctl.py power standby
++python3 tools/fwctl.py power wake
++python3 tools/fwctl.py power timeout 120
+ ```
+ 
++`power` talks to the application's power manager (USB `0xa0` status, `0xa1`
++control, protocol `PWR1`; see [the app guide](../app/README.md#power-manager)).
++It refuses to run against the bootloader and reports "No power manager" on an
++application without the request. `standby` is accepted only while no hardware
++owner is active (`accepted: false` with `last_result: busy` otherwise); an
++acknowledged request means accepted, and the returned status shows the state
++reached. `timeout 0` disables automatic standby for this power cycle only
++(the setting lives in RAM). Readbacks in the status are logical register
++values, not measured rail voltages; `unsupported` lists what standby does not
++switch yet.
++
+ Global options such as `--port` and `--serial` go before the subcommand. Normal
+ uploads accept MGAP main applications, never raw full-chip dumps. `--stay` keeps
+ rescue mode after uploading. I²C commands always request floating pins on exit.
+diff --git a/tools/fwctl.py b/tools/fwctl.py
+index 3a4bdbe..09430af 100644
+--- a/tools/fwctl.py
++++ b/tools/fwctl.py
+@@ -253,6 +253,55 @@ def dangerous_write(data, expected_sha256, serial_number=None, report_path=None)
+             Path(report_path).write_text(json.dumps(report, indent=2)+'\n')
+ 
+ 
++APP_REQUEST_POWER_STATUS, APP_REQUEST_POWER_CONTROL = 0xa0, 0xa1
++POWER_STATES = ('ready', 'active', 'quiescing', 'standby', 'waking', 'fault')
++POWER_REASONS = ('boot', 'timeout', 'host', 'panel', 'job', 'fault')
++POWER_RESULTS = ('none', 'accepted', 'busy', 'invalid', 'fault')
++POWER_ERRORS = ('none', 'scanner_power_readback', 'scan_motor_output_readback', 'owner_active')
++POWER_OWNERS = ('scan_motor', 'scan_page', 'scan_lamp', 'scan_armed', 'paper', 'carriage', 'page_job', 'stamp',
++                'hybrid', 'cartridge', 'head_fire', 'print_mech', 'print_rx', 'raster_rx', 'print_job')
++POWER_CAPS = ('scanner', 'scan_motor', 'panel', 'timeout')
++
++
++def power_status(dev):
++    import usb.core
++    try: raw = bytes(dev.ctrl_transfer(0xc0, APP_REQUEST_POWER_STATUS, 0, 0, 64, timeout=1000))
++    except usb.core.USBError: raw = b''
++    if len(raw) != 64 or raw[:4] != b'1RWP':
++        raise RuntimeError('No power manager: this application does not answer USB 0xa0 (protocol PWR1)')
++    w = struct.unpack('<16I', raw)
++    return {'protocol': 'PWR1', 'state': POWER_STATES[w[1] & 0xff], 'reason': POWER_REASONS[w[1] >> 8 & 0xff],
++            'last_result': POWER_RESULTS[w[1] >> 16 & 0xff], 'fail_stage': w[1] >> 24,
++            'idle_timeout_s': w[2], 'idle_age_ms': w[3],
++            'owners': [n for i, n in enumerate(POWER_OWNERS) if w[4] >> i & 1],
++            'last_error': POWER_ERRORS[w[5]] if w[5] < len(POWER_ERRORS) else w[5],
++            'capabilities': [n for i, n in enumerate(POWER_CAPS) if w[6] >> i & 1],
++            'logical_outputs': {'scanner_power_reg': w[7] & 1, 'panel_dark': bool(w[7] & 2), 'head_prepared': bool(w[7] & 4),
++                                'scan_rows_unread': bool(w[7] & 8), 'paper_held': bool(w[7] & 16),
++                                'scan_motor_ctrl': w[8], 'scan_motor_compare': w[9]},
++            'transitions': w[10], 'standby_count': w[11], 'wake_count': w[12], 'uptime_ms': w[13],
++            'unsupported': ['print parking/head capping', 'driver-IC sleep', 'rail switching', 'CPU sleep']}
++
++
++def power_command(dev, info, action, seconds=None):
++    if info.get('mode') != 'application':
++        raise RuntimeError('power commands need the running application, not the bootloader')
++    import usb.core
++    op = {'standby': 1, 'wake': 2, 'timeout': 3}.get(action)
++    if op:
++        arg = 0
++        if action == 'timeout':
++            if seconds is None or not 0 <= seconds <= 3600: raise ValueError('timeout needs 0..3600 seconds')
++            arg = seconds
++        try:
++            dev.ctrl_transfer(0x40, APP_REQUEST_POWER_CONTROL, op, arg, b'', timeout=3000); accepted = True
++        except usb.core.USBError:
++            accepted = False                      # stall: busy, invalid or a failed quiesce; see last_result
++        status = power_status(dev); status['request'] = action; status['accepted'] = accepted
++        return status
++    return power_status(dev)
++
++
+ def main():
+     parser = argparse.ArgumentParser(description=__doc__)
+     parser.add_argument('--serial', help='Printer USB serial number (not the ESP32 port)')
+@@ -278,12 +327,19 @@ def main():
+     maintenance.add_argument('image', type=Path)
+     maintenance.add_argument('--sha256', required=True, help='Required exact bootloader.bin SHA-256')
+     maintenance.add_argument('--manual-reset', action='store_true', help='Wait for a manual printer reset if management is stuck')
++    power = sub.add_parser('power', help='Application power manager: status, standby, wake, idle timeout (USB 0xa0/0xa1)')
++    power.add_argument('action', choices=('status', 'standby', 'wake', 'timeout'))
++    power.add_argument('seconds', type=int, nargs='?', help='timeout: idle seconds before standby, 0 = never (max 3600)')
+     args = parser.parse_args()
+     import usb.util
+     if args.command == 'status':
+         dev, info = wait_device(serial_number=args.serial)
+         try: print(json.dumps(info, indent=2))
+         finally: usb.util.dispose_resources(dev)
++    elif args.command == 'power':
++        dev, info = wait_device(serial_number=args.serial)
++        try: print(json.dumps(power_command(dev, info, args.action, args.seconds), indent=2))
++        finally: usb.util.dispose_resources(dev)
+     elif args.command == 'float':
+         with Bridge(args.port): pass
+     elif args.command == 'detect':
+diff --git a/tools/stockusb/scan.py b/tools/stockusb/scan.py
+index 5e22a3a..214c2b2 100644
+--- a/tools/stockusb/scan.py
++++ b/tools/stockusb/scan.py
+@@ -115,7 +115,9 @@ class Scanner:
+         self.write(body)
+         response=self.reply(1024)
+         if b'<ivec:response>OK</ivec:response>' not in response:
+-            raise ProtocolError(f'Scanner refused {label}')
++            text=response.decode('ascii','replace')[:300]
++            self.trace('scan_xml_refused',operation=label,response=text)
++            raise ProtocolError(f'Scanner refused {label}: {text!r}')
+ 
+     def drain(self):
+         # Bounded cleanup, unlike an unbounded timeout/retry loop.

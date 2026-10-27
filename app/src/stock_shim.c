@@ -41,7 +41,7 @@ extern unsigned usb_reattach_count;
 #define MANAGER6         0x1879b144u
 #define MANAGERS         0x1879b09cu   /* seven print-buffer managers, 0x1c each (brief 8): output groups 0..6 */
 #define MATRIX           0x1806cd04u
-#define SNAPSHOT_FLASH   0x1b9000u     /* app/hybrid/build.py: HOLE + 0x20000 */
+#define SNAPSHOT_FLASH   0x1ba000u     /* app/hybrid/build.py: HOLE + 0x21000 */
 static uint32_t snapshot_pages;
 #define STOCK_INIT_C763E 0xc763eu
 #define F008_BANK 0x180662ecu
@@ -67,8 +67,16 @@ static unsigned mailbox_count[MAILBOXES];
  * column + 131 KiB, measured in the emulator. The arena lives in our bss,
  * which the stock RAM init skips; stock's zero-initialised RAM up to
  * 0x18420000 has no snapshot page and no fixture ever touched it (LAYOUT). */
-static uint8_t arena[1536 * 1024] __attribute__((aligned(8)));
+static uint8_t arena[1280 * 1024] __attribute__((aligned(8)));   /* 1.25 MiB: a 2112-column mode-7 band (~1.09 MB) plus messages; the on-device print rings need the rest of RAM */
 static unsigned arena_used;
+/* Band allocations (job, managers, raster storage, Q, pattern buffers) stay
+ * live from band-prepare through upload and execution: band_mark is the
+ * arena high-water mark at the end of a successful prepare, and every later
+ * routine's short-lived messages are allocated above it (presets). Resetting
+ * the cursor to zero per routine let executor/status messages overwrite the
+ * prepared pattern buffers from the second pass on (brief 22 answer §1). */
+static unsigned band_mark;
+static bool band_live;
 static bool live, motion_only, lf_live, cr_stock, cr_stock_dry, ram_ready, running, fresh_run;
 /* Stock paper load (brief 10 / paper_path): mechanism command 0x4011 handler
  * 0xdce50(msg); its LF requests go to the LF task body 0xd9ad0 (one call per
@@ -454,7 +462,7 @@ uint32_t shim_sem_release(uint32_t id) { (void)id; return 0; }
 static uint32_t *take(uint32_t size)
 {
     size = ((size + 7u) & ~7u) + 64u;   /* + 64: room to align a manager's raster storage (manager_raster) */
-    if (arena_used + size > sizeof arena) { ++errors; return 0; }
+    if (arena_used + size > sizeof arena) { ++errors; dbg_puts("[shim] arena exhausted\n"); return 0; }
     uint32_t *p = (uint32_t *)(arena + arena_used); arena_used += size;
     for (unsigned i = 0; i < size / 4; ++i) p[i] = 0;
     return p;
@@ -905,7 +913,7 @@ static void presets(bool capped)
     ww(F008_BANK + 4 * 13, 0x18066768u);
     for (unsigned i = 0; i < EVENT_GROUPS; ++i) events[i] = 0;
     for (unsigned i = 0; i < MAILBOXES; ++i) mailbox_count[i] = 0;
-    arena_used = 0; trace_n = 0; service_calls = 0;
+    arena_used = band_live ? band_mark : 0; trace_n = 0; service_calls = 0;   /* messages above the live band */
     events[0x1a] = 0x2010u;                             /* CR and LF initial synchronisation */
     events[0x1b] = 0x1u;                                /* head power owner available */
         events[0x1c] = 0xc0000000u;                        /* idle head-work context: bits 31 and 30 (stock c8d30 ends with ca42c, ca41e, ca3e6; brief 20 §1) */
@@ -994,7 +1002,7 @@ static uint32_t band_prepare(void)
      * our synthetic packet is consumed at once, so free them every prepare.
      * Without this the sixth prepare's builder spins in delay(5) forever. */
     for (unsigned i = 0; i < 10; ++i) *(volatile uint8_t *)(0x1806b1dcu + i) = 0;
-    arena_used = 0;
+    band_live = false; band_mark = 0; arena_used = 0;   /* the previous band is reclaimed here, and only here */
     for (unsigned i = 0; i < sizeof band_job; ++i) band_job[i] = 0;
     *(uint16_t *)(band_job + 0x28) = (uint16_t)band_mode; *(uint32_t *)(band_job + 0x2c) = band_cols; *(uint16_t *)(band_job + 0x30) = 600;
     band_rc[0] = stock_call(STOCK_ALLOC_JOB | 1u, (uint32_t)band_job, 0, 0, 0, 0, 0);
@@ -1044,6 +1052,8 @@ static uint32_t band_prepare(void)
     band_q = mailbox_count[0x2d] ? (uint32_t)mailbox[0x2d][0] : 0;
     note(T_UNKNOWN, 0xb12a2, band_rc[2], band_q);
     dbg_puts("[shim] b12a2 -> "); dbg_dec(band_rc[2]); dbg_puts(" Q=0x"); dbg_u32(band_q); dbg_putc('\n');
+    band_mark = arena_used; band_live = band_q != 0;
+    dbg_puts("[shim] band arena "); dbg_dec(band_mark); dbg_puts(" bytes live\n");
     return band_q ? 1u : 0xbad3;
 }
 
@@ -1144,6 +1154,19 @@ void hybrid_raster_feed(const uint8_t *data, unsigned len)
     for (unsigned i = 0; i < len; ++i) raster_dst[raster_received + i] = data[i];
     raster_received += len; raster_remaining -= len;
     if (!raster_remaining) { dbg_puts("[shim] raster upload complete: "); dbg_dec(raster_received); dbg_puts(" bytes\n"); }
+}
+
+/* ---- on-device print engine (print_engine.c) ---- */
+uint32_t hybrid_last_result(void) { return last_result; }
+unsigned hybrid_routines_run(void) { return routines_run; }
+bool hybrid_sheet_loaded(void) { return ram_ready && *(volatile uint8_t *)0x180c6f54u == 1u; }   /* stock ASF state byte: 1 = loaded and aligned */
+uint8_t *hybrid_manager_raster(unsigned group, unsigned *slots, unsigned *width, unsigned *stride, unsigned *size)
+{
+    if (group > 6 || running || routine_pending || !band_q) return 0;
+    uint32_t m = MANAGERS + group * 0x1cu;
+    if (!w(m + 0x18) || !manager_slots(m)) return 0;
+    *slots = manager_slots(m); *width = *(volatile uint16_t *)(m + 4u); *stride = manager_stride(m); *size = w(m + 8);
+    return (uint8_t *)manager_raster(m);
 }
 
 /* ---- USB interface (0x95 call, 0x96 result, 0x97 run, 0x98 trace, 0x99 raster) ---- */

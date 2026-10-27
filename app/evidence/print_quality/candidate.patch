@@ -1,0 +1,198 @@
+--- a/app/src/print_engine.c
++++ b/app/src/print_engine.c
+@@ -15,7 +15,11 @@
+  * Colour pages use stock print mode 7 with 152-row bands; the C/M/Y arrays
+  * sit 128 rows below black row 0 on paper, so a band's black covers data rows
+  * [152b - 128, 152b + 24) while its colour covers [152b, 152b + 152). Mono
+- * pages use mode 1, 304-row bands, one 4224-column sweep. Everything here is
++ * pages use mode 1, 304-row bands, one 4224-column segment. Each band uses
++ * two disjoint row passes, 16 rows apart: physical rows 0..15 in every
++ * 32-row group cover both halves of the image. Q272125 showed recurring
++ * weak rows in the other half, independent of sweep width and density.
++ * This avoids those rows without changing head drive timing. Everything here is
+  * polled; the shim runs each stock routine inside hybrid_poll(). */
+ #include "app.h"
+ #include "print_job.h"
+@@ -45,6 +49,7 @@
+ static bool dry;                   /* emulator exercise (USB 0xa3): no homing, head or sheet checks; dry executor */
+ static uint32_t expect;
+ static unsigned rows_in, in_row, band_rows, band_next, bands_total, seg_index, pages, sweeps, failures, last_fail, routines_before;
++static unsigned nozzle_phase;      /* 0 or 16 paper rows into this band's two-pass coverage */
+ static uint32_t job_started_ms;
+ static struct urf_decoder decoder;
+ static uint8_t k_ring[K_RING][ROW_BYTES], c_ring[3][C_RING][ROW_BYTES];
+@@ -72,7 +77,7 @@
+     if (page_open) return false;                              /* the previous page is still printing */
+     mono = p->components == 1u;
+     band_rows = mono ? 304u : 152u;
+-    rows_in = in_row = band_next = bands_total = seg_index = 0; page_open = true; input_done = false;
++    rows_in = in_row = band_next = bands_total = seg_index = nozzle_phase = 0; page_open = true; input_done = false;
+     dbg_puts("[print] page "); dbg_dec(p->index); dbg_putc('/'); dbg_dec(p->count); dbg_putc(' ');
+     dbg_dec(p->width); dbg_putc('x'); dbg_dec(p->height); dbg_puts(mono ? " grey\n" : " colour\n");
+     return true;
+@@ -141,6 +146,11 @@
+ unsigned print_engine_feed(const uint8_t *data, unsigned len)
+ {
+     if (state != PE_RECEIVING) return len;                    /* a finished or failed job drains its data */
++    /* The shim services IPP while stock calls block, but its motor servos
++     * also need that polling loop. Row conversion yields only to scanner
++     * work: doing it here can overrun an LF move (QI272220: +64 Ulf).
++     * Keep the USB packet pending until the stock routine has finished. */
++    if (hybrid_busy()) return 0;
+     unsigned n = urf_feed(&decoder, data, len);
+     if (decoder.error) { dbg_puts("[print] bad URF document\n"); ++failures; last_fail = 1; state = page_open ? PE_PRINTING : PE_FAILED; if (page_open) page_end(); return len; }
+     return n;
+@@ -176,10 +186,16 @@
+ {
+     for (unsigned g = 0; g < rows / 8u && g < slots; ++g)
+         for (unsigned r = 0; r < 8u; ++r) {
+-            int d = row0 + (int)(8u * g + r);
+-            if (d < 0 || (unsigned)d >= rows_in) continue;        /* blank rows: the fresh allocation is zero */
+-            const uint8_t *src = ring + ((unsigned)d % ring_rows) * ROW_BYTES + col0 / 8u;
+-            for (unsigned t = 0; t < ncols / 16u; ++t) { uint8_t *o = raster + t * stride + 16u * g + 2u * r; o[0] = src[2u * t]; o[1] = src[2u * t + 1u]; }
++            unsigned physical = 8u * g + r, logical = physical + nozzle_phase;
++            int d = row0 + (int)logical;
++            bool used = (physical & 31u) < 16u && logical < rows && d >= 0 && (unsigned)d < rows_in;
++            const uint8_t *src = used ? ring + ((unsigned)d % ring_rows) * ROW_BYTES + col0 / 8u : NULL;
++            /* Explicit blanking also removes the shim's synthetic eight-row
++             * preparation packet from leading/trailing blank black rows. */
++            for (unsigned t = 0; t < ncols / 16u; ++t) {
++                uint8_t *o = raster + t * stride + 16u * g + 2u * r;
++                o[0] = src ? src[2u * t] : 0; o[1] = src ? src[2u * t + 1u] : 0;
++            }
+             app_yield();
+         }
+ }
+@@ -267,7 +283,7 @@
+         if (!start(10u | 0x800u, mono ? FIRST_ULF_MONO : FIRST_ULF_COLOUR, S_FIRST, 0, 15)) fail(15);
+         return;
+     case S_FIRST:
+-        seg_index = 0; step = S_BAND; return;
++        seg_index = nozzle_phase = 0; step = S_BAND; return;
+     case S_BAND:
+         if (seg_index == 0) {
+             if (cancel_wanted) { eject(); return; }
+@@ -288,9 +304,15 @@
+     case S_FIRED:
+         ++sweeps;
+         if (++seg_index < segments()) { step = S_BAND; return; }
+-        seg_index = 0; ++band_next;
++        seg_index = 0;
++        if (nozzle_phase == 0) {
++            nozzle_phase = 16;
++            if (!start(10u | 0x800u, 32u, S_ADVANCED, 0, 24)) fail(24);
++            return;
++        }
++        nozzle_phase = 0; ++band_next;
+         if (input_done && band_next >= bands_total) { eject(); return; }
+-        if (!start(10u | 0x800u, 2u * band_rows, S_ADVANCED, 0, 24)) fail(24);
++        if (!start(10u | 0x800u, 2u * band_rows - 32u, S_ADVANCED, 0, 24)) fail(24);
+         return;
+     case S_ADVANCED:
+         step = S_BAND; return;
+--- a/app/src/ippusb.c
++++ b/app/src/ippusb.c
+@@ -298,7 +298,10 @@
+                 unsigned taken = ipp_document_feed(conn, packets[conn] + k->packet_position - 1u, n);
+                 k->packet_position += taken - 1u; k->left -= taken;
+                 if (!k->left) k->rx = RX_DONE;
+-                if (taken < n) { k->packet_position -= 1u; return; }   /* backpressure: retry from the next byte */
++                /* Position already points at the first unconsumed byte.
++                 * Rewinding here duplicates data (or underflows at offset 0)
++                 * whenever a full print ring applies backpressure. */
++                if (taken < n) return;
+                 break;
+             }
+             if (!body_byte(conn, b)) { --k->packet_position; return; }
+--- a/app/hybrid/validate_hybrid.py
++++ b/app/hybrid/validate_hybrid.py
+@@ -132,7 +132,10 @@
+         if m != _last_mode[0]:
+             _modes.append((hex(a), hex(m), hex(cpu.reg_read(_LR)))); _last_mode[0] = m
+         _ring.append((a, m))
+-    _ring_handle = e.uc.hook_add(_HC, _ring_hook)
++    # Per-instruction Python tracing dominates long URF/printing tests. Keep
++    # the crash-history hook available explicitly; normal runs still retain
++    # unmapped-access hooks, register assertions and targeted stage captures.
++    _ring_handle = e.uc.hook_add(_HC, _ring_hook) if __import__('os').environ.get('HYBRID_TRACE_PC') else None
+     import atexit
+     def _dump():
+         sym = manifest['symbols']['application']
+@@ -380,9 +383,16 @@
+         e.requests.extend([('altset2', setup(1, 11, 0, 2)), ('altset3', setup(1, 11, 0, 3))])
+         e.run(lambda x: any(n == 'altset3' for g, n, d in x.responses if g == x.generation), resume=True)
+         command('dry', 0xa3, 1, 1)
++        quality = None
++        mono_quality = bool(os.environ.get('HYBRID_IPP_MONO'))
++        if os.environ.get('HYBRID_IPP_QUALITY'):
++            import print_quality_capture as pq
++            quality = pq.Capture(e, manifest, mono=mono_quality)
+         width, rows_n = 2480, 60                                # 38 rows above the printable area, 22 printable -> 44 output rows -> 2 colour bands
+         row = bytes([90, 150, 200]) * 1200 + bytes([255, 255, 255]) * (width - 1200)   # left: ink in all four planes; right: white
+-        document = ip.urf_document([(width, rows_n, 3, [row] * rows_n)])
++        if quality:
++            width, rows_n = pq.WIDTH, 200 if mono_quality else pq.HEIGHT
++        document = ip.urf_document([(width, rows_n, 1 if mono_quality else 3, pq.input_rows(mono_quality) if quality else [row] * rows_n)])
+         body = ip.print_job_request(document, 'emu', request_id=11)
+         print(f'IPP print: URF {len(document)} bytes, request {len(body)} bytes')
+         t0 = e.ticks
+@@ -401,15 +411,19 @@
+         lines = shim_log()
+         print('shim/print log:'); [print('   ', l) for l in lines if '[print]' in l or 'returned' in l or 'arena' in l]
+         assert state == 'completed' and w[6] == 1 and w[8] == 0, (state, w)
+-        assert w[7] == 4, ('sweeps', w[7])                     # 2 bands x 2 segments (the page's band count is cleared once printed)
+-        assert sum(1 for l in lines if 'band arena' in l) == 4 and any('page data complete: 44 rows, 2 bands' in l for l in lines), lines[-20:]
++        expected_sweeps = 4 if mono_quality else 8             # 2 bands x 1/2 segments x 2 disjoint row passes
++        assert w[7] == expected_sweeps, ('sweeps', w[7])
++        expected_rows = 2 * (rows_n - 38)
++        assert sum(1 for l in lines if 'band arena' in l) == expected_sweeps and any(f'page data complete: {expected_rows} rows, 2 bands' in l for l in lines), lines[-20:]
+         assert not pool_violations, pool_violations[:5]
++        if quality:
++            quality.verify()
+         body = ip.ipp_message(0x0009, 12, [(0x47, b'attributes-charset', b'utf-8'), (0x48, b'attributes-natural-language', b'en'),
+                                            (0x45, b'printer-uri', b'ipp://localhost/ipp/print'), (0x21, b'job-id', b'\x00\x00\x00\x01')])
+         status, headers, resp, _ = v.http(e, 1, 'POST', '/ipp/print', body, headers=('Content-Type: application/ipp',))
+         ipp_status, attrs = ip.ipp_parse(resp)
+         assert ipp_status == 0 and attrs['job-state'] == [(0x23, b'\x00\x00\x00\x09')], (ipp_status, attrs)
+-        print(f'PASS ipp print: Print-Job accepted (job 1 processing), engine completed 1 page in 4 sweeps over 2 bands, no allocation inside a live band, Get-Job-Attributes reports completed')
++        print(f'PASS ipp print: Print-Job accepted (job 1 processing), engine completed 1 page in {expected_sweeps} sweeps over 2 bands, no allocation inside a live band, Get-Job-Attributes reports completed')
+         return
+     if os.environ.get('HYBRID_COLOUR_ONLY'):
+         # Colour band: stock print mode 7 (C/M/Y groups 61 slots, black 81, 8-row groups), the
+--- a/app/README.md
++++ b/app/README.md
+@@ -251,11 +251,18 @@
+ `src/print_engine.c` turns rows into 600 dpi K/C/M/Y bit rows (grey
+ component replacement, 8x8 ordered dither, the measured 1.024 width
+ compensation applied before halftoning) and drives the stock band path
+-through the shim exactly as `tools/print_doc.py` does: home, head prepare,
++through the shim: home, head prepare,
+ stock load, first-line advance, per band prepare / tile raster into the stock
+ managers / executor / advance, eject. Colour pages print in stock mode 7 with
+ 152-row bands (black leads the colour arrays by 128 rows), grey pages in mode
+-1 with 304-row bands. Boards without the hybrid band path still answer
++1 with 304-row bands. Each segment now uses two disjoint row passes, 16 rows
++apart, to avoid the repeating weak nozzle rows measured on Q272125. The
++remaining feed is shortened by the same amount, preserving page scale.
++Q272212 physically verifies removal of the recurring K/C/Y white strips;
++this workaround costs a second sweep per segment. Raster conversion pauses
++while stock routines run so it cannot delay their polled motor controllers.
++See [the print-quality evidence](evidence/print_quality/README.md) for physical
++results and remaining limits. Boards without the hybrid band path still answer
+ `server-error-not-accepting-jobs`, draining the document instead of 413.
+ 
+ ```sh
+@@ -268,8 +275,11 @@
+ once they list the printer (`printer-is-accepting-jobs` is true on hybrid
+ boards). Emulator: `HYBRID_IPP_PRINT=1 app/hybrid/validate_hybrid.py` runs a
+ Print-Job end to end in the engine's dry mode (USB 0xa3 op 1: no homing, head
+-or sheet checks, dry executor) and asserts two bands in four sweeps with no
+-allocation inside a live band; `tests/test_urf.c` is the native decoder test.
++or sheet checks, dry executor) and asserts two colour bands in eight sweeps
++with no allocation inside a live band. Add `HYBRID_IPP_QUALITY=1` to check
++every emitted paper dot, both segments, the band seam and trailing blanks;
++add `HYBRID_IPP_MONO=1` for the four-sweep mono case. These tests also forbid
++row conversion during stock routines. `tests/test_urf.c` is the native decoder test.
+ The shim keeps a prepared band's allocations live until the next prepare
+ (`band_mark`), the fix for the per-pass pattern-buffer overwrite found by the
+ brief 22 helper; the validator asserts it on every executed band.

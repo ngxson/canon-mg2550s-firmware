@@ -11,6 +11,7 @@
  * raw-CIS scanner PoC) will add bounded *_tick() calls to this loop. */
 #include "app.h"
 #include "print.h"
+#include "print_job.h"
 
 /* Decode an embedded minimal BJL/BJRaster3 band through the open print receiver
  * and report the result over the debug log. Runs the same parser the (future)
@@ -79,28 +80,7 @@ void print_selftest(void)
         0x1b,0x28,0x46,0x05,0x00, 0xfc,0xff,0xfc,0x00,0x80, /* ESC(F raster */
         0x1b,0x40,                               /* ESC@ */
     };
-    print_reset(&print_st);
-    int r = print_decode(band, sizeof(band), &print_st);
-    dbg_puts("[print] r="); dbg_dec((unsigned)(r & 0xff));
-    dbg_puts(" mandatory=0x"); dbg_u32(print_st.mandatory);
-    dbg_puts(" planes="); dbg_dec(print_st.num_planes);
-    dbg_puts(" rows="); dbg_dec(print_st.rows_decoded);
-    dbg_puts(" rowbytes="); dbg_dec(print_st.row_bytes[0]);
-    dbg_puts(" row0:");
-    for (unsigned i = 0; i < print_st.row_bytes[0] && i < 16; ++i) {
-        dbg_putc(' '); dbg_u32(print_st.row[0][i]);
-    }
-    dbg_putc('\n');
-
-    /* Placeholder head-data emit: stream the decoded plane dots to the head-data
-     * data port (0xc0c25000). The real nozzle mapping / timing / DMA protocol is
-     * a TODO (needs RE of the 0xc0c2xxxx head driver); this validates the
-     * decode -> head-output path end-to-end in emulation (PrinterModel observes
-     * these writes), and is harmless on hardware (the head is unconnected). */
-    for (unsigned pl = 0; pl < print_st.num_planes; ++pl)
-        for (unsigned i = 0; i < print_st.row_bytes[pl]; ++i)
-            wr(0xc0c25000u, print_st.row[pl][i]);
-    dbg_puts("[print] emitted head bytes: "); dbg_dec(print_st.row_bytes[0]); dbg_putc('\n');
+    print_process(band, sizeof(band));
 }
 
 /* Diagnostic: pattern the idle print buffer during scan pages; the first
@@ -160,7 +140,13 @@ void firmware_main(void)
     dbg_hex("app_flash", APP_FLASH);
     dbg_hex("app_ram", APP_RAM);
 
+    /* The scanner's conversion rate needs I-cache even when an ordinary
+     * eSCL client never sends the bench-only 0x8c command. DMA stays uncached;
+     * page capture enables write-through caching of CPU-owned data. */
+    cpu_icache_set(true);
+
     usb_init();
+    power_init();
     dbg_puts("[app] usb up, entering main loop\n");
     if (hybrid_panel_available()) {
         buttons_select_map(2);
@@ -185,11 +171,12 @@ void firmware_main(void)
         scanner_motor_poll();
         service_poll();
         buttons_poll();
+        power_poll();                        /* ownership, idle timer, standby/wake; cheap */
         scan_page_poll();
         /* Long scanner captures and I2C retry loops cannot extend a jog. */
         if (!scanner_motor_busy()) {
             mailbox_poll();
-            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); head_fire_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); carriage_poll(); page_job_poll(); hybrid_poll(); }
+            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); head_fire_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); carriage_poll(); page_job_poll(); hybrid_poll(); print_engine_poll(); }
         }
     }
 }

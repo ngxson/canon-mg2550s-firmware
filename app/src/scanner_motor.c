@@ -32,7 +32,7 @@ enum phase { IDLE, WANT_JOG, WANT_HOME, JOG, SEEK, BACKOFF, RETURN, SETTLE,
  * coefficients), cruise capped at scan_speed, then the backoff's 4000 counts/s
  * approach for the last 3000 counts before the hardware endpoint. Stock's own
  * scan endpoint lies ~469,000 counts from its origin; we stay within 458,000. */
-#define SCAN_TRAVEL_LIMIT 458000u
+#define SCAN_TRAVEL_LIMIT 478208u   /* CONT_START + 3672 run-in/document units + CONT_RUNOUT: stock's last row lies 156/300 in past our first line */
 #define SCAN_APPROACH 3000u
 enum home_result { UNREFERENCED, HOMING, MECHANICAL_REFERENCE, HOME_FAILED, HOME_CANCELLED };
 static enum phase phase, after_settle;
@@ -40,7 +40,7 @@ static enum home_result home_result;
 static bool initialized, inhibited, cooling, home_power_owned;
 static uint32_t saved_scanner_power;
 static unsigned direction, last_ms, window_ms, same_ms;
-static uint32_t started, x0, target, span, limit_ms, cool_until, settle_at;
+static uint32_t tick_anchor, move_ms, x0, target, span, limit_ms, cool_until, settle_at;
 static uint32_t first_stop, backoff_end, home_position, last_position;
 static int32_t window_progress, measured_speed, qualified_progress;
 static struct motor_control control;
@@ -63,6 +63,18 @@ bool scanner_motor_set_return_speed(unsigned counts_per_s)
 
 static bool driving(void) { return (phase >= JOG && phase <= RETURN) || phase == PAGE_MOVE || phase == SCAN_MOVE || phase == FAST_RETURN; }
 static bool homing(void) { return home_result == HOMING; }
+
+/* A 32-bit 96 MHz duration wraps after 44.7 s, before a full 300 dpi page
+ * finishes. Accumulate whole milliseconds at each poll and retain the
+ * fractional ticks in the moving anchor. Individual deltas stay short;
+ * the existing delayed-poll and phase-deadline guards still apply. */
+static uint32_t move_elapsed_ms(void)
+{
+    uint32_t whole = (app_clock_ticks() - tick_anchor) / CLOCK_TICKS_PER_MS;
+    tick_anchor += whole * CLOCK_TICKS_PER_MS;
+    move_ms += whole;
+    return move_ms;
+}
 bool scanner_motor_busy(void) { return phase != IDLE; }
 unsigned scanner_home_result(void) { return home_result; }
 uint32_t scanner_motor_position(void) { return rd(P + 0x100u); }
@@ -115,7 +127,7 @@ bool scanner_motor_scan_throttle(uint32_t speed)
     if (speed == scan_speed) return true;
     uint32_t x = rd(P + 0x100u), remaining = scan_target > x ? scan_target - x : 0u;
     scan_speed = speed;
-    limit_ms = (uint32_t)((app_clock_ticks() - started) / CLOCK_TICKS_PER_MS) +
+    limit_ms = move_elapsed_ms() +
                motor_divide((uint64_t)remaining * 1000u, speed) + SCAN_APPROACH * 1000u / 4000u + 2000u;
     return true;
 }
@@ -130,7 +142,7 @@ static void stop_outputs(void)
 static void finish(const char *why, enum home_result result)
 {
     uint32_t compare = driving() ? rd(C + 8u) : NEUTRAL;
-    uint32_t elapsed = driving() ? (app_clock_ticks() - started) / CLOCK_TICKS_PER_MS : 0;
+    uint32_t elapsed = driving() ? move_elapsed_ms() : 0;
     stop_outputs();
     if (home_power_owned) {
         wr(0xc0c85614u, saved_scanner_power); home_power_owned = false;
@@ -152,6 +164,15 @@ void scanner_motor_shutdown(void)
     inhibited = true;
     if (scanner_motor_busy()) finish("reboot", HOME_CANCELLED);
     else if (initialized) stop_outputs();
+}
+/* Reversible rest for standby: neutral outputs without the reboot inhibit;
+ * the next move re-runs initialize() as every move does. Reports whether the
+ * outputs read idle (an uninitialised driver has nothing to rest). */
+bool scanner_motor_quiesce(void)
+{
+    if (scanner_motor_busy()) return false;
+    if (initialized) stop_outputs();
+    return !initialized || (rd(C) == 0u && rd(C + 8u) == NEUTRAL);
 }
 static bool available(void)
 {
@@ -306,7 +327,7 @@ static bool start_move(enum phase next)
              "[home] backoff" : next == RETURN ? "[home] repeat left seek" : next == FAST_RETURN ? "[home] fast return" :
              direction ? "[motor] jog backward" : "[motor] jog forward");
     dbg_puts(" start="); dbg_u32(x0); dbg_puts(" target="); dbg_u32(target); dbg_putc('\n');
-    started = app_clock_ticks();
+    tick_anchor = app_clock_ticks(); move_ms = 0;
     wr(C, 0x102u);  /* first non-neutral command comes from the 1ms controller */
     return true;
 }
@@ -417,8 +438,7 @@ void scanner_motor_poll(void)
         (void)start_move(after_settle); return;
     }
     if (!driving()) return;
-    uint32_t elapsed = app_clock_ticks() - started;
-    unsigned ms = elapsed / CLOCK_TICKS_PER_MS;
+    unsigned ms = move_elapsed_ms();
     if (ms >= limit_ms) { finish("phase deadline", HOME_FAILED); return; }
     if (ms == last_ms) return;
     if (ms - last_ms > 4u) {

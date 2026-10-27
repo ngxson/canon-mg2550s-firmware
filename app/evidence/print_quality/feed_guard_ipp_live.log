@@ -1,0 +1,21 @@
+QI272229 URF bytes 33832
+Traceback (most recent call last):
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/tools/quality_ipp.py", line 93, in <module>
+    main()
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/tools/quality_ipp.py", line 62, in main
+    conn = escl_usb.Connection(dev, intf)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/tools/escl_usb.py", line 37, in __init__
+    usb.util.claim_interface(dev, self.number)
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/util.py", line 203, in claim_interface
+    device._ctx.managed_claim_interface(device, interface)
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/core.py", line 113, in wrapper
+    return f(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/core.py", line 180, in managed_claim_interface
+    self.backend.claim_interface(self.handle, i)
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/backend/libusb1.py", line 833, in claim_interface
+    _check(self.lib.libusb_claim_interface(dev_handle.handle, intf))
+  File "/Users/ngxson/.venv/lib/python3.12/site-packages/usb/backend/libusb1.py", line 604, in _check
+    raise USBError(_strerror(ret), ret, _libusb_errno[ret])
+usb.core.USBError: [Errno 13] Access denied (insufficient permissions)

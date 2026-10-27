@@ -14,6 +14,7 @@
  * Interfaces 2 and 3 are IPP-over-USB (class 7/1/4) for driverless scanning;
  * their bulk endpoints are handed to ippusb.c (see escl.h). */
 #include "app.h"
+#include "print_job.h"
 #define IN(n) (USB+0x900+(n)*0x20)
 #define OUT(n) (USB+0xb00+(n)*0x20)
 #define ENABLE 0x80000000u
@@ -21,16 +22,16 @@
 #define ACTIVE 0x8000u
 #define STALL 0x200000u
 
-static uint8_t setup_buffer[64] ALIGNED;
-static uint8_t control_buffer[256] ALIGNED;
-static uint8_t bulk_buffer[512] ALIGNED;
+static uint8_t setup_buffer[64] USB_DMA;
+static uint8_t control_buffer[256] USB_DMA;
+static uint8_t bulk_buffer[512] USB_DMA;
 static unsigned max_packet, tx_length, tx_position;
 static unsigned configuration;
 static bool need_zlp, reboot_status_ack, bulk_armed;
 enum control_state { IDLE, DATA_IN, STATUS_IN, STATUS_OUT };
 static enum control_state state;
 
-#define PRODUCT "MG2550s App"
+#define PRODUCT "MG2550s"             /* with iManufacturer "OpenFW": the same display name as the IPP attributes (brief 22 §2f) */
 #define PID_LOW 0xfe
 #define PID_HIGH 0x12
 static const uint8_t device_descriptor[]={18,1,0,2,0,0,0,64,0xa9,4,PID_LOW,PID_HIGH,0,2,1,2,3,1};
@@ -157,7 +158,7 @@ static void stall(void)
 static unsigned config_descriptor(bool other_speed)
 {
     unsigned mps=other_speed?(max_packet==512?64:512):max_packet;
-    /* Empty vendor interface 0 preserves printer interface 1 for host tools.
+    /* Empty vendor interface 0 preserves bulk interface 1 (vendor class since 2026-10-27; was printer class 7/1/2) for host tools.
      * Interfaces 2 and 3 are IPP-USB; endpoints must match ipp_out/ipp_in.
      * Each carries the mandatory IPP USB Device Info Descriptor (type 21h):
      * release 1, one IPP Basic Capabilities descriptor with Print (bit 1),
@@ -166,7 +167,7 @@ static unsigned config_descriptor(bool other_speed)
 #define IPP_USB_DEVICE_INFO 10,0x21,1,1,0,4,0x13,0x00,0,0
     const uint8_t config[]={9,2,107,0,4,1,0,0xc0,1,
         9,4,0,0,0,0xff,0,0,0,
-        9,4,1,0,2,7,1,2,0,
+        9,4,1,0,2,0xff,0,0,0,            /* bulk tool interface: vendor class, so the host's USB printer-class driver does not make a second printer of it (IPP-USB is the printer) */
         7,5,1,2,0,0,0, 7,5,0x82,2,0,0,0,
         9,4,2,0,2,7,1,4,0, IPP_USB_DEVICE_INFO,
         7,5,2,2,0,0,0, 7,5,0x81,2,0,0,0,
@@ -199,7 +200,7 @@ static unsigned device_id(void)
      * CMD/URF announce an AirPrint (IPP-USB) device, which steers macOS to the
      * IPP-USB interfaces instead of a generic USB printer driver. The IPP
      * answer (ipp.c) states that jobs are not accepted yet. */
-    static const char body[]="MFG:OpenFW;MDL:MG2550s;CMD:URF;CLS:PRINTER;DES:" PRODUCT
+    static const char body[]="MFG:OpenFW;MDL:MG2550s;CMD:URF;CLS:PRINTER;DES:" DEVICE_MAKE_MODEL
                              ";VER:0.3;STA:80;URF:W8,SRGB24,CP1,RS300,V1.4,DM1;";
     unsigned n=sizeof(body)-1;
     control_buffer[0]=(uint8_t)((n+2)>>8); control_buffer[1]=(uint8_t)(n+2);
@@ -267,6 +268,14 @@ static void setup_request(void)
     } else if(type==0x40 && request==APP_REQUEST_SCAN_OPTIONS && !index && !length) {
         scan_page_set_calibration(!(value&0x40u));
         if(scan_source_set_order(value&3u,(value>>2)&3u,(value>>4)&3u)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_POWER_STATUS && !value && !index) {
+        reply(power_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_POWER_CONTROL && !length) {
+        if(power_request(value,index)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_PRINT_JOB_CONTROL && !length) {
+        if(print_engine_control(value,index)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_PRINT_JOB_STATUS && !value && !index) {
+        reply(print_engine_status(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_PEEK) {
         uint32_t a=(uint32_t)value|(uint32_t)index<<16;
         if(a>=0x20000000u && a<=0x20800000u-64u) { memcpy(control_buffer,(const void *)(uintptr_t)a,64); reply(64,length); } else stall();
@@ -281,6 +290,8 @@ static void setup_request(void)
         if(scanner_motor_set_return_speed(value*100u)) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_LINE_AFE && !length) {
         if(scanner_line_set_afe(value,index)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_LINE_COLOUR && !length) {
+        if(scanner_line_set_colour(value,index)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_LINE_DUMP) {
         unsigned n=scanner_line_dump(control_buffer,(uint32_t)index<<16|value,length>sizeof(control_buffer)?sizeof(control_buffer):length);
         if(n) reply(n,length); else stall();

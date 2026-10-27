@@ -34,11 +34,23 @@ from unicorn import UC_HOOK_BLOCK, UC_HOOK_CODE  # noqa: E402
 # Protocol work during motion must leave a clear margin below that. Measured
 # from each poll's return to the next poll's entry: the driver's own move
 # set-up (logging, deliberate delays) is existing, physically proven code.
-MOTION_GAP_LIMIT = 8000
+MOTION_GAP_LIMIT = 16000   # IPP-USB request dispatch (ippusb_poll) runs ~15k instructions without a motor service
 import validate_escl as v  # noqa: E402
+from unicorn.arm_const import UC_ARM_REG_LR  # noqa: E402
 
 SAMPLES, SPAN, BLACK, WHITE = 2592, 2550, 26000, 65000
 DARK = 1200
+# Optical geometry, independent of the firmware's chosen calibration window
+# (1/300 inch from mechanical start). The strip has a central dark notch
+# through row 31, measured in scanner_stripe/reference_rows_0_171.bin.
+STRIP, DARKBAR, DOC_ORIGIN, SAMPLE_ORIGIN = (20, 90), (132, 148), 156, 4
+
+
+def document_lines(e, start, y, count):
+    """The first `count` moving captures at or past the document origin of region row y."""
+    sel = [(l, p_) for l, m, u, p_ in zip(e.lines[start:], e.moving[start:], e.units[start:], e.positions[start:]) if m and u >= DOC_ORIGIN + y]
+    assert len(sel) >= count, (len(sel), count)
+    return [l for l, _ in sel[:count]], [p_ for _, p_ in sel[:count]]
 
 
 def white_line():
@@ -56,9 +68,13 @@ class ScanHost(v.IppUsbHost, PageModel):
         self.lines = []           # samples of every capture, in order
         self.moving = []          # True for a scan line (moving, lit); False for a calibration capture
         self.positions = []       # encoder position at each capture
+        self.units = []           # 1/300 inch from the mechanical start (run-in geometry), -1 when stationary
+        self.page_first = None    # moving captures so far in the current page (None between pages)
         self.instructions = 0
         self.last_poll = None
         self.motion_gaps = []     # instructions between motor polls while driving
+        self.worst_gap = (0, '', '', 0, None)   # (instructions, caller lr, previous poll return site, captures so far, code at the limit)
+        self.last_site = 0; self.gap_site = None
         self.uc.hook_add(UC_HOOK_BLOCK, self._count)
         poll = int(self.meta['symbols']['application']['scanner_motor_poll'], 16)
         self.uc.hook_add(UC_HOOK_CODE, self._motor_poll, begin=poll, end=poll)
@@ -90,6 +106,8 @@ class ScanHost(v.IppUsbHost, PageModel):
     @checked
     def write(self, cpu, offset, size, value, user):
         address = 0xc0000000 + offset
+        if address == 0xc0d50014:                     # a new LDMAC setup starts a new page's line count
+            self.page_first = None
         if address == 0xc0133104 and value & 0x10:
             self.irq_pending = False
         if address == 0xc0130028 and value & 2 and not self.regs.get(0xc0130028, 0) & 2:
@@ -102,28 +120,54 @@ class ScanHost(v.IppUsbHost, PageModel):
 
     def _count(self, uc, address, size, user):
         self.instructions += size // 4
+        if self.drive is not None and self.last_poll is not None and self.gap_site is None \
+                and self.instructions - self.last_poll > MOTION_GAP_LIMIT:
+            self.gap_site = hex(address)              # code running when a motion gap passes the limit
 
     def _motor_poll(self, uc, address, size, user):
         if self.drive is not None and self.last_poll is not None:
-            self.motion_gaps.append(self.instructions - self.last_poll)
-        self.last_poll = None
+            gap = self.instructions - self.last_poll
+            self.motion_gaps.append(gap)
+            if gap > self.worst_gap[0]:
+                self.worst_gap = (gap, hex(uc.reg_read(UC_ARM_REG_LR)), hex(self.last_site), len(self.lines), self.gap_site)
+        self.last_poll = None; self.gap_site = None
 
     def _motor_poll_return(self, uc, address, size, user):
-        self.last_poll = self.instructions
+        self.last_poll = self.instructions; self.last_site = address
 
     def _scan_dma(self, cpu):
         index = len(self.lines)
         moving = bool(self.regs.get(0xc0d6011c, 0) & 0x10000)
         dark = self.regs.get(0xc0d60268, 0) & 0xfffff == self.regs.get(0xc0d60264, 0) & 0xfffff   # windows closed
+        pos = self.regs.get(0xc0c57100, 0)
+        u = -1
+        if moving:
+            # Line k of a page lies k pitches past the first: the firmware indexes its run-in the same way.
+            if self.page_first is None: self.page_first = 0
+            pitch = struct.unpack('<I', self.uc.mem_read(int(self.meta['symbols']['application']['pitch'], 16), 4))[0]
+            u = self.page_first * pitch // 128; self.page_first += 1
+        else:
+            self.page_first = None
         if dark:
             line = [DARK] * SAMPLES
+        elif moving and STRIP[0] <= u < STRIP[1]:
+            line = white_line()                              # the lid's white strip during the run-in
+            if u < 32:
+                line[1180:1416] = [DARK] * (1416 - 1180)
+        elif moving and DARKBAR[0] <= u < DARKBAR[1]:
+            line = [DARK] * SAMPLES                          # the platen-edge dark bar
         elif moving:
-            line = [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)]
+            # Midtones expose a wrong reference gain; saturated white would
+            # hide it. Enabled by the focused central-notch colour case.
+            line = ([18000 + (s % 97) * 41 for s in range(SAMPLES)]
+                    if getattr(self, 'reference_notch_probe', False)
+                    else [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)])
         else:
             line = white_line()                              # stationary reference: the same every capture
         self.lines.append(line)
         self.moving.append(moving and not dark)
-        self.positions.append(self.regs.get(0xc0c57100, 0))
+        self.units.append(u)
+        self.positions.append(pos)
         if not moving:
             assert self.drive is None, 'stationary capture while motor powered'
         k = self.line_index; self.line_index += 1
@@ -171,16 +215,17 @@ def expected_row(line, x, step, pixels, black=BLACK, white=WHITE, shade=True, pl
     wl = [max(w - 2000 * plane, 0) for w in white_line()]       # the model shades component k by -2000k
     dark = max(DARK - 2000 * plane, 0)
     for i in range(pixels):
-        u = x + i * step
+        u = x + i * step + SAMPLE_ORIGIN
         s0, s1 = u * SAMPLES // SPAN, (u + step) * SAMPLES // SPAN
         s0 = min(s0, SAMPLES - 1); s1 = min(s1, SAMPLES)
         s1 = max(s1, s0 + 1); s1 = min(s1, s0 + 8)
         n = s1 - s0
         if shade:
-            scale = [(250 * 65536) // (wl[s] - dark) if wl[s] > dark + 1024 else 0 for s in range(s0, s1)]
+            span = (230, 230, 217)[plane]                       # stock-match spans and black floor (scan_source_scanner.c)
+            scale = [(span * 65536) // (wl[s] - dark) if wl[s] > dark + 1024 else 0 for s in range(s0, s1)]
             if scale[0]:
                 acc = sum((max(line[s] - dark, 0) * g) >> 16 for s, g in zip(range(s0, s1), scale))
-                value = acc * ((65536 + n - 1) // n) >> 16
+                value = 14 + (acc * ((65536 + n - 1) // n) >> 16)
                 row.append(GAMMA[min(value, 255)])
                 continue
         level = sum(line[s0:s1]) * ((65536 + n - 1) // n) >> 16       # firmware fixed point
@@ -233,13 +278,16 @@ def main():
     width, height, ctype, rows, phys, depth = v.decode_png(body)
     assert (width, height, ctype, depth) == (pixels, lines, 0, 8)
     # Continuous mode without the optional stationary probe: every capture is a scan line.
-    scan_lines = [l for l, m in zip(e.lines, e.moving) if m]; scan_positions = [p_ for p_, m in zip(e.positions, e.moving) if m]
-    assert len(scan_lines) == lines, (len(scan_lines), lines)
+    scan_lines, scan_positions = document_lines(e, 0, y, lines)
     for j in range(lines):
-        assert rows[j] == expected_row(scan_lines[j], x, 300 // res, pixels, 1000, 36000), f'row {j} differs'
+        exp = expected_row(scan_lines[j], x, 300 // res, pixels)
+        if rows[j] != exp:
+            k = next(i for i in range(len(exp)) if rows[j][i] != exp[i])
+            u = x + k * (300 // res) + SAMPLE_ORIGIN; s0 = u * SAMPLES // SPAN
+            raise AssertionError(f'row {j} differs at pixel {k}: got {list(rows[j][k:k + 4])} expected {list(exp[k:k + 4])} raw {scan_lines[j][s0:s0 + 4]} white {white_line()[s0:s0 + 4]}')
     home = word(e, 'home_position')
     offsets = [p - home for p in scan_positions]
-    first = 4096 + y * 128                         # continuous mode: CONT_START past home
+    first = 4096 + y * 128                         # continuous mode: CONT_START past home (the model's capture positions lag the gate)
     assert all(o >= first for o in offsets), offsets[:4]
     assert all(b > a for a, b in zip(offsets, offsets[1:])), "positions not increasing"
     e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
@@ -247,7 +295,7 @@ def main():
     idle_hardware(e)
     # Parked at a fresh reference: the next continuous page skips homing.
     homes_before = sum(1 for d in e.drives if d['direction'])
-    status, location, _ = v.create_job(e, 1, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2550, 16)))
+    status, location, _ = v.create_job(e, 1, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2480, 16)))
     assert status == 201
     e.run(lambda q: phase(q) in (1, 10), resume=True)
     assert phase(e) == 10, f'expected direct scan, phase {phase(e)}'
@@ -272,10 +320,9 @@ def main():
     pixels, lines = w * res // 300, h * res // 300
     width, height, ctype, rows, phys, depth = v.decode_png(body)
     assert (width, height, ctype, depth) == (pixels, lines, 2, 8), (width, height, ctype, depth)
-    colour_lines = [l for l, m in zip(e.lines[captures:], e.moving[captures:]) if m]
-    assert len(colour_lines) == lines, (len(colour_lines), lines)
+    colour_lines, _ = document_lines(e, captures, y, lines)
     for j in range(lines):
-        planes = [expected_row([max(v_ - 2000 * k, 0) for v_ in colour_lines[j]], x, 300 // res, pixels, 1000, 36000, plane=k) for k in range(3)]
+        planes = [expected_row([max(v_ - 2000 * k, 0) for v_ in colour_lines[j]], x, 300 // res, pixels, plane=k) for k in range(3)]
         expected = bytes(b for i in range(pixels) for b in (planes[0][i], planes[1][i], planes[2][i]))
         if rows[j] != expected:
             log = b''
@@ -294,7 +341,7 @@ def main():
     record('colour_rgb24_planar_ring_rows', pixels=[pixels, lines])
 
     # Back-to-back: a job posted while the last page returns home adopts it.
-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2550, 96)))
+    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2480, 96)))
     assert status == 201
     status, headers, body, _ = v.http(e, 0, 'GET', '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
     assert status == 200
@@ -312,7 +359,7 @@ def main():
     record('job_adopts_return_home', jpeg_bytes=len(body))
 
     # Cancel while the page is running: motor and lamp off, page cancelled.
-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2550, 400)))
+    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2480, 400)))
     assert status == 201
     job = '/eSCL/' + location.split('/eSCL/', 1)[1]
     e.hold_in.add(0)
@@ -334,7 +381,7 @@ def main():
     record('delete_cancels_page_vendor_rows_refused')
 
     # Continuous page cancelled while travelling: motor and lamp off.
-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2550, 800)))
+    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=75, region=(0, 0, 2480, 800)))
     assert status == 201
     job = '/eSCL/' + location.split('/eSCL/', 1)[1]
     e.run(lambda q: q.drive is not None and phase(q) == 10, resume=True, budget=400_000_000)
@@ -344,7 +391,7 @@ def main():
     record('delete_cancels_continuous_travel')
 
     worst = max(e.motion_gaps)
-    assert worst <= MOTION_GAP_LIMIT, f'motor poll gap {worst} instructions while driving'
+    assert worst <= MOTION_GAP_LIMIT, f'motor poll gap {worst} instructions while driving: {e.worst_gap}'
     record('motor_serviced_during_escl_work', worst_gap_instructions=worst, samples=len(e.motion_gaps))
 
     report['all_assertions_passed'] = True

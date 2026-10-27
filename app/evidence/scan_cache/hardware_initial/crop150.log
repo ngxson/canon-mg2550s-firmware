@@ -1,0 +1,88 @@
+[http] c1 GET /eSCL/ScannerStatus
+[http] c1 -> 200
+[cpu] icache 1 ok control=0x00001079 bench before=906000 after=906000 instr/10ms
+[http] c1 POST /eSCL/ScanJobs
+[escl] ScanSettings InputSource=Platen Intent=- ColorMode=RGB24 XResolution=150 DocumentFormatExt=image/png DocumentFormat=- XOffset=0 YOffset=0 Width=2480 Height=600
+[page] data cache on
+[page] start rows=378 pitch=256 offset=0 internal
+[escl] job 4 RGB24 150dpi 1240x300 image/png
+[http] c1 -> 201
+[line] priming setup
+[line] start lines=378 comp=3 ring=219 first=00700ffc at=006ffffc gate
+[motor] jog forward start=006ffffc target=007198fc
+[http] c1 GET /eSCL/ScanJobs/4/NextDocument
+[http] c1 -> 200
+[page] alive row=0 taken=0 backlog=0 pos=006ffffc loops=2 ch0=20420000/00000000/00000004/00000000/0000046d ch1=20420a20/00000000/00000000/00000000/0000046d
+[home] phase=10 ms=100 pos=00700a1a compare=2495 speed=39867
+[line] request 1 at 0070108c
+[line] request 2 at 00701187
+[home] phase=10 ms=200 pos=007019bb compare=2468 speed=40066
+[home] phase=10 ms=300 pos=0070295c compare=2444 speed=40268
+[home] phase=10 ms=400 pos=007038fb compare=2448 speed=40201
+[home] phase=10 ms=500 pos=0070489a compare=2458 speed=40133
+[page] alive row=56 taken=56 backlog=2 pos=007048c6 loops=15698 ch0=204f7280/00000001/00000004/00000000/000003c3 ch1=204f7ca0/00000001/00000000/00000000/000003c3
+[home] phase=10 ms=600 pos=0070583d compare=2449 speed=40201
+[cal] run-in white lines=35 dark lines=8 mid-sample white/dark: 54682/1227 55477/1679 46132/1446
+[home] phase=10 ms=700 pos=007067db compare=2464 speed=40100
+[home] phase=10 ms=800 pos=0070777a compare=2464 speed=40100
+[home] phase=10 ms=900 pos=00708719 compare=2447 speed=40234
+[home] phase=10 ms=1000 pos=007096b9 compare=2458 speed=40133
+[page] alive row=138 taken=120 backlog=20 pos=00709980 loops=20433 ch0=2062fc40/00000001/00000004/00000000/000002cc ch1=20630660/00000001/00000000/00000000/000002cc
+[home] phase=10 ms=1500 pos=0070e4d8 compare=2464 speed=40100
+[page] alive row=219 taken=180 backlog=41 pos=0070e8c3 loops=20894 ch0=20423cc0/00000009/00000004/00000000/000001d9 ch1=204246e0/00000009/00000000/00000000/000001d9
+[line] request 256 at 00710a71
+[home] phase=10 ms=2000 pos=007132fb compare=2452 speed=40167
+[page] alive row=300 taken=240 backlog=62 pos=00713801 loops=21351 ch0=20556140/00000009/00000004/00000000/000000e7 ch1=20556b60/00000009/00000000/00000000/000000e7
+[home] phase=10 ms=2500 pos=0071811b compare=2456 speed=40133
+[line] done
+[page] alive row=378 taken=300 backlog=78 pos=0071872c loops=21807 ch0=00000000/00000000/00000000/00000000/00000000 ch1=00000000/00000000/00000000/00000000/00000000
+[motor] stop: cancelled pos=00718751 elapsed_ms=2539 compare=2452
+[home] fast return start=00718e74 target=00705dbc
+[home] phase=12 ms=100 pos=00718b53 compare=1640 speed=19933
+[home] phase=12 ms=200 pos=00717bd5 compare=1245 speed=60529
+[home] phase=12 ms=300 pos=00715cfb compare=864 speed=93750
+[escl] job 4 Completed rows=300
+[escl] profile calls=20191 produce_ms=2742 rows_ms=1865 max_gap_ms=20 wall_ms=4429 rows=300 loops=22472 loop_max_us=1229178
+[home] phase=12 ms=400 pos=00713656 compare=884 speed=99792
+[home] phase=12 ms=500 pos=00710f4b compare=903 speed=100000
+[home] phase=12 ms=600 pos=0070e83b compare=904 speed=100000
+[home] phase=12 ms=700 pos=0070c12d compare=905 speed=100000
+[home] phase=12 ms=800 pos=00709a21 compare=1030 speed=97165
+[home] phase=12 ms=900 pos=00707df8 compare=1440 speed=51668
+[home] phase=12 ms=1000 pos=00706ef2 compare=1654 speed=27570
+[home] seek left start=00705da5 target=00684ab7
+[home] phase=4 ms=100 pos=007055a9 compare=1674 speed=28285
+[home] phase=4 ms=200 pos=00704aba compare=1656 speed=28169
+[home] phase=4 ms=300 pos=00703fc9 compare=1677 speed=28318
+[home] phase=4 ms=400 pos=007034d9 compare=1656 speed=28135
+[home] phase=4 ms=500 pos=007029e9 compare=1682 speed=28335
+[home] phase=4 ms=600 pos=00701efa compare=1656 speed=28169
+[home] phase=4 ms=700 pos=0070140a compare=1674 speed=28318
+[home] phase=4 ms=800 pos=0070091a compare=1658 speed=28169
+[home] phase=4 ms=900 pos=006ffff3 compare=1400 speed=1000
+[home] phase=4 ms=1000 pos=006ffff3 compare=1400 speed=38
+[home] phase=4 ms=1500 pos=006ffff3 compare=1400 speed=6
+[home] backoff start=006ffff3 target=00702949
+[home] phase=5 ms=100 pos=00700528 compare=2238 speed=20244
+[home] phase=5 ms=200 pos=00700cf7 compare=2228 speed=20416
+[home] phase=5 ms=300 pos=007014c7 compare=2253 speed=20236
+[home] phase=5 ms=400 pos=00701c98 compare=2233 speed=20356
+[home] phase=5 ms=500 pos=00701f70 compare=2084 speed=4220
+[home] phase=5 ms=600 pos=007020ff compare=2101 speed=4148
+[home] phase=5 ms=700 pos=00702290 compare=2070 speed=4300
+[home] phase=5 ms=800 pos=0070241f compare=2102 speed=4113
+[home] phase=5 ms=900 pos=007025b0 compare=2079 speed=4236
+[home] phase=5 ms=1000 pos=0070273f compare=2102 speed=4147
+[home] repeat left seek start=0070295d target=006ff44f
+[home] phase=6 ms=100 pos=00702163 compare=1619 speed=27890
+[home] phase=6 ms=200 pos=00701673 compare=1617 speed=27906
+[home] phase=6 ms=300 pos=00700b83 compare=1635 speed=28037
+[home] phase=6 ms=400 pos=007000bd compare=1400 speed=21486
+[home] phase=6 ms=500 pos=006ffff7 compare=1400 speed=48
+[home] phase=6 ms=600 pos=006ffff7 compare=1400 speed=21
+[home] phase=6 ms=700 pos=006ffff7 compare=1400 speed=14
+[home] phase=6 ms=800 pos=006ffff7 compare=1400 speed=10
+[home] phase=6 ms=900 pos=006ffff7 compare=1400 speed=8
+[home] phase=6 ms=1000 pos=006ffff7 compare=1400 speed=6
+[home] stop: mechanical reference established; optical calibration pending pos=006ffff8 elapsed_ms=0 compare=2000
+[page] end state=7 error=0 rows=378 ms: home=0 settle=0 capture=0 ready=0 step=0 return=5941 scan=3769 calibrate=0
