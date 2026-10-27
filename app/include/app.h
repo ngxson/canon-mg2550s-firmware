@@ -20,14 +20,6 @@
 /* Vendor control-OUT (bmRequestType 0x40, no data) that asks the app to run a
  * one-shot scanner register peek (0x51, read-only) or active write-readback
  * probe (0x52), emitting the result to the debug log. */
-#define APP_REQUEST_SCAN 0x51u
-#define APP_REQUEST_SCAN_PROBE 0x52u
-#define APP_REQUEST_SCAN_BRINGUP 0x53u
-#define APP_REQUEST_SCAN_CAPTURE 0x54u
-#define APP_REQUEST_SCAN_ENABLE 0x55u
-#define APP_REQUEST_SCAN_FIELD 0x56u
-#define APP_REQUEST_SCAN_LDMAC 0x57u
-#define APP_REQUEST_SCAN_DMASETUP 0x58u
 #define APP_REQUEST_SCAN_FULLCAP 0x59u   /* wValue = variant bits */
 #define APP_REQUEST_SCAN_DUMP 0x5au      /* control-IN, wValue = 256-byte chunk index */
 #define APP_REQUEST_SCAN_BURST 0x5bu     /* OUT: wValue = n | exposure_eighths << 8 | offset_step << 12,
@@ -65,34 +57,48 @@
 
 /* Scanner (CIS) reverse-engineering support, see src/scanner.c. All bounded;
  * nothing blocks the management loop for long and no flash is written. */
-void scanner_request(void);         /* arm a one-shot read-only peek (USB 0x51) */
-void scanner_probe_request(void);   /* arm a one-shot config write-readback (USB 0x52) */
-void scanner_bringup_request(void); /* arm engine enable + scanner power + reprobe (USB 0x53) */
-void scanner_capture_request(void); /* arm a guarded stationary capture (USB 0x54) */
-void scanner_enable_request(void);  /* arm enable+mux then re-test dark sub-blocks (USB 0x55) */
-void scanner_field_request(void);   /* arm correct-low-field latch test (USB 0x56) */
-void scanner_ldmac_request(void);   /* arm LDMAC/BUFADM peek + field write-readback (USB 0x57) */
-void scanner_dmasetup_request(void);/* arm LDMAC descriptor programming validation (USB 0x58) */
 void scanner_fullcap_request(unsigned variant); /* arm full stationary capture (USB 0x59, wValue=variant) */
 unsigned scanner_dump(uint8_t *out, unsigned chunk, unsigned max); /* copy capture buffer (USB 0x5a) */
 void scanner_burst_request(unsigned n, unsigned exposure_eighths, unsigned gain, unsigned skip_events,
                            unsigned afe_offset);
 unsigned scanner_burst_dump(uint8_t *out, unsigned chunk, unsigned max);
+#define APP_REQUEST_SCAN_BURST_OPTIONS 0x5eu   /* OUT: wValue = components (1|3) | repeat << 4 | window rows << 8 (0 = stock); wIndex = sub-period T >> 4 (0 = P0 default) */
+bool scanner_burst_options(unsigned components, unsigned repeat, uint32_t period, unsigned window, unsigned flags);   /* 0x5e wValue bits 13..15: full arm table, no 0x158 ack, immediate first request */
+/* src/cpu_cache.c: ARM946E-S instruction cache (CP15; data cache stays off for DMA). */
+#define APP_REQUEST_CPU_CACHE 0x8cu      /* OUT: wValue bit0 = instruction cache on/off; logs a benchmark before and after */
+bool cpu_icache_set(bool on);
+void exception_report(void);             /* log and clear the persistent exception record (stock_shim.c) */
+void heartbeat(uint32_t loops, const char *section);
+uint32_t scan_page_status_word(void);     /* phase | row << 8 | crawling << 24 */
+uint32_t scanner_line_status_word(void);  /* requested | ready << 12 | taken << 24 (12-bit fields) */
+uint32_t scanner_motor_status_word(void); /* phase | home_result << 8 | position << 12 */
+#define APP_REQUEST_SCAN_OPTIONS 0x9cu   /* OUT: wValue = illumination phase for R | G << 2 | B << 4 (0..2 each); maps the colour planes to RGB */
+uint32_t cpu_icache_state(void);
+uint32_t cpu_bench(void);                /* instructions executed in 10 ms by a tight loop */
+
 bool scan_page_park(uint32_t offset);
 /* Continuous moving line acquisition (scanner.c). */
-unsigned scanner_line_max_rows(void);
-bool scanner_line_prepare(unsigned rows, unsigned pitch, unsigned period);
+/* Moving line acquisition into the scan ring (scanner.c): one or three
+ * components, lines released in order by the page consumer. */
+unsigned scanner_line_capacity(unsigned components);   /* ring lines */
+bool scanner_line_prepare(unsigned components, unsigned lines, unsigned pitch, unsigned period);
 bool scanner_line_start(uint32_t first, uint32_t lead, uint32_t budget_ms);
 void scanner_line_poll(void);
 void scanner_line_stop(void);
+void scanner_line_reset(void);                         /* drop the previous page's state */
 unsigned scanner_line_ready(void);
+unsigned scanner_line_backlog(void);                  /* requested - released */
+unsigned scanner_line_ring(void);
+void scanner_line_release(unsigned line);
 bool scanner_line_done(void);
 bool scanner_line_failed(void);
-const uint16_t *scanner_line_row(unsigned row);
+const uint16_t *scanner_line_row(unsigned line, unsigned comp);
 unsigned scanner_line_dump(uint8_t *out, uint32_t chunk, unsigned max);
-bool scanner_line_probe_config(unsigned lines, unsigned drain);   /* experiment: stationary probe lines */
+/* Dark/white reference rows captured at the mechanical home (scanner.c). */
+bool scanner_calibrate(unsigned components);
+bool scanner_cal_valid(unsigned components);
+const uint16_t *scanner_cal_row(unsigned white, unsigned comp);   /* 1296 samples per segment... full 2592-sample row */
 #define APP_REQUEST_LINE_DUMP 0x5du      /* IN: chunk = wIndex << 16 | wValue of the raw line buffer */
-#define APP_REQUEST_LINE_PROBE 0x7du     /* OUT: wValue = probe lines (0..4), wIndex = drain events (0..32) */
 #define APP_REQUEST_HOME_SPEED 0x7eu     /* OUT: wValue = fast-return cruise / 100 (0 = classic homing) */
 #define APP_REQUEST_LINE_AFE 0x7fu       /* OUT: wValue = exposure eighths (1..8), wIndex = AFE gain (1..13) */
 void print_selftest(void);          /* decode an embedded BJL band, emit result to the debug log */
@@ -140,11 +146,32 @@ unsigned stamp_status(uint8_t *out);
 #define APP_REQUEST_TUNNEL_WRITE 0x92u   /* OUT: wValue | wIndex << 16 = 32-bit value (unlocked, allowlisted) */
 #define APP_REQUEST_TUNNEL_UNLOCK 0x93u  /* OUT: wValue = key enables writes, anything else locks */
 #define APP_REQUEST_TUNNEL_STATUS 0x94u  /* IN: 7 words */
+#define APP_REQUEST_HYBRID_CALL 0x95u    /* OUT: wValue | wIndex << 16 = Thumb address of a stock flash routine; called with r0..r3 = 0 (unlocked) */
+#define APP_REQUEST_HYBRID_RESULT 0x96u  /* IN: 6 words: magic, address, r0, calls, refused, flags */
 bool tunnel_set_address(uint32_t a);
 unsigned tunnel_read(uint8_t *out, unsigned max);
 bool tunnel_write(uint32_t value);
 bool tunnel_unlock(unsigned key);
 unsigned tunnel_status(uint8_t *out);
+bool hybrid_call(uint32_t address);
+unsigned hybrid_result(uint8_t *out);
+/* Hybrid shim (src/stock_shim.c): run a stock maintenance routine in place with our services. */
+#define APP_REQUEST_HYBRID_RUN 0x97u     /* OUT: wValue = routine (1 cap, 2 uncap, 3 wipe, 4 clean) | type << 4 | 0x100 live motion; wIndex = ambient half-degrees (0 = 50) */
+#define APP_REQUEST_HYBRID_TRACE 0x98u   /* IN: wValue = record index -> 4 words (kind, a, b, c); wValue 0xffff -> 8-word run status */
+#define APP_REQUEST_HYBRID_RASTER 0x99u  /* OUT: wValue | (wIndex & 0xf) << 16 = bytes of band raster (tile layout) to follow on bulk OUT; wIndex bits 8..11 = manager + 1 (0 = black, manager 6); after band-prepare */
+bool hybrid_run(unsigned value, unsigned index);
+bool hybrid_panel_available(void);
+bool hybrid_panel_advance(void);         /* one 400-Ulf stock forward step; no carriage move or firing */
+void hybrid_poll(void);
+bool hybrid_busy(void);
+unsigned hybrid_trace(uint8_t *out, unsigned index);
+#define APP_REQUEST_HYBRID_BAND 0x9au    /* OUT: wValue = columns (multiple of 32), wIndex = nozzle rows (bits 0..8, multiple of 8, <= 304) | 0x800 colour lanes | stock print mode << 12 (0 = 1) */
+#define APP_REQUEST_HYBRID_PLACE 0x9bu   /* OUT: wValue = stock common horizontal placement (int16, Q+0x3a) for the next band-run */
+bool hybrid_band_params(unsigned cols, unsigned rows, int place, bool set_place);
+bool hybrid_raster_begin(unsigned total, unsigned manager);   /* USB 0x99: start receiving a band raster into print-buffer manager 0..6 (6 = black) */
+void hybrid_raster_feed(const uint8_t *data, unsigned len);
+bool hybrid_raster_active(void);
+unsigned hybrid_run_status(uint8_t *out);
 bool head_fire_request(unsigned value, unsigned ambient);
 void head_fire_poll(void);
 bool head_fire_busy(void);
@@ -171,6 +198,7 @@ void carriage_poll(void);
 void carriage_cancel(void);
 bool carriage_busy(void);
 bool carriage_referenced(void);
+bool carriage_set_frame(uint32_t raw_at_park);   /* raw counter := raw_at_park + x (idle, referenced) */
 int32_t carriage_position(void);
 unsigned carriage_status(uint8_t *out);
 bool carriage_tune(unsigned id, unsigned value);
@@ -203,6 +231,13 @@ void scanner_motor_poll(void);             /* drive deadline checked every main 
  * protocol and encoding loops call this every few thousand instructions. */
 void app_yield(void);
 extern const char *app_section;   /* protocol work in progress, for motor diagnostics */
+extern uint32_t app_loop_max_ticks, app_loop_count;
+void canary_init(void);
+int canary_check(uint32_t *value);        /* -1 intact, else the damaged word index and its value */
+void scratch_pattern_fill(void);          /* diagnostic: pattern the idle print buffer */
+int scratch_pattern_check(uint32_t *value); /* -1 intact, else first damaged offset and 4 bytes */
+void scanner_line_dma_report(void);        /* diagnostic: live LDMAC words of the ring channels */
+#define APP_REQUEST_PEEK 0x9du           /* IN: wValue | wIndex << 16 = app RAM address (0x20000000..0x20800000, read-only), 64 bytes */
 void scanner_motor_cancel(void);
 void scanner_motor_shutdown(void);         /* stop and inhibit until reset */
 unsigned scanner_home_result(void);
@@ -210,6 +245,7 @@ uint32_t scanner_motor_position(void);
 uint32_t scanner_motor_reference(void);
 bool scanner_motor_page_move(uint32_t position);
 bool scanner_motor_scan_move(uint32_t endpoint, uint32_t speed);  /* continuous scan travel */
+bool scanner_motor_scan_throttle(uint32_t speed);              /* live cruise change during scan travel */
 bool scanner_motor_at_reference(void);  /* idle, referenced and parked at home */
 bool scanner_motor_set_return_speed(unsigned counts_per_s); /* experiment: fast return cruise, 0 or 20000..120000 */
 bool scanner_line_set_afe(unsigned exposure_eighths, unsigned gain); /* experiment: continuous-scan optics */
@@ -221,7 +257,10 @@ bool scanner_capture_row(bool first); /* bounded stationary capture; motor must 
 void scanner_lamp_off(void);
 bool scan_page_request(unsigned rows, unsigned pitch);
 bool scan_page_start(unsigned rows, unsigned pitch, uint32_t start, bool owned);
-const uint16_t *scan_page_take(unsigned *row);  /* owned page: ready row samples, else NULL */
+const uint16_t *scan_page_take(unsigned *row);  /* owned page: ready row samples (component 0), else NULL */
+const uint16_t *scan_page_component(unsigned row, unsigned comp);   /* continuous colour page: component row */
+void scan_page_set_components(unsigned components);                /* before scan_page_start: 1 or 3 */
+void scan_page_set_calibration(bool on);
 bool scan_page_release(unsigned row);           /* owned page: row consumed, move on */
 bool scan_page_failed(void);
 const uint16_t *scanner_row(void);              /* last captured row: 2592 LE samples */

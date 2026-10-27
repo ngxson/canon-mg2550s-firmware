@@ -132,3 +132,12 @@ arithmetic, and that is not a verified way to print farther on real A4.
 - Status-cache byte `+0x127` (`0x1803a8b7`) is a session availability latch
   cleared by the session handler at `0x3a10e` and set back at session end;
   the decoder exposes it as `session_available`. It is not scanner progress.
+
+## EEPROM bus during idle and scanning (sniffer, 2026-10-26)
+
+`i2c_sniff_idle_and_scan.log`: 20 s idle, a 50 × 50 mm 150 dpi scan, then
+75 s idle, with the bridge sniffing passively. **No I²C frames at all.**
+Stock touches the 24C08 at boot (`i2c_sniff_power_cycle.json`) and, by the
+brief 13/14 evidence, around maintenance and print accounting; scanning and
+idling do not. The next capture must bracket a print start, where the
+cleaning decision behind `WP4` reads and writes its counters.

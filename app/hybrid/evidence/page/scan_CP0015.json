@@ -1,0 +1,68 @@
+{
+  "image": "app/hybrid/evidence/page/scan_CP0015.png",
+  "resolution": 150,
+  "mm_per_px": 0.16933333333333334,
+  "image_mm": [
+    215.9,
+    296.8
+  ],
+  "paper_fraction": 0.938,
+  "marks": [
+    {
+      "x_mm": 39.66,
+      "y_mm": 26.13,
+      "w_mm": 1.52,
+      "h_mm": 1.02,
+      "area_mm2": 0.95,
+      "bbox_px": [
+        231,
+        152,
+        240,
+        158
+      ],
+      "mean_darkness": 0.573
+    },
+    {
+      "x_mm": 105.39,
+      "y_mm": 42.65,
+      "w_mm": 2.03,
+      "h_mm": 3.73,
+      "area_mm2": 6.14,
+      "bbox_px": [
+        616,
+        241,
+        628,
+        263
+      ],
+      "mean_darkness": 0.563
+    },
+    {
+      "x_mm": 105.23,
+      "y_mm": 47.76,
+      "w_mm": 2.54,
+      "h_mm": 6.27,
+      "area_mm2": 12.24,
+      "bbox_px": [
+        613,
+        264,
+        628,
+        301
+      ],
+      "mean_darkness": 0.553
+    },
+    {
+      "x_mm": 79.45,
+      "y_mm": 114.59,
+      "w_mm": 1.52,
+      "h_mm": 1.86,
+      "area_mm2": 0.66,
+      "bbox_px": [
+        465,
+        672,
+        474,
+        683
+      ],
+      "mean_darkness": 0.474
+    }
+  ]
+}

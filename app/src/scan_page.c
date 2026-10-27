@@ -9,7 +9,7 @@
 #include "motor_control.h"
 
 enum page_phase { PAGE_IDLE, PAGE_HOME, PAGE_SETTLE, PAGE_CAPTURE, PAGE_READY,
-                  PAGE_STEP, PAGE_RETURN, PAGE_DONE, PAGE_FAILED, PAGE_CANCELLED, PAGE_SCAN };
+                  PAGE_STEP, PAGE_RETURN, PAGE_DONE, PAGE_FAILED, PAGE_CANCELLED, PAGE_SCAN, PAGE_CALIBRATE };
 enum page_error { PAGE_OK, ERR_HOME, ERR_STEP, ERR_CAPTURE, ERR_HOST_TIMEOUT,
                   ERR_POSITION, ERR_DEADLINE, ERR_CANCEL };
 /* Continuous mode. Line period T and speed follow the stock moving-scan
@@ -20,8 +20,13 @@ enum page_error { PAGE_OK, ERR_HOME, ERR_STEP, ERR_CAPTURE, ERR_HOST_TIMEOUT,
  * other speeds in 17,000..30,000 are diagnostic (vendor 0x7c).
  * Line 0 lies CONT_START past mechanical home: room for the 70 ms ramp and
  * the lead, and past the dark area imaged at home. */
-#define CONT_PITCH 512u
-#define CONT_SPEED_DEFAULT 28000u   /* full page physically verified at 28,000 (2026-10-24) */
+#define CONT_SPEED_DEFAULT 0u       /* 0: per-pitch table below; a value (USB 0x7c) overrides every pitch */
+/* Cruise per pitch. Brief 21 §3: stock's P0 line timing gives 37,043 counts/s for
+ * RGB 300 dpi and far more at 75/150 (149,687), above what our scan controller
+ * allows (60,000) and what was physically verified (28,000 full page, 100,000
+ * fast return). 40,000 at 75/150 dpi is the first operating point to verify. */
+static uint32_t cruise_for_pitch(unsigned p) { return p >= 256u ? 40000u : 37000u; }
+#define CONT_CRAWL 3000u            /* ring backpressure cruise (above the stall detector's 1000 counts / 500 ms) */
 #define CONT_START 4096u
 #define CONT_RUNOUT 4096u
 #define CONT_RETRIES 2u
@@ -46,13 +51,19 @@ static bool action_started;
 
 bool scan_page_busy(void)
 {
-    return (page_phase >= PAGE_HOME && page_phase <= PAGE_RETURN) || page_phase == PAGE_SCAN;
+    return (page_phase >= PAGE_HOME && page_phase <= PAGE_RETURN) || page_phase == PAGE_SCAN || page_phase == PAGE_CALIBRATE;
 }
 
 /* Time spent in each phase over the current page, for speed work. */
-static uint32_t phase_total[PAGE_SCAN + 1];
+static uint32_t phase_total[PAGE_CALIBRATE + 1];
 static bool continuous;                 /* this page uses moving acquisition */
 static uint32_t cont_speed = CONT_SPEED_DEFAULT;
+static unsigned components = 1, next_components = 1;
+static bool crawling;
+static bool calibrate_pages = true;     /* USB 0x9c bit 6 clears it (A/B tests) */
+void scan_page_set_calibration(bool on) { calibrate_pages = on; }
+
+void scan_page_set_components(unsigned c) { next_components = c == 3u ? 3u : 1u; }
 
 bool scan_page_continuous(void) { return continuous; }
 void scan_page_set_speed(unsigned counts_per_s)
@@ -71,13 +82,16 @@ static void transition(enum page_phase next)
 static void end_page(enum page_phase result, enum page_error error)
 {
     static const char *const names[] = {"idle", "home", "settle", "capture", "ready", "step", "return",
-                                        "done", "failed", "cancelled", "scan"};
+                                        "done", "failed", "cancelled", "scan", "calibrate"};
     scanner_motor_cancel(); scanner_line_stop(); scanner_lamp_off();
+    /* Returning home can finish before a slow host drains the ring. Keep
+     * completed rows readable until the next page; failures discard them. */
+    if (result != PAGE_DONE) scanner_line_reset();
     page_error = error; transition(result);
     dbg_puts("[page] end state="); dbg_dec(result);
     dbg_puts(" error="); dbg_dec(error); dbg_puts(" rows="); dbg_dec(row); dbg_puts(" ms:");
-    for (unsigned i = PAGE_HOME; i <= PAGE_SCAN; ++i) {
-        if (i > PAGE_RETURN && i != PAGE_SCAN) continue;
+    for (unsigned i = PAGE_HOME; i <= PAGE_CALIBRATE; ++i) {
+        if (i > PAGE_RETURN && i != PAGE_SCAN && i != PAGE_CALIBRATE) continue;
         dbg_putc(' '); dbg_puts(names[i]); dbg_putc('='); dbg_dec(phase_total[i]);
     }
     dbg_putc('\n');
@@ -85,6 +99,9 @@ static void end_page(enum page_phase result, enum page_error error)
 
 void scan_page_cancel(void)
 {
+    /* Emergency stop and reboot also call this when page bookkeeping is
+     * idle or damaged. Quiesce acquisition independently of that state. */
+    scanner_line_stop();
     if (scan_page_busy()) end_page(PAGE_CANCELLED, ERR_CANCEL);
 }
 
@@ -95,11 +112,15 @@ void scan_page_cancel(void)
 bool scan_page_start(unsigned count, unsigned spacing, uint32_t start, bool owned)
 {
     bool adopt = page_phase == PAGE_RETURN;
-    if (!count || count > 1760u || spacing < 256u || spacing > 1024u || start > 450048u ||
+    if (!count || count > (owned ? 3508u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > 450048u ||
         (count - 1u) * spacing > 450048u - start || (scan_page_busy() && !adopt) ||
         (scanner_motor_busy() && !adopt) || print_is_active()) return false;
     rows = count; pitch = spacing; offset = start; internal = owned; park = false; retries = 0;
-    continuous = owned && spacing == CONT_PITCH && count <= scanner_line_max_rows();
+    scanner_line_reset(); scratch_pattern_fill();
+    components = owned ? next_components : 1u; next_components = 1u;
+    /* Moving acquisition for the eSCL pitches; the vendor page protocol keeps stop-and-capture. */
+    continuous = owned && (spacing == 128u || spacing == 256u || spacing == 512u) && count * components <= 65535u;
+    if (!continuous && components == 3u) return false;
     row = taken = 0; last_acked = UINT32_MAX;
     origin = capture_start = capture_end = chunks_read = 0;
     page_error = PAGE_OK; started_ms = time_ms();
@@ -108,7 +129,7 @@ bool scan_page_start(unsigned count, unsigned spacing, uint32_t start, bool owne
     else if (continuous && scanner_motor_at_reference()) {
         /* Parked at a fresh reference (the previous page's return is a full
          * home): skip the ~3.5 s homing. */
-        transition(PAGE_SCAN); origin = scanner_motor_reference();
+        transition(PAGE_CALIBRATE); origin = scanner_motor_reference();
     } else transition(PAGE_HOME);
     dbg_puts("[page] start rows="); dbg_dec(rows); dbg_puts(" pitch="); dbg_dec(pitch);
     dbg_puts(" offset="); dbg_dec(offset); dbg_puts(owned ? " internal\n" : "\n");
@@ -136,17 +157,23 @@ const uint16_t *scan_page_take(unsigned *ready_row)
     if (continuous) {
         if (!internal || taken >= scanner_line_ready()) return NULL;
         contact_ms = time_ms(); *ready_row = taken;
-        return scanner_line_row(taken);
+        return scanner_line_row(taken, 0);
     }
     if (!internal || taken == row) return NULL;
     contact_ms = time_ms(); *ready_row = taken;
     return queue[taken % QUEUE_ROWS];
 }
 
+const uint16_t *scan_page_component(unsigned requested_row, unsigned comp)
+{
+    return continuous && internal && requested_row == taken ? scanner_line_row(taken, comp) : NULL;
+}
+
 bool scan_page_release(unsigned requested_row)
 {
     if (continuous) {
         if (!internal || requested_row != taken || taken >= scanner_line_ready()) return false;
+        scanner_line_release(taken);
         ++taken; contact_ms = time_ms();
         return true;
     }
@@ -178,12 +205,16 @@ static void scan_continuous(uint32_t now)
     uint32_t first = origin + CONT_START + offset;
     if (!action_started) {
         uint32_t endpoint = first + (rows - 1u) * pitch + CONT_RUNOUT;
-        uint32_t budget = 3000u + motor_divide((uint64_t)(endpoint - origin) * 1000u, cont_speed);
-        uint32_t period = motor_divide((uint64_t)96000000u * pitch * 49u, cont_speed * 50u);
+        /* Budget covers a page crawled from the start (host backpressure). */
+        uint32_t speed = cont_speed ? cont_speed : cruise_for_pitch(pitch);
+        uint32_t budget = 3000u + motor_divide((uint64_t)(endpoint - origin) * 1000u, CONT_CRAWL);
+        /* Line period T x d = 96 MHz x pitch x 0.98 / v (stock B.2); T per sub-period. */
+        uint32_t period = motor_divide((uint64_t)96000000u * pitch * 49u, speed * 50u * components);
         uint32_t lead = pitch * 12u / 5u;
-        if (!scanner_line_prepare(rows, pitch, period)) { end_page(PAGE_FAILED, ERR_CAPTURE); return; }
+        crawling = false;
+        if (!scanner_line_prepare(components, rows, pitch, period)) { end_page(PAGE_FAILED, ERR_CAPTURE); return; }
         if (!scanner_line_start(first, lead, budget) ||
-            !scanner_motor_scan_move(endpoint, cont_speed)) {
+            !scanner_motor_scan_move(endpoint, speed)) {
             end_page(PAGE_FAILED, ERR_STEP); return;
         }
         action_started = true; contact_ms = now;
@@ -198,9 +229,33 @@ static void scan_continuous(uint32_t now)
         }
         end_page(PAGE_FAILED, ERR_CAPTURE); return;
     }
-    if (scanner_motor_busy()) return;
+    {   /* progress line every 2 s: the last one before a freeze locates it */
+        static uint32_t alive_ms;
+        if (now - alive_ms > 500u) {
+            alive_ms = now;
+            dbg_puts("[page] alive row="); dbg_dec(scanner_line_ready()); dbg_puts(" taken="); dbg_dec(taken);
+            dbg_puts(" backlog="); dbg_dec(scanner_line_backlog()); dbg_puts(" pos="); dbg_u32(scanner_motor_position());
+            dbg_puts(" loops="); dbg_dec(app_loop_count);
+            { uint32_t v; int c = canary_check(&v); if (c >= 0) { dbg_puts(" CANARY "); dbg_dec((uint32_t)c); dbg_puts("=0x"); dbg_u32(v); } }
+            { uint32_t v; int c = scratch_pattern_check(&v); if (c >= 0) { dbg_puts(" SCRATCH "); dbg_dec((uint32_t)c); dbg_puts("=0x"); dbg_u32(v); } }
+            scanner_line_dma_report();
+            dbg_puts(crawling ? " crawl\n" : "\n");
+        }
+    }
+    /* Acquisition completion owns the end of forward travel. Do not wait
+     * for the runout endpoint (or its stall timeout) with the lamp on. */
+    if (scanner_line_done()) {
+        scanner_line_stop(); scanner_motor_cancel(); transition(PAGE_RETURN); return;
+    }
+    if (scanner_motor_busy()) {
+        /* Ring backpressure: lines are position-gated, so a slow consumer
+         * (host, encoder) slows the carriage instead of losing lines. */
+        unsigned backlog = scanner_line_backlog(), ring = scanner_line_ring();
+        if (!crawling && backlog > ring / 2u) { crawling = scanner_motor_scan_throttle(CONT_CRAWL); if (crawling) dbg_puts("[page] crawl\n"); }
+        else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch)); if (!crawling) dbg_puts("[page] cruise\n"); }
+        return;
+    }
     if (!scanner_motor_move_ok()) { end_page(PAGE_FAILED, ERR_STEP); return; }
-    if (scanner_line_done()) { scanner_line_stop(); transition(PAGE_RETURN); return; }
     if (now - phase_ms > 60000u) end_page(PAGE_FAILED, ERR_DEADLINE);
 }
 
@@ -253,7 +308,12 @@ void scan_page_poll(void)
         if (scanner_home_result() != 2u) { end_page(PAGE_FAILED, ERR_HOME); return; }
         if (page_phase == PAGE_RETURN) { end_page(PAGE_DONE, PAGE_OK); return; }
         origin = scanner_motor_reference();
-        transition(park || !continuous ? (offset ? PAGE_STEP : PAGE_SETTLE) : PAGE_SCAN);
+        transition(park || !continuous ? (offset ? PAGE_STEP : PAGE_SETTLE) : PAGE_CALIBRATE);
+    } else if (page_phase == PAGE_CALIBRATE) {
+        /* Dark/white references at the mechanical home (~0.7 s, motor off); a
+         * failed calibration falls back to the fixed levels. */
+        if (calibrate_pages) (void)scanner_calibrate(components);
+        transition(PAGE_SCAN);
     } else if (page_phase == PAGE_SCAN) {
         scan_continuous(now);
     } else if (page_phase == PAGE_STEP) {
@@ -296,3 +356,5 @@ void scan_page_poll(void)
         transition(PAGE_STEP);                   /* the consumer made room */
     }
 }
+
+uint32_t scan_page_status_word(void) { return (uint32_t)page_phase | (row & 0xffffu) << 8 | (crawling ? 1u : 0u) << 24; }

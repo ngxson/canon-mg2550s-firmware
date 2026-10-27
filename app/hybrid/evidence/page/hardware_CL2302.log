@@ -1,0 +1,32 @@
+label CL2302: 1024 columns x 304 rows, placement 2104, planes {'K': 18784, 'C': 34816, 'M': 34816, 'Y': 34816}
+1. home
+  home: result 2 raw 0xa80
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load
+  routine 8|0x1900: result 0x0 errors 74 exceptions 0 (5.5s) CR [(2688, '0x201'), (2688, '0x1')]
+3b. first-line advance 650 Ulf
+  routine 10|0x800: result 0x0 errors 74 exceptions 0 (1.0s) CR []
+  routine 10|0x800: result 0x0 errors 74 exceptions 0 (1.1s) CR []
+  routine 10|0x800: result 0x0 errors 74 exceptions 0 (1.1s) CR []
+4. blank fresh pass
+  routine 5|0x400: result 0x1 errors 74 exceptions 0 (3.2s) CR []
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  routine 7|0x1100: result 0x1 errors 75 exceptions 0 (5.9s) CR [(56596, '0x103')]
+5. colour band
+  routine 5|0x0: result 0x1 errors 75 exceptions 0 (0.6s) CR []
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  manager 6 (K): {'slots': 81, 'width': 1024, 'stride': 1296, 'size': 82944, 'base': 539537024, 'raster': 539538968}
+  upload K: {'bytes': 82944, 'seconds': 0.22, 'raster': '0x1828b618', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  manager 0 (C): {'slots': 61, 'width': 2048, 'stride': 976, 'size': 124928, 'base': 539157728, 'raster': 539159192}
+  upload C: {'bytes': 124928, 'seconds': 0.33, 'raster': '0x1822ea98', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  manager 2 (M): {'slots': 61, 'width': 2048, 'stride': 976, 'size': 124928, 'base': 539284160, 'raster': 539285624}
+  upload M: {'bytes': 124928, 'seconds': 0.33, 'raster': '0x1824d878', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  manager 4 (Y): {'slots': 61, 'width': 2048, 'stride': 976, 'size': 124928, 'base': 539410592, 'raster': 539412056}
+  upload Y: {'bytes': 124928, 'seconds': 0.33, 'raster': '0x1826c658', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  routine 7|0x1100: result 0x1 errors 77 exceptions 0 (4.0s) CR [(23794, '0x1'), (56596, '0x103')]
+6. stock eject
+  routine 9|0xd00: result 0x0 errors 77 exceptions 0 (5.6s) CR []
+7. home
+  home: result 2 raw 0xa80
+done CL2302

@@ -62,6 +62,16 @@ static unsigned manual_dir;        /* manual run: 0 off, 1 reverse, 2 forward */
 bool paper_manual_request(unsigned dir);
 static unsigned attempts, advance_target, handoff_target, phase1_target;
 static uint32_t t_state, t_start, pos_mark, pickup_counts, advance_counts, eject_counts, last_pos;
+/* Stall boost: the open-loop 15 % transport command is marginal in the ASF
+ * cam's lift phase (2026-10-26: a swing-arm reset crept 1,729 counts in 20 s,
+ * then ran freely at 25 %). While a command is applied and the encoder makes
+ * no progress for BOOST_MS, step the command 100 further from neutral, up to
+ * the jog limits. Stock drives the feed closed-loop and never has this gap. */
+#define BOOST_MS 200u
+#define BOOST_STEP 100u
+#define LF_CMD_MAX 2600u
+#define LF_CMD_MIN 1400u
+static uint32_t t_progress, pos_progress;
 
 static uint32_t pos(void) { return rd(LF_P + 0x100u) & POS_MASK; }
 static int32_t delta(uint32_t from, uint32_t to)
@@ -80,6 +90,21 @@ static void drive(uint32_t command)
     wr(LF_C + 8u, LF_NEUTRAL);
     if (!(rd(LF_C) & 0x102u)) { wr(LF_C, 0x102u); delay_ticks(CLOCK_TICKS_PER_MS); }
     wr(LF_C + 8u, command);
+    t_progress = app_clock_ticks(); pos_progress = pos();
+}
+
+static void stall_boost(uint32_t p)
+{
+    uint32_t cmd = rd(LF_C + 8u);
+    if (cmd == LF_NEUTRAL) { t_progress = app_clock_ticks(); pos_progress = p; return; }
+    if (p != pos_progress) { pos_progress = p; t_progress = app_clock_ticks(); return; }
+    if (ms_since(t_progress) < BOOST_MS) return;
+    uint32_t next = cmd > LF_NEUTRAL ? (cmd + BOOST_STEP > LF_CMD_MAX ? LF_CMD_MAX : cmd + BOOST_STEP)
+                                     : (cmd < LF_CMD_MIN + BOOST_STEP ? LF_CMD_MIN : cmd - BOOST_STEP);
+    t_progress = app_clock_ticks();
+    if (next == cmd) return;
+    wr(LF_C + 8u, next);
+    dbg_puts("[feed] stall boost cmd="); dbg_dec(next); dbg_puts(" state="); dbg_dec(state); dbg_putc('\n');
 }
 
 static void motor_off(void)
@@ -161,6 +186,7 @@ void paper_feed_poll(void)
 {
     if (state == FS_IDLE) return;
     uint32_t p = pos(); last_pos = p;
+    stall_boost(p);
     switch (state) {
     case FS_PICKUP: {
         uint32_t reverse = (uint32_t)(-delta(pos_mark, p));

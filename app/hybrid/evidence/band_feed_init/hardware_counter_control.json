@@ -1,0 +1,57 @@
+{
+  "label": "CNTCTRL",
+  "control_mark_requested": true,
+  "upload": {
+    "bytes": 25600,
+    "seconds": 0.07,
+    "raster": "0x182100c0",
+    "mismatches": 0,
+    "first_bad": []
+  },
+  "counts_before_band": {
+    "0": 4000,
+    "1": 4000,
+    "2": 0,
+    "3": 0,
+    "5": 0,
+    "4": 0,
+    "7": 0,
+    "6": 0
+  },
+  "counts_band": {
+    "0": 244,
+    "1": 244,
+    "2": 0,
+    "3": 0,
+    "5": 0,
+    "4": 0,
+    "7": 0,
+    "6": 0
+  },
+  "stationary_control": {
+    "result": 2,
+    "records": 2,
+    "sequence": 1,
+    "x": 57984,
+    "adc_before": [
+      746,
+      741
+    ],
+    "adc_after": [
+      724,
+      725
+    ],
+    "elapsed_ms": 590,
+    "last_record_ms": 16
+  },
+  "counts_control": {
+    "0": 16800,
+    "1": 16800,
+    "2": 0,
+    "3": 0,
+    "5": 0,
+    "4": 0,
+    "7": 0,
+    "6": 0
+  }
+}

@@ -1,0 +1,31 @@
+[http] c1 POST /
+[ipp] operation 0x0000000b status 0x00000000
+[http] c1 -> 200
+[motor] setup c0c41404=00000004
+[motor] setup c0c41408=00000005
+[motor] setup c0c41418=0000000a
+[motor] setup c0c81090=0000003f
+[motor] setup c0c57000=0000200d
+[motor] setup c0c57100=00700000
+[motor] setup c0c57148=00000001
+[motor] setup c0c57308=00000001
+[bench] stock forward 400 Ulf lf=1206 pe=0 cr=0
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] stock SVC handler registered
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=400 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=114
+[shim] advance ulf=400 raw before=0x00700000 after=0x00700961 paper=1
+[shim] routine 10 returned 0 errors=0
+[bench] stock forward 400 Ulf lf=2400 pe=0 cr=0
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=400 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=110
+[shim] advance ulf=400 raw before=0x00700000 after=0x00700960 paper=1
+[shim] routine 10 returned 0 errors=0

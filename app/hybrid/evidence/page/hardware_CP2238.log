@@ -1,0 +1,61 @@
+label CP2238: 2112 columns, 24 bands of 176 rows, colour offset 112, placement 856, dots {'K': 49062, 'C': 320390, 'M': 308838, 'Y': 293288}
+1. home
+  home: result 2
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load
+3b. first-line advance 650 Ulf
+4. blank fresh pass
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 00/24 done in 8.0s, total 26s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 01/24 done in 8.0s, total 34s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 02/24 done in 8.0s, total 42s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 03/24 done in 8.0s, total 50s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 04/24 done in 8.0s, total 58s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 05/24 done in 8.0s, total 66s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 06/24 done in 8.0s, total 74s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 07/24 done in 8.1s, total 82s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 08/24 done in 8.1s, total 90s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 09/24 done in 8.1s, total 99s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 10/24 done in 8.0s, total 107s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 11/24 done in 8.2s, total 115s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 12/24 done in 8.0s, total 123s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 13/24 done in 8.2s, total 131s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 14/24 done in 8.1s, total 139s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 15/24 done in 8.1s, total 147s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 16/24 done in 8.2s, total 155s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 17/24 done in 8.1s, total 164s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 18/24 done in 8.1s, total 172s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 19/24 done in 8.0s, total 180s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 20/24 done in 8.1s, total 188s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 21/24 done in 8.2s, total 196s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 22/24 done in 8.1s, total 204s
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  band 23/24 done in 7.1s, total 211s
+5. stock eject
+6. home
+  home: result 2
+done: CP2238 in 217s

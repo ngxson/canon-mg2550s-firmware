@@ -1,5 +1,7 @@
 # Generated firmware and ESP-IDF / PlatformIO outputs
 /app/build/
+/app/hybrid/build/
+/app/hybrid/build[A-Z]/
 /bootloader/build/
 /tools/esp32/.pio/
 /tools/esp32/build/
@@ -55,3 +57,6 @@ htmlcov/
 
 # Keep reference firmware dumps, SDK defaults, and evidence JSON/logs versionable.
 # Do not add blanket *.bin, *.json or *.log exclusions.
+
+# Full-page 300 dpi scans are too large for Git; keep crops and comparisons.
+/app/**/*_rgb300.png

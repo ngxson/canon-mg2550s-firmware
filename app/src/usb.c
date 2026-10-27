@@ -207,6 +207,19 @@ static unsigned device_id(void)
     return n+2;
 }
 
+/* FIFO flush completion with a deadline. The core normally clears the bits
+ * within microseconds; an unbounded spin here froze the whole firmware
+ * (lamp on, main loop dead, no fault) several times on 2026-10-27 when the
+ * flush did not complete during long IPP-USB transfers. */
+static unsigned flush_timeouts;
+static void flush_wait(uint32_t bits)
+{
+    uint32_t t0=app_clock_ticks();
+    while(rd(USB+0x10)&bits) {
+        if(app_clock_ticks()-t0>5u*CLOCK_TICKS_PER_MS) { ++flush_timeouts; dbg_puts("[usb] fifo flush timeout\n"); return; }
+    }
+}
+
 static void setup_request(void)
 {
     uint8_t type=setup_buffer[0], request=setup_buffer[1];
@@ -214,10 +227,10 @@ static void setup_request(void)
     reboot_status_ack=false;
     /* Abort any old IN transfer/FIFO on a new SETUP. */
     modify(IN(0),ENABLE|STALL,0); modify(OUT(0),STALL,0);
-    wr(USB+0x10,0x20); while(rd(USB+0x10)&0x20) {}
+    wr(USB+0x10,0x20); flush_wait(0x20);
     wr(IN(0)+8,0xffffffff);
     if(scan_page_busy() && type==0x40 &&
-       ((request>=APP_REQUEST_SCAN && request<=APP_REQUEST_SCAN_FULLCAP) ||
+       ((request>=APP_REQUEST_SCAN_FULLCAP && request<=APP_REQUEST_SCAN_FULLCAP) ||
         request==APP_REQUEST_HOME || request==APP_REQUEST_MOTOR_JOG ||
         request==APP_REQUEST_PRINT_TEST || request==APP_REQUEST_PRINT_BEGIN)) {
         stall();
@@ -249,14 +262,25 @@ static void setup_request(void)
               && !scanner_motor_busy() && !scan_page_busy()) {
         unsigned step=value>>12, offset=step>=8?0u:0xffu-0x20u*step;
         scanner_burst_request(value&255,(value>>8)&15,index&255,(index>>8)*8u,offset); ack();
+    } else if(type==0x40 && request==APP_REQUEST_SCAN_BURST_OPTIONS && !length && !scanner_motor_busy() && !scan_page_busy()) {
+        if(scanner_burst_options(value&15u,(value>>4)&15u,(uint32_t)index<<4,(value>>8)&0x1fu,value>>13)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_SCAN_OPTIONS && !index && !length) {
+        scan_page_set_calibration(!(value&0x40u));
+        if(scan_source_set_order(value&3u,(value>>2)&3u,(value>>4)&3u)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_PEEK) {
+        uint32_t a=(uint32_t)value|(uint32_t)index<<16;
+        if(a>=0x20000000u && a<=0x20800000u-64u) { memcpy(control_buffer,(const void *)(uintptr_t)a,64); reply(64,length); } else stall();
+    } else if(type==0x40 && request==APP_REQUEST_CPU_CACHE && !index && !length && !scanner_motor_busy() && !scan_page_busy()) {
+        uint32_t before=cpu_bench(); bool ok=cpu_icache_set((value&1u)!=0); uint32_t after=cpu_bench();
+        dbg_puts("[cpu] icache "); dbg_dec(value&1u); dbg_puts(ok?" ok":" refused"); dbg_puts(" control=0x"); dbg_u32(cpu_icache_state());
+        dbg_puts(" bench before="); dbg_dec(before); dbg_puts(" after="); dbg_dec(after); dbg_puts(" instr/10ms\n");
+        if(ok) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_SCAN_SPEED && !index && !length) {
         scan_page_set_speed(value*100u); ack();
     } else if(type==0x40 && request==APP_REQUEST_HOME_SPEED && !index && !length) {
         if(scanner_motor_set_return_speed(value*100u)) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_LINE_AFE && !length) {
         if(scanner_line_set_afe(value,index)) ack(); else stall();
-    } else if(type==0x40 && request==APP_REQUEST_LINE_PROBE && !length) {
-        if(scanner_line_probe_config(value,index)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_LINE_DUMP) {
         unsigned n=scanner_line_dump(control_buffer,(uint32_t)index<<16|value,length>sizeof(control_buffer)?sizeof(control_buffer):length);
         if(n) reply(n,length); else stall();
@@ -266,22 +290,6 @@ static void setup_request(void)
         if(scan_page_park((uint32_t)value*256u)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_SCAN_DUMP && !index) {
         reply(scanner_dump(control_buffer,value,length>sizeof(control_buffer)?sizeof(control_buffer):length),length);
-    } else if(type==0x40 && request==APP_REQUEST_SCAN && !value && !index && !length) {
-        scanner_request(); ack();
-    } else if(type==0x40 && request==APP_REQUEST_SCAN_PROBE && !value && !index && !length) {
-        scanner_probe_request(); ack();
-    } else if(type==0x40 && request==APP_REQUEST_SCAN_BRINGUP && !value && !index && !length) {
-        scanner_bringup_request(); ack();
-    } else if(type==0x40 && request==APP_REQUEST_SCAN_CAPTURE && !value && !index && !length) {
-        scanner_capture_request(); ack();
-    } else if(type==0x40 && request==APP_REQUEST_SCAN_ENABLE && !value && !index && !length) {
-        scanner_enable_request(); ack();
-    } else if(type==0x40 && request==APP_REQUEST_SCAN_FIELD && !value && !index && !length) {
-        scanner_field_request(); ack();
-    } else if(type==0x40 && request==APP_REQUEST_SCAN_LDMAC && !value && !index && !length) {
-        scanner_ldmac_request(); ack();
-    } else if(type==0x40 && request==APP_REQUEST_SCAN_DMASETUP && !value && !index && !length) {
-        scanner_dmasetup_request(); ack();
     } else if(type==0x40 && request==APP_REQUEST_SCAN_FULLCAP && !index && !length) {
         scanner_fullcap_request(value); ack();
     } else if(type==0x40 && request==APP_REQUEST_PRINT_TEST && !value && !index && !length) {
@@ -307,6 +315,21 @@ static void setup_request(void)
         if(tunnel_unlock(value)) ack(); else stall();
     } else if(type==0xc0 && request==APP_REQUEST_TUNNEL_STATUS && !value && !index) {
         reply(tunnel_status(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_HYBRID_CALL && !length) {
+        if(hybrid_call((uint32_t)value|(uint32_t)index<<16)) ack(); else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_HYBRID_RESULT && !value && !index) {
+        reply(hybrid_result(control_buffer),length);
+    } else if(type==0x40 && request==APP_REQUEST_HYBRID_RUN && !length) {
+        if(hybrid_run(value,index)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_HYBRID_BAND && !length) {
+        if(hybrid_band_params(value,index,0,false)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_HYBRID_PLACE && !length) {
+        if(hybrid_band_params(0,0,index==1?(int)(value|0x10000u):index==2?(int)(value|0x20000u):index==3?(int)(value|0x40000u):index==4?(int)(value|0x80000u):(int)(int16_t)value,true)) ack(); else stall();
+    } else if(type==0x40 && request==APP_REQUEST_HYBRID_RASTER && !length) {
+        if(hybrid_raster_begin((unsigned)value|((unsigned)(index&0xf)<<16),(index>>8&0xf)?(index>>8&0xf)-1u:6u)) { arm_bulk(); ack(); } else stall();
+    } else if(type==0xc0 && request==APP_REQUEST_HYBRID_TRACE && !index) {
+        unsigned n=value==0xffff?hybrid_run_status(control_buffer):hybrid_trace(control_buffer,value);
+        if(n) reply(n,length); else stall();
     } else if(type==0x40 && request==APP_REQUEST_STAMP_COMMIT && !length) {
         if(stamp_commit(value,(uint32_t)index*64u)) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_STAMP_CLEAR && !value && !index && !length) {
@@ -410,7 +433,7 @@ static void bus_reset(void)
     ippusb_reset();
     modify(USB+0x800,0x7f0,0);
     for(unsigned n=0;n<4;++n) { wr(IN(n),0); wr(OUT(n),0); wr(IN(n)+8,0xffffffff); wr(OUT(n)+8,0xffffffff); }
-    wr(USB+0x10,0x430); while(rd(USB+0x10)&0x30) {}
+    wr(USB+0x10,0x430); flush_wait(0x30);
 }
 
 static void enumerated(void)
@@ -459,8 +482,44 @@ void usb_init(void)
     modify(0xc0c88024,0,0x10000); modify(USB+0x804,2,0);
 }
 
+/* Bus liveness. The DWC OTG core's frame number (DSTS 0x808 bits 21..8)
+ * advances every (micro)frame while the host drives the bus. Three times on
+ * 2026-10-27 the board stayed reachable only until the host lost it (no
+ * exception recorded, the main loop alive): if the frame counter stops for
+ * USB_DEAD_MS while the PHY is connected, after having run, the core is
+ * soft-disconnected and re-attached so the host enumerates afresh. The
+ * event is counted in the persistent record for the next boot's log. */
+#define USB_DEAD_MS 5000u
+#define USB_LIVE_CHANGES 16u           /* frame-counter changes seen before the check arms */
+static uint32_t frame_seen, frame_check_ms, frame_change_ms, frame_changes, reattach_at_ms; static bool detached;
+unsigned usb_reattach_count;
+static void usb_liveness(void)
+{
+    /* Sparse: the clock is read once per 512 polls (~60 ms on the board), so
+     * the check adds no measurable time to stock routines' USB polling. */
+    static unsigned polls;
+    if(++polls&511u) return;
+    uint32_t now=time_ms();
+    if(detached) {                                  /* non-blocking re-attach, 100 ms after the detach */
+        if(now-reattach_at_ms<100u) return;
+        detached=false; frame_changes=0; frame_change_ms=now;
+        modify(0xc0c88024,0,0x10000); modify(USB+0x804,2,0);
+        return;
+    }
+    if(now-frame_check_ms<100u || hybrid_busy()) return;   /* never inside a stock routine's polling */
+    frame_check_ms=now;
+    uint32_t frame=(rd(USB+0x808)>>8)&0x3fffu;
+    if(frame!=frame_seen) { frame_seen=frame; frame_change_ms=now; if(frame_changes<USB_LIVE_CHANGES) ++frame_changes; return; }
+    if(frame_changes<USB_LIVE_CHANGES || !(rd(0xc0c88024)&0x10000) || now-frame_change_ms<USB_DEAD_MS) return;
+    ++usb_reattach_count;
+    dbg_puts("[usb] bus dead for "); dbg_dec(USB_DEAD_MS); dbg_puts(" ms: re-attaching ("); dbg_dec(usb_reattach_count); dbg_puts(")\n");
+    usb_disconnect(); configuration=0; state=IDLE; ippusb_reset();
+    detached=true; reattach_at_ms=now;
+}
+
 void usb_poll(void)
 {
+    usb_liveness();
     uint32_t events=rd(USB+0x14)&rd(USB+0x18);
     if(events) wr(USB+0x14,events);
     if(events&0x1000) bus_reset();
@@ -491,7 +550,10 @@ void usb_poll(void)
     if((bulk&1) && configuration) {
         unsigned remaining=rd(OUT(1)+0x10)&0x7ffff;
         bulk_armed=false;
-        if(remaining<=max_packet) print_bulk_feed(bulk_buffer,max_packet-remaining);
+        if(remaining<=max_packet) {
+            if(hybrid_raster_active()) hybrid_raster_feed(bulk_buffer,max_packet-remaining);
+            else print_bulk_feed(bulk_buffer,max_packet-remaining);
+        }
         arm_bulk();
     }
     /* IPP-USB bulk endpoints: completions go to the HTTP transport. */

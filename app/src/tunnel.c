@@ -1,4 +1,4 @@
-/* Register tunnel for hardware-in-the-loop emulation (USB 0x90..0x93).
+/* Register tunnel for hardware-in-the-loop emulation (USB 0x90..0x96).
  *
  * The stock firmware runs in the emulator; selected peripheral accesses are
  * forwarded to this board so the real ASIC answers them. The host sets an
@@ -21,6 +21,8 @@ static const struct range allow[] = {
     { 0xc0c80000u, 0xc0c88000u, true },    /* GPIO, alias and sense banks */
     { 0xc0c8d000u, 0xc0c8e000u, false },   /* panel keys and LEDs: read only */
     { 0xc0c90000u, 0xc0c90100u, true },    /* ADC block */
+    { 0x10000000u, 0x10100000u, false },   /* stock shared RAM (hybrid): read only */
+    { 0x18000000u, 0x18800000u, false },   /* stock main RAM (hybrid): read only */
 };
 
 static uint32_t address, reads, writes, refused;
@@ -67,4 +69,29 @@ unsigned tunnel_status(uint8_t *out)
     put32(out, 0x4e55544du); put32(out + 4, 1); put32(out + 8, address); put32(out + 12, reads);
     put32(out + 16, writes); put32(out + 20, refused); put32(out + 24, unlocked ? 1u : 0);
     return 28;
+}
+
+/* Hybrid shape B: call one stock routine in place from flash (USB 0x95).
+ * Only Thumb addresses inside the stock application image are accepted, the
+ * tunnel must be unlocked, and the mechanism must be idle. Arguments are zero;
+ * the routine runs on the app's stack in the app's mode and its r0 is kept. */
+static uint32_t call_address, call_result, calls, call_refused;
+
+bool hybrid_call(uint32_t address)
+{
+    bool ok = unlocked && (address & 1u) && address >= 0x11000u && address < 0x1f2000u && !service_busy();
+    if (!ok) { ++call_refused; dbg_puts("[hybrid] call refused at 0x"); dbg_u32(address); dbg_putc('\n'); return false; }
+    call_address = address;
+    call_result = ((uint32_t (*)(uint32_t, uint32_t, uint32_t, uint32_t))address)(0, 0, 0, 0);
+    ++calls;
+    dbg_puts("[hybrid] called 0x"); dbg_u32(address); dbg_puts(" -> 0x"); dbg_u32(call_result); dbg_putc('\n');
+    return true;
+}
+
+/* 0x96 IN: last call. */
+unsigned hybrid_result(uint8_t *out)
+{
+    put32(out, 0x42594848u); put32(out + 4, call_address); put32(out + 8, call_result);
+    put32(out + 12, calls); put32(out + 16, call_refused); put32(out + 20, unlocked ? 1u : 0);
+    return 24;
 }

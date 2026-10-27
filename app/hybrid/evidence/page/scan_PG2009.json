@@ -1,0 +1,54 @@
+{
+  "image": "app/hybrid/evidence/page/scan_PG2009.png",
+  "resolution": 150,
+  "mm_per_px": 0.16933333333333334,
+  "image_mm": [
+    215.9,
+    296.8
+  ],
+  "paper_fraction": 0.947,
+  "marks": [
+    {
+      "x_mm": 38.49,
+      "y_mm": 25.73,
+      "w_mm": 1.35,
+      "h_mm": 1.35,
+      "area_mm2": 0.66,
+      "bbox_px": [
+        222,
+        148,
+        230,
+        156
+      ],
+      "mean_darkness": 0.551
+    },
+    {
+      "x_mm": 36.61,
+      "y_mm": 25.75,
+      "w_mm": 0.68,
+      "h_mm": 1.69,
+      "area_mm2": 0.66,
+      "bbox_px": [
+        214,
+        148,
+        218,
+        158
+      ],
+      "mean_darkness": 0.522
+    },
+    {
+      "x_mm": 27.78,
+      "y_mm": 25.9,
+      "w_mm": 1.35,
+      "h_mm": 1.19,
+      "area_mm2": 0.57,
+      "bbox_px": [
+        161,
+        149,
+        169,
+        156
+      ],
+      "mean_darkness": 0.544
+    }
+  ]
+}

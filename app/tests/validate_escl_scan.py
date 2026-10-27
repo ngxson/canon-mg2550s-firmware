@@ -38,6 +38,12 @@ MOTION_GAP_LIMIT = 8000
 import validate_escl as v  # noqa: E402
 
 SAMPLES, SPAN, BLACK, WHITE = 2592, 2550, 26000, 65000
+DARK = 1200
+
+
+def white_line():
+    # a uniform-enough strip: the firmware accepts a reference only when max <= 1.5 x min
+    return [40000 + (s * 23) % 8000 for s in range(SAMPLES)]
 
 
 MP = 0xc0c57000
@@ -48,6 +54,7 @@ class ScanHost(v.IppUsbHost, PageModel):
         self.irq_polls = 0; self.irq_pending = False; self.line_index = 0
         super().__init__(**kw)
         self.lines = []           # samples of every capture, in order
+        self.moving = []          # True for a scan line (moving, lit); False for a calibration capture
         self.positions = []       # encoder position at each capture
         self.instructions = 0
         self.last_poll = None
@@ -106,17 +113,33 @@ class ScanHost(v.IppUsbHost, PageModel):
 
     def _scan_dma(self, cpu):
         index = len(self.lines)
-        line = [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)]
-        self.lines.append(line)
-        self.positions.append(self.regs.get(0xc0c57100, 0))
         moving = bool(self.regs.get(0xc0d6011c, 0) & 0x10000)
+        dark = self.regs.get(0xc0d60268, 0) & 0xfffff == self.regs.get(0xc0d60264, 0) & 0xfffff   # windows closed
+        if dark:
+            line = [DARK] * SAMPLES
+        elif moving:
+            line = [25000 + (s * 17 + index * 331) % 40536 for s in range(SAMPLES)]
+        else:
+            line = white_line()                              # stationary reference: the same every capture
+        self.lines.append(line)
+        self.moving.append(moving and not dark)
+        self.positions.append(self.regs.get(0xc0c57100, 0))
         if not moving:
             assert self.drive is None, 'stationary capture while motor powered'
         k = self.line_index; self.line_index += 1
-        for ch in (0, 1):
-            dest = self.regs.get(0xc0d50014 + ch * 0x100, 0) + k * 0x1440
-            assert dest + 0xa20 <= self.regs.get(0xc0d5001c + ch * 0x100, 0), 'row outside window'
-            cpu.mem_write(dest, struct.pack('<1296H', *line[ch * 1296:(ch + 1) * 1296]))
+        mask = self.regs.get(0xc0d6000c, 0)
+        components = 3 if mask == 7 else 1
+        for comp in range(components):
+            t = k * components + comp
+            for ch in (0, 1):
+                base = 0xc0d50000 + ch * 0x100
+                lower, upper = self.regs.get(base + 0x18, 0), self.regs.get(base + 0x1c, 0)
+                skip2 = self.regs.get(base + 0x34, 0xa20)
+                dest = self.regs.get(base + 0x14, 0) + t * (0xa20 + skip2)
+                dest = lower + (dest - lower) % (upper - lower)          # ring wrap (modelled, see BRIEF_scan_modes answer §1)
+                assert dest + 0xa20 <= upper, 'row outside window'
+                shade = [max(v - comp * 2000, 0) for v in line[ch * 1296:(ch + 1) * 1296]]
+                cpu.mem_write(dest, struct.pack('<1296H', *shade))
         self.regs[0xc0d50010] = self.regs.get(0xc0d50010, 0) | 4
         self.regs[0xc0d50110] = self.regs.get(0xc0d50110, 0) | 4
         self.regs[0xc0d60010] = self.regs.get(0xc0d60010, 0) + 1     # SCNIO read count
@@ -143,14 +166,23 @@ def fetch_while_polling(e, c, path):
 GAMMA = [round(255 * (i / 255) ** (1 / 2.2)) for i in range(256)]   # scan_source_scanner.c gamma_lut
 
 
-def expected_row(line, x, step, pixels, black=BLACK, white=WHITE):
+def expected_row(line, x, step, pixels, black=BLACK, white=WHITE, shade=True, plane=0):
     row = bytearray()
+    wl = [max(w - 2000 * plane, 0) for w in white_line()]       # the model shades component k by -2000k
+    dark = max(DARK - 2000 * plane, 0)
     for i in range(pixels):
         u = x + i * step
         s0, s1 = u * SAMPLES // SPAN, (u + step) * SAMPLES // SPAN
         s0 = min(s0, SAMPLES - 1); s1 = min(s1, SAMPLES)
         s1 = max(s1, s0 + 1); s1 = min(s1, s0 + 8)
         n = s1 - s0
+        if shade:
+            scale = [(250 * 65536) // (wl[s] - dark) if wl[s] > dark + 1024 else 0 for s in range(s0, s1)]
+            if scale[0]:
+                acc = sum((max(line[s] - dark, 0) * g) >> 16 for s, g in zip(range(s0, s1), scale))
+                value = acc * ((65536 + n - 1) // n) >> 16
+                row.append(GAMMA[min(value, 255)])
+                continue
         level = sum(line[s0:s1]) * ((65536 + n - 1) // n) >> 16       # firmware fixed point
         value = 0 if level <= black else (level - black) * (255 * 65536 // (white - black)) >> 16
         row.append(GAMMA[min(value, 255)])
@@ -187,8 +219,7 @@ def main():
     caps = v.ET.fromstring(body)
     modes = [m.text for m in caps.iterfind('.//scan:ColorMode', v.NS)]
     resolutions = [int(r.text) for r in caps.iterfind('.//scan:XResolution', v.NS)]
-    assert modes == ['BlackAndWhite1', 'Grayscale8'] and resolutions == [75, 150], (modes, resolutions)
-    assert v.create_job(e, 0, v.settings(mode='RGB24'))[0] == 409
+    assert modes == ['BlackAndWhite1', 'Grayscale8', 'RGB24'] and resolutions == [75, 150, 300], (modes, resolutions)
     record('capabilities_are_the_scanners', modes=modes, resolutions=resolutions)
 
     # A region below the home position: 40/300 in = 5120 counts, i.e. hops.
@@ -202,8 +233,8 @@ def main():
     width, height, ctype, rows, phys, depth = v.decode_png(body)
     assert (width, height, ctype, depth) == (pixels, lines, 0, 8)
     # Continuous mode without the optional stationary probe: every capture is a scan line.
-    assert len(e.lines) == lines, (len(e.lines), lines)
-    scan_lines, scan_positions = e.lines, e.positions
+    scan_lines = [l for l, m in zip(e.lines, e.moving) if m]; scan_positions = [p_ for p_, m in zip(e.positions, e.moving) if m]
+    assert len(scan_lines) == lines, (len(scan_lines), lines)
     for j in range(lines):
         assert rows[j] == expected_row(scan_lines[j], x, 300 // res, pixels, 1000, 36000), f'row {j} differs'
     home = word(e, 'home_position')
@@ -226,43 +257,49 @@ def main():
     assert phase(e) == 7
     record('continuous_page_skips_homing_when_parked', reverse_moves_before=homes_before)
 
-    # Probe experiment (vendor 0x7d): P stationary probe lines after the warm-up,
-    # then D drain events; scan line k must be read from buffer row k + P.
-    def vendor(name, packet):
-        before = len(e.responses); stalls = len(e.stalls)
-        e.requests.appendleft((name, packet))
-        e.run(lambda q: any(n == name for _, n, _ in q.responses[before:]) or len(q.stalls) > stalls, resume=True)
-        return len(e.stalls) == stalls
-    assert not vendor('probe_too_many', setup(0x40, 0x7d, 5, 3)), 'probe lines above the maximum accepted'
-    assert vendor('probe_on', setup(0x40, 0x7d, 2, 4))
+    record('continuous_region_exact_pixels_gated_positions', status_polls=polls, pixels=[pixels, lines],
+           first_offset=offsets[0], requests=len(scan_lines))
+
+    # Colour: three component rows per line from the planar ring (component k of
+    # line i in row (2N + i + k(2N+1)) mod (3N+1), the modelled stock C=3 layout),
+    # request mask 7, 150 dpi continuous; the model shades component k by -2000k.
+    x, y, w, h, res = 120, 0, 1200, 64, 150
     captures = len(e.lines)
-    x, y, w, h = 600, 0, 1200, 32
-    status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=75, region=(x, y, w, h)))
+    status, location, _ = v.create_job(e, 0, v.settings(mode='RGB24', res=res, region=(x, y, w, h)))
     assert status == 201
     status, headers, body, _ = fetch_while_polling(e, 0, '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
     assert status == 200
-    pixels, lines = w * 75 // 300, h * 75 // 300
+    pixels, lines = w * res // 300, h * res // 300
     width, height, ctype, rows, phys, depth = v.decode_png(body)
-    assert (width, height) == (pixels, lines)
-    probe_lines = e.lines[captures:]
-    assert len(probe_lines) == lines + 2, (len(probe_lines), lines)
-    assert e.positions[captures] == e.positions[captures + 1], 'probe lines were not stationary'
-    assert all(b > a for a, b in zip(e.positions[captures + 2:], e.positions[captures + 3:]))
+    assert (width, height, ctype, depth) == (pixels, lines, 2, 8), (width, height, ctype, depth)
+    colour_lines = [l for l, m in zip(e.lines[captures:], e.moving[captures:]) if m]
+    assert len(colour_lines) == lines, (len(colour_lines), lines)
     for j in range(lines):
-        assert rows[j] == expected_row(probe_lines[2 + j], x, 4, pixels, 1000, 36000), f'probe row {j} differs'
+        planes = [expected_row([max(v_ - 2000 * k, 0) for v_ in colour_lines[j]], x, 300 // res, pixels, 1000, 36000, plane=k) for k in range(3)]
+        expected = bytes(b for i in range(pixels) for b in (planes[0][i], planes[1][i], planes[2][i]))
+        if rows[j] != expected:
+            log = b''
+            for _ in range(60):
+                e.requests.appendleft(('log', setup(0xc0, 0x50, 0, 0, 256))); before = len(e.responses)
+                e.run(lambda q: len(q.responses) > before, resume=True)
+                part = e.responses[-1][2]
+                if not part: break
+                log += bytes(part)
+            print('FIRMWARE LOG:', [l for l in log.decode('latin1').splitlines() if '[cal]' in l][-6:])
+            k = next(i for i in range(len(expected)) if rows[j][i] != expected[i])
+            raise AssertionError(f'colour row {j} differs at byte {k} (pixel {k // 3} comp {k % 3}): got {list(rows[j][k:k + 6])} expected {list(expected[k:k + 6])}')
     e.run(lambda q: phase(q) in (7, 8, 9), resume=True, budget=400_000_000)
     assert phase(e) == 7
     idle_hardware(e)
-    assert vendor('probe_off', setup(0x40, 0x7d, 0, 3))
-    record('probe_lines_shift_the_buffer_rows', probe_lines=2, drain=4, captures=len(probe_lines))
-    record('continuous_region_exact_pixels_gated_positions', status_polls=polls, pixels=[pixels, lines],
-           first_offset=offsets[0], requests=len(scan_lines))
+    record('colour_rgb24_planar_ring_rows', pixels=[pixels, lines])
 
     # Back-to-back: a job posted while the last page returns home adopts it.
     status, location, _ = v.create_job(e, 0, v.settings(mode='Grayscale8', res=150, region=(0, 0, 2550, 96)))
     assert status == 201
     status, headers, body, _ = v.http(e, 0, 'GET', '/eSCL/' + location.split('/eSCL/', 1)[1] + '/NextDocument')
     assert status == 200
+    # The ring engine delivers the last line before the travel's run-out ends.
+    e.run(lambda q: phase(q) in (6, 7, 8, 9), resume=True, budget=400_000_000)
     assert phase(e) == 6, f'expected the page to be returning home, phase {phase(e)}'
     status, location, _ = v.create_job(e, 1, v.settings(mode='BlackAndWhite1', res=150, region=(0, 0, 600, 16),
                                                        fmt='image/jpeg'))
@@ -280,13 +317,13 @@ def main():
     job = '/eSCL/' + location.split('/eSCL/', 1)[1]
     e.hold_in.add(0)
     v.send(e, 0, f'GET {job}/NextDocument HTTP/1.1\r\nHost: {v.HOST}\r\n\r\n'.encode())
-    e.run(lambda q: phase(q) == 4, resume=True, budget=400_000_000)
+    e.run(lambda q: phase(q) == 10 and q.drive is not None, resume=True, budget=400_000_000)
     # The vendor page protocol cannot read or acknowledge an eSCL-owned row.
     stalls = len(e.stalls)
     e.requests.appendleft(('vendor_data', setup(0xc0, 0x79, 0, 0, 256)))
     e.requests.appendleft(('vendor_ack', setup(0x40, 0x7a, 0)))
     e.run(lambda q: len(q.stalls) >= stalls + 2, resume=True)
-    assert phase(e) == 4
+    assert phase(e) == 10
     assert v.http(e, 1, 'DELETE', job)[0] == 200
     e.run(lambda q: phase(q) == 9, resume=True)
     e.hold_in.discard(0)

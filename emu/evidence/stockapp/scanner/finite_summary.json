@@ -1,0 +1,1082 @@
+{
+  "description": "Offline stock scanner control-flow verification; no pixel DMA, optics, hardware access, or hybrid build.",
+  "firmware_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "eeprom_sha256": "2ac4cf98655e9831a9baf07a5148c9a1a994df6e49e949fbd8dfbcd8cf401f2d",
+  "fixture_sha256": "7ca095bdc9a19270905d291f3168e598a93d7ca2ee78eddcdb6d1c8cd0d53b8f",
+  "verified": true,
+  "assumptions": [
+    "Inherited BootTrace readiness and serial response 0x40 (type 0)",
+    "Direct Thumb calls, IRQ/FIQ masked; no scheduler during calls",
+    "RTOS event set/clear/wait implemented by fixture; delay returns immediately",
+    "IRQ18/19/1d stock handler calls supplied explicitly, not elapsed physical time",
+    "No optical, DMA, encoder, or motor completion model",
+    "Restored full boot RAM, NOT the current hybrid sparse snapshot"
+  ],
+  "cases": [
+    {
+      "name": "p7-diagnostic",
+      "profile": 7,
+      "width": 3072,
+      "components": 1,
+      "lines": 1,
+      "summary": {
+        "returned": true,
+        "error": null,
+        "irq18": 2,
+        "irq19": 5,
+        "serial_irqs": 9,
+        "requests": 1,
+        "request_masks": [
+          "0x1"
+        ],
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x200d",
+          "0x300c",
+          "0x4000",
+          "0x500d",
+          "0x60bb",
+          "0x70b1"
+        ],
+        "waiting": null
+      },
+      "power_before_capture": 2,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483649,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18200000",
+          "lower": "0x18200000",
+          "upper": "0x18203000",
+          "skip": "0xc00",
+          "skip2": "0xc00",
+          "segment_bytes": 3072,
+          "repeat_low": 1,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18200c00",
+          "lower": "0x18200000",
+          "upper": "0x18203000",
+          "skip": "0xc00",
+          "skip2": "0xc00",
+          "segment_bytes": 3072,
+          "repeat_low": 1,
+          "repeat_high": 1
+        }
+      ]
+    },
+    {
+      "name": "p0-gray-1",
+      "profile": 0,
+      "width": 2592,
+      "components": 1,
+      "lines": 1,
+      "summary": {
+        "returned": true,
+        "error": null,
+        "irq18": 2,
+        "irq19": 5,
+        "serial_irqs": 9,
+        "requests": 1,
+        "request_masks": [
+          "0x1"
+        ],
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x200d",
+          "0x300c",
+          "0x4000",
+          "0x500d",
+          "0x60bb",
+          "0x70b1"
+        ],
+        "waiting": null
+      },
+      "power_before_capture": 2,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483649,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18200000",
+          "lower": "0x18200000",
+          "upper": "0x18202880",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 1,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18200a20",
+          "lower": "0x18200000",
+          "upper": "0x18202880",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 1,
+          "repeat_high": 1
+        }
+      ]
+    },
+    {
+      "name": "p0-gray-2",
+      "profile": 0,
+      "width": 2592,
+      "components": 1,
+      "lines": 2,
+      "summary": {
+        "returned": true,
+        "error": null,
+        "irq18": 2,
+        "irq19": 6,
+        "serial_irqs": 9,
+        "requests": 2,
+        "request_masks": [
+          "0x1",
+          "0x1"
+        ],
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x200d",
+          "0x300c",
+          "0x4000",
+          "0x500d",
+          "0x60bb",
+          "0x70b1"
+        ],
+        "waiting": null
+      },
+      "power_before_capture": 2,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483649,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18200000",
+          "lower": "0x18200000",
+          "upper": "0x18203cc0",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 2,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18200a20",
+          "lower": "0x18200000",
+          "upper": "0x18203cc0",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 2,
+          "repeat_high": 1
+        }
+      ]
+    },
+    {
+      "name": "p0-gray-4",
+      "profile": 0,
+      "width": 2592,
+      "components": 1,
+      "lines": 4,
+      "summary": {
+        "returned": true,
+        "error": null,
+        "irq18": 2,
+        "irq19": 8,
+        "serial_irqs": 9,
+        "requests": 4,
+        "request_masks": [
+          "0x1",
+          "0x1",
+          "0x1",
+          "0x1"
+        ],
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x200d",
+          "0x300c",
+          "0x4000",
+          "0x500d",
+          "0x60bb",
+          "0x70b1"
+        ],
+        "waiting": null
+      },
+      "power_before_capture": 2,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483649,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18200000",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18200a20",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        }
+      ],
+      "repeat": {
+        "returned": true,
+        "irq18": 2,
+        "irq19": 8,
+        "serial_irqs": 0,
+        "afe_tx": []
+      },
+      "retuned": {
+        "returned": true,
+        "irq18": 2,
+        "irq19": 8,
+        "serial_irqs": 9,
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x2005",
+          "0x300c",
+          "0x4000",
+          "0x5005",
+          "0x60bb",
+          "0x70b1"
+        ]
+      }
+    },
+    {
+      "name": "p0-three-components",
+      "profile": 0,
+      "width": 2592,
+      "components": 3,
+      "lines": 4,
+      "summary": {
+        "returned": true,
+        "error": null,
+        "irq18": 2,
+        "irq19": 8,
+        "serial_irqs": 9,
+        "requests": 4,
+        "request_masks": [
+          "0x7",
+          "0x7",
+          "0x7",
+          "0x7"
+        ],
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x200d",
+          "0x300c",
+          "0x4000",
+          "0x500d",
+          "0x60bb",
+          "0x70b1"
+        ],
+        "waiting": null
+      },
+      "power_before_capture": 2,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483649,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x1820a200",
+          "lower": "0x18200000",
+          "upper": "0x18210740",
+          "skip": "0xa20",
+          "skip2": "0xac20",
+          "segment_bytes": 2592,
+          "repeat_low": 12,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x1820ac20",
+          "lower": "0x18200000",
+          "upper": "0x18210740",
+          "skip": "0xa20",
+          "skip2": "0xac20",
+          "segment_bytes": 2592,
+          "repeat_low": 12,
+          "repeat_high": 1
+        }
+      ]
+    },
+    {
+      "name": "p6-three-components",
+      "profile": 6,
+      "width": 5184,
+      "components": 3,
+      "lines": 4,
+      "summary": {
+        "returned": true,
+        "error": null,
+        "irq18": 2,
+        "irq19": 8,
+        "serial_irqs": 9,
+        "requests": 4,
+        "request_masks": [
+          "0x7",
+          "0x7",
+          "0x7",
+          "0x7"
+        ],
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x200d",
+          "0x300c",
+          "0x4000",
+          "0x500d",
+          "0x60bb",
+          "0x70b1"
+        ],
+        "waiting": null
+      },
+      "power_before_capture": 2,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483649,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18214400",
+          "lower": "0x18200000",
+          "upper": "0x18220e80",
+          "skip": "0x1440",
+          "skip2": "0x15840",
+          "segment_bytes": 5184,
+          "repeat_low": 12,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18215840",
+          "lower": "0x18200000",
+          "upper": "0x18220e80",
+          "skip": "0x1440",
+          "skip2": "0x15840",
+          "segment_bytes": 5184,
+          "repeat_low": 12,
+          "repeat_high": 1
+        }
+      ]
+    },
+    {
+      "name": "missing-irq18",
+      "profile": 0,
+      "width": 2592,
+      "components": 1,
+      "lines": 4,
+      "summary": {
+        "returned": false,
+        "error": null,
+        "irq18": 0,
+        "irq19": 0,
+        "serial_irqs": 0,
+        "requests": 0,
+        "request_masks": [],
+        "afe_tx": [],
+        "waiting": [
+          36,
+          65536,
+          1,
+          269475612,
+          4294967295
+        ]
+      },
+      "power_before_capture": 2,
+      "power_after_off": 2,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483648,
+        "dma_enable": [
+          128,
+          128,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18200000",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18200a20",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        }
+      ]
+    },
+    {
+      "name": "missing-irq19",
+      "profile": 0,
+      "width": 2592,
+      "components": 1,
+      "lines": 4,
+      "summary": {
+        "returned": false,
+        "error": null,
+        "irq18": 2,
+        "irq19": 0,
+        "serial_irqs": 9,
+        "requests": 0,
+        "request_masks": [],
+        "afe_tx": [
+          "0x80",
+          "0x43",
+          "0x1000",
+          "0x200d",
+          "0x300c",
+          "0x4000",
+          "0x500d",
+          "0x60bb",
+          "0x70b1"
+        ],
+        "waiting": [
+          36,
+          1,
+          1,
+          269475604,
+          4294967295
+        ]
+      },
+      "power_before_capture": 2,
+      "power_after_off": 2,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 1,
+        "dma_enable": [
+          129,
+          129,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18200000",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18200a20",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        }
+      ]
+    },
+    {
+      "name": "missing-serial",
+      "profile": 0,
+      "width": 2592,
+      "components": 1,
+      "lines": 4,
+      "summary": {
+        "returned": false,
+        "error": null,
+        "irq18": 0,
+        "irq19": 0,
+        "serial_irqs": 0,
+        "requests": 0,
+        "request_masks": [],
+        "afe_tx": [
+          "0x0",
+          "0x4"
+        ],
+        "waiting": [
+          41,
+          4294967295,
+          1,
+          269475588,
+          4294967295
+        ]
+      },
+      "power_before_capture": 0,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 0,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": []
+    },
+    {
+      "name": "missing-power",
+      "profile": 0,
+      "width": 2592,
+      "components": 1,
+      "lines": 4,
+      "summary": {
+        "returned": true,
+        "error": null,
+        "irq18": 2,
+        "irq19": 8,
+        "serial_irqs": 0,
+        "requests": 4,
+        "request_masks": [
+          "0x1",
+          "0x1",
+          "0x1",
+          "0x1"
+        ],
+        "afe_tx": [],
+        "waiting": null
+      },
+      "power_before_capture": 0,
+      "power_after_off": 0,
+      "cleanup": {
+        "request": 0,
+        "scnio_control": 2147483649,
+        "dma_enable": [
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "buffer_unchanged": true,
+      "firmware_unchanged": true,
+      "problems": [],
+      "dma_descriptors": [
+        {
+          "initial": "0x18200000",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        },
+        {
+          "initial": "0x18200a20",
+          "lower": "0x18200000",
+          "upper": "0x18206540",
+          "skip": "0xa20",
+          "skip2": "0xa20",
+          "segment_bytes": 2592,
+          "repeat_low": 4,
+          "repeat_high": 1
+        }
+      ]
+    }
+  ],
+  "gain_cases": [
+    {
+      "high": 10000,
+      "low": 0,
+      "target": 14745,
+      "minimum_gain": 3,
+      "gain": 13
+    },
+    {
+      "high": 14745,
+      "low": 0,
+      "target": 14745,
+      "minimum_gain": 3,
+      "gain": 13
+    },
+    {
+      "high": 16000,
+      "low": 0,
+      "target": 14745,
+      "minimum_gain": 3,
+      "gain": 10
+    },
+    {
+      "high": 20000,
+      "low": 0,
+      "target": 14745,
+      "minimum_gain": 3,
+      "gain": 4
+    },
+    {
+      "high": 30000,
+      "low": 0,
+      "target": 14745,
+      "minimum_gain": 3,
+      "gain": 3
+    }
+  ],
+  "ram_pages_touched_4k": [
+    [
+      "0x10080000",
+      "0x10084000"
+    ],
+    [
+      "0x100fd000",
+      "0x100fe000"
+    ],
+    [
+      "0x100ff000",
+      "0x10100000"
+    ],
+    [
+      "0x18030000",
+      "0x18031000"
+    ],
+    [
+      "0x180d7000",
+      "0x180da000"
+    ],
+    [
+      "0x180dc000",
+      "0x180de000"
+    ],
+    [
+      "0x1811b000",
+      "0x1811c000"
+    ]
+  ],
+  "flash_coverage": {
+    "page_bytes": 256,
+    "call_code_ranges": [
+      [
+        "0x10000",
+        "0x10100"
+      ],
+      [
+        "0x88c00",
+        "0x88e00"
+      ],
+      [
+        "0xf1c00",
+        "0xf1d00"
+      ],
+      [
+        "0xf1f00",
+        "0xf2200"
+      ],
+      [
+        "0xf2300",
+        "0xf2d00"
+      ],
+      [
+        "0xf2e00",
+        "0xf3600"
+      ],
+      [
+        "0xf3700",
+        "0xf4400"
+      ],
+      [
+        "0xf4500",
+        "0xf4b00"
+      ],
+      [
+        "0xf5400",
+        "0xf5500"
+      ],
+      [
+        "0xf5800",
+        "0xf5900"
+      ],
+      [
+        "0xf5e00",
+        "0xf5f00"
+      ],
+      [
+        "0xf6000",
+        "0xf6100"
+      ],
+      [
+        "0xf6400",
+        "0xf6500"
+      ],
+      [
+        "0xf6800",
+        "0xf6900"
+      ],
+      [
+        "0xf6c00",
+        "0xf6d00"
+      ],
+      [
+        "0xf6e00",
+        "0xf6f00"
+      ],
+      [
+        "0xf7100",
+        "0xf7200"
+      ],
+      [
+        "0xf7300",
+        "0xf7400"
+      ],
+      [
+        "0xf7600",
+        "0xf7700"
+      ],
+      [
+        "0xfa100",
+        "0xfa800"
+      ],
+      [
+        "0xfaa00",
+        "0xfae00"
+      ],
+      [
+        "0xfb700",
+        "0xfbb00"
+      ],
+      [
+        "0xfbc00",
+        "0xfc100"
+      ],
+      [
+        "0xfc700",
+        "0xfc900"
+      ],
+      [
+        "0xfcb00",
+        "0xfcd00"
+      ],
+      [
+        "0xfd000",
+        "0xfd100"
+      ],
+      [
+        "0xfd400",
+        "0xfd900"
+      ],
+      [
+        "0xfdb00",
+        "0xfdd00"
+      ],
+      [
+        "0xfe400",
+        "0xfe600"
+      ],
+      [
+        "0xfeb00",
+        "0xff100"
+      ],
+      [
+        "0xff200",
+        "0xff600"
+      ],
+      [
+        "0xffb00",
+        "0xfff00"
+      ],
+      [
+        "0x106b00",
+        "0x106e00"
+      ],
+      [
+        "0x108500",
+        "0x108600"
+      ],
+      [
+        "0x14f200",
+        "0x14f300"
+      ],
+      [
+        "0x14f600",
+        "0x14f900"
+      ],
+      [
+        "0x150000",
+        "0x150100"
+      ],
+      [
+        "0x150800",
+        "0x150a00"
+      ],
+      [
+        "0x150b00",
+        "0x150c00"
+      ],
+      [
+        "0x151e00",
+        "0x152000"
+      ],
+      [
+        "0x154000",
+        "0x154200"
+      ]
+    ],
+    "call_data_ranges": [
+      [
+        "0xf1e00",
+        "0xf1f00"
+      ],
+      [
+        "0xf2200",
+        "0xf2300"
+      ],
+      [
+        "0xf2700",
+        "0xf2800"
+      ],
+      [
+        "0xf2b00",
+        "0xf2c00"
+      ],
+      [
+        "0xf2f00",
+        "0xf3200"
+      ],
+      [
+        "0xf3400",
+        "0xf3600"
+      ],
+      [
+        "0xf3800",
+        "0xf3a00"
+      ],
+      [
+        "0xf3b00",
+        "0xf4400"
+      ],
+      [
+        "0xf4600",
+        "0xf4900"
+      ],
+      [
+        "0xf4a00",
+        "0xf4b00"
+      ],
+      [
+        "0xf5400",
+        "0xf5500"
+      ],
+      [
+        "0xf5800",
+        "0xf5a00"
+      ],
+      [
+        "0xf5e00",
+        "0xf5f00"
+      ],
+      [
+        "0xf6000",
+        "0xf6200"
+      ],
+      [
+        "0xf6700",
+        "0xf6800"
+      ],
+      [
+        "0xf7400",
+        "0xf7500"
+      ],
+      [
+        "0xfa100",
+        "0xfa200"
+      ],
+      [
+        "0xfa300",
+        "0xfa400"
+      ],
+      [
+        "0xfa700",
+        "0xfa800"
+      ],
+      [
+        "0xfad00",
+        "0xfae00"
+      ],
+      [
+        "0xfba00",
+        "0xfbb00"
+      ],
+      [
+        "0xfbc00",
+        "0xfbd00"
+      ],
+      [
+        "0xfcb00",
+        "0xfcc00"
+      ],
+      [
+        "0xfcf00",
+        "0xfd000"
+      ],
+      [
+        "0xfd600",
+        "0xfd700"
+      ],
+      [
+        "0xfda00",
+        "0xfdb00"
+      ],
+      [
+        "0xfdf00",
+        "0xfe000"
+      ],
+      [
+        "0xfe800",
+        "0xfe900"
+      ],
+      [
+        "0xfeb00",
+        "0xfec00"
+      ],
+      [
+        "0xfef00",
+        "0xff000"
+      ],
+      [
+        "0xff100",
+        "0xff200"
+      ],
+      [
+        "0xff500",
+        "0xff700"
+      ],
+      [
+        "0xffb00",
+        "0xfff00"
+      ],
+      [
+        "0x154100",
+        "0x154200"
+      ],
+      [
+        "0x18be00",
+        "0x18bf00"
+      ],
+      [
+        "0x18d900",
+        "0x18dc00"
+      ],
+      [
+        "0x18e400",
+        "0x18f000"
+      ],
+      [
+        "0x18f200",
+        "0x18f600"
+      ],
+      [
+        "0x190300",
+        "0x190500"
+      ]
+    ]
+  }
+}

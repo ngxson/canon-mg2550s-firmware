@@ -106,6 +106,20 @@ bool scanner_motor_scan_move(uint32_t endpoint, uint32_t speed)
     return true;
 }
 
+/* Live cruise change during a scan travel (ring backpressure, scan_page.c):
+ * the ramp targets scan_speed every tick, so the PI follows the new target;
+ * the deadline is extended for the slower remainder. */
+bool scanner_motor_scan_throttle(uint32_t speed)
+{
+    if (phase != SCAN_MOVE || speed < 1200u || speed > 60000u) return false;
+    if (speed == scan_speed) return true;
+    uint32_t x = rd(P + 0x100u), remaining = scan_target > x ? scan_target - x : 0u;
+    scan_speed = speed;
+    limit_ms = (uint32_t)((app_clock_ticks() - started) / CLOCK_TICKS_PER_MS) +
+               motor_divide((uint64_t)remaining * 1000u, speed) + SCAN_APPROACH * 1000u / 4000u + 2000u;
+    return true;
+}
+
 static void stop_outputs(void)
 {
     wr(C, 0u); wr(C + 8u, NEUTRAL); wr(P + 0x11cu, 0u);
@@ -451,3 +465,5 @@ void scanner_motor_poll(void)
 /* Stage A2 experiment: the shared motor-off setup (routing + driver-IC serial wake +
  * scanner block init) for print_mech.c; identical to the path every scanner move uses. */
 bool scanner_motor_shared_init(void) { return initialize(); }
+
+uint32_t scanner_motor_status_word(void) { return (uint32_t)phase | (uint32_t)home_result << 8 | (rd(P + 0x100u) & 0xfffffu) << 12; }

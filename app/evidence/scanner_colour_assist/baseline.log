@@ -1,0 +1,7 @@
+{"accept_rgb300_32": 0, "accept_rgb300_3507": 0}
+job_status 503
+Traceback (most recent call last):
+  File "/project/app/tests/assist_probe.py", line 28, in <module>
+    assert status==201,('300dpi job rejected',status)
+           ^^^^^^^^^^^
+AssertionError: ('300dpi job rejected', 503)

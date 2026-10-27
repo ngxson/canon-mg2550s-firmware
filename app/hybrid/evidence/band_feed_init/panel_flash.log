@@ -1,0 +1,14 @@
+Application: 2031616 bytes, SHA-256 5ab4404c2c3efee5480b7c5eabc7682d2e9faeafa73085d7149e1b8a28b66570
+{
+  "layout_version": 2,
+  "mode": "bootloader",
+  "held": true,
+  "busy": false,
+  "app_valid": true,
+  "dangerous_write": true,
+  "reboot_blocked": false,
+  "remaining_ms": 0,
+  "status": "C0",
+  "application_flash": "0x10000",
+  "application_capacity": 2031616
+}

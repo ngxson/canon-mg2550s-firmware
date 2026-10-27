@@ -1,0 +1,57 @@
+{
+  "scope": "ARM regressions for continuous RGB output, with synthetic optics.\n\nChecks 75/150/300 dpi, the n=1 pixel average, reuse of the colour ring, and\nthe stock C=3 routing preconditions before the model supplies any pixels.\nDMA traversal follows ScanHost's model; this does not verify physical colour\norder, cold AFE startup, IRQ cadence or optical quality. No printer access.\n",
+  "app_sha256": "c4db5d879e72883a7b575937da3e28a51acad82fa65353804260dbc5ba0676b2",
+  "cases": [
+    {
+      "name": "300dpi_admission_and_bounds",
+      "rows": [
+        32,
+        3507,
+        3508
+      ]
+    },
+    {
+      "name": "continuous_rgb",
+      "dpi": 75,
+      "pixels": 45,
+      "rows": 24,
+      "ring_capacity": 219,
+      "reuses_ring": false
+    },
+    {
+      "name": "continuous_rgb",
+      "dpi": 150,
+      "pixels": 90,
+      "rows": 24,
+      "ring_capacity": 219,
+      "reuses_ring": false
+    },
+    {
+      "name": "continuous_rgb",
+      "dpi": 300,
+      "pixels": 180,
+      "rows": 32,
+      "ring_capacity": 219,
+      "reuses_ring": false
+    },
+    {
+      "name": "continuous_rgb",
+      "dpi": 300,
+      "pixels": 180,
+      "rows": 231,
+      "ring_capacity": 219,
+      "reuses_ring": true
+    },
+    {
+      "name": "continuous_rgb",
+      "dpi": 75,
+      "pixels": 637,
+      "rows": 876,
+      "ring_capacity": 219,
+      "reuses_ring": true
+    },
+    {
+      "name": "incorrect_colour_routing_rejected"
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+{
+ "label": "CA0119",
+ "variants": [
+  [
+   "A",
+   0,
+   false,
+   255
+  ],
+  [
+   "B",
+   320,
+   false,
+   255
+  ],
+  [
+   "C",
+   0,
+   false,
+   255
+  ],
+  [
+   "D",
+   320,
+   "blank",
+   255
+  ],
+  [
+   "E",
+   320,
+   false,
+   0
+  ],
+  [
+   "F",
+   320,
+   false,
+   95
+  ]
+ ],
+ "steps": [
+  {
+   "routine": 8,
+   "flags": 6400,
+   "index": null,
+   "result": 0,
+   "errors": 2,
+   "exceptions": 0,
+   "seconds": 5.4
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 650,
+   "result": 0,
+   "errors": 2,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 1024,
+   "index": null,
+   "result": 1,
+   "errors": 2,
+   "exceptions": 0,
+   "seconds": 3.2
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 5.7
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.8
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.8
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.8
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.8
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.8
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.9
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.8
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 1.0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 0.6
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 2.8
+  },
+  {
+   "routine": 9,
+   "flags": 3328,
+   "index": null,
+   "result": 0,
+   "errors": 3,
+   "exceptions": 0,
+   "seconds": 5.5
+  }
+ ]
+}

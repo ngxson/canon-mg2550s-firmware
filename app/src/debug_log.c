@@ -4,7 +4,7 @@
  * counters masked to the buffer; their unsigned difference is the fill level. */
 #include "app.h"
 
-#define LOG_SIZE 4096u
+#define LOG_SIZE 32768u
 #define LOG_MASK (LOG_SIZE - 1u)
 static uint8_t buffer[LOG_SIZE];
 static uint32_t head, tail;

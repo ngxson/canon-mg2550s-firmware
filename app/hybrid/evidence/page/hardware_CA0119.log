@@ -1,0 +1,28 @@
+1. home
+  home: result 2
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load
+variant S00: advance 0, fresh False, finish mask 0xff, selection rows 304, raster mode 0x0
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant S08: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x8
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant S16: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x10
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant S24: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x18
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant S32: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x20
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant S40: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x28
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant S48: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x30
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant S56: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x38
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant AL: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x100
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+5. stock eject
+6. home
+  home: result 2
+done CA0119
+exit=0

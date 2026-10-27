@@ -1,0 +1,201 @@
+--- a/app/src/scanner.c
++++ b/app/src/scanner.c
+@@ -446,15 +446,17 @@
+  * (emu/stockapp/scanner_fixture.py); the ring/wrap behaviour is measured on
+  * hardware with the burst window override (USB 0x5e).
+  *
+- * Ring geometry. Grey: W rows, DMA advances one row per line and wraps at
+- * the window end, so line i lives in row i mod W. Colour: stock's planar
+- * window of 3N+1 rows with a (2N+1)-row jump per component transfer, so
+- * component k of line i lives in row (2N + i + k(2N+1)) mod (3N+1) and the
+- * ring holds N lines. The DMA transfer count is the whole page (16-bit, up to
++ * Ring geometry: every transfer advances by one component row, as in the
++ * verified grey path. Colour stores consecutive R/G/B component rows for
++ * each line; the window is a multiple of three rows. The finite stock
++ * capture's large planar jumps remain confined to the short burst/calibration
++ * path. Small burst tests did not prove those jumps safe for a whole page;
++ * long colour pages using them corrupted application RAM on the board.
++ * The DMA transfer count is the whole page (16-bit, up to
+  * 65535 segments); the page consumer must release line i before line
+  * i + capacity - 2 is requested, which scan_page.c enforces by throttling the
+  * carriage (lines are position-gated). */
+-#define LINE_RING_ROWS ((LINE_BUF_BYTES - BURST_GUARD) / BURST_ROW)     /* 672 rows of 0x1440 */
++#define LINE_RING_ROWS ((LINE_BUF_BYTES - BURST_GUARD) / BURST_ROW)
+ #define LINE_ATTEMPTS 3u
+ #define LINE_WARMUP 128u                    /* stationary P0 periods before any request */
+ #define LINE_AFE_GAIN 13u
+@@ -464,7 +466,7 @@
+ static struct {
+     bool running, done, failed, gate_pending, validated, overrun;
+     unsigned components, lines, requested, q, raw, ready, taken;
+-    unsigned ring_lines, window_rows, plane;          /* capacity, window, colour plane length N */
++    unsigned ring_lines, window_rows;
+     uint32_t first, started_ms, budget_ms;
+ } line;
+ /* Request event index of each outstanding line, by line mod ring capacity. */
+@@ -482,28 +484,25 @@
+ 
+ unsigned scanner_line_capacity(unsigned components)
+ {
+-    return components == 3u ? (LINE_RING_ROWS - 1u) / 3u : LINE_RING_ROWS;
++    return components == 3u ? LINE_RING_ROWS / 3u : LINE_RING_ROWS;
+ }
+ 
+ /* Buffer row of component `comp` of line `k` (see the ring geometry above). */
+ static uint32_t line_row_address(unsigned k, unsigned comp)
+ {
+-    unsigned row;
+-    if (line.components == 3u) {
+-        unsigned n = line.plane, w = line.window_rows;
+-        row = (2u * n + k % w + comp * (2u * n + 1u)) % w;
+-    } else row = k % line.window_rows;
++    unsigned row = (k % line.ring_lines) * line.components + comp;
+     return LINE_BUF + row * BURST_ROW;
+ }
+ 
+ void scanner_line_stop(void)
+ {
+-    if (line.running || line.gate_pending) {
+-        modify(0xc0d6011cu, 0x11111113u, 0u);        /* position gate and the moving-mode bits */
+-        modify(0xc0c57400u, 2u, 0u); wr(0xc0c57108u, 0u); modify(0xc0c57404u, 2u, 0u);
+-        wr(0xc0c57140u, 0u);
+-        burst_stop();
+-    }
++    /* Prepare enables timing before running is set; completion may already
++     * have cleared running. Always quiesce the hardware, preserving the rows
++     * and counters so the host can drain a finished page. */
++    modify(0xc0d6011cu, 0x11111113u, 0u);
++    modify(0xc0c57400u, 2u, 0u); wr(0xc0c57108u, 0u); modify(0xc0c57404u, 2u, 0u);
++    wr(0xc0c57140u, 0u);
++    burst_stop();
+     line.running = line.gate_pending = false;
+     scanner_power(false);
+ }
+@@ -515,11 +514,10 @@
+ {
+     const uint32_t R = LINE_BUF;
+     const unsigned C = components;
+-    unsigned n = C == 3u ? (LINE_RING_ROWS - 1u) / 3u : 0u;
+-    unsigned rows = C == 3u ? 3u * n + 1u : LINE_RING_ROWS;
+-    uint32_t window = rows * BURST_ROW, plane = C == 3u ? 2u * n * BURST_ROW : 0u;
++    unsigned rows = scanner_line_capacity(C) * C;
++    uint32_t window = rows * BURST_ROW;
+     unsigned transfers = lines * C;
+-    line.components = C; line.lines = lines; line.plane = n; line.window_rows = rows;
++    line.components = C; line.lines = lines; line.window_rows = rows;
+     line.ring_lines = scanner_line_capacity(C);
+     if (transfers > 65535u) return false;
+     /* Sentinel over the whole window (~40 ms with the instruction cache): a
+@@ -538,8 +536,7 @@
+     modify(0xc0d60008u, 0u, 0x80000000u);
+     for (unsigned c = 0; c < 2u; ++c) {
+         uint32_t b = 0xc0d50000u + c * 0x100u;
+-        ldmac_descriptor(c, R + plane + c * BURST_SEG, R, R + window, BURST_SEG);
+-        wr(b + 0x34u, plane + BURST_SEG);
++        ldmac_descriptor(c, R + c * BURST_SEG, R, R + window, BURST_SEG);
+         modify(b + 0x28u, 0xffffu, transfers);
+     }
+     for (unsigned c = 2; c < 4u; ++c) { uint32_t b = 0xc0d50000u + c * 0x100u; wr(b + 8u, 0u); wr(b, 0u); }
+@@ -551,7 +548,7 @@
+     if (!afe_operating_gain(line_gain, LINE_AFE_OFFSET)) goto failed;
+     for (unsigned c = 0; c < 2u; ++c) {
+         uint32_t b = 0xc0d50000u + c * 0x100u;
+-        if (rd(b + 0x14u) != R + plane + c * BURST_SEG || rd(b + 0x18u) != R || rd(b + 0x1cu) != R + window ||
++        if (rd(b + 0x14u) != R + c * BURST_SEG || rd(b + 0x18u) != R || rd(b + 0x1cu) != R + window ||
+             rd(b + 0x20u) != 0x00010a20u || rd(b + 0x28u) != (0x10000u | transfers)) goto failed;
+     }
+     scnio_arm(C, 0x1a748u);                  /* P0 sub-period for the warm-up */
+@@ -685,7 +682,7 @@
+     }
+     while (line.ready < line.requested &&
+            (line.done || (uint16_t)(line.raw - line_request_event[line.ready % LINE_RING_ROWS]) >= 3u)) ++line.ready;
+-    if (line.done) { burst_stop(); line.running = false; dbg_puts("[line] done\n"); }
++    if (line.done) { scanner_line_stop(); dbg_puts("[line] done\n"); }
+     /* The front end sometimes outputs exact zeros for a whole setup; check
+      * the first two lines once, before any line is handed out, so the page can
+      * redo the setup without duplicating output. */
+@@ -712,6 +709,17 @@
+     memset(&line, 0, sizeof(line));
+ }
+ unsigned scanner_line_backlog(void) { return line.requested - line.taken; }
++/* Diagnostic (2026-10-27 freezes between lines 467 and 627 of a colour page):
++ * the live LDMAC words of both ring channels, so the last progress line before
++ * a freeze shows where the hardware pointer is relative to the ring. */
++void scanner_line_dma_report(void)
++{
++    for (unsigned c = 0; c < 2u; ++c) {
++        uint32_t b = 0xc0d50000u + c * 0x100u;
++        dbg_puts(c ? " ch1=" : " ch0="); dbg_u32(rd(b + 0x14u)); dbg_putc('/'); dbg_u32(rd(b + 0x10u));
++        dbg_putc('/'); dbg_u32(rd(b + 0x0cu)); dbg_putc('/'); dbg_u32(rd(b + 0x24u)); dbg_putc('/'); dbg_u32(rd(b + 0x28u));
++    }
++}
+ uint32_t scanner_line_status_word(void) { return (line.requested & 0xfffu) | (line.ready & 0xfffu) << 12 | (line.taken & 0xffu) << 24; }
+ unsigned scanner_line_ring(void) { return line.ring_lines; }
+ 
+--- a/app/src/scan_page.c
++++ b/app/src/scan_page.c
+@@ -83,7 +83,10 @@
+ {
+     static const char *const names[] = {"idle", "home", "settle", "capture", "ready", "step", "return",
+                                         "done", "failed", "cancelled", "scan", "calibrate"};
+-    scanner_motor_cancel(); scanner_line_reset(); scanner_lamp_off();
++    scanner_motor_cancel(); scanner_line_stop(); scanner_lamp_off();
++    /* Returning home can finish before a slow host drains the ring. Keep
++     * completed rows readable until the next page; failures discard them. */
++    if (result != PAGE_DONE) scanner_line_reset();
+     page_error = error; transition(result);
+     dbg_puts("[page] end state="); dbg_dec(result);
+     dbg_puts(" error="); dbg_dec(error); dbg_puts(" rows="); dbg_dec(row); dbg_puts(" ms:");
+@@ -96,6 +99,9 @@
+ 
+ void scan_page_cancel(void)
+ {
++    /* Emergency stop and reboot also call this when page bookkeeping is
++     * idle or damaged. Quiesce acquisition independently of that state. */
++    scanner_line_stop();
+     if (scan_page_busy()) end_page(PAGE_CANCELLED, ERR_CANCEL);
+ }
+ 
+@@ -110,7 +116,7 @@
+         (count - 1u) * spacing > 450048u - start || (scan_page_busy() && !adopt) ||
+         (scanner_motor_busy() && !adopt) || print_is_active()) return false;
+     rows = count; pitch = spacing; offset = start; internal = owned; park = false; retries = 0;
+-    scanner_line_reset();
++    scanner_line_reset(); scratch_pattern_fill();
+     components = owned ? next_components : 1u; next_components = 1u;
+     /* Moving acquisition for the eSCL pitches; the vendor page protocol keeps stop-and-capture. */
+     continuous = owned && (spacing == 128u || spacing == 256u || spacing == 512u) && count * components <= 65535u;
+@@ -225,14 +231,21 @@
+     }
+     {   /* progress line every 2 s: the last one before a freeze locates it */
+         static uint32_t alive_ms;
+-        if (now - alive_ms > 2000u) {
++        if (now - alive_ms > 500u) {
+             alive_ms = now;
+             dbg_puts("[page] alive row="); dbg_dec(scanner_line_ready()); dbg_puts(" taken="); dbg_dec(taken);
+             dbg_puts(" backlog="); dbg_dec(scanner_line_backlog()); dbg_puts(" pos="); dbg_u32(scanner_motor_position());
+             dbg_puts(" loops="); dbg_dec(app_loop_count);
+             { uint32_t v; int c = canary_check(&v); if (c >= 0) { dbg_puts(" CANARY "); dbg_dec((uint32_t)c); dbg_puts("=0x"); dbg_u32(v); } }
++            { uint32_t v; int c = scratch_pattern_check(&v); if (c >= 0) { dbg_puts(" SCRATCH "); dbg_dec((uint32_t)c); dbg_puts("=0x"); dbg_u32(v); } }
++            scanner_line_dma_report();
+             dbg_puts(crawling ? " crawl\n" : "\n");
+         }
++    }
++    /* Acquisition completion owns the end of forward travel. Do not wait
++     * for the runout endpoint (or its stall timeout) with the lamp on. */
++    if (scanner_line_done()) {
++        scanner_line_stop(); scanner_motor_cancel(); transition(PAGE_RETURN); return;
+     }
+     if (scanner_motor_busy()) {
+         /* Ring backpressure: lines are position-gated, so a slow consumer
+@@ -242,10 +255,6 @@
+         else if (crawling && backlog < ring / 4u) { crawling = !scanner_motor_scan_throttle(cont_speed ? cont_speed : cruise_for_pitch(pitch)); if (!crawling) dbg_puts("[page] cruise\n"); }
+         return;
+     }
+-    /* Every line captured: the page is complete whatever the travel's end
+-     * looked like (an endpoint stall after the last line, 2026-10-27 baseline
+-     * scan, used to abort a fully captured page). */
+-    if (scanner_line_done()) { scanner_line_stop(); transition(PAGE_RETURN); return; }
+     if (!scanner_motor_move_ok()) { end_page(PAGE_FAILED, ERR_STEP); return; }
+     if (now - phase_ms > 60000u) end_page(PAGE_FAILED, ERR_DEADLINE);
+ }

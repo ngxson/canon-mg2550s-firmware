@@ -103,7 +103,44 @@ void print_selftest(void)
     dbg_puts("[print] emitted head bytes: "); dbg_dec(print_st.row_bytes[0]); dbg_putc('\n');
 }
 
+/* Diagnostic: pattern the idle print buffer during scan pages; the first
+ * damaged byte (offset, value) locates a writer that app_loop_count's canaries
+ * below it cannot see. print_buf sits at bss+... directly above app_loop_count. */
+void scratch_pattern_fill(void)
+{
+    if (print_active) return;
+    for (unsigned i = 0; i < sizeof(print_buf); ++i) {
+        if (!(i & 127u)) app_yield();
+        print_buf[i] = (uint8_t)(0x5au ^ i);
+    }
+}
+int scratch_pattern_check(uint32_t *value)
+{
+    if (print_active) return -1;
+    for (unsigned i = 0; i < sizeof(print_buf); ++i) {
+        if (!(i & 127u)) app_yield();
+        if (print_buf[i] != (uint8_t)(0x5au ^ i)) {
+            *value = 0; for (unsigned k = 0; k < 4u && i + k < sizeof(print_buf); ++k) *value |= (uint32_t)print_buf[i + k] << (8u * k);
+            return (int)i;
+        }
+    }
+    return -1;
+}
+
 const char *app_section = "main";
+uint32_t app_loop_max_ticks, app_loop_count;   /* main-loop iteration profile (escl.c prints and resets it) */
+/* Corruption canaries (2026-10-27: bss globals were overwritten during a long
+ * colour page). Filled at boot; canary_check() reports the first damaged word. */
+uint32_t canary_a[64], canary_b[64];
+void canary_init(void) { for (unsigned i = 0; i < 64; ++i) { canary_a[i] = 0xc0ffee00u + i; canary_b[i] = 0xdeadbe00u + i; } }
+int canary_check(uint32_t *value)
+{
+    for (unsigned i = 0; i < 64; ++i) {
+        if (canary_a[i] != 0xc0ffee00u + i) { *value = canary_a[i]; return (int)i; }
+        if (canary_b[i] != 0xdeadbe00u + i) { *value = canary_b[i]; return 64 + (int)i; }
+    }
+    return -1;
+}
 
 void app_yield(void)
 {
@@ -118,21 +155,27 @@ void firmware_main(void)
     service_init(false);
     dbg_init();
     dbg_puts("\n[app] MG2550s open app\n");
+    canary_init();
+    exception_report();
     dbg_hex("app_flash", APP_FLASH);
     dbg_hex("app_ram", APP_RAM);
 
     usb_init();
     dbg_puts("[app] usb up, entering main loop\n");
-    dbg_puts("[btn] B/W=toggle feeder (LF reverse); Colour=toggle transport (LF forward); Cancel=stop\n");
+    if (hybrid_panel_available()) {
+        buttons_select_map(2);
+        dbg_puts("[btn] B/W=one stock paper advance; release between presses; Cancel=stop; no firing\n");
+    } else dbg_puts("[btn] B/W=toggle feeder (LF reverse); Colour=toggle transport (LF forward); Cancel=stop\n");
     dbg_puts("[home] stock PI seek + verified backoff + repeat seek; mechanical reference\n");
     dbg_puts("[page] USB stop-and-capture page scan; returns home; Cancel=stop\n");
     dbg_puts("[escl] eSCL over IPP-USB (interfaces 2-3)\n");
     dbg_puts("[cart] USB 0x62 reads cartridge fuse ROM (read-only); 0x63 status\n");
     dbg_puts("[head] USB 0x81 stationary black prefire (stock ID24 list); 0x82 status\n");
 
-    scanner_request();                 /* one peek at boot; re-trigger via USB 0x51 */
-
+    uint32_t loop_t0 = app_clock_ticks();
     for (;;) {
+        { uint32_t t = app_clock_ticks(); if (t - loop_t0 > app_loop_max_ticks) app_loop_max_ticks = t - loop_t0; loop_t0 = t; ++app_loop_count; }
+        if (!(app_loop_count & 63u)) heartbeat(app_loop_count, app_section);
         scanner_motor_poll();
         leds_tick();
         scanner_line_poll();
@@ -146,7 +189,7 @@ void firmware_main(void)
         /* Long scanner captures and I2C retry loops cannot extend a jog. */
         if (!scanner_motor_busy()) {
             mailbox_poll();
-            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); head_fire_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); carriage_poll(); page_job_poll(); }
+            if (!scan_page_busy()) { scanner_poll(); cartridge_poll(); head_fire_poll(); print_mech_poll(); paper_feed_poll(); paper_manual_poll(); carriage_poll(); page_job_poll(); hybrid_poll(); }
         }
     }
 }

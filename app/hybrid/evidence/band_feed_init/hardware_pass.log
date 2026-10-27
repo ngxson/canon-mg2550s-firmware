@@ -1,0 +1,9 @@
+label INIT40
+1. home
+  carriage home: result 2 raw 0x70000
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load (routine 8, stock LF task + servo, CR live)
+  routine 8|0x1900: result 0x0 errors 0 exceptions 0 (4.6s) CR moves [(2688, '0x201', 5)]
+  stock ASF state byte 0x180c6f54 = 0 (1 = sheet loaded and aligned)
+stock loader did not load a sheet (tray empty or pickup failed); nothing printed

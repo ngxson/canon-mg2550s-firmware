@@ -59,3 +59,5 @@ int scan_source_row(uint8_t *out)
 }
 
 void scan_source_cancel(void) { running = false; }
+
+bool scan_source_set_order(unsigned r, unsigned g, unsigned b) { (void)r; (void)g; (void)b; return true; }

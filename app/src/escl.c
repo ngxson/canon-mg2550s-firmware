@@ -18,9 +18,9 @@
 #define NS "xmlns:scan=\"http://schemas.hp.com/imaging/escl/2011/05/03\" " \
            "xmlns:pwg=\"http://www.pwg.org/schemas/2010/12/sm\""
 #define PENDING_TIMEOUT_MS 60000u
-#define STREAM_BATCH 4096u        /* encoded bytes per bulk transfer, roughly */
+#define STREAM_BATCH 12288u       /* encoded bytes per bulk transfer, roughly (TX_SIZE 16 KiB) */
 #define JPEG_QUALITY 85u
-#define PRODUCE_BUDGET_MS 2u      /* per call: keep the main loop (page steps) responsive */
+#define PRODUCE_BUDGET_MS 40u     /* per call; the converters and encoders yield to the motor every few thousand instructions */
 
 enum doc_format { FORMAT_JPEG, FORMAT_PNG };
 static const char *const format_types[] = {"image/jpeg", "image/png"};
@@ -43,6 +43,21 @@ static struct jpeg_writer jpeg;
 static uint8_t row[SCAN_MAX_PIXELS * 3u];
 
 static bool active(void) { return job.state == JOB_PENDING || job.state == JOB_PROCESSING; }
+
+/* Throughput profile of the streaming path (2026-10-27: a 75 dpi grey page
+ * delivered ~10 rows/s while the carriage captured 50 rows/s). Ticks of the
+ * 96 MHz clock inside produce(), inside the source row calls, the largest gap
+ * between produce() calls (host/USB/main-loop latency) and the wall time. */
+static struct { uint32_t calls, produce_ticks, row_ticks, rows, max_gap, last_end, started_ms; } prof;
+static void prof_begin(void) { prof.calls = prof.produce_ticks = prof.row_ticks = prof.rows = prof.max_gap = prof.last_end = 0; prof.started_ms = time_ms(); app_loop_max_ticks = app_loop_count = 0; }
+static int prof_row(uint8_t *out)
+{
+    uint32_t t = app_clock_ticks();
+    int r = scan_source_row(out);
+    prof.row_ticks += app_clock_ticks() - t;
+    if (r > 0) ++prof.rows;
+    return r;
+}
 
 static bool same(const char *a, const char *b)
 {
@@ -70,6 +85,12 @@ static void finish(enum job_state state)
     job.state = state; job.streaming = false;
     dbg_puts("[escl] job "); dbg_dec(job.id); dbg_putc(' ');
     dbg_puts(job_names[state]); dbg_puts(" rows="); dbg_dec(job.rows); dbg_putc('\n');
+    if (prof.calls) {
+        dbg_puts("[escl] profile calls="); dbg_dec(prof.calls); dbg_puts(" produce_ms="); dbg_dec(prof.produce_ticks / CLOCK_TICKS_PER_MS);
+        dbg_puts(" rows_ms="); dbg_dec(prof.row_ticks / CLOCK_TICKS_PER_MS); dbg_puts(" max_gap_ms="); dbg_dec(prof.max_gap / CLOCK_TICKS_PER_MS);
+        dbg_puts(" wall_ms="); dbg_dec(time_ms() - prof.started_ms); dbg_puts(" rows="); dbg_dec(prof.rows);
+        dbg_puts(" loops="); dbg_dec(app_loop_count); dbg_puts(" loop_max_us="); dbg_dec(app_loop_max_ticks / 96u); dbg_putc('\n');
+    }
 }
 
 static void element(struct obuf *o, const char *name, const char *text)
@@ -263,6 +284,7 @@ static void create_job(unsigned conn, const struct http_request *rq)
     log_settings(rq);
     if (active()) { http_reply(conn, 503, NULL, NULL, NULL); return; }
     if (!settings(rq, &p, &bilevel, &format)) { http_reply(conn, 409, NULL, NULL, NULL); return; }
+    prof_begin();
     if (!scan_source_start(&p)) { http_reply(conn, 503, NULL, NULL, NULL); return; }
     job.state = JOB_PENDING; job.id = next_id++; job.rows = 0;
     job.created_ms = time_ms(); job.streaming = job.header_sent = false;
@@ -313,7 +335,7 @@ static unsigned produce_jpeg(uint8_t *out, unsigned max, bool *done)
     while (n < STREAM_BATCH && max - n >= JPEG_MCU_MAX && time_ms() - started < PRODUCE_BUDGET_MS) {
         uint8_t *slot = jpeg_row_buffer(&jpeg);
         if (slot) {
-            int r = scan_source_row(slot);
+            int r = prof_row(slot);
             if (!r) break;
             if (r < 0) { finish(JOB_ABORTED); *done = true; return n; }   /* truncated image */
             if (job.bilevel) threshold(slot, p->pixels);
@@ -327,7 +349,17 @@ static unsigned produce_jpeg(uint8_t *out, unsigned max, bool *done)
     return n;
 }
 
+static unsigned produce_body(uint8_t *out, unsigned max, bool *done);
 static unsigned produce(uint8_t *out, unsigned max, bool *done)
+{
+    uint32_t t = app_clock_ticks();
+    if (prof.last_end && t - prof.last_end > prof.max_gap) prof.max_gap = t - prof.last_end;
+    unsigned n = produce_body(out, max, done);
+    prof.last_end = app_clock_ticks(); prof.produce_ticks += prof.last_end - t; ++prof.calls;
+    return n;
+}
+
+static unsigned produce_body(uint8_t *out, unsigned max, bool *done)
 {
     unsigned n = 0;
     const struct scan_params *p = &job.params;
@@ -341,7 +373,7 @@ static unsigned produce(uint8_t *out, unsigned max, bool *done)
     uint32_t started = time_ms();
     while (job.rows < p->lines && n < STREAM_BATCH && max - n >= png.row_bytes + PNG_ROW_OVERHEAD
            && time_ms() - started < PRODUCE_BUDGET_MS) {
-        int r = scan_source_row(row);
+        int r = prof_row(row);
         if (!r) break;
         if (r < 0) { finish(JOB_ABORTED); *done = true; return n; }   /* truncated image */
         if (job.bilevel) pack_bilevel(row, p->pixels);

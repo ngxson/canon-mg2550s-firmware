@@ -1,0 +1,6 @@
+application ready {'layout_version': 2, 'mode': 'application', 'held': False, 'busy': False, 'app_valid': True, 'dangerous_write': False, 'reboot_blocked': False, 'remaining_ms': 0, 'status': '80', 'application_flash': '0x10000', 'application_capacity': 2031616} paper_sensor 1
+Traceback (most recent call last):
+  File "/tmp/canon-advance-held.py", line 11, in <module>
+    assert pe&1==0,'held paper no longer present; no step submitted'
+           ^^^^^^^
+AssertionError: held paper no longer present; no step submitted

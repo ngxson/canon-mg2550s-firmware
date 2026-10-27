@@ -77,3 +77,15 @@ The compiler's 60-byte shim is executed from the bootloader's full RAM copy.
 Stock dependencies remain extensive: C runtime, RTOS, exception handlers and
 all peripheral drivers. Their role is observation and comparison while source
 drivers replace them in the separate open application.
+
+## Running one stock routine as a fixture (hybrid shape B)
+
+`fixture.py` boots the unmodified stock image to idle in the public emulator,
+snapshots RAM, and direct-calls stock functions with the RTOS services
+(event flags, semaphores, mailboxes, pools, delay) either stopped at or
+stubbed and logged. `fixture_summary.py` prints the ordered service calls,
+decoded mailbox requests and MMIO writes of a saved report. Named cases cover
+the head-maintenance entries from RE brief 16; see
+[the maintenance evidence](../evidence/stockapp/maintenance/README.md) for
+the conventions (system mode, scratch allocator, zero status replies) and
+results.

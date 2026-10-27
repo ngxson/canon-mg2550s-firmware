@@ -1,0 +1,22 @@
+1. home
+  home: result 2
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load
+4. blank fresh pass
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant R160: advance 0, fresh False, finish mask 0xff, selection rows 160
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant R176: advance 320, fresh False, finish mask 0xff, selection rows 176
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant R224: advance 320, fresh False, finish mask 0xff, selection rows 224
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant R304: advance 320, fresh False, finish mask 0xff, selection rows 304
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant R304F: advance 640, fresh False, finish mask 0xff, selection rows 304
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+5. stock eject
+6. home
+  home: result 2
+done CR0006
+exit=0

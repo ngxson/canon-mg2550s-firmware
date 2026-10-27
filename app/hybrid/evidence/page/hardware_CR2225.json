@@ -1,0 +1,218 @@
+{
+ "label": "CR2225",
+ "cols": 1024,
+ "rows": 304,
+ "steps": [
+  {
+   "routine": 8,
+   "flags": 6400,
+   "index": null,
+   "result": 0,
+   "errors": 7,
+   "exceptions": 0,
+   "cr": [
+    [
+     2688,
+     "0x201"
+    ],
+    [
+     2688,
+     "0x1"
+    ]
+   ],
+   "log": [
+    "[shim] run routine 8 live",
+    "[shim] NVM write offset=0x00000140 len=96 (dropped)",
+    "[shim] NVM write offset=0x000001a8 len=96 (dropped)",
+    "[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00000a80 cd6b6=1",
+    "[shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=8 51400=0x00000000 28000=1 28080=167 51d04=0 51d0c=0 headticks=19",
+    "[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x000019c0 ticks=98",
+    "[shim] LF move ulf=2050 dir=1 profile=0x8000020b stock LF task",
+    "[shim] CR motion complete ticks=98 raw=0x000019c0",
+    "[shim] LF task body -> 0 running=0",
+    "[shim] LF motion complete, paper=0 ticks=364",
+    "[shim] LF move ulf=12950 dir=1 profile=0x8000020c stock LF task",
+    "[shim] LF task body -> 0 running=1",
+    "[shim] LF motion complete, paper=1 ticks=572",
+    "[shim] receive on empty mailbox 0x0000001b",
+    "[shim] LF move ulf=646 dir=0 profile=0x80000006 stock LF task",
+    "[shim] LF task body -> 0 running=1",
+    "[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00001980 cd6b6=1",
+    "[shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=8 51400=0x00000000 28000=1 28080=167 51d04=0 51d0c=0 headticks=19",
+    "[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000703 raw=0x00001980 ticks=0",
+    "[shim] CR motion complete ticks=0 raw=0x00001980",
+    "[shim] LF motion complete, paper=1 ticks=150",
+    "[shim] event wait timeout id=0x0000001b mask=0x00000001",
+    "[shim] stock load -> 0 servo ticks=150 asf=1",
+    "[shim] routine 8 returned 0 errors=7"
+   ]
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 1200,
+   "result": 0,
+   "errors": 7,
+   "exceptions": 0,
+   "cr": [],
+   "log": [
+    "[shim] run routine 10 dry",
+    "[shim] LF command 0x00004030",
+    "[shim] LF task body -> 0 running=0",
+    "[shim] LF move ulf=1200 dir=0 profile=0x80000006 stock LF task",
+    "[shim] LF task body -> 0 running=0",
+    "[shim] LF motion complete, paper=1 ticks=233",
+    "[shim] advance ulf=1200 raw before=0x00700000 after=0x00701c24 paper=1",
+    "[shim] routine 10 returned 0 errors=7"
+   ]
+  },
+  {
+   "routine": 5,
+   "flags": 1024,
+   "index": null,
+   "result": 1,
+   "errors": 7,
+   "exceptions": 0,
+   "cr": [],
+   "log": [
+    "[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)",
+    "[shim] run routine 5 dry",
+    "[shim] adc14 -> 8 manager6 base=0x2028ae80",
+    "[shim] a8422 -> 0",
+    "[shim] b12a2 -> 1 Q=0x202a1fa8",
+    "[shim] routine 5 returned 1 errors=7"
+   ]
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 8,
+   "exceptions": 0,
+   "cr": [
+    [
+     56596,
+     "0x103"
+    ]
+   ],
+   "log": [
+    "[shim] raster upload 82944 bytes to 0x2028b618",
+    "[shim] raster upload complete: 82944 bytes",
+    "[shim] raster upload 62464 bytes to 0x2022ea98",
+    "[shim] raster upload complete: 62464 bytes",
+    "[shim] raster upload 62464 bytes to 0x2024d878",
+    "[shim] raster upload complete: 62464 bytes",
+    "[shim] raster upload 62464 bytes to 0x2026c658",
+    "[shim] raster upload complete: 62464 bytes",
+    "[shim] run routine 7 live",
+    "[shim] band N=1024 rows=304 place=2104 masks 0xfffffffc 000000ff 00000000",
+    "[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=56596 profile=0x00000103",
+    "[shim] event wait timeout id=0x0000001b mask=0x00000001",
+    "[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00001980 cd6b6=1",
+    "[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=17",
+    "[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x0000ec80 ticks=1200",
+    "[shim] e6b80 -> 1",
+    "[shim] band finish done, errors=8",
+    "[shim] CR motion complete ticks=1200 raw=0x0000ec80",
+    "[shim] routine 7 returned 1 errors=8"
+   ]
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 8,
+   "exceptions": 0,
+   "cr": [],
+   "log": [
+    "[shim] run routine 5 dry",
+    "[shim] adc14 -> 8 manager6 base=0x2028ae80",
+    "[shim] a8422 -> 0",
+    "[shim] b12a2 -> 1 Q=0x202a1fa8",
+    "[shim] routine 5 returned 1 errors=8"
+   ]
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 10,
+   "exceptions": 0,
+   "cr": [
+    [
+     23794,
+     "0x1"
+    ],
+    [
+     56596,
+     "0x103"
+    ]
+   ],
+   "log": [
+    "[shim] raster upload 82944 bytes to 0x2028b618",
+    "[shim] raster upload complete: 82944 bytes",
+    "[shim] raster upload 124928 bytes to 0x2022ea98",
+    "[shim] raster upload complete: 124928 bytes",
+    "[shim] raster upload 124928 bytes to 0x2024d878",
+    "[shim] raster upload complete: 124928 bytes",
+    "[shim] raster upload 124928 bytes to 0x2026c658",
+    "[shim] raster upload complete: 124928 bytes",
+    "[shim] run routine 7 live",
+    "[shim] band N=1024 rows=304 place=2104 masks 0xfffffffc 000000ff 00000000",
+    "[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=56596 profile=0x00000103",
+    "[shim] event wait timeout id=0x0000001c mask=0x80000000",
+    "[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x0000ec80 cd6b6=1",
+    "[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=18",
+    "[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00006800 ticks=627",
+    "[shim] CR motion complete ticks=627 raw=0x00006800",
+    "[shim] event wait timeout id=0x0000001c mask=0x80000000",
+    "[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00006800 cd6b6=1",
+    "[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=18",
+    "[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x0000ec40 ticks=737",
+    "[shim] e6b80 -> 1",
+    "[shim] band finish done, errors=10",
+    "[shim] CR motion complete ticks=737 raw=0x0000ec40",
+    "[shim] routine 7 returned 1 errors=10"
+   ]
+  },
+  {
+   "routine": 9,
+   "flags": 3328,
+   "index": null,
+   "result": 0,
+   "errors": 10,
+   "exceptions": 0,
+   "cr": [],
+   "log": [
+    "[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)",
+    "[shim] run routine 9 live",
+    "[shim] LF command 0x00004030",
+    "[shim] LF task body -> 0 running=0",
+    "[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task",
+    "[shim] LF task body -> 0 running=0",
+    "[shim] LF motion complete, paper=1 ticks=445",
+    "[shim] eject move 0 request->0 paper=1",
+    "[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task",
+    "[shim] LF task body -> 0 running=1",
+    "[shim] LF motion complete, paper=1 ticks=445",
+    "[shim] eject move 1 request->0 paper=1",
+    "[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task",
+    "[shim] LF task body -> 0 running=1",
+    "[shim] LF motion complete, paper=1 ticks=446",
+    "[shim] eject move 2 request->0 paper=1",
+    "[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task",
+    "[shim] LF task body -> 0 running=1",
+    "[shim] LF motion complete, paper=0 ticks=447",
+    "[shim] eject move 3 request->0 paper=0",
+    "[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task",
+    "[shim] LF task body -> 0 running=1",
+    "[shim] LF motion complete, paper=0 ticks=448",
+    "[shim] eject move 4 request->0 paper=0",
+    "[shim] routine 9 returned 0 errors=10"
+   ]
+  }
+ ]
+}

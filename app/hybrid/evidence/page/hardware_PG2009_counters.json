@@ -1,0 +1,15 @@
+{
+ "label": "PG2009",
+ "note": "head activity counters read once after the whole 21-band run (not reset in between); lanes 0/1 = BK; band 0 expected even/odd 21940/16613, all bands 175021/126957",
+ "counters": {
+  "0": 26180,
+  "1": 20853,
+  "2": 2520,
+  "3": 5880,
+  "5": 2520,
+  "4": 5880,
+  "7": 2520,
+  "6": 5880
+ },
+ "second_read": 0
+}

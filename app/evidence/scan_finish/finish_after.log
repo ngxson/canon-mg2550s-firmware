@@ -1,0 +1,4 @@
+PASS capture completion stops forward travel and acquisition
+PASS all RGB rows remain downloadable after return-home
+PASS stop also quiesces prepared-but-not-started acquisition
+ALL SCAN FINISH ASSERTIONS PASSED

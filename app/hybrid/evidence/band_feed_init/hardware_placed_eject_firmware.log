@@ -1,0 +1,28 @@
+[cr] park reference=0x00000a80
+[cr] done result=2 x=64 ms=638 stalls=0
+[cr] frame: raw at park=0x00000a80 raw now=0x00000ac0
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] run routine 9 live
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=444
+[shim] eject move 0 request->0 paper=1
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=1 ticks=445
+[shim] eject move 1 request->0 paper=1
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=1 ticks=444
+[shim] eject move 2 request->0 paper=1
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=0 ticks=449
+[shim] eject move 3 request->0 paper=0
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=0 ticks=451
+[shim] eject move 4 request->0 paper=0
+[shim] routine 9 returned 0 errors=1

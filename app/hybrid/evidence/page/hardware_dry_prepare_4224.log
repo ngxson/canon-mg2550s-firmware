@@ -1,0 +1,13 @@
+app up after 0s: application 
+prepare: result 0x1 errors 0 exceptions 0 Q 0x20265868 base 0x20210080 (3.6s)
+manager 6: {'slots': 80, 'width': 4224, 'stride': 1280, 'size': 337920, 'base': '0x20210080'}
+Q BK masks: ['0xffffffff', '0x3f', '0x0', '0xffffffff', '0x3f', '0x0']
+upload band 0 (full verify): {'bytes': 337920, 'seconds': 0.88, 'raster': '0x18210800', 'checked': 337920, 'mismatches': 0, 'first_bad': []}
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x20210080
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x20265868
+[shim] routine 5 returned 1 errors=0
+[shim] raster upload 337920 bytes to 0x20210800
+[shim] raster upload complete: 337920 bytes

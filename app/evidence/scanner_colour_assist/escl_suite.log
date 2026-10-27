@@ -1,0 +1,9 @@
+PASS capabilities_are_the_scanners {"modes": ["BlackAndWhite1", "Grayscale8", "RGB24"], "resolutions": [75, 150, 300]}
+PASS continuous_page_skips_homing_when_parked {"reverse_moves_before": 4}
+PASS continuous_region_exact_pixels_gated_positions {"status_polls": 539, "pixels": [375, 30], "first_offset": 9401, "requests": 30}
+PASS colour_rgb24_planar_ring_rows {"pixels": [600, 32]}
+PASS job_adopts_return_home {"jpeg_bytes": 360}
+PASS delete_cancels_page_vendor_rows_refused 
+PASS delete_cancels_continuous_travel 
+PASS motor_serviced_during_escl_work {"worst_gap_instructions": 5509, "samples": 159938}
+ALL ESCL SCAN ASSERTIONS PASSED

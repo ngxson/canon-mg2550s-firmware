@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/work/repo/app/tests/validate_scan_finish.py", line 81, in <module>
+    main()
+  File "/work/repo/app/tests/validate_scan_finish.py", line 48, in main
+    assert word(e, 'page_phase') == 6, 'completed capture waited for motor endpoint'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: completed capture waited for motor endpoint

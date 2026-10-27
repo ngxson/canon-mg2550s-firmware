@@ -1,0 +1,6 @@
+short created /eSCL/ScanJobs/1
+short {'seconds': 22.408103415975347, 'pixels': (637, 32), 'mode': 'RGB', 'bytes': 61800}
+short page state 7 rail 0
+full created /eSCL/ScanJobs/2
+full {'seconds': 13.425947915995494, 'pixels': (637, 876), 'mode': 'RGB', 'bytes': 1689876}
+full page state 7 rail 0

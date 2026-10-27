@@ -1,0 +1,25 @@
+1. home
+  home: result 2
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load
+4. blank fresh pass
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant A: advance 0, fresh False, finish mask 0xff
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant B: advance 320, fresh False, finish mask 0xff
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant C: advance 0, fresh False, finish mask 0xff
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant D: advance 320, fresh blank, finish mask 0xff
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant E: advance 320, fresh False, finish mask 0x0
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant F: advance 320, fresh False, finish mask 0x5f
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+5. stock eject
+6. home
+  home: result 2
+done CV2335
+exit=0

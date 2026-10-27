@@ -1,0 +1,40 @@
+{
+  "image": "app/hybrid/evidence/page/scan_CP2314.png",
+  "resolution": 150,
+  "mm_per_px": 0.16933333333333334,
+  "image_mm": [
+    215.9,
+    296.8
+  ],
+  "paper_fraction": 0.931,
+  "marks": [
+    {
+      "x_mm": 41.27,
+      "y_mm": 28.19,
+      "w_mm": 1.35,
+      "h_mm": 1.02,
+      "area_mm2": 0.75,
+      "bbox_px": [
+        240,
+        165,
+        248,
+        171
+      ],
+      "mean_darkness": 0.546
+    },
+    {
+      "x_mm": 107.03,
+      "y_mm": 46.7,
+      "w_mm": 3.39,
+      "h_mm": 1.19,
+      "area_mm2": 1.95,
+      "bbox_px": [
+        619,
+        272,
+        639,
+        279
+      ],
+      "mean_darkness": 0.5
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "scope": "Isolated standalone ARM build, not flashed; no printer access. Source files match the applied changes.",
+  "application": {
+    "bytes": 115296,
+    "sha256": "195cb5dca7aba58d118ea683c2af74c791fecad12c9a175b543bfde56e281003"
+  },
+  "compiler": "arm-none-eabi-gcc (Arm GNU Toolchain 14.2.Rel1 (Build arm-14.52)) 14.2.1 20241119",
+  "tested_source_sha256": {
+    "app/src/scan_page.c": "dae33cbac502b22e60273908e42f9fe70714cf9cd88514b4eeca3569948a1082",
+    "app/src/scan_source_scanner.c": "22aeed8df9aaf977f6e60554e627b094c9adad2a763d94bb660d7ba1daced132",
+    "app/src/scanner.c": "460e999dd9ce58ca0eca91deea27c5af085f2c59c45e4fd42635ddcee42585bc",
+    "app/tests/validate_colour_continuous.py": "eb582df5150fed37e30e2273517de2b06e8c3aba7f72bf033deb5f159690ae4b"
+  },
+  "prior_sources": "baseline_sha256.json"
+}

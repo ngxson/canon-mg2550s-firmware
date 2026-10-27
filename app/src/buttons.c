@@ -18,7 +18,10 @@
  *   map 1 (feed bench): B/W = pick up and place a sheet (hold, then advance
  *                    8000 counts); Colour = advance 1024 counts; Power =
  *                    carriage park <-> 60000 counts; Cancel = eject if a
- *                    sheet is held, else stop. */
+ *                    sheet is held, else stop.
+ *   map 2 (hybrid): B/W = one 400-Ulf stock-controlled forward step.
+ *                    No repeat while held; Colour/Power have no action.
+ *                    Cancel is also polled inside the stock step. */
 static unsigned button_map;
 static unsigned place_step;        /* feed bench: 0 idle, 1 hold requested, 2 advance requested */
 static bool btn_log, snapshot, ready, cancel_consumed;
@@ -27,7 +30,7 @@ static unsigned btn_cand_n;
 
 bool buttons_select_map(unsigned map)
 {
-    if (map > 1u) return false;
+    if (map > 2u || (map == 2u && !hybrid_panel_available())) return false;
     button_map = map; place_step = 0;
     dbg_puts("[btn] map "); dbg_dec(map); dbg_putc('\n');
     return true;
@@ -108,6 +111,14 @@ void buttons_poll(void)
         if (pressed & (KEY_COPY_BW | KEY_COPY_CL | KEY_POWER | KEY_CANCEL)) {
             if ((pressed & KEY_CANCEL) && cancel_consumed) return;   /* the stop above already handled it */
             bench_press(pressed);
+        }
+        return;
+    }
+    if (button_map == 2u) {
+        if ((btn_cand & KEY_CANCEL) || (btn_cand & COPY_KEYS) == COPY_KEYS) return;
+        if (pressed & KEY_COPY_BW) {
+            bool accepted = hybrid_panel_advance();
+            bench_log(accepted ? "stock forward 400 Ulf" : "stock forward refused: busy");
         }
         return;
     }

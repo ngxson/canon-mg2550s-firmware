@@ -1,0 +1,110 @@
+label BK2254: 4224 x 1216 dots, 4 bands x 1 sweeps of 4224 columns, placement 856 (columns at our x 35008..102592, 15.9 mm from the sheet edge), first advance 650 Ulf, band pitch 608 Ulf
+1. home
+  carriage home: result 2 raw 0xa80
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load (routine 8)
+  routine 8|0x1900: result 0x0 errors 63 exceptions 0 waits 1 (5.5s) CR [(2688, '0x201', 5), (2688, '0x1', 5)] LF [(2050, '0x0', 2147484171), (12950, '0x0', 2147484172), (646, '0x0', 2147483654)]
+  stock ASF state byte = 1 (1 = sheet loaded and aligned)
+3b. first-line advance 650 Ulf
+  routine 10|0x800: result 0x0 errors 63 exceptions 0 waits 0 (1.0s) LF [(650, '0x0', 2147483654)]
+3c. blank first pass (fresh snapshot, zero raster, no advance)
+  routine 5|0x400: result 0x1 errors 63 exceptions 0 waits 0 (3.0s)
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  routine 7|0x1100: result 0x1 errors 64 exceptions 0 waits 1 (7.8s) CR [(102804, '0x103', 5)]
+band 00/4: 1 x (prepare, upload, fire), then advance 608 Ulf
+  routine 5|0x0: result 0x1 errors 64 exceptions 0 waits 0 (0.3s)
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  columns 0..4224 placement 856: upload {'bytes': 337920, 'seconds': 0.89, 'raster': '0x18210c20', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  routine 7|0x1100: result 0x1 errors 66 exceptions 0 waits 2 (5.9s) CR [(32850, '0x1', 5), (102804, '0x103', 5)]
+    [shim] LF move ulf=2050 dir=1 profile=0x8000020b stock LF task
+    [shim] LF task body -> 0 running=0
+    [shim] LF motion complete, paper=0 ticks=374
+    [shim] LF move ulf=12950 dir=1 profile=0x8000020c stock LF task
+    [shim] LF task body -> 0 running=1
+    [shim] LF motion complete, paper=1 ticks=584
+    [shim] LF move ulf=646 dir=0 profile=0x80000006 stock LF task
+    [shim] LF task body -> 0 running=1
+    [shim] LF motion complete, paper=1 ticks=150
+    [shim] event wait timeout id=0x0000001b mask=0x00000001
+    [shim] routine 8 returned 0 errors=63
+    [shim] LF command 0x00004030
+    [shim] LF task body -> 0 running=0
+    [shim] LF move ulf=650 dir=0 profile=0x80000006 stock LF task
+    [shim] LF task body -> 0 running=0
+    [shim] LF motion complete, paper=1 ticks=148
+    [shim] routine 10 returned 0 errors=63
+    [shim] routine 5 returned 1 errors=63
+    [shim] band N=4224 rows=304 place=856 masks 0xffffffff 0000003f 00000000
+    [shim] event wait timeout id=0x0000001b mask=0x00000001
+    [shim] band finish done, errors=64
+    [shim] routine 7 returned 1 errors=64
+    [shim] routine 5 returned 1 errors=64
+    [shim] band N=4224 rows=304 place=856 masks 0xfffffffc 000000ff 00000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] band finish done, errors=66
+    [shim] routine 7 returned 1 errors=66
+  routine 10|0x800: result 0x0 errors 66 exceptions 0 waits 0 (1.0s) LF [(608, '0x0', 2147483654)]
+  band 00 done in 8.2s, total 27s
+band 01/4: 1 x (prepare, upload, fire), then advance 608 Ulf
+  routine 5|0x0: result 0x1 errors 66 exceptions 0 waits 0 (0.3s)
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  columns 0..4224 placement 856: upload {'bytes': 337920, 'seconds': 0.89, 'raster': '0x18210c20', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  routine 7|0x1100: result 0x1 errors 68 exceptions 0 waits 2 (5.8s) CR [(32850, '0x1', 5), (102804, '0x103', 5)]
+    [shim] LF command 0x00004030
+    [shim] LF task body -> 0 running=0
+    [shim] LF move ulf=608 dir=0 profile=0x80000006 stock LF task
+    [shim] LF task body -> 0 running=0
+    [shim] LF motion complete, paper=1 ticks=147
+    [shim] routine 10 returned 0 errors=66
+    [shim] routine 5 returned 1 errors=66
+    [shim] band N=4224 rows=304 place=856 masks 0xfffffffc 000000ff 00000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] band finish done, errors=68
+    [shim] routine 7 returned 1 errors=68
+  routine 10|0x800: result 0x0 errors 68 exceptions 0 waits 0 (1.0s) LF [(608, '0x0', 2147483654)]
+  band 01 done in 8.1s, total 35s
+band 02/4: 1 x (prepare, upload, fire), then advance 608 Ulf
+  routine 5|0x0: result 0x1 errors 68 exceptions 0 waits 0 (0.3s)
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  columns 0..4224 placement 856: upload {'bytes': 337920, 'seconds': 0.89, 'raster': '0x18210c20', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  routine 7|0x1100: result 0x1 errors 70 exceptions 0 waits 2 (5.7s) CR [(32850, '0x1', 5), (102804, '0x103', 5)]
+    [shim] LF command 0x00004030
+    [shim] LF task body -> 0 running=0
+    [shim] LF move ulf=608 dir=0 profile=0x80000006 stock LF task
+    [shim] LF task body -> 0 running=0
+    [shim] LF motion complete, paper=1 ticks=144
+    [shim] routine 10 returned 0 errors=68
+    [shim] routine 5 returned 1 errors=68
+    [shim] band N=4224 rows=304 place=856 masks 0xfffffffc 000000ff 00000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] band finish done, errors=70
+    [shim] routine 7 returned 1 errors=70
+  routine 10|0x800: result 0x0 errors 70 exceptions 0 waits 0 (1.0s) LF [(608, '0x0', 2147483654)]
+  band 02 done in 8.0s, total 43s
+band 03/4: 1 x (prepare, upload, fire)
+  routine 5|0x0: result 0x1 errors 70 exceptions 0 waits 0 (0.3s)
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+  columns 0..4224 placement 856: upload {'bytes': 337920, 'seconds': 0.89, 'raster': '0x18210c20', 'checked': 6144, 'mismatches': 0, 'first_bad': []}
+  routine 7|0x1100: result 0x1 errors 72 exceptions 0 waits 2 (5.8s) CR [(32850, '0x1', 5), (102804, '0x103', 5)]
+    [shim] LF command 0x00004030
+    [shim] LF task body -> 0 running=0
+    [shim] LF move ulf=608 dir=0 profile=0x80000006 stock LF task
+    [shim] LF task body -> 0 running=0
+    [shim] LF motion complete, paper=1 ticks=147
+    [shim] routine 10 returned 0 errors=70
+    [shim] routine 5 returned 1 errors=70
+    [shim] band N=4224 rows=304 place=856 masks 0xfffffffc 000000ff 00000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] event wait timeout id=0x0000001c mask=0x80000000
+    [shim] band finish done, errors=72
+    [shim] routine 7 returned 1 errors=72
+  band 03 done in 7.1s, total 50s
+4. stock eject (routine 9)
+  routine 9|0xd00: result 0x0 errors 72 exceptions 0 waits 0 (5.5s) LF [(3596, '0x0', 2147483655), (3596, '0x0', 2147483655), (3596, '0x0', 2147483655), (3596, '0x0', 2147483655)]
+5. home
+  carriage home: result 2 raw 0xa80
+done: BK2254 in 57s

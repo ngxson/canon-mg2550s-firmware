@@ -1,0 +1,236 @@
+[http] c1 POST /eSCL/ScanJobs
+[escl] ScanSettings InputSource=Platen Intent=- ColorMode=RGB24 XResolution=75 DocumentFormatExt=image/png DocumentFormat=- XOffset=0 YOffset=0 Width=2550 Height=3507
+[page] start rows=876 pitch=512 offset=0 internal
+[escl] job 2 RGB24 75dpi 637x876 image/png
+[http] c1 -> 201
+[burst] n=8 comp=3 rep=1 T=108360 exposure=0/8 gain=13 offset=0x00000000 skip=0
+[burst] priming setup
+[burst] done=1 raw=12 requests=8 readcnt 00000000->00000018 ev0=0000000f ev1=0000000f st=00000000 ptr0=000097e0 ptr1=0000a200
+[burst] event us: 3220 6608 9994 13380 16766 20152 23538 26925 30311 33697 37083 40470
+[burst] row 0 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 0 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 1 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 1 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 2 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 2 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 3 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 3 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 4 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 4 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 5 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 5 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 6 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 6 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 7 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 7 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 8 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 8 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 9 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 9 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 10 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 10 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 11 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 11 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 12 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 12 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 13 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 13 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 14 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 14 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 15 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 15 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 16 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 16 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 17 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 17 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 18 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 18 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 19 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 19 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 20 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 20 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 21 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 21 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 22 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 22 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 23 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 23 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 24 ch0 sentinel=1296 clipped=0 min=0 max=0 mean=0
+[burst] row 24 ch1 sentinel=1296 clipped=0 min=0 max=0 mean=0
+[burst] guard=1
+[burst] n=8 comp=3 rep=1 T=108360 exposure=8/8 gain=13 offset=0x00000000 skip=0
+[burst] done=1 raw=12 requests=8 readcnt 00000000->00000018 ev0=0000000f ev1=0000000f st=00000000 ptr0=000097e0 ptr1=0000a200
+[burst] event us: 3223 6609 9996 13381 16767 20153 23540 26926 30312 33698 37085 40471
+[burst] row 0 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 0 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 1 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 1 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 2 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 2 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 3 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 3 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 4 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 4 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 5 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 5 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 6 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 6 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 7 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 7 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 8 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 8 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 9 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 9 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 10 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 10 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 11 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 11 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 12 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 12 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 13 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 13 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 14 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 14 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 15 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 15 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 16 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 16 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 17 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 17 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 18 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 18 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 19 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 19 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 20 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 20 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 21 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 21 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 22 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 22 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 23 ch0 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 23 ch1 sentinel=0 clipped=0 min=0 max=0 mean=0
+[burst] row 24 ch0 sentinel=1296 clipped=0 min=0 max=0 mean=0
+[burst] row 24 ch1 sentinel=1296 clipped=0 min=0 max=0 mean=0
+[burst] guard=1
+[cal] comp=3 white 0-0 dark 0-0 not a uniform reference: shading off
+[line] priming setup
+[line] start lines=876 comp=3 ring=219 first=0069137c at=0069037c gate
+[motor] jog forward start=0069037c target=006ff97c
+[http] c1 GET /eSCL/ScanJobs/2/NextDocument
+[http] c1 -> 200
+[page] alive row=0 taken=0 backlog=0 pos=0069037c loops=2 ch0=20420000/00000000/00000004/00000000/00000a43 ch1=20420a20/00000000/00000000/00000000/00000a43
+[home] phase=10 ms=100 pos=00690da1 compare=2554 speed=39376
+[line] request 1 at 0069140a
+[line] request 2 at 00691600
+[home] phase=10 ms=200 pos=00691d45 compare=2488 speed=39900
+[home] phase=10 ms=300 pos=00692ce3 compare=2515 speed=39735
+[home] phase=10 ms=400 pos=00693c87 compare=2494 speed=39834
+[home] phase=10 ms=500 pos=00694c21 compare=2505 speed=39768
+[page] alive row=29 taken=28 backlog=3 pos=00694fa4 loops=2062 ch0=20490a40/00000001/00000004/00000000/000009ea ch1=20491460/00000001/00000000/00000000/000009ea
+[home] phase=10 ms=600 pos=00695bc5 compare=2486 speed=39900
+[home] phase=10 ms=700 pos=00696b66 compare=2479 speed=39966
+[home] phase=10 ms=800 pos=00697b04 compare=2488 speed=39900
+[home] phase=10 ms=900 pos=00698aa2 compare=2522 speed=39636
+[home] phase=10 ms=1000 pos=00699a3d compare=2486 speed=39900
+[page] alive row=69 taken=69 backlog=2 pos=00699f2a loops=2220 ch0=2052b0c0/00000001/00000004/00000000/00000970 ch1=2052bae0/00000001/00000000/00000000/00000970
+[home] phase=10 ms=1500 pos=0069e85c compare=2488 speed=39900
+[page] alive row=109 taken=109 backlog=2 pos=0069ed8c loops=2331 ch0=205c2ec0/00000001/00000004/00000000/000008f8 ch1=205c38e0/00000001/00000000/00000000/000008f8
+[home] phase=10 ms=2000 pos=006a367c compare=2492 speed=39867
+[page] alive row=149 taken=149 backlog=2 pos=006a3bea loops=2499 ch0=2065acc0/00000001/00000004/00000000/00000880 ch1=2065b6e0/00000001/00000000/00000000/00000880
+[home] phase=10 ms=2500 pos=006a84a0 compare=2516 speed=39669
+[page] alive row=189 taken=189 backlog=2 pos=006a8a5a loops=2663 ch0=206f2ac0/00000001/00000004/00000000/00000808 ch1=206f34e0/00000001/00000000/00000000/00000808
+[home] phase=10 ms=3000 pos=006ad2b9 compare=2492 speed=39834
+[page] alive row=229 taken=229 backlog=2 pos=006ad8bb loops=2797 ch0=2044b080/00000009/00000004/00000000/00000790 ch1=2044baa0/00000009/00000000/00000000/00000790
+[line] request 256 at 006b07cd
+[home] phase=10 ms=3500 pos=006b20e8 compare=2511 speed=39702
+[page] alive row=269 taken=269 backlog=2 pos=006b2723 loops=2928 ch0=204e2e80/00000009/00000004/00000000/00000718 ch1=204e38a0/00000009/00000000/00000000/00000718
+[home] phase=10 ms=4000 pos=006b6efe compare=2504 speed=39735
+[page] alive row=309 taken=309 backlog=2 pos=006b757f loops=3070 ch0=2057ac80/00000009/00000004/00000000/000006a0 ch1=2057b6a0/00000009/00000000/00000000/000006a0
+[home] phase=10 ms=4500 pos=006bbd1a compare=2478 speed=39933
+[page] alive row=349 taken=349 backlog=2 pos=006bc3e7 loops=3272 ch0=20612a80/00000009/00000004/00000000/00000628 ch1=206134a0/00000009/00000000/00000000/00000628
+[home] phase=10 ms=5000 pos=006c0b37 compare=2509 speed=39702
+[page] alive row=389 taken=389 backlog=2 pos=006c124a loops=3449 ch0=206aa880/00000009/00000004/00000000/000005b0 ch1=206ab2a0/00000009/00000000/00000000/000005b0
+[home] phase=10 ms=5500 pos=006c595b compare=2488 speed=39867
+[page] alive row=429 taken=429 backlog=2 pos=006c60c1 loops=3606 ch0=20742680/00000009/00000004/00000000/00000538 ch1=207430a0/00000009/00000000/00000000/00000538
+[home] phase=10 ms=6000 pos=006ca77d compare=2504 speed=39735
+[page] alive row=469 taken=469 backlog=2 pos=006caf20 loops=3722 ch0=2049ac40/00000009/00000004/00000000/000004c0 ch1=2049b660/00000009/00000000/00000000/000004c0
+[home] phase=10 ms=6500 pos=006cf59b compare=2497 speed=39768
+[page] alive row=509 taken=509 backlog=2 pos=006cfd87 loops=3844[line] request 512 at 006cfd8f
+ ch0=20532a40/00000009/00000004/00000000/00000448 ch1=20533460/00000009/00000000/00000000/00000448
+[home] phase=10 ms=7000 pos=006d43be compare=2499 speed=39768
+[page] alive row=549 taken=549 backlog=2 pos=006d4bee loops=3976 ch0=205ca840/00000009/00000004/00000000/000003d0 ch1=205cb260/00000009/00000000/00000000/000003d0
+[home] phase=10 ms=7500 pos=006d91dc compare=2487 speed=39867
+[page] alive row=589 taken=589 backlog=2 pos=006d9a56 loops=4110 ch0=20662640/00000009/00000004/00000000/00000358 ch1=20663060/00000009/00000000/00000000/00000358
+[home] phase=10 ms=8000 pos=006ddfff compare=2492 speed=39834
+[page] alive row=629 taken=629 backlog=2 pos=006de8ba loops=4229 ch0=206fa440/00000009/00000004/00000000/000002e0 ch1=206fae60/00000009/00000000/00000000/000002e0
+[home] phase=10 ms=8500 pos=006e2e17 compare=2508 speed=39702
+[page] alive row=669 taken=669 backlog=2 pos=006e3723 loops=4350 ch0=20452a00/00000009/00000004/00000000/00000268 ch1=20453420/00000009/00000000/00000000/00000268
+[home] phase=10 ms=9000 pos=006e7c3a compare=2486 speed=39867
+[page] alive row=709 taken=709 backlog=2 pos=006e8588 loops=4473 ch0=204ea800/00000009/00000004/00000000/000001f0 ch1=204eb220/00000009/00000000/00000000/000001f0
+[home] phase=10 ms=9500 pos=006eca5d compare=2501 speed=39768
+[page] alive row=749 taken=749 backlog=2 pos=006ed3ef loops=4585 ch0=20582600/00000009/00000004/00000000/00000178 ch1=20583020/00000009/00000000/00000000/00000178
+[line] request 768 at 006ef351
+[home] phase=10 ms=10000 pos=006f1878 compare=2482 speed=39900
+[page] alive row=789 taken=789 backlog=2 pos=006f2258 loops=4693 ch0=2061a400/00000009/00000004/00000000/00000100 ch1=2061ae20/00000009/00000000/00000000/00000100
+[home] phase=10 ms=10500 pos=006f6699 compare=2488 speed=39867
+[page] alive row=829 taken=829 backlog=2 pos=006f70be loops=4816 ch0=206b2200/00000009/00000004/00000000/00000088 ch1=206b2c20/00000009/00000000/00000000/00000088
+[home] phase=10 ms=11000 pos=006fb4b6 compare=2518 speed=39636
+[page] alive row=869 taken=869 backlog=2 pos=006fbf24 loops=4923 ch0=2074a000/00000009/00000004/00000000/00000010 ch1=2074aa20/00000009/00000000/00000000/00000010
+[line] done
+[escl] job 2 Completed rows=876
+[escl] profile calls=5012 produce_ms=10658 rows_ms=8504 max_gap_ms=3 wall_ms=13422 rows=876 loops=4928 loop_max_us=1230715
+[motor] stop: cancelled pos=006fcd18 elapsed_ms=11156 compare=2489
+[home] fast return start=006fd469 target=0069613c
+[home] phase=12 ms=100 pos=006fd148 compare=1704 speed=20390
+[home] phase=12 ms=200 pos=006fc1cb compare=1191 speed=60150
+[home] phase=12 ms=300 pos=006fa2ee compare=988 speed=94674
+[home] phase=12 ms=400 pos=006f7c49 compare=880 speed=99792
+[home] phase=12 ms=500 pos=006f5539 compare=933 speed=100208
+[home] phase=12 ms=600 pos=006f2e29 compare=992 speed=100628
+[home] phase=12 ms=700 pos=006f0719 compare=906 speed=100000
+[home] phase=12 ms=800 pos=006ee007 compare=968 speed=100418
+[home] phase=12 ms=900 pos=006eb8fa compare=909 speed=100000
+[home] phase=12 ms=1000 pos=006e91ea compare=946 speed=100208
+[home] phase=12 ms=1500 pos=006dceaf compare=858 speed=99585
+[home] phase=12 ms=2000 pos=006d0b5f compare=976 speed=100418
+[home] phase=12 ms=2500 pos=006c480f compare=878 speed=99792
+[home] phase=12 ms=3000 pos=006b84c0 compare=950 speed=100208
+[home] phase=12 ms=3500 pos=006ac170 compare=861 speed=99585
+[home] phase=12 ms=4000 pos=0069fe1e compare=966 speed=100418
+[home] phase=12 ms=4500 pos=00696d94 compare=1726 speed=19736
+[home] seek left start=0069612d target=00614e3f
+[home] phase=4 ms=100 pos=00695934 compare=1630 speed=27923
+[home] phase=4 ms=200 pos=00694e44 compare=1636 speed=27988
+[home] phase=4 ms=300 pos=00694354 compare=1624 speed=27890
+[home] phase=4 ms=400 pos=00693864 compare=1641 speed=28004
+[home] phase=4 ms=500 pos=00692d74 compare=1631 speed=27939
+[home] phase=4 ms=600 pos=00692285 compare=1637 speed=28004
+[home] phase=4 ms=700 pos=00691795 compare=1630 speed=27955
+[home] phase=4 ms=800 pos=00690ca4 compare=1645 speed=28053
+[home] phase=4 ms=900 pos=0069037f compare=1400 speed=1000
+[home] phase=4 ms=1000 pos=0069037f compare=1400 speed=38
+[home] phase=4 ms=1500 pos=0069037f compare=1400 speed=6
+[home] backoff start=00690380 target=00692cd6
+[home] phase=5 ms=100 pos=006908b5 compare=2237 speed=20193
+[home] phase=5 ms=200 pos=00691084 compare=2260 speed=20117
+[home] phase=5 ms=300 pos=00691855 compare=2253 speed=20176
+[home] phase=5 ms=400 pos=00692026 compare=2254 speed=20134
+[home] phase=5 ms=500 pos=006922fc compare=2114 speed=4045
+[home] phase=5 ms=600 pos=0069248c compare=2117 speed=4043
+[home] phase=5 ms=700 pos=0069261c compare=2120 speed=4007
+[home] phase=5 ms=800 pos=006927ac compare=2113 speed=4060
+[home] phase=5 ms=900 pos=0069293c compare=2119 speed=4013
+[home] phase=5 ms=1000 pos=00692acc compare=2115 speed=4064
+[home] repeat left seek start=00692cf2 target=0068f7e4
+[home] phase=6 ms=100 pos=006924f8 compare=1656 speed=28152
+[home] phase=6 ms=200 pos=00691a09 compare=1651 speed=28119
+[home] phase=6 ms=300 pos=00690f19 compare=1653 speed=28152
+[home] phase=6 ms=400 pos=00690451 compare=1400 speed=21978
+[home] phase=6 ms=500 pos=0069037e compare=1400 speed=50
+[home] phase=6 ms=600 pos=0069037e compare=1400 speed=22
+[home] phase=6 ms=700 pos=0069037e compare=1400 speed=14
+[home] phase=6 ms=800 pos=0069037e compare=1400 speed=10
+[home] phase=6 ms=900 pos=0069037e compare=1400 speed=8
+[home] phase=6 ms=1000 pos=0069037e compare=1400 speed=6
+[home] stop: mechanical reference established; optical calibration pending pos=0069037f elapsed_ms=0 compare=2000
+[page] end state=7 error=0 rows=876 ms: home=0 settle=0 capture=0 ready=0 step=0 return=9367 scan=12387 calibrate=1033

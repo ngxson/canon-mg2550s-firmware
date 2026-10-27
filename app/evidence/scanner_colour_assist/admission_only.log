@@ -1,0 +1,8 @@
+{"accept_rgb300_32": 1, "accept_rgb300_3507": 1}
+job_status 201
+RGB300 row mismatch 0 actual_nonzero 9 expected_nonzero 540 actual_first [0, 0, 0, 251, 251, 250, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0] expected_first [251, 251, 251, 251, 251, 250, 251, 251, 250, 251, 251, 250, 250, 251, 250, 251, 250, 250, 251, 250, 250, 250, 251, 250]
+Traceback (most recent call last):
+  File "/project/app/tests/assist_probe.py", line 41, in <module>
+    assert rows[j]==expected,('RGB300 incorrect samples',j)
+           ^^^^^^^^^^^^^^^^^
+AssertionError: ('RGB300 incorrect samples', 0)

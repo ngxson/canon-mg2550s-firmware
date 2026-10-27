@@ -1,0 +1,12 @@
+application ready {'layout_version': 2, 'mode': 'application', 'held': False, 'busy': False, 'app_valid': True, 'dangerous_write': False, 'reboot_blocked': False, 'remaining_ms': 0, 'status': '80', 'application_flash': '0x10000', 'application_capacity': 2031616} paper_sensor 0
+result=0x0 errors=0 trace=10 flags=0x4 cr_position=2688 exceptions=0 kind=0 lr=0x0 spsr=0x0 (4.3s)
+  DELAY        0x14 0x0 0x0
+  DELAY        0xf 0x0 0x0
+  DELAY        0x14 0x0 0x0
+  UNKNOWN      0x18 0x4030 0x0
+  STATUS_GET   0xf008 0x20 0x0
+  LF_MOVE      0xc8 0x0 0x80000006
+  DELAY        0x2 0x0 0x0
+  UNKNOWN      0xd8a8e 0x1 0x0
+  UNKNOWN      0x4031 0x1 0x52
+  ROUTINE      0xa 0x0 0x0

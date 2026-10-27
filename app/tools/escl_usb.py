@@ -176,7 +176,7 @@ def main():
         location = headers['location']
         job = '/eSCL/' + location.split('/eSCL/', 1)[1]
         started = time.monotonic()
-        status, headers, image = conn.request('GET', job + '/NextDocument', timeout=1200000)   # 150 dpi step-mode scans take about ten minutes
+        status, headers, image = conn.request('GET', job + '/NextDocument', timeout=300000)   # five minutes: a hung page must not block a session
         elapsed = time.monotonic() - started
         assert status == 200, f'NextDocument returned {status}'
         args.out.parent.mkdir(parents=True, exist_ok=True)

@@ -1,0 +1,37 @@
+label PLACED
+1. home
+  carriage home: result 2 raw 0x70000
+2. head power and prepare
+  head: connection 1/1, prepared True
+4. fresh band-prepare
+  routine 5|0x400: result 0x1 errors 0 exceptions 0 (3.5s) CR moves []
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+5. raster upload
+   {'bytes': 25600, 'seconds': 0.07, 'raster': '0x18210580', 'mismatches': 0, 'first_bad': []}
+6. executor live
+  routine 7|0x1100: result 0x1 errors 1 exceptions 0 (19.1s) CR moves [(56744, '0x103', 5)]
+  band counters: {'0': 208, '1': 208, '2': 0, '3': 0, '5': 0, '4': 0, '7': 0, '6': 0}
+6b. stationary control mark at the stopped carriage position
+  stationary control (separate from band): {'result': 2, 'records': 2, 'sequence': 1, 'x': 57984, 'adc_before': [748, 744], 'adc_after': [726, 728], 'elapsed_ms': 590, 'last_record_ms': 16}
+  stationary control counters: {'0': 16800, '1': 16800, '2': 0, '3': 0, '5': 0, '4': 0, '7': 0, '6': 0}
+  [cr] done result=2 x=64 ms=320 stalls=0
+  [shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+  [shim] run routine 5 dry
+  [shim] adc14 -> 8 manager6 base=0x2020fe00
+  [shim] a8422 -> 0
+  [shim] b12a2 -> 1 Q=0x20217348
+  [shim] routine 5 returned 1 errors=0
+  [shim] raster upload 25600 bytes to 0x20210580
+  [shim] raster upload complete: 25600 bytes
+  [cr] frame: raw at park=0x00000a80 raw now=0x00000ac0
+  [shim] run routine 7 live
+  [shim] e6aea -> 0 lanes=0x00000101 target=56744 profile=0x00000103
+  [shim] event wait timeout id=0x0000001b mask=0x00000001
+  [shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00000ac0 cd6b6=1
+  [shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=3 51d04=3 51d0c=3 headticks=17
+  [shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x0000ed00 ticks=1316
+  [shim] e6b80 -> 1
+  [shim] CR motion complete ticks=1316 raw=0x0000ed00
+  [shim] routine 7 returned 1 errors=1
+8. home
+  carriage home: result 2 raw 0xac0

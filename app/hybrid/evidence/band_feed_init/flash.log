@@ -1,0 +1,23 @@
+Application: 2031616 bytes, SHA-256 1bafb32bd35ad12ddd84cf1c7f971388cb9200441994c1bfc922fcd870fb6e46
+{
+  "layout_version": 2,
+  "mode": "bootloader",
+  "held": true,
+  "busy": false,
+  "app_valid": true,
+  "dangerous_write": true,
+  "reboot_blocked": false,
+  "remaining_ms": 0,
+  "status": "C0",
+  "application_flash": "0x10000",
+  "application_capacity": 2031616
+}
+Traceback (most recent call last):
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/tools/fwctl.py", line 349, in <module>
+    main()
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/tools/fwctl.py", line 344, in main
+    dev, info = wait_device('application', serial_number=args.serial)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/tools/fwctl.py", line 80, in wait_device
+    raise TimeoutError(f'No responsive {mode or "management"} USB device; use I2C or reset if firmware is stuck')
+TimeoutError: No responsive application USB device; use I2C or reset if firmware is stuck

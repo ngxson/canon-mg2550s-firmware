@@ -1,0 +1,337 @@
+PASS boot: bootloader -> hole app, INFO mode 2 app RAM 0x201a8fe0
+PASS stock calls: 0xe8610 and 0xc763e executed in place; RAM effects match brief 16 §2
+PASS cold RAM: all 14 CR profiles restored before any band or loader call
+cap: result=1 errors=0 trace=35 records
+    ('STATUS_GET', 61448, 64, 0)
+    ('STATUS_GET', 61448, 128, 0)
+    ('STATUS_GET', 61448, 256, 0)
+    ('STATUS_GET', 61448, 64, 0)
+    ('STATUS_GET', 61448, 128, 0)
+    ('STATUS_GET', 61448, 256, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('STATUS_GET', 61448, 512, 0)
+    ('STATUS_GET', 61448, 1024, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_MOVE', 2688, 3, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_PROFILE', 8197, 0, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_MOVE', 81280, 3, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_PROFILE', 8194, 0, 0)
+    ('CR_RELEASE', 0, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('STATUS_PUB', 61444, 512, 1)
+    ('NOTIFY', 4101, 1, 3)
+    ('STATUS_GET', 61448, 8192, 403072872)
+    ('STATUS_GET', 61449, 128, 403073176)
+    ('STATUS_PUB', 61444, 8192, 403156324)
+    ('NOTIFY', 4198, 0, 0)
+    ('STATUS_GET', 61448, 32, 1)
+    ('STATUS_GET', 61448, 8192, 403156324)
+    ('STATUS_GET', 61449, 2, 0)
+    ('STATUS_GET', 61449, 4, 0)
+    ('STATUS_PUB', 61445, 2, 0)
+    ('NVM', 6, 320, 96)
+    ('NVM', 6, 424, 96)
+    ('ROUTINE', 1, 1, 0)
+wipe: result=1 errors=2 trace=23 records
+    ('STATUS_GET', 61448, 64, 0)
+    ('STATUS_GET', 61448, 128, 0)
+    ('STATUS_GET', 61448, 256, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_PROFILE', 8195, 1, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_MOVE', 16640, 3, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_PROFILE', 8194, 1, 0)
+    ('CR_RELEASE', 0, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('STATUS_PUB', 61444, 512, 1)
+    ('NOTIFY', 4101, 1, 3)
+    ('STATUS_GET', 61448, 32, 1)
+    ('NVM', 6, 544, 476)
+    ('STATUS_GET', 61448, 32, 1)
+    ('DELAY', 201, 0, 0)
+    ('STATUS_GET', 61448, 32, 1)
+    ('WAIT_TIMEOUT', 28, 2147483648, 1)
+    ('STATUS_GET', 61448, 32, 1)
+    ('WAIT_TIMEOUT', 28, 2147483648, 1)
+    ('ROUTINE', 3, 1, 2)
+uncap: result=1 errors=2 trace=23 records
+    ('STATUS_GET', 61448, 32, 0)
+    ('STATUS_GET', 61449, 128, 403073176)
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 5, 0, 0)
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 41, 0, 0)
+    ('STATUS_GET', 61449, 128, 403073176)
+    ('STATUS_PUB', 61445, 128, 403493788)
+    ('NOTIFY', 4200, 0, 0)
+    ('STATUS_GET', 61449, 128, 403493788)
+    ('STATUS_PUB', 61445, 128, 403493812)
+    ('NOTIFY', 4200, 0, 0)
+    ('STATUS_PUB', 61444, 64, 512)
+    ('NOTIFY', 4132, 1, 5)
+    ('STATUS_GET', 61449, 2, 1)
+    ('STATUS_PUB', 61445, 2, 0)
+    ('STATUS_PUB', 61444, 512, 0)
+    ('STATUS_GET', 61448, 32, 2)
+    ('ROUTINE', 2, 1, 2)
+PASS shim: cap and wipe ran in place with our services (dry motion), request sequence as in the fixture
+resource table 0x180d571e nonzero entries before feed: [(0, 95), (3, 257), (4, 256), (5, 57), (7, 113), (13, 65535), (49, 515), (56, 1), (61, 16384), (65, 57), (66, 3), (82, 256), (91, 256), (92, 257), (93, 1), (94, 257), (99, 256), (101, 512), (102, 257), (103, 1)]
+shim log during feed:
+   [shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+   [shim] stage 1 reached
+   [shim] stock SVC handler registered
+   [shim] run routine 1 dry
+   [shim] CR move target=2688 profile=0x00000003 dry
+   [shim] CR profile motion kind=0x00002005
+   [shim] CR move target=81280 profile=0x00000003 dry
+   [shim] CR profile motion kind=0x00002002
+   [shim] CR release
+   [shim] notify key=0x00001005 value=0x00000001
+   [shim] notify key=0x00001066 value=0x00000000
+   [shim] NVM write offset=0x00000140 len=96 (dropped)
+   [shim] NVM write offset=0x000001a8 len=96 (dropped)
+   [shim] routine 1 returned 1 errors=0
+   [shim] run routine 3 dry
+   [shim] CR profile motion kind=0x00002003
+   [shim] CR move target=16640 profile=0x00000003 dry
+   [shim] CR profile motion kind=0x00002002
+   [shim] CR release
+   [shim] notify key=0x00001005 value=0x00000001
+   [shim] NVM write offset=0x00000220 len=476 (dropped)
+   [shim] event wait timeout id=0x0000001c mask=0x80000000
+   [shim] event wait timeout id=0x0000001c mask=0x80000000
+   [shim] routine 3 returned 1 errors=2
+   [shim] run routine 2 dry
+   [shim] notify key=0x00001068 value=0x00000000
+   [shim] notify key=0x00001068 value=0x00000000
+   [shim] notify key=0x00001024 value=0x00000001
+   [shim] routine 2 returned 1 errors=2
+   [shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+   [shim] run routine 8 dry
+   [shim] NVM write offset=0x00000140 len=96 (dropped)
+   [shim] NVM write offset=0x000001a8 len=96 (dropped)
+   [shim] CR move target=2688 profile=0x00000201 dry
+   [shim] LF move ulf=2050 dir=1 profile=0x8000020b stock LF task
+   [shim] event wait timeout id=0x0000001d mask=0x00000200
+   [shim] LF task body -> 0 running=1
+   [shim] event wait timeout id=0x0000001a mask=0x00002000
+   [shim] LF move ulf=12950 dir=1 profile=0x8000020c stock LF task
+   [shim] event wait timeout id=0x0000001d mask=0x00000200
+   [shim] LF task body -> 0 running=1
+   [shim] event wait timeout id=0x0000001a mask=0x00202000
+   [shim] event wait timeout id=0x0000001a mask=0x00002000
+   [shim] LF move ulf=3095 dir=0 profile=0x8000000c stock LF task
+   [shim] event wait timeout id=0x0000001d mask=0x00000200
+   [shim] LF task body -> 0 running=1
+   [shim] event wait timeout id=0x0000001a mask=0x00002000
+   [shim] CR move target=2688 profile=0x00000201 dry
+   [shim] LF move ulf=2050 dir=1 profile=0x8000020b stock LF task
+   [shim] event wait timeout id=0x0000001d mask=0x00000200
+   [shim] LF task body -> 0 running=1
+   [shim] event wait timeout id=0x0000001a mask=0x00002000
+   [shim] LF move ulf=12950 dir=1 profile=0x8000020d stock LF task
+   [shim] event wait timeout id=0x0000001d mask=0x00000200
+   [shim] LF task body -> 0 running=1
+   [shim] event wait timeout id=0x0000001a mask=0x00002000
+   [shim] LF move ulf=80 dir=1 profile=0x80000009 stock LF task
+   [shim] event wait timeout id=0x0000001d mask=0x00000200
+   [shim] LF task body -> 0 running=1
+   [shim] event wait timeout id=0x0000001a mask=0x00002000
+   [shim] receive on empty mailbox 0x0000001b
+   [shim] LF move ulf=646 dir=0 profile=0x80000006 stock LF task
+   [shim] event wait timeout id=0x0000001d mask=0x00000200
+   [shim] LF task body -> 0 running=1
+   [shim] CR move target=2688 profile=0x00000001 dry
+   [shim] event wait timeout id=0x0000001a mask=0x00002010
+   [shim] LF motion complete, paper=0 ticks=500
+   [shim] notify key=0x00001068 value=0x00000000
+   [shim] notify key=0x00001068 value=0x00000000
+   [shim] notify key=0x00001024 value=0x00000001
+   [shim] notify key=0x00001021 value=0x00000001
+   [shim] stock load -> 0 servo ticks=500 asf=1
+   [shim] routine 8 returned 0 errors=18
+feed probes (entry, lr, r0, r1, stack code words):
+    load ('0xdce50', '0x201bbe5c', '0x2020f188', '0x0', ['0x1d2800'])
+    prepare ('0xdcd2a', '0xdce73', '0x2020f188', '0x180c7130', ['0x1d2800'])
+    dc95c ('0xdc95c', '0xdcd73', '0x0', '0x0', ['0xdce73'])
+    cond. maintenance ('0xc7126', '0xdcd85', '0x0', '0x1', ['0xdce73'])
+    resource wait ('0xe97f0', '0xdcd91', '0x1', '0x0', ['0xdce73'])
+    leave cap ('0xc6414', '0xdcd9f', '0x0', '0x1', ['0xdce73'])
+    record select ('0xdd8ce', '0xdcdc5', '0x0', '0x0', ['0xdce73'])
+    pickup ('0xdcb18', '0xdccbb', '0x207feeb0', '0x2', ['0xdcde5', '0xdce73'])
+    leave cap ('0xc6414', '0xd1e5d', '0x0', '0x1', ['0xdc2f7', '0xdcb3f'])
+    pickup ('0xdcb18', '0xdcce9', '0x207feeb0', '0x201c4a4c', ['0xdcde5', '0xdce73'])
+    leave cap ('0xc6414', '0xd1e5d', '0x0', '0x1', ['0x40010', '0xdc2f7', '0x40010', '0xdcb3f', '0x40010'])
+    align ('0xdca82', '0xdce29', '0x1', '0x201c46c0', ['0xdce73'])
+0xc87f0 loop iterations: 0 head engine arms: 1
+feed: result=0x0 errors=18 trace=103; LF moves: [('LF_MOVE', 2050, 0, 2147484171), ('LF_MOVE', 12950, 0, 2147484172), ('LF_MOVE', 3095, 0, 2147483660), ('LF_MOVE', 2050, 0, 2147484171), ('LF_MOVE', 12950, 0, 2147484173), ('LF_MOVE', 80, 0, 2147483657), ('LF_MOVE', 646, 0, 2147483654)]; CR moves: [('CR_MOVE', 2688, 513, 0), ('CR_MOVE', 2688, 513, 0), ('CR_MOVE', 2688, 1, 0)]
+feed model: present=False pos=0x70473d reverse=0 forward=12038 lf command writes=2541 range=20..3980
+feed trace tail:
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 41, 0, 0)
+    ('UNKNOWN', 16433, 0, 500)
+    ('STATUS_GET', 61449, 128, 403073176)
+    ('STATUS_PUB', 61445, 128, 403493788)
+    ('NOTIFY', 4200, 0, 0)
+    ('STATUS_GET', 61449, 128, 403493788)
+    ('STATUS_PUB', 61445, 128, 403493812)
+    ('NOTIFY', 4200, 0, 0)
+    ('STATUS_PUB', 61444, 64, 512)
+    ('NOTIFY', 4132, 1, 5)
+    ('STATUS_GET', 61448, 32, 2)
+    ('STATUS_PUB', 61444, 64, 528)
+    ('NOTIFY', 4129, 1, 4)
+    ('UNKNOWN', 904784, 0, 500)
+    ('ROUTINE', 8, 0, 18)
+PASS feed: stock paper load ran in place with the stock LF servo (model present=False; hardware verified 2026-10-26)
+band-prepare: result=1 Q=0x202175c8 manager6 base=0x20210080 adc14=8 a8422=0
+PASS band-prepare: stock allocation, raster worker and Q builder ran in place (manager 6: 80 slots, width 320, stride 1280)
+GATE executor submit site 0xe3c76 reached
+GATE d1f70 reached (after d2a9c)
+GATE 0xcd6b6 (executor enable) -> 0x1, byte 0x180d578e = 1
+GATE 0xebbac -> 0x1, S20 = 0x0, bank200 = 0x0, platform = 2
+executor chain entries (name, lr, r0):
+    ('e3a1c lane-flag gate', '0xe3b57', '0x12')
+    ('e6b80 executor', '0x201bbe5c', '0x20217610')
+    ('e3a1c lane-flag gate', '0xe6b8d', '0x20217610')
+    ('e402a', '0xe6b99', '0x20217610')
+    ('e7094', '0xe6ba9', '0x20217610')
+    ('e703e', '0xe6bb1', '0x1')
+    ('e40ee position prep', '0xe6bbb', '0x20217610')
+    ('d227e CR wait', '0xe6bbf', '0x0')
+    ('ca372', '0xe6bc3', '0x0')
+    ('e7074', '0xe6bc7', '0x18079e80')
+    ('e3be6', '0xe6bd1', '0x20217610')
+    ('e4574 register image', '0xe3bef', '0x20217610')
+    ('e419c', '0xe6bd9', '0x1')
+    ('e7074', '0xe6c1b', '0xf0')
+    ('e402a', '0xe6c27', '0x20217610')
+    ('e703e', '0xe6c33', '0x0')
+    ('e3c14 pass config', '0xe6c43', '0x20217610')
+    ('e458c', '0xe3c35', '0x20217610')
+    ('e5c06 cold prep', '0xe45ab', '0x5c')
+    ('ddfb6', '0xe3c57', '0x3')
+    ('e1984 owner acquire', '0xe1a7d', '0x0')
+    ('e6ba0 return 1', '0xe6c4b', '0x1')
+band-run trace (last records):
+    ('UNKNOWN', 711700, 8, 539033728)
+    ('UNKNOWN', 11819, 46, 1)
+    ('UNKNOWN', 11819, 43, 1)
+    ('UNKNOWN', 689186, 0, 0)
+    ('UNKNOWN', 725666, 1, 539063824)
+    ('UNKNOWN', 684, 262144, 0)
+    ('UNKNOWN', 696, 262144, 0)
+    ('UNKNOWN', 944874, 0, 257)
+    ('STATUS_GET', 61448, 32, 0)
+    ('STATUS_GET', 61449, 128, 403073176)
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 5, 0, 0)
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 41, 0, 0)
+    ('DELAY', 6, 0, 0)
+    ('DELAY', 3, 0, 0)
+    ('DELAY', 5, 0, 0)
+    ('DELAY', 2, 0, 0)
+    ('DELAY', 4, 0, 0)
+    ('DELAY', 10, 0, 0)
+    ('STATUS_PUB', 61444, 512, 0)
+    ('WAIT_TIMEOUT', 27, 1, 1)
+    ('DELAY', 6, 0, 0)
+    ('DELAY', 20, 0, 0)
+    ('DELAY', 7, 0, 0)
+    ('STATUS_GET', 61448, 32, 0)
+    ('CR_MOVE', 56744, 259, 0)
+    ('UNKNOWN', 945024, 1, 0)
+    ('ROUTINE', 6, 1, 19)
+band-run: result=1 errors=19 trace=33; CR moves: [('CR_MOVE', 56744, 259, 0)]
+gate inputs after band-run: {'exec_enable_180d578e': '0x10001', 'platform_180d57e9': '0x4010201', 'S20_18066300': '0x0', 'bank200_18066310': '0x0', 'bank400': '0x0', 'A_target_180cda4c': '0xdda8', 'A_profile': '0x103', 'lanes': '0x101'}
+0xebbac() -> 0x1
+band-run: wait timeouts (dry, expected): [('WAIT_TIMEOUT', 27, 1, 1)]
+PASS band-run (dry): lane preparation gave BK lanes active and the stock band executor ran in place to a return
+GATE executor submit site 0xe3c76 reached
+GATE d1f70 reached (after d2a9c)
+GATE 0xcd6b6 (executor enable) -> 0x1, byte 0x180d578e = 1
+GATE 0xebbac -> 0x1, S20 = 0x0, bank200 = 0x0, platform = 2
+band-fire (routine 7, no re-prepare): result=1 errors=19; CR moves: [('CR_MOVE', 40036, 259, 0)]
+PASS band-fire (dry): the executor re-ran on the prepared band without a new preparation
+GATE executor submit site 0xe3c76 reached
+GATE d1f70 reached (after d2a9c)
+GATE 0xcd6b6 (executor enable) -> 0x1, byte 0x180d578e = 1
+GATE 0xebbac -> 0x1, S20 = 0x2, bank200 = 0x0, platform = 2
+band-fire with stock CR task: result=0x1 errors=21; CR records: [('CR_MOVE', 56744, 259, 5)]
+CR probes (entry, lr, r0, r1):
+    ('0xd4820', '0x201bbe5c', '0x0', '0x0')
+    ('0xd4958', '0xd482f', '0x4000', '0x2000')
+    ('0xd2788', '0xd495d', '0x4000', '0x2000')
+    ('0xd4f48', '0xd4977', '0x207fedbc', '0x1')
+    ('0xd2788', '0xd497d', '0x1', '0x0')
+    ('0xd499a', '0xd4989', '0x80000', '0x1000')
+    ('0xd41ee', '0xd49a5', '0x20210210', '0x56')
+    ('0xd2788', '0xd424f', '0xe0000078', '0x1')
+    ('0xd3418', '0xd3eab', '0x300', '0xc0c51200')
+    ('0xd33ae', '0xd3795', '0x102', '0xc0c50000')
+    ('0xd44c6', '0xd3795', '0x102', '0x2')
+    ('0x109ec4', '0x10a53f', '0x1878e034', '0x1')
+    ('0xd385a', '0xd385b', '0x0', '0x2004')
+    ('0xd3dfc', '0xd385f', '0x1', '0x1807b12c')
+    ('0xd49b2', '0xd49b3', '0x20210210', '0x1807b100')
+    ('0xd49c4', '0x6bf', '0x1', '0x201c4a4c')
+    ('0xd2788', '0xd49fb', '0x1', '0x201c4a4c')
+    ('0xd2788', '0xd4a07', '0x0', '0x0')
+    ('0xd4a30', '0xd4a17', '0x1808965c', '0xfffffac0')
+    ('0xd4328', '0xd4a3f', '0x0', '0x0')
+    ('0xd3dfc', '0xd4a3f', '0x0', '0x0')
+    ('0xd33ae', '0xd3795', '0x0', '0xc0c50000')
+    ('0xd33ae', '0xd3795', '0x0', '0xc0c50000')
+    ('0xd33ae', '0xd3795', '0x0', '0xc0c50000')
+    ('0xd33ae', '0xd3795', '0x0', '0xc0c50000')
+shim log (CR lines):
+   [shim] CR move target=56744 profile=0x00000103 dry
+   [shim] run routine 7 dry
+   [shim] CR move target=40036 profile=0x00000103 dry
+   [shim] routine 7 returned 1 errors=19
+   [shim] run routine 7 dry
+   [shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00000ac0 cd6b6=1
+   [shim] CR task body -> 0 timer=0x00000001 active=1 drive=0x00000102 cmd=2772 ev1d=0x00000000 raw=0x00000ac0 ticks=202
+   [shim] CR motion complete ticks=500 raw=0x00000ac0
+   [shim] routine 7 returned 1 errors=21
+CR timer 0xc0140200 = 0x0  CR drive 0xc0c50000 = 0x0
+brief 19 checkpoints after the stock-CR pass: {'head_state': 0, 'owner': 3, '87000': 1, '8700c': 4, '87010': 7, '812c0': 1, '295f0': 8, '51400': 286, '28000': 1, '28080': 3, '51d04': 0, '51d0c': 0}
+PASS owner-3 acquire: stock e1984 programmed the 0xc0c87000 block and set 0xc0c812c0 bit 0 before the sweep
+wide band p152: arena used 351368 bytes after prepare (manager size 337920)
+GATE executor submit site 0xe3c76 reached
+GATE d1f70 reached (after d2a9c)
+GATE 0xcd6b6 (executor enable) -> 0x1, byte 0x180d578e = 1
+GATE 0xebbac -> 0x1, S20 = 0x2, bank200 = 0x0, platform = 2
+wide band p152: {"result": 1, "errors": 23, "q": "0x20265868", "base": "0x20210080", "slots": 80, "width": 4224, "stride": 1280, "size": 337920, "masks": [["0xffffffff", "0x3f", "0x0"], ["0xffffffff", "0x3f", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"]], "regs": {"0xc0c51d34": "0x0", "0xc0c51d38": "0x0", "0xc0c51108": "0x19200", "0xc0c51114": "0x8780", "0xc0c51700": "0x0", "0xc0c51704": "0x0", "0xc0c51708": "0x0", "0xc0c51800": "0x0", "0xc0c51804": "0x0", "0xc0c51808": "0x0", "0xc0c51900": "0x0", "0xc0c51904": "0x0", "0xc0c51908": "0x0", "0xc0c51a00": "0x0", "0xc0c51a04": "0x0", "0xc0c51a08": "0x0", "0xc0c27000": "0x20210800", "0xc0c27004": "0x20210800", "0xc0c27100": "0x500", "0xc0c27104": "0x500", "0xc0c27200": "0x20210800", "0xc0c27204": "0x20210800", "0xc0c27300": "0x4f", "0xc0c27304": "0x4f", "0xc0c27570": "0x0", "0xc0c27574": "0xffffffc0", "0xc0c27578": "0xffffffff", "0xc0c27580": "0x0", "0xc0c27584": "0xffffffc0", "0xc0c27588": "0xffffffff", "0xc0c28200": "0x9", "0xc0c28210": "0x9f0000", "0xc0c28214": "0x9f0000", "0xc0c28218": "0x9f0000", "0xc0c2821c": "0x9f0000", "0xc0c28220": "0x9f0000", "0xc0c27810": "0x104", "0xc0c27814": "0x1", "0xc0c28080": "0x3", "0xc0c280c0": "0xff", "0xc0c28000": "0x1"}, "moves": [["CR_MOVE", 99816, 259, 5]], "lanes": "0x101", "A": ["0x78ea", "0x18164", "0x793a", "0x181b4", "0x74a6", "0xa80", "0x185e8", "0x0", "0x103"], "log": ["[shim] band N=4224 rows=304 place=152 masks 0xffffffff 0000003f 00000000"]}
+PASS wide band: manager 6 allocated 4224 columns, BK lanes active, DMA base at the raster storage, 38 nozzle groups selected, CR window 34688..102912 = 4*place+34080 .. +16N+640
+wide band p1152: arena used 351368 bytes after prepare (manager size 337920)
+GATE executor submit site 0xe3c76 reached
+GATE d1f70 reached (after d2a9c)
+GATE 0xcd6b6 (executor enable) -> 0x1, byte 0x180d578e = 1
+GATE 0xebbac -> 0x1, S20 = 0x2, bank200 = 0x0, platform = 2
+wide band p1152: {"result": 1, "errors": 25, "q": "0x20265868", "base": "0x20210080", "slots": 80, "width": 4224, "stride": 1280, "size": 337920, "masks": [["0xffffffff", "0x3f", "0x0"], ["0xffffffff", "0x3f", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"], ["0x0", "0x0", "0x0"]], "regs": {"0xc0c51d34": "0x0", "0xc0c51d38": "0x0", "0xc0c51108": "0x1a180", "0xc0c51114": "0x9740", "0xc0c51700": "0x0", "0xc0c51704": "0x0", "0xc0c51708": "0x0", "0xc0c51800": "0x0", "0xc0c51804": "0x0", "0xc0c51808": "0x0", "0xc0c51900": "0x0", "0xc0c51904": "0x0", "0xc0c51908": "0x0", "0xc0c51a00": "0x0", "0xc0c51a04": "0x0", "0xc0c51a08": "0x0", "0xc0c27000": "0x20210800", "0xc0c27004": "0x20210800", "0xc0c27100": "0x500", "0xc0c27104": "0x500", "0xc0c27200": "0x20210800", "0xc0c27204": "0x20210800", "0xc0c27300": "0x4f", "0xc0c27304": "0x4f", "0xc0c27570": "0x0", "0xc0c27574": "0xffffffc0", "0xc0c27578": "0xffffffff", "0xc0c27580": "0x0", "0xc0c27584": "0xffffffc0", "0xc0c27588": "0xffffffff", "0xc0c28200": "0x9", "0xc0c28210": "0x9f0000", "0xc0c28214": "0x9f0000", "0xc0c28218": "0x9f0000", "0xc0c2821c": "0x9f0000", "0xc0c28220": "0x9f0000", "0xc0c27810": "0x104", "0xc0c27814": "0x1", "0xc0c28080": "0x3", "0xc0c280c0": "0xff", "0xc0c28000": "0x1"}, "moves": [["CR_MOVE", 103816, 259, 5]], "lanes": "0x101", "A": ["0x888a", "0x19104", "0x88da", "0x19154", "0x8446", "0xa80", "0x19588", "0x0", "0x103"], "log": ["[shim] band N=4224 rows=304 place=1152 masks 0xffffffff 0000003f 00000000"]}
+PASS wide band placement: +1000 in Q+0x3a moved the CR window start by 4032 raw counts (4 per unit, quantized to 64)
+PASS forward step: bounded lengths, stock profile 6/direction 0, paper guard, no head work
+PASS panel: Black Copy advances once, held key does not repeat, Cancel stops stock LF; no carriage request or head work
+PASS hybrid
+DEBUG pc 0x201ab8d0 lr 0x201b7838 shim {'trace_n': 10, 'routines_run': 19, 'routine_pending': 0, 'last_result': 47835, 'errors': 28, 'ram_ready': 16777217}
+reset seen: False
+last pcs: [('0x201b7dcc', '0x13'), ('0x201b7dd0', '0x13'), ('0x201b7dd4', '0x13'), ('0x201b7dd8', '0x13'), ('0x201b7ddc', '0x13'), ('0x201b7de0', '0x13'), ('0x201b7de4', '0x13'), ('0x201b7de8', '0x13'), ('0x201b7dec', '0x13'), ('0x201b7df0', '0x13'), ('0x201b7df4', '0x13'), ('0x201b7df8', '0x13'), ('0x201b7dfc', '0x13'), ('0x201b7e00', '0x13'), ('0x201b8490', '0x13'), ('0x201b8494', '0x13'), ('0x201b8498', '0x13'), ('0x201b850c', '0x13'), ('0x201b8510', '0x13'), ('0x201b8514', '0x13'), ('0x201b8518', '0x13'), ('0x201b851c', '0x13'), ('0x201b8520', '0x13'), ('0x201b8524', '0x13'), ('0x201b8528', '0x13'), ('0x201b852c', '0x13'), ('0x201b8530', '0x13'), ('0x201b8534', '0x13'), ('0x201b8538', '0x13'), ('0x201b9f6c', '0x13'), ('0x201b9f70', '0x13'), ('0x201b9f74', '0x13'), ('0x201b9f78', '0x13'), ('0x201b9f7c', '0x13'), ('0x201b782c', '0x13'), ('0x201b7830', '0x13'), ('0x201af930', '0x13'), ('0x201af934', '0x13'), ('0x201af938', '0x13'), ('0x201af93c', '0x13'), ('0x201af940', '0x13'), ('0x201af944', '0x13'), ('0x201af948', '0x13'), ('0x201af94c', '0x13'), ('0x201afac4', '0x13'), ('0x201aea70', '0x13'), ('0x201aea74', '0x13'), ('0x201aea78', '0x13'), ('0x201aea7c', '0x13'), ('0x201aea80', '0x13'), ('0x201aea84', '0x13'), ('0x201aea88', '0x13'), ('0x201aea8c', '0x13'), ('0x201aea90', '0x13'), ('0x201aea94', '0x13'), ('0x201afac8', '0x13'), ('0x201afacc', '0x13'), ('0x201b00b8', '0x13'), ('0x201b00bc', '0x13'), ('0x201b7834', '0x13')]
+mode transitions (pc, mode, lr): [('0x201bdc80', '0x1f', '0x109bd1'), ('0x109bd0', '0x3f', '0x109bd1'), ('0x201bdc80', '0x1f', '0x109bd1'), ('0x109bd0', '0x3f', '0x109bd1'), ('0x201bdc70', '0x1f', '0x109bdb'), ('0x109bda', '0x3f', '0x109bdb'), ('0x201bdc70', '0x1f', '0x109bdb'), ('0x109bda', '0x3f', '0x109bdb'), ('0x201bdc80', '0x1f', '0x109bd1'), ('0x109bd0', '0x3f', '0x109bd1'), ('0x201bdc80', '0x1f', '0x109bd1'), ('0x109bd0', '0x3f', '0x109bd1'), ('0x201bdf20', '0x1f', '0x9ad69'), ('0x9ad68', '0x3f', '0x9ad69'), ('0x201bdc70', '0x1f', '0x9ad7b'), ('0x9ad7a', '0x3f', '0x9ad7b'), ('0x201bdc88', '0x1f', '0x9ad89'), ('0x9ad88', '0x3f', '0x20210278'), ('0x201bddf8', '0x1f', '0x9adb1'), ('0x9adb0', '0x3f', '0x201bde1c'), ('0x201bdd3c', '0x1f', '0x9adbd'), ('0x9adbc', '0x3f', '0x9adbd'), ('0x201bdd2c', '0x1f', '0x9ae13'), ('0x9ae12', '0x3f', '0x9ae13'), ('0x201bdc80', '0x1f', '0x9ae19'), ('0x9ae18', '0x3f', '0x9ae19'), ('0x14f178', '0x1f', '0xea86f'), ('0xea86e', '0x3f', '0xea86f'), ('0x201bbe5c', '0x1f', '0xea86f'), ('0x201bbe8c', '0x13', '0x201be9f4')]
+exit=0

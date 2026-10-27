@@ -1,0 +1,31 @@
+{
+  "time_utc": "2026-10-26T18:22:31.134191+00:00",
+  "stage": "after band, stationary control and stock eject; visual ink feedback pending",
+  "run_status": [
+    1314214472,
+    0,
+    5,
+    1,
+    31,
+    6,
+    56744,
+    62,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    8,
+    0
+  ],
+  "registers": {
+    "0xc0c8d028": 8,
+    "0xc0c84e08": 1,
+    "0xc0c52000": 0,
+    "0xc0c53100": 7447925,
+    "0xc0c50000": 0,
+    "0xc0c51100": 2752
+  },
+  "firmware_log": "[cr] park reference=0x00000a80\n[cr] done result=2 x=64 ms=638 stalls=0\n[cr] frame: raw at park=0x00000a80 raw now=0x00000ac0\n[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)\n[shim] run routine 9 live\n[shim] LF command 0x00004030\n[shim] LF task body -> 0 running=0\n[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task\n[shim] LF task body -> 0 running=0\n[shim] LF motion complete, paper=1 ticks=444\n[shim] eject move 0 request->0 paper=1\n[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task\n[shim] LF task body -> 0 running=1\n[shim] LF motion complete, paper=1 ticks=445\n[shim] eject move 1 request->0 paper=1\n[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task\n[shim] LF task body -> 0 running=1\n[shim] LF motion complete, paper=1 ticks=444\n[shim] eject move 2 request->0 paper=1\n[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task\n[shim] LF task body -> 0 running=1\n[shim] LF motion complete, paper=0 ticks=449\n[shim] eject move 3 request->0 paper=0\n[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task\n[shim] LF task body -> 0 running=1\n[shim] LF motion complete, paper=0 ticks=451\n[shim] eject move 4 request->0 paper=0\n[shim] routine 9 returned 0 errors=1\n"
+}

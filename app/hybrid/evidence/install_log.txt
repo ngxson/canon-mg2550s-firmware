@@ -1,0 +1,23 @@
+printer off after 24.2s
+bootloader caught after 54.5s {"layout_version": 2, "mode": "bootloader", "held": false, "busy": false, "app_valid": true, "dangerous_write": true, "reboot_blocked": false, "remaining_ms": 4720, "status": "80", "application_flash": "0x10000", "application_capacity": 2031616}
+{
+ "layout_version": 2,
+ "mode": "bootloader",
+ "held": true,
+ "busy": false,
+ "app_valid": true,
+ "dangerous_write": true,
+ "reboot_blocked": false,
+ "remaining_ms": 0,
+ "status": "C0",
+ "application_flash": "0x10000",
+ "application_capacity": 2031616
+}
+Traceback (most recent call last):
+  File "/private/tmp/claude-501/-Users-ngxson-canon-eeprom/f931a047-9224-4d39-bde8-2de7132d7ad6/scratchpad/catch_and_flash.py", line 23, in <module>
+    dev, info = fwctl.wait_device('application', timeout=60); usb.util.dispose_resources(dev)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/ngxson/canon-eeprom/canon-mg2550s-firmware/tools/fwctl.py", line 80, in wait_device
+    raise TimeoutError(f'No responsive {mode or "management"} USB device; use I2C or reset if firmware is stuck')
+TimeoutError: No responsive application USB device; use I2C or reset if firmware is stuck
+exit 1

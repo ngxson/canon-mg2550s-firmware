@@ -1,0 +1,5 @@
+{
+  "app/src/scanner.c": "460e999dd9ce58ca0eca91deea27c5af085f2c59c45e4fd42635ddcee42585bc",
+  "app/src/scan_page.c": "30ab46025612e9c862ca1e0003c256e0e4dc0a20a46200f48a1495b74fd6d83a",
+  "app/src/scan_source_scanner.c": "276cb4def0fadd4ef4576e9cc55004aaece52f346287b5ee15672194febf58a3"
+}

@@ -1,0 +1,4 @@
+scanning: /Users/ngxson/.venv/bin/python3 /Users/ngxson/canon-eeprom/canon-mg2550s-firmware/app/tools/escl_usb.py --mode Grayscale8 --resolution 75 --interface 0 --out canon-mg2550s-firmware/app/hybrid/evidence/band_feed_init/hardware_placed_scan.png
+1 mark(s) in 215.7 x 296.7 mm; paper covers 96% of the scan
+  0: centre x=81.25 y=25.27 mm  size 1.35 x 15.24 mm  area 16.06 mm2  darkness 0.964
+annotated: canon-mg2550s-firmware/app/hybrid/evidence/band_feed_init/hardware_placed_scan-marks.png  report: canon-mg2550s-firmware/app/hybrid/evidence/band_feed_init/hardware_placed_scan.json

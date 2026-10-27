@@ -1,0 +1,68 @@
+label CNTCTRL
+1. home
+  carriage home: result 2 raw 0xa80
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load (routine 8, stock LF task + servo, CR live)
+  routine 8|0x1900: result 0x0 errors 5 exceptions 0 (18.5s) CR moves [(2688, '0x201', 5), (2688, '0x1', 5)]
+  stock ASF state byte 0x180c6f54 = 1 (1 = sheet loaded and aligned)
+4. fresh band-prepare
+  routine 5|0x400: result 0x1 errors 5 exceptions 0 (3.5s) CR moves []
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+5. raster upload
+   {'bytes': 25600, 'seconds': 0.07, 'raster': '0x182100c0', 'mismatches': 0, 'first_bad': []}
+6. executor live
+  routine 7|0x1100: result 0x1 errors 6 exceptions 0 (18.9s) CR moves [(56744, '0x103', 5)]
+  band counters: {'0': 244, '1': 244, '2': 0, '3': 0, '5': 0, '4': 0, '7': 0, '6': 0}
+6b. stationary control mark at the stopped carriage position
+  stationary control (separate from band): {'result': 2, 'records': 2, 'sequence': 1, 'x': 57984, 'adc_before': [746, 741], 'adc_after': [724, 725], 'elapsed_ms': 590, 'last_record_ms': 16}
+  stationary control counters: {'0': 16800, '1': 16800, '2': 0, '3': 0, '5': 0, '4': 0, '7': 0, '6': 0}
+  [cr] done result=2 x=64 ms=641 stalls=0
+  [cr] done result=2 x=64 ms=321 stalls=0
+  [cr] frame: raw at park=0x00000a80 raw now=0x00000ac0
+  [shim] run routine 8 live
+  [shim] NVM write offset=0x00000140 len=96 (dropped)
+  [shim] NVM write offset=0x000001a8 len=96 (dropped)
+  [shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00000ac0 cd6b6=1
+  [shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=8 51400=0x00000000 28000=1 28080=3 51d04=0 51d0c=0 headticks=18
+  [shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x000019c0 ticks=97
+  [shim] LF move ulf=2050 dir=1 profile=0x8000020b stock LF task
+  [shim] CR motion complete ticks=97 raw=0x000019c0
+  [shim] LF task body -> 0 running=0
+  [shim] LF motion complete, paper=0 ticks=369
+  [shim] LF move ulf=12950 dir=1 profile=0x8000020c stock LF task
+  [shim] LF task body -> 0 running=1
+  [shim] LF motion complete, paper=1 ticks=555
+  [shim] receive on empty mailbox 0x0000001b
+  [shim] LF move ulf=646 dir=0 profile=0x80000006 stock LF task
+  [shim] LF task body -> 0 running=1
+  [shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x000019c0 cd6b6=1
+  [shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=8 51400=0x00000100 28000=1 28080=3 51d04=0 51d0c=0 headticks=18
+  [shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000703 raw=0x000019c0 ticks=0
+  [shim] CR motion complete ticks=0 raw=0x000019c0
+  [shim] LF motion complete, paper=1 ticks=150
+  [shim] event wait timeout id=0x0000001b mask=0x00000001
+  [shim] stock load -> 0 servo ticks=150 asf=1
+  [shim] routine 8 returned 0 errors=5
+  [shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+  [shim] run routine 5 dry
+  [shim] adc14 -> 8 manager6 base=0x2020f940
+  [shim] a8422 -> 0
+  [shim] b12a2 -> 1 Q=0x20216e80
+  [shim] routine 5 returned 1 errors=5
+  [shim] raster upload 25600 bytes to 0x202100c0
+  [shim] raster upload complete: 25600 bytes
+  [cr] frame: raw at park=0x00000a80 raw now=0x000019c0
+  [shim] run routine 7 live
+  [shim] e6aea -> 0 lanes=0x00000101 target=56744 profile=0x00000103
+  [shim] event wait timeout id=0x0000001b mask=0x00000001
+  [shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x000019c0 cd6b6=1
+  [shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=3 51d04=3 51d0c=3 headticks=17
+  [shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x0000ed00 ticks=1247
+  [shim] e6b80 -> 1
+  [shim] CR motion complete ticks=1247 raw=0x0000ed00
+  [shim] routine 7 returned 1 errors=6
+7. stock eject (routine 9)
+  routine 9|0xd00: result 0x0 errors 6 exceptions 0 (6.7s) CR moves []
+8. home
+  carriage home: result 2 raw 0xac0

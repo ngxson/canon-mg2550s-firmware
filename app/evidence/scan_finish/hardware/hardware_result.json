@@ -1,0 +1,72 @@
+{
+  "management_before": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "short": {
+    "seconds": 22.408103415975347,
+    "pixels": [
+      637,
+      32
+    ],
+    "mode": "RGB",
+    "bytes": 61800,
+    "page_status": [
+      1196446541,
+      1,
+      7,
+      0,
+      32,
+      32,
+      2592,
+      5184,
+      512,
+      6882173,
+      6882172,
+      0,
+      0,
+      0,
+      26940,
+      70
+    ],
+    "scanner_power_after_home": 0
+  },
+  "full": {
+    "seconds": 13.425947915995494,
+    "pixels": [
+      637,
+      876
+    ],
+    "mode": "RGB",
+    "bytes": 1689876,
+    "page_status": [
+      1196446541,
+      1,
+      7,
+      0,
+      876,
+      876,
+      2592,
+      5184,
+      512,
+      6882172,
+      6882175,
+      0,
+      0,
+      0,
+      22990,
+      70
+    ],
+    "scanner_power_after_home": 0
+  },
+  "passed": true
+}

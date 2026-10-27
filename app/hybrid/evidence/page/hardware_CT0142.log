@@ -1,0 +1,18 @@
+1. home
+  home: result 2
+2. head power and prepare
+  head: connection 1/1, prepared True
+3. stock paper load
+variant P1: advance 0, fresh False, finish mask 0xff, selection rows 304, raster mode 0x100
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant P2A: advance 320, fresh False, finish mask 0xff, selection rows 304, raster mode 0x100
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant P2B: advance 32, fresh False, finish mask 0xff, selection rows 304, raster mode 0x100
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+variant P1M: advance 288, fresh False, finish mask 0xff, selection rows 304, raster mode 0x100
+  raster-feed boot defaults verified (28180/184, lane offsets and sizes)
+5. stock eject
+6. home
+  home: result 2
+done CT0142
+exit=0

@@ -1,0 +1,102 @@
+{
+  "stock_entry": "0xc5820",
+  "writes": [
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x0"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    },
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x1"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    },
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x2"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    },
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x3"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    },
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x5"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    },
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x4"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    },
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x7"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    },
+    {
+      "pc": "0xc5836",
+      "address": "0xc0c29d48",
+      "size": 4,
+      "value": "0x6"
+    },
+    {
+      "pc": "0xc583c",
+      "address": "0xc0c29d44",
+      "size": 4,
+      "value": "0x101"
+    }
+  ],
+  "result": "stock counter collection touches only selector and latch/reset registers; zero data modeled"
+}

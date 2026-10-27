@@ -1,0 +1,3 @@
+{"accept_rgb300_32": 1, "accept_rgb300_3507": 1}
+job_status 201
+PASS RGB300 exact output pixels

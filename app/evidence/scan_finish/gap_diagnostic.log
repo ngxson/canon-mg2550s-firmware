@@ -1,0 +1,23 @@
+PASS capabilities_are_the_scanners {"modes": ["BlackAndWhite1", "Grayscale8", "RGB24"], "resolutions": [75, 150, 300]}
+LONG GAP 70437 from 0x2002f234 to caller 0x2002f218 drive 4
+LONG GAP 70513 from 0x2002f234 to caller 0x2002f218 drive 4
+LONG GAP 70323 from 0x2002f234 to caller 0x2002f218 drive 8
+PASS continuous_page_skips_homing_when_parked {"reverse_moves_before": 4}
+PASS continuous_region_exact_pixels_gated_positions {"status_polls": 536, "pixels": [375, 30], "first_offset": 9433, "requests": 30}
+LONG GAP 70323 from 0x2002f234 to caller 0x2002f218 drive 12
+PASS colour_rgb24_planar_ring_rows {"pixels": [600, 32]}
+LONG GAP 70323 from 0x2002f234 to caller 0x2002f218 drive 16
+LONG GAP 70513 from 0x2002f234 to caller 0x2002f218 drive 16
+LONG GAP 70441 from 0x2002f234 to caller 0x2002f218 drive 20
+PASS job_adopts_return_home {"jpeg_bytes": 360}
+LONG GAP 70327 from 0x2002f234 to caller 0x2002f218 drive 24
+PASS delete_cancels_page_vendor_rows_refused 
+LONG GAP 70327 from 0x2002f234 to caller 0x2002f218 drive 25
+PASS delete_cancels_continuous_travel 
+Traceback (most recent call last):
+  File "/work/repo/app/tests/validate_escl_scan.py", line 361, in <module>
+    main()
+  File "/work/repo/app/tests/validate_escl_scan.py", line 352, in main
+    assert worst <= MOTION_GAP_LIMIT, f'motor poll gap {worst} instructions while driving'
+           ^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: motor poll gap 70513 instructions while driving

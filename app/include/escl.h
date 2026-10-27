@@ -108,5 +108,6 @@ extern const struct scan_caps scan_caps;
 bool scan_source_start(const struct scan_params *params);
 int scan_source_row(uint8_t *pixels);  /* 1 row written, 0 not ready, <0 failed */
 void scan_source_cancel(void);
+bool scan_source_set_order(unsigned r, unsigned g, unsigned b);   /* scanner source: illumination phase -> R, G, B */
 
 #endif

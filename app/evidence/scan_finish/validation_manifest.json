@@ -1,0 +1,33 @@
+{
+  "installed_package_sha256": "1c0fba1941631a5ba1bad448df0b7394a397c79e045a7ef0ab97d4deb15644d0",
+  "source_hashes_match": true,
+  "physical_full_rgb75": {
+    "seconds": 13.425947915995494,
+    "pixels": [
+      637,
+      876
+    ],
+    "mode": "RGB",
+    "bytes": 1689876,
+    "page_status": [
+      1196446541,
+      1,
+      7,
+      0,
+      876,
+      876,
+      2592,
+      5184,
+      512,
+      6882172,
+      6882175,
+      0,
+      0,
+      0,
+      22990,
+      70
+    ],
+    "scanner_power_after_home": 0
+  },
+  "emulator_rgb_app_sha256": "c4db5d879e72883a7b575937da3e28a51acad82fa65353804260dbc5ba0676b2"
+}

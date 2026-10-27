@@ -113,6 +113,20 @@ static void finish(enum cr_result r)
 
 bool carriage_busy(void) { return state != CR_IDLE; }
 bool carriage_referenced(void) { return referenced; }
+
+/* Put the hardware counter into a caller's frame: afterwards the raw counter
+ * reads raw_at_park + x, with x unchanged. The stock routines program the
+ * position-compare windows against the raw counter in their own frame (their
+ * capped position is 2688), so a live hybrid run sets that frame first. */
+bool carriage_set_frame(uint32_t raw_at_park)
+{
+    if (state != CR_IDLE || !referenced) return false;
+    int32_t x = x_now();
+    wr(CR_P + 0x100u, ((uint32_t)x + raw_at_park) & POS_MASK);
+    reference = raw_at_park & POS_MASK;
+    dbg_puts("[cr] frame: raw at park=0x"); dbg_u32(reference); dbg_puts(" raw now=0x"); dbg_u32(raw_pos()); dbg_putc('\n');
+    return (int32_t)((raw_pos() - reference) & POS_MASK) == x || x_now() == x;
+}
 int32_t carriage_position(void) { return referenced ? x_now() : 0; }
 
 bool carriage_home_request(void)

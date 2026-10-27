@@ -109,8 +109,13 @@ def main():
         assert '[burst] guard=1' in text and len(rows) == 2 * (n + 1)
         chunks = []
         for chunk in range(0, (n * 0x1440 + 255) // 256):
+            stalls = len(e.stalls)
             e.requests.append(('dump', setup(0xc0, 0x5c, chunk, 0, 256)))
-            e.run(lambda x: x.responses[-1][1] == 'dump' and x.current is None and not x.requests, resume=True)
+            try:
+                e.run(lambda x: (x.responses[-1][1] == 'dump' and x.current is None and not x.requests) or len(x.stalls) > stalls, resume=True)
+            except AssertionError:
+                print('DEBUG dump', chunk, 'n', n, 'current', e.current, 'requests', list(e.requests)[:2], 'responses', [r[1] for r in e.responses[-3:]], 'stalls', len(e.stalls)); raise
+            assert len(e.stalls) == stalls, f'dump chunk {chunk} of n={n} stalled'
             chunks.append(bytes(e.responses[-1][2]))
         data = b''.join(chunks)[:n * 0x1440]
         for k in range(n):

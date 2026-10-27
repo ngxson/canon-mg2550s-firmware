@@ -1,0 +1,5 @@
+short created /eSCL/ScanJobs/1
+short {'seconds': 22.40591320907697, 'pixels': (637, 32), 'mode': 'RGB', 'bytes': 61800}
+short page state 7 rail 0
+full created /eSCL/ScanJobs/2
+FAILED TimeoutError('GET /eSCL/ScanJobs/2/NextDocument: incomplete response (1168318 bytes)')

@@ -1,0 +1,37 @@
+{
+  "info": {
+    "layout_version": 2,
+    "mode": "application",
+    "held": false,
+    "busy": false,
+    "app_valid": true,
+    "dangerous_write": false,
+    "reboot_blocked": false,
+    "remaining_ms": 0,
+    "status": "80",
+    "application_flash": "0x10000",
+    "application_capacity": 2031616
+  },
+  "status": [
+    1314214472,
+    0,
+    1,
+    0,
+    0,
+    4,
+    2688,
+    62,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+  ],
+  "profile_bytes": 3472,
+  "profile_sha256": "e95aa77f6a80a4dd7f76285f54aa77a1ca1b6781e7913052dd3f2de0b0cc2ce8",
+  "matches_rom": true,
+  "mechanical_operations": 0
+}

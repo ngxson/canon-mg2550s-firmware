@@ -1,0 +1,26 @@
+{
+  "image": "canon-mg2550s-firmware/app/hybrid/evidence/band_feed_init/hardware_placed_scan.png",
+  "resolution": 75,
+  "mm_per_px": 0.33866666666666667,
+  "image_mm": [
+    215.7,
+    296.7
+  ],
+  "paper_fraction": 0.96,
+  "marks": [
+    {
+      "x_mm": 81.25,
+      "y_mm": 25.27,
+      "w_mm": 1.35,
+      "h_mm": 15.24,
+      "area_mm2": 16.06,
+      "bbox_px": [
+        238,
+        53,
+        242,
+        98
+      ],
+      "mean_darkness": 0.964
+    }
+  ]
+}

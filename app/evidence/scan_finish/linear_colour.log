@@ -1,0 +1,8 @@
+PASS 300dpi_admission_and_bounds {"rows": [32, 3507, 3508]}
+PASS continuous_rgb {"dpi": 75, "pixels": 45, "rows": 24, "ring_capacity": 219, "reuses_ring": false}
+PASS continuous_rgb {"dpi": 150, "pixels": 90, "rows": 24, "ring_capacity": 219, "reuses_ring": false}
+PASS continuous_rgb {"dpi": 300, "pixels": 180, "rows": 32, "ring_capacity": 219, "reuses_ring": false}
+PASS continuous_rgb {"dpi": 300, "pixels": 180, "rows": 231, "ring_capacity": 219, "reuses_ring": true}
+PASS continuous_rgb {"dpi": 75, "pixels": 637, "rows": 876, "ring_capacity": 219, "reuses_ring": true}
+PASS incorrect_colour_routing_rejected {}
+ALL CONTINUOUS COLOUR ASSERTIONS PASSED

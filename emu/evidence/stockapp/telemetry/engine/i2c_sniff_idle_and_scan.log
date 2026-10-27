@@ -1,0 +1,3 @@
+# passive I2C sniff: 20 s idle, then a 50x50 mm 150 dpi scan (exit 0), then 75 s idle; 2026-10-26T00:49:30.455771+00:00
+# line markers: idle_end=0 scan_end=0
+

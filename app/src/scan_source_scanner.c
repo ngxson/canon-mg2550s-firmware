@@ -7,11 +7,12 @@
  * Across, the 2592 samples are assumed to span the 216 mm platen width (as the
  * page PoC assumed); each output pixel averages the samples it covers.
  *
- * Levels are not calibrated: no dark/white shading. A fixed linear map per
+ * Levels are not yet calibrated per sample: no dark/white shading (next step). A fixed linear map per
  * mode takes a measured dark level to black and a measured paper-white level
  * to white, followed by a gamma 1/2.2 curve (the sensor is linear; viewers
- * expect sRGB-like encoding, without it paper looks grey). The CIS is driven
- * monochrome, so only greyscale (and thresholded B/W) exist. */
+ * expect sRGB-like encoding, without it paper looks grey). Colour uses the
+ * three-phase illumination (one component row per LED); grey the combined
+ * exposure. */
 #include "app.h"
 
 #define SAMPLES 2592u
@@ -45,27 +46,58 @@ static const uint8_t gamma_lut[256] = {
     248, 249, 249, 249, 250, 250, 251, 251, 252, 252, 253, 253, 254, 254, 255, 255
 };
 
-static const uint16_t resolutions[] = {75, 150};
+static const uint16_t resolutions[] = {75, 150, 300};
 const struct scan_caps scan_caps = {
     .max_width = 2550, .max_height = 3507,          /* 216 x 297 mm platen */
     .min_size = 16, .optical = 300,
     .resolutions = resolutions, .resolution_count = ARRAY_SIZE(resolutions),
-    .gray = true, .color = false,
+    .gray = true, .color = true,
 };
 
 static uint16_t first_sample[SCAN_MAX_PIXELS];
 static uint8_t sample_count[SCAN_MAX_PIXELS];
-static uint16_t reciprocal[9];          /* 65536 / n, n = samples per pixel */
+static uint32_t reciprocal[9];          /* 16.16: n=1 requires 65536, not uint16_t */
 static unsigned black_level, level_scale;   /* fixed point: no per-pixel division */
-static unsigned pixels;
+static unsigned pixels, components;
+/* Per-sample shading from the page's dark/white references (scanner_calibrate):
+ * out = (raw - dark[x]) * scale[x] >> 16 with scale = 255 * 65536 / (white[x] -
+ * dark[x]) * WHITE_TARGET / 255; a sample whose references are unusable keeps
+ * scale 0 and falls back to the fixed levels. 16.16 products fit 32 bits. */
+#define CAL_MIN_SPAN 1024u
+#define WHITE_TARGET 250u           /* the reference strip maps to this, paper slightly below */
+static uint16_t cal_dark[3][SAMPLES];
+static uint32_t cal_scale[3][SAMPLES];
+static bool cal_built, cal_on;
+
+static void cal_build(void)
+{
+    cal_on = scanner_cal_valid(components);
+    for (unsigned c = 0; cal_on && c < components; ++c) {
+        const uint16_t *d = scanner_cal_row(0, c), *w = scanner_cal_row(1, c);
+        for (unsigned x = 0; x < SAMPLES; ++x) {
+            if (!(x & 127u)) app_yield();
+            cal_dark[c][x] = d[x];
+            cal_scale[c][x] = w[x] > d[x] + CAL_MIN_SPAN ? (WHITE_TARGET * 65536u) / (w[x] - d[x]) : 0u;
+        }
+    }
+    cal_built = true;
+}
+/* Component order of the three illumination phases as delivered by the ring
+ * (0, 1, 2) to output R, G, B; set from the swatch measurement (USB 0x9c). */
+static uint8_t comp_of_rgb[3] = {0, 1, 2};
+bool scan_source_set_order(unsigned r, unsigned g, unsigned b)
+{
+    if (r > 2u || g > 2u || b > 2u || r == g || g == b || r == b) return false;
+    comp_of_rgb[0] = (uint8_t)r; comp_of_rgb[1] = (uint8_t)g; comp_of_rgb[2] = (uint8_t)b; return true;
+}
 
 bool scan_source_start(const struct scan_params *p)
 {
     unsigned step = 1;
     while (step * p->resolution < 300u) ++step;
-    if (p->color || step * p->resolution != 300u || p->pixels > SCAN_MAX_PIXELS) return false;
-    pixels = p->pixels;
-    for (unsigned n = 1; n < ARRAY_SIZE(reciprocal); ++n) reciprocal[n] = (uint16_t)((65536u + n - 1u) / n);
+    if (step * p->resolution != 300u || p->pixels > SCAN_MAX_PIXELS) return false;
+    pixels = p->pixels; components = p->color ? 3u : 1u; cal_built = cal_on = false;
+    for (unsigned n = 1; n < ARRAY_SIZE(reciprocal); ++n) reciprocal[n] = (65536u + n - 1u) / n;
     for (unsigned i = 0; i < pixels; ++i) {
         if (!(i & 127u)) app_yield();
         unsigned u = p->x + i * step;
@@ -76,11 +108,27 @@ bool scan_source_start(const struct scan_params *p)
         if (s1 - s0 > 8u) s1 = s0 + 8u;               /* 75 dpi needs at most 5 */
         first_sample[i] = (uint16_t)s0; sample_count[i] = (uint8_t)(s1 - s0);
     }
+    scan_page_set_components(components);
     if (!scan_page_start(p->lines, step * COUNTS_PER_UNIT, p->y * COUNTS_PER_UNIT, true)) return false;
     bool cont = scan_page_continuous();
     black_level = cont ? CONT_BLACK : STEP_BLACK;
     level_scale = 255u * 65536u / ((cont ? CONT_WHITE : STEP_WHITE) - black_level);
     return true;
+}
+
+static inline uint8_t convert(const uint16_t *s, unsigned s0, unsigned n, unsigned c)
+{
+    unsigned sum = 0, value;
+    if (cal_on && cal_scale[c][s0]) {
+        const uint16_t *d = cal_dark[c] + s0; const uint32_t *g = cal_scale[c] + s0;
+        for (unsigned k = 0; k < n; ++k) { unsigned v = s[k] > d[k] ? (unsigned)(s[k] - d[k]) : 0u; sum += (v * g[k]) >> 16; }
+        value = (sum * reciprocal[n]) >> 16;
+    } else {
+        for (unsigned k = 0; k < n; ++k) sum += s[k];
+        unsigned level = (unsigned)(((unsigned long long)sum * reciprocal[n]) >> 16);
+        value = level <= black_level ? 0u : ((level - black_level) * level_scale) >> 16;
+    }
+    return gamma_lut[value > 255u ? 255u : value];
 }
 
 int scan_source_row(uint8_t *out)
@@ -89,14 +137,25 @@ int scan_source_row(uint8_t *out)
     const uint16_t *samples = scan_page_take(&row);
     if (!samples) return scan_page_failed() ? -1 : 0;
     app_section = "convert";
-    for (unsigned i = 0; i < pixels; ++i) {
-        if (!(i & 15u)) app_yield();
-        const uint16_t *s = samples + first_sample[i];
-        unsigned sum = 0, n = sample_count[i];
-        for (unsigned k = 0; k < n; ++k) sum += s[k];
-        unsigned level = (unsigned)(((unsigned long long)sum * reciprocal[n]) >> 16);
-        unsigned value = level <= black_level ? 0u : ((level - black_level) * level_scale) >> 16;
-        out[i] = gamma_lut[value > 255u ? 255u : value];
+    if (!cal_built) cal_build();
+    if (components == 1u) {
+        for (unsigned i = 0; i < pixels; ++i) {
+            if (!(i & 15u)) app_yield();
+            out[i] = convert(samples + first_sample[i], first_sample[i], sample_count[i], 0);
+        }
+    } else {
+        const uint16_t *comp[3];
+        for (unsigned c = 0; c < 3u; ++c) {
+            comp[c] = scan_page_component(row, comp_of_rgb[c]);
+            if (!comp[c]) return -1;
+        }
+        for (unsigned i = 0; i < pixels; ++i) {
+            if (!(i & 15u)) app_yield();
+            unsigned s0 = first_sample[i], n = sample_count[i];
+            out[3u * i] = convert(comp[0] + s0, s0, n, comp_of_rgb[0]);
+            out[3u * i + 1u] = convert(comp[1] + s0, s0, n, comp_of_rgb[1]);
+            out[3u * i + 2u] = convert(comp[2] + s0, s0, n, comp_of_rgb[2]);
+        }
     }
     return scan_page_release(row) ? 1 : -1;
 }

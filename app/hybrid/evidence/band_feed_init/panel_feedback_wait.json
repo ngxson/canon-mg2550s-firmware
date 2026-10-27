@@ -1,0 +1,12 @@
+{
+  "time_utc": "2026-10-26T18:17:16.366453+00:00",
+  "read_only": true,
+  "routine_result": "0x0",
+  "routines_completed": 0,
+  "errors": 0,
+  "exceptions": 0,
+  "keys": "0x8",
+  "paper_sensor": 1,
+  "lf_drive": 0,
+  "cr_drive": 0
+}

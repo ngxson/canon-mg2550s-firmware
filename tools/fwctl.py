@@ -91,7 +91,8 @@ def enter_bootloader(serial_number=None):
     dev, info = wait_device(serial_number=serial_number)
     if info['mode'] == 'application':
         request_reboot(dev, 1)
-        dev, info = wait_device('bootloader', serial_number=serial_number)
+        # The hybrid app (2 MiB image, two CRC passes) takes about 20 s to hand over.
+        dev, info = wait_device('bootloader', timeout=90, serial_number=serial_number)
     dev.ctrl_transfer(0x40, REQUEST_STAY, 0, 0, b'', timeout=3000)
     return dev
 

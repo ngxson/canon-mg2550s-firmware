@@ -1,0 +1,52 @@
+{
+ "label": "CA0116",
+ "variants": [
+  [
+   "A",
+   0,
+   false,
+   255
+  ],
+  [
+   "B",
+   320,
+   false,
+   255
+  ],
+  [
+   "C",
+   0,
+   false,
+   255
+  ],
+  [
+   "D",
+   320,
+   "blank",
+   255
+  ],
+  [
+   "E",
+   320,
+   false,
+   0
+  ],
+  [
+   "F",
+   320,
+   false,
+   95
+  ]
+ ],
+ "steps": [
+  {
+   "routine": 8,
+   "flags": 6400,
+   "index": null,
+   "result": 0,
+   "errors": 0,
+   "exceptions": 0,
+   "seconds": 0.6
+  }
+ ]
+}

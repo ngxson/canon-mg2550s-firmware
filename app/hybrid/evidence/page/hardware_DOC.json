@@ -1,0 +1,758 @@
+{
+ "label": "DOC0019",
+ "file": "app/hybrid/evidence/page/testdoc.png",
+ "steps": [
+  {
+   "routine": 8,
+   "flags": 6400,
+   "index": null,
+   "result": 0,
+   "errors": 98,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 650,
+   "result": 0,
+   "errors": 98,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 1024,
+   "index": null,
+   "result": 1,
+   "errors": 98,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 99,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 99,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 101,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 101,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 103,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 103,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 103,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 105,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 105,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 107,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 107,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 107,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 109,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 109,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 111,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 111,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 111,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 113,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 113,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 115,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 115,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 115,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 117,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 117,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 119,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 119,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 119,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 121,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 121,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 123,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 123,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 123,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 125,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 125,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 127,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 127,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 127,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 129,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 129,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 131,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 131,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 131,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 133,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 133,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 135,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 135,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 135,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 137,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 137,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 139,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 139,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 139,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 141,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 141,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 143,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 143,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 143,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 145,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 145,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 147,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 147,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 147,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 149,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 149,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 151,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 151,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 151,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 153,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 153,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 155,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 155,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 155,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 157,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 157,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 159,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 159,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 159,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 161,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 161,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 163,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 163,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 163,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 165,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 165,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 167,
+   "exceptions": 0
+  },
+  {
+   "routine": 10,
+   "flags": 2048,
+   "index": 320,
+   "result": 0,
+   "errors": 167,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 167,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 169,
+   "exceptions": 0
+  },
+  {
+   "routine": 5,
+   "flags": 0,
+   "index": null,
+   "result": 1,
+   "errors": 169,
+   "exceptions": 0
+  },
+  {
+   "routine": 7,
+   "flags": 4352,
+   "index": null,
+   "result": 1,
+   "errors": 171,
+   "exceptions": 0
+  },
+  {
+   "routine": 9,
+   "flags": 3328,
+   "index": null,
+   "result": 0,
+   "errors": 171,
+   "exceptions": 0
+  }
+ ]
+}

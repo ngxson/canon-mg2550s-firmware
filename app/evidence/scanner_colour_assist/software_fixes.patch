@@ -1,0 +1,31 @@
+--- a/app/src/scan_page.c
++++ b/app/src/scan_page.c
+@@ -106,7 +106,7 @@
+ bool scan_page_start(unsigned count, unsigned spacing, uint32_t start, bool owned)
+ {
+     bool adopt = page_phase == PAGE_RETURN;
+-    if (!count || count > 1760u || spacing < 256u || spacing > 1024u || start > 450048u ||
++    if (!count || count > (owned ? 3508u : 1760u) || spacing < (owned ? 128u : 256u) || spacing > 1024u || start > 450048u ||
+         (count - 1u) * spacing > 450048u - start || (scan_page_busy() && !adopt) ||
+         (scanner_motor_busy() && !adopt) || print_is_active()) return false;
+     rows = count; pitch = spacing; offset = start; internal = owned; park = false; retries = 0;
+--- a/app/src/scan_source_scanner.c
++++ b/app/src/scan_source_scanner.c
+@@ -56,7 +56,7 @@
+ 
+ static uint16_t first_sample[SCAN_MAX_PIXELS];
+ static uint8_t sample_count[SCAN_MAX_PIXELS];
+-static uint16_t reciprocal[9];          /* 65536 / n, n = samples per pixel */
++static uint32_t reciprocal[9];          /* 16.16: n=1 requires 65536, not uint16_t */
+ static unsigned black_level, level_scale;   /* fixed point: no per-pixel division */
+ static unsigned pixels, components;
+ /* Per-sample shading from the page's dark/white references (scanner_calibrate):
+@@ -97,7 +97,7 @@
+     while (step * p->resolution < 300u) ++step;
+     if (step * p->resolution != 300u || p->pixels > SCAN_MAX_PIXELS) return false;
+     pixels = p->pixels; components = p->color ? 3u : 1u; cal_built = cal_on = false;
+-    for (unsigned n = 1; n < ARRAY_SIZE(reciprocal); ++n) reciprocal[n] = (uint16_t)((65536u + n - 1u) / n);
++    for (unsigned n = 1; n < ARRAY_SIZE(reciprocal); ++n) reciprocal[n] = (65536u + n - 1u) / n;
+     for (unsigned i = 0; i < pixels; ++i) {
+         if (!(i & 127u)) app_yield();
+         unsigned u = p->x + i * step;
