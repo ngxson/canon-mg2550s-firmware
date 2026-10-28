@@ -12,7 +12,8 @@ protocol details and recovery limits.
   at every boot; GPIO4/5 return to floating inputs after probing or transfers.
 - `float_esp32.py`: optional independent ROM register check of floating GPIO4/5;
   requires esptool 4.x or PlatformIO's `tool-esptoolpy` package.
-- `ipp_print.py`: print an image through the application's IPP job intake
+- `ipp_print.py`: print an image through the application's IPP job intake;
+  prints the job's timing profile (USB `0xa2` wIndex 1/2) at completion and with `--status`
   over IPP-USB (URF Print-Job, job status, engine status); see
   [the app guide](../app/README.md#print-from-the-host-over-ipp-on-device-page-printer).
 - `requirements.txt`: Python host dependencies. USB also requires libusb.

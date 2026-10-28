@@ -37,7 +37,7 @@ static void build_doc(void)
     for (unsigned p = 0; p < 2; ++p) {
         unsigned c = BPP[p] / 8;
         for (unsigned y = 0; y < H[p]; ++y) for (unsigned x = 0; x < W[p]; ++x) for (unsigned k = 0; k < c; ++k)
-            pages[p][(y * W[p] + x) * c + k] = (y == 2) ? (uint8_t)(x * 7 + k * 50) : (x > 30 && y != 4) ? 0xff : (uint8_t)(y * 40 + k);
+            pages[p][(y * W[p] + x) * c + k] = (y == 2) ? (uint8_t)(x * 7 + k * 50) : (y == 1 || (x > 30 && y != 4)) ? 0xff : (uint8_t)(y * 40 + k);   /* row 1 entirely white */
         doc[n++] = (uint8_t)BPP[p]; doc[n++] = c == 1 ? 0 : 1; doc[n++] = 1; doc[n++] = 4; n += put32(doc + n, 1); n += put32(doc + n, 0);
         n += put32(doc + n, W[p]); n += put32(doc + n, H[p]); n += put32(doc + n, 300); n += put32(doc + n, 0); n += put32(doc + n, 0);
         for (unsigned y = 0; y < H[p]; ) {
@@ -56,7 +56,17 @@ static bool cb_page(const struct urf_page *p)
     assert(p->width == W[p->index - 1] && p->height == H[p->index - 1] && p->bpp == BPP[p->index - 1] && p->count == 2);
     cur_page = (int)p->index - 1; got_rows = 0; ++got_pages; return true;
 }
-static bool cb_row(const uint8_t *px, unsigned width, unsigned comps)
+static unsigned blank_rows, blank_wrong;
+static bool cb_row_body(const uint8_t *px, unsigned width, unsigned comps);
+static bool cb_row(const uint8_t *px, unsigned width, unsigned comps, bool blank)
+{
+    bool white = true;
+    for (unsigned i = 0; i < width * comps; ++i) if (px[i] != 0xffu) white = false;
+    if (blank) ++blank_rows;
+    if (blank != white) ++blank_wrong;
+    return cb_row_body(px, width, comps);
+}
+static bool cb_row_body(const uint8_t *px, unsigned width, unsigned comps)
 {
     if (refuse_budget) { --refuse_budget; return false; }
     unsigned c = BPP[cur_page] / 8;
@@ -93,6 +103,8 @@ int main(void)
     urf_init(&d, &sink); uint8_t bad[12] = "UNIRASX\0\0\0\0\1";
     urf_feed(&d, bad, 12); assert(d.error);
     printf("PASS bad magic rejected\n");
+    assert(blank_wrong == 0 && blank_rows > 0);
+    printf("PASS blank flag: %u white rows flagged, no mismatch against the pixels\n", blank_rows);
     printf("ALL URF ASSERTIONS PASSED\n");
     return 0;
 }

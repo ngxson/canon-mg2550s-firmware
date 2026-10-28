@@ -34,7 +34,37 @@ HOLE_END = 0x1d8000
 STOCK_END = 0x1f2000                   # last stock byte is below this; tail is erased
 CANDIDATES = ROOT / 'emu/evidence/stockapp/maintenance/flash_free_candidates.json'
 SNAPSHOT = ROOT / 'emu/output/fixture/stock_ram_snapshot'   # .json/.bin from emu/stockapp/ram_snapshot.py
-SNAPSHOT_FLASH = HOLE + 0x21000        # app must end below this (132 KiB); table then blob (the blob ends ~3 KiB below HOLE_END)
+# RAM snapshot: the page table (SNAPSHOT_MAGIC, count, raw bytes, format 1;
+# then (RAM address, flash source, decoded length) per page) sits at
+# SNAPSHOT_FLASH in the erased stock tail (0x1f2000.. is 0xff in the stock
+# image; the update payload ends at 0x1fffe0). Pages are stored word-run
+# encoded (zero_rle: byte token t, t & 0x80 = (t & 0x7f) + 1 zero words,
+# else (t & 0x7f) + 1 literal words follow) and packed, in order, into the
+# hole after the application and then the rest of the tail; every source
+# address is absolute. The pages shrink from 121344 to ~91 KB, so the whole
+# set normally fits behind the app inside the hole. Do not add stock sector
+# runs here on the strength of the maintenance coverage alone: the band
+# builder reads 0x16b000/0x16c000/0x178000/0x179000 during a print job
+# (validate_hybrid.py HYBRID_FLASH_READ_WATCH, 2026-10-28), and the hybrid
+# crashed with those sectors overwritten.
+SNAPSHOT_FLASH = 0x1f2000
+SNAPSHOT_TAIL = (SNAPSHOT_FLASH + 0x1000, 0x1fffe0)
+SNAPSHOT_FORMAT = 1
+
+
+def zero_rle(page):
+    """Word-run encoding of one snapshot page (length a multiple of 4)."""
+    words = [page[i:i + 4] for i in range(0, len(page), 4)]
+    out, i = bytearray(), 0
+    while i < len(words):
+        zero, j = words[i] == b'\0\0\0\0', i
+        while j < len(words) and (words[j] == b'\0\0\0\0') == zero and j - i < 128:
+            j += 1
+        out.append((0x80 if zero else 0) | (j - i - 1))
+        if not zero:
+            out += b''.join(words[i:j])
+        i = j
+    return bytes(out)
 SNAPSHOT_MAGIC = 0x50414e53            # 'SNAP'
 
 
@@ -166,6 +196,7 @@ def main():
     candidates = json.loads(CANDIDATES.read_text())['untouched_by_boot_and_calls_sectors_4k']
     check(any(int(a, 16) <= HOLE and HOLE_END <= int(b, 16) for a, b in candidates),
           'hole is not inside an untouched candidate run; rerun the coverage fixtures')
+    check(all(stock[a] == 0xff for a in range(SNAPSHOT_FLASH, SNAPSHOT_TAIL[1])), 'stock tail is not erased')
 
     # Build the app linked at its RAM-copy address.
     app_out = output / 'app'
@@ -184,7 +215,7 @@ def main():
     patches = relocate_delay_helpers(image, stock)
     veneers = patch_veneers(image, stock, app_manifest['symbols']['application'])
     image[HOLE:HOLE + len(raw)] = raw
-    check(HOLE + len(raw) <= SNAPSHOT_FLASH, 'application overlaps the RAM snapshot slot')
+    check(HOLE + len(raw) <= HOLE_END, 'application exceeds the hole')
     # Boot-state RAM snapshot (stock object graph): table of (address, flash offset, length) + blob.
     snapshot = None
     if SNAPSHOT.with_suffix('.json').exists():
@@ -192,16 +223,26 @@ def main():
         check(hashlib.sha256(blob).hexdigest() == meta['blob_sha256'], 'snapshot blob does not match its index')
         check(meta['boot']['firmware_sha256'] == sha(stock), 'snapshot taken from a different stock image')
         entries = [e for e in meta['pages'] if not e.get('zero')]
-        table = struct.pack('<4I', SNAPSHOT_MAGIC, len(entries), len(blob), 0)
-        blob_flash = SNAPSHOT_FLASH + 16 + 12 * len(entries)
-        blob_flash = (blob_flash + 15) & ~15
+        check(16 + 12 * len(entries) <= SNAPSHOT_TAIL[0] - SNAPSHOT_FLASH, 'snapshot table exceeds its sector')
+        table = struct.pack('<4I', SNAPSHOT_MAGIC, len(entries), len(blob), SNAPSHOT_FORMAT)
+        regions = [(HOLE + ((len(raw) + 15) & ~15), HOLE_END), SNAPSHOT_TAIL]
+        region, cursor, placed, encoded = 0, regions[0][0], [], 0
         for e in entries:
-            table += struct.pack('<III', int(e['address'], 16), blob_flash + e['offset'], e['length'])
-        check(blob_flash + len(blob) <= HOLE_END, f'snapshot ({len(blob)} bytes) exceeds the hole')
+            page = blob[e['offset']:e['offset'] + e['length']]
+            check(len(page) % 4 == 0, 'snapshot page length is not a multiple of 4')
+            data = zero_rle(page)
+            while cursor + len(data) > regions[region][1]:
+                region += 1
+                check(region < len(regions), f'encoded snapshot exceeds the hole remainder and the tail')
+                cursor = regions[region][0]
+            table += struct.pack('<III', int(e['address'], 16), cursor, len(page))
+            image[cursor:cursor + len(data)] = data
+            placed.append((cursor, len(data))); encoded += len(data)
+            cursor = (cursor + len(data) + 3) & ~3
         image[SNAPSHOT_FLASH:SNAPSHOT_FLASH + len(table)] = table
-        image[blob_flash:blob_flash + len(blob)] = blob
-        snapshot = dict(flash=hex(SNAPSHOT_FLASH), blob_flash=hex(blob_flash), pages=len(entries), zero_pages=len(meta['pages']) - len(entries),
-                        bytes=len(blob), blob_sha256=meta['blob_sha256'], boot=meta['boot'])
+        snapshot = dict(flash=hex(SNAPSHOT_FLASH), format=SNAPSHOT_FORMAT, regions=[[hex(a), hex(b)] for a, b in regions],
+                        page_runs=[[hex(a), hex(a + n)] for a, n in placed], pages=len(entries), zero_pages=len(meta['pages']) - len(entries),
+                        bytes=len(blob), encoded_bytes=encoded, blob_sha256=meta['blob_sha256'], boot=meta['boot'])
     # Entry word: ARM branch from RAM 0x20020000 to the app in its RAM copy.
     image[APP + 32:APP + 36] = arm_branch(RAM, RAM_OFFSET + HOLE)
     payload = bytes(image[APP + 32:])

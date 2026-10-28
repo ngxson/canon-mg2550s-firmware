@@ -1,0 +1,16 @@
+Flashing c18905b7 (print_speed_convert)
+Application: 2031616 bytes, SHA-256 c18905b7e66e0cede90f39384e359c31a4585732ecb0e3e7442fc15453938015
+{
+  "layout_version": 2,
+  "mode": "bootloader",
+  "held": true,
+  "busy": false,
+  "app_valid": true,
+  "dangerous_write": true,
+  "reboot_blocked": false,
+  "remaining_ms": 0,
+  "status": "C0",
+  "application_flash": "0x10000",
+  "application_capacity": 2031616
+}
+application up after 6 s

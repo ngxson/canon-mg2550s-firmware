@@ -21,7 +21,7 @@ void urf_init(struct urf_decoder *d, const struct urf_sink *sink)
 static bool offer_row(struct urf_decoder *d)
 {
     while (d->repeat) {
-        if (!d->sink->row(d->row, d->page.width, d->page.components)) return false;
+        if (!d->sink->row(d->row, d->page.width, d->page.components, d->blank)) return false;
         --d->repeat;
     }
     return true;
@@ -88,7 +88,7 @@ unsigned urf_feed(struct urf_decoder *d, const uint8_t *data, unsigned len)
             if (d->pos == 32) { d->pos = 0; page_header(d); if (d->page_pending) return i; }
             break;
         case S_REPEAT:
-            d->repeat = d->row_lines = (unsigned)b + 1u; d->x = 0; d->stage = S_CODE; ++i;
+            d->repeat = d->row_lines = (unsigned)b + 1u; d->x = 0; d->blank = true; d->stage = S_CODE; ++i;
             break;
         case S_CODE:
             ++i;
@@ -102,12 +102,13 @@ unsigned urf_feed(struct urf_decoder *d, const uint8_t *data, unsigned len)
             d->pixel[d->pos++] = b; ++i;
             if (d->pos == px) {
                 d->pos = 0;
+                for (unsigned k = 0; k < px; ++k) if (d->pixel[k] != 0xffu) d->blank = false;
                 for (; d->run && d->x < d->page.width; --d->run, ++d->x) memcpy(d->row + d->x * px, d->pixel, px);
                 d->stage = d->x >= d->page.width ? S_EMIT : S_CODE;
             }
             break;
         case S_LITERAL:
-            if (d->x < d->page.width) d->row[d->x * px + d->pos] = b;
+            if (d->x < d->page.width) { d->row[d->x * px + d->pos] = b; if (b != 0xffu) d->blank = false; }
             ++i;
             if (++d->pos == px) { d->pos = 0; ++d->x; if (!--d->run) d->stage = d->x >= d->page.width ? S_EMIT : S_CODE; }
             break;

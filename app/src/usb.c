@@ -274,8 +274,8 @@ static void setup_request(void)
         if(power_request(value,index)) ack(); else stall();
     } else if(type==0x40 && request==APP_REQUEST_PRINT_JOB_CONTROL && !length) {
         if(print_engine_control(value,index)) ack(); else stall();
-    } else if(type==0xc0 && request==APP_REQUEST_PRINT_JOB_STATUS && !value && !index) {
-        reply(print_engine_status(control_buffer),length);
+    } else if(type==0xc0 && request==APP_REQUEST_PRINT_JOB_STATUS && !value && index<=3) {
+        reply(index?print_engine_profile(control_buffer,index):print_engine_status(control_buffer),length);
     } else if(type==0xc0 && request==APP_REQUEST_PEEK) {
         uint32_t a=(uint32_t)value|(uint32_t)index<<16;
         if(a>=0x20000000u && a<=0x20800000u-64u) { memcpy(control_buffer,(const void *)(uintptr_t)a,64); reply(64,length); } else stall();

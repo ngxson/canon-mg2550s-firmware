@@ -41,7 +41,7 @@ extern unsigned usb_reattach_count;
 #define MANAGER6         0x1879b144u
 #define MANAGERS         0x1879b09cu   /* seven print-buffer managers, 0x1c each (brief 8): output groups 0..6 */
 #define MATRIX           0x1806cd04u
-#define SNAPSHOT_FLASH   0x1ba000u     /* app/hybrid/build.py: HOLE + 0x21000 */
+#define SNAPSHOT_FLASH   0x1f2000u     /* app/hybrid/build.py: page table in the erased stock tail; page sources are absolute, pages word-run encoded */
 static uint32_t snapshot_pages;
 #define STOCK_INIT_C763E 0xc763eu
 #define F008_BANK 0x180662ecu
@@ -119,6 +119,33 @@ static unsigned routine_pending, routine_type, ambient_half, stage_limit;
 static unsigned advance_ulf;
 static bool advance_active, advance_cancelled, panel_motor_ready;
 static uint32_t last_result, routines_run, errors;
+
+/* ---- timing profile (print-speed brief step 1) ----
+ * Device time per shim activity, accumulated in clock ticks since boot and
+ * read in ms through hybrid_profile_get(); the print engine reports the
+ * delta of one job. Only counts, no per-pixel logging. */
+enum { HP_CR, HP_LF, HP_WAIT, HP_TIMEOUT, HP_DELAY, HP_RAMINIT, HP_PREPARE, HP_FINISH, HP_DRAIN, HP_N };
+static uint32_t prof_msacc[HP_N], prof_rem[HP_N], prof_calls[HP_N], prof_arena_peak, cr_req_t0, lf_req_t0;
+static uint32_t prof_routine, prof_rdelay_ms[11], prof_rdelay_calls[11], prof_rwait_ms[11], prof_rtimeouts[11];   /* per running routine 1..10 (0: none) */
+/* 32-bit only (no libgcc): whole milliseconds accumulate, the tick remainder carries. */
+static void prof_add(unsigned k, uint32_t t0)
+{
+    prof_rem[k] += app_clock_ticks() - t0; prof_msacc[k] += prof_rem[k] / CLOCK_TICKS_PER_MS; prof_rem[k] %= CLOCK_TICKS_PER_MS; ++prof_calls[k];
+}
+static uint32_t prof_ms(unsigned k) { return prof_msacc[k]; }
+void hybrid_profile_get(struct hybrid_profile *o)
+{
+    o->cr_ms = prof_ms(HP_CR); o->cr_moves = prof_calls[HP_CR]; o->lf_ms = prof_ms(HP_LF); o->lf_moves = prof_calls[HP_LF];
+    o->wait_ms = prof_ms(HP_WAIT); o->waits = prof_calls[HP_WAIT]; o->timeout_ms = prof_ms(HP_TIMEOUT); o->timeouts = prof_calls[HP_TIMEOUT];
+    o->delay_ms = prof_ms(HP_DELAY); o->delays = prof_calls[HP_DELAY]; o->raminit_ms = prof_ms(HP_RAMINIT);
+    o->prepare_ms = prof_ms(HP_PREPARE); o->finish_ms = prof_ms(HP_FINISH); o->drain_ms = prof_ms(HP_DRAIN); o->arena_peak = prof_arena_peak; o->errors = errors;
+}
+/* Per-routine split (USB 0xa2 wIndex 3): for routines 1..10 the stock delay() time and calls, and the
+ * satisfied event-wait time and timeout count, since boot; the engine reports per-job deltas. */
+void hybrid_profile_routines(uint32_t *out)
+{
+    for (unsigned r = 0; r < 11; ++r) { out[r] = prof_rdelay_ms[r] | prof_rdelay_calls[r] << 20; out[11 + r] = prof_rwait_ms[r] | prof_rtimeouts[r] << 20; }
+}
 
 struct trace { uint32_t kind, a, b, c; };
 static struct trace trace[TRACE_RECORDS];
@@ -344,7 +371,7 @@ static void poll_hardware_events(void)
                 stock_call(STOCK_CR_TICK | 1u, 0, 0, 0, 0, 0, 0);
             }
         } else if (cr_motion_pending) {
-            cr_motion_pending = false;
+            cr_motion_pending = false; prof_add(HP_CR, cr_req_t0);
             *(volatile uint16_t *)0x180d5784u &= (uint16_t)~0x1000u;
             events[0x1a] |= 0x10u;
             note(T_UNKNOWN, 0x4041, cr_ticks, rd(0xc0c51100u));
@@ -360,7 +387,7 @@ static void poll_hardware_events(void)
      * sensor saw a sheet arrive during the move. Distances, profiles, the
      * edge stop itself and retries remain stock's. */
     if (lf_live && lf_motion_pending && *(volatile uint16_t *)(LF_TIMER_STATE + 2u) == 0u) {
-        lf_motion_pending = false;
+        lf_motion_pending = false; prof_add(HP_LF, lf_req_t0);
         bool paper = !(rd(0xc0c84e08u) & 1u);
         events[0x1d] |= 0x400u; events[0x1a] |= 0x2000u;
         if (paper && !lf_paper_at_start) events[0x1a] |= 0x200000u;
@@ -439,11 +466,12 @@ uint32_t shim_event_wait(uint32_t id, uint32_t mask, uint32_t mode, uint32_t *ou
         uint32_t have = events[id] & mask;
         if (mode == 0 ? have == mask : have != 0) {
             if (out) *out = events[id];
+            prof_add(HP_WAIT, t0); prof_rwait_ms[prof_routine] += (app_clock_ticks() - t0) / CLOCK_TICKS_PER_MS;
             return 0;
         }
         poll_hardware_events(); shim_poll();
         if ((app_clock_ticks() - t0) / CLOCK_TICKS_PER_MS > deadline_ms) {
-            ++errors; note(T_WAIT_TIMEOUT, id, mask, mode);
+            ++errors; note(T_WAIT_TIMEOUT, id, mask, mode); prof_add(HP_TIMEOUT, t0); ++prof_rtimeouts[prof_routine];
             dbg_puts("[shim] event wait timeout id=0x"); dbg_u32(id); dbg_puts(" mask=0x"); dbg_u32(mask); dbg_putc('\n');
             if (out) *out = events[id];
             return 1;
@@ -544,7 +572,9 @@ static void cr_move(int32_t target, uint32_t profile)
             *(volatile uint32_t *)0xc0c28000u = 0; *(volatile uint32_t *)0xc0c51400u = 0;
         } else { head_block_init(); head_if_prepare(); head_if_acquire(); }
         if (carriage_move_request(target - cr_offset, 0)) {
+            uint32_t t0 = app_clock_ticks();
             while (carriage_busy()) { carriage_poll(); shim_poll(); }
+            prof_add(HP_CR, t0);
         } else ++errors;
         if (!motion_only) head_if_release();
         dbg_puts("[shim] CR move done x="); dbg_dec((uint32_t)carriage_position()); dbg_putc('\n');
@@ -582,7 +612,7 @@ static void carriage_task(uint32_t *m)
             dbg_puts(" 51d04="); dbg_dec(rd(0xc0c51d04u)); dbg_puts(" 51d0c="); dbg_dec(rd(0xc0c51d0cu)); dbg_puts(" headticks="); dbg_dec(head_ticks); dbg_putc('\n');
         }
         if (!enqueue(0x19, m)) return;
-        cr_tick_last = app_clock_ticks(); cr_ticks = 0;
+        cr_tick_last = cr_req_t0 = app_clock_ticks(); cr_ticks = 0;
         uint32_t r = stock_call(STOCK_CR_TASK | 1u, 0, 0, 0, 0, 0, 0);
         dbg_puts("[shim] CR task body -> "); dbg_dec(r); dbg_puts(" timer=0x"); dbg_u32(rd(CR_TIMER)); dbg_puts(" active="); dbg_dec(*(volatile uint8_t *)CR_SERVO_ACTIVE);
         dbg_puts(" drive=0x"); dbg_u32(rd(0xc0c50000u)); dbg_puts(" cmd="); dbg_dec(rd(0xc0c50008u)); dbg_puts(" ev1d=0x"); dbg_u32(events[0x1d]); dbg_puts(" raw=0x"); dbg_u32(rd(0xc0c51100u)); dbg_puts(" ticks="); dbg_dec(cr_ticks); dbg_putc('\n');
@@ -620,7 +650,7 @@ static void linefeed_task(uint32_t *m)
          * completion (event 0x1a:0x2000 / edge 0x200000) comes from the servo
          * iterations the hardware-event poll runs. */
         if (!enqueue(0x18, m)) return;
-        lf_tick_last = app_clock_ticks(); lf_ticks = 0;
+        lf_tick_last = lf_req_t0 = app_clock_ticks(); lf_ticks = 0;
         lf_paper_at_start = !(rd(0xc0c84e08u) & 1u);
         uint32_t r = stock_call(STOCK_LF_TASK | 1u, 0, 0, 0, 0, 0, 0);
         dbg_puts("[shim] LF task body -> "); dbg_dec(r); dbg_puts(" running="); dbg_dec(*(volatile uint16_t *)(LF_TIMER_STATE + 2u)); dbg_putc('\n');
@@ -744,6 +774,7 @@ uint32_t shim_delay(uint32_t ticks)
     uint32_t t0 = app_clock_ticks(), ms = ticks * TICK_MS;
     if (ms > 3000u) ms = 3000u;
     while ((app_clock_ticks() - t0) / CLOCK_TICKS_PER_MS < ms) { poll_hardware_events(); shim_poll(); }
+    prof_add(HP_DELAY, t0); prof_rdelay_ms[prof_routine] += ms; ++prof_rdelay_calls[prof_routine];
     return 0;
 }
 uint32_t shim_kquery(uint32_t what, uint32_t *out) { (void)what; if (out) out[0] = 0; return 0; }
@@ -835,9 +866,25 @@ static const uint32_t restore_ranges[][2] = {
     {0x18079000u, 0x1807c000u},   /* bit 5: head work lists, profiles (0x18079e54, 0x1807acac) */
 };
 static uint32_t restore_mask;
+static bool snapshot_present(void) { return w(SNAPSHOT_FLASH) == 0x50414e53u && w(SNAPSHOT_FLASH + 12) == 1u; }
+/* One snapshot page from flash (app/hybrid/build.py zero_rle): byte token t,
+ * t & 0x80 = (t & 0x7f) + 1 zero words, else that many literal words follow
+ * (unaligned in flash, so they are read bytewise). */
+static void snapshot_copy(uint32_t dst, uint32_t src, uint32_t len)
+{
+    for (uint32_t end = dst + len; dst < end;) {
+        unsigned t = *(volatile uint8_t *)src++, n = (t & 0x7fu) + 1u;
+        if (t & 0x80u) { while (n--) { ww(dst, 0); dst += 4; } continue; }
+        while (n--) {
+            const volatile uint8_t *b = (const volatile uint8_t *)src;
+            ww(dst, (uint32_t)b[0] | (uint32_t)b[1] << 8 | (uint32_t)b[2] << 16 | (uint32_t)b[3] << 24);
+            src += 4; dst += 4;
+        }
+    }
+}
 static void snapshot_restore_ranges(uint32_t mask)
 {
-    if (!mask || w(SNAPSHOT_FLASH) != 0x50414e53u) return;
+    if (!mask || !snapshot_present()) return;
     uint32_t n = w(SNAPSHOT_FLASH + 4), done = 0;
     for (uint32_t i = 0; i < n; ++i) {
         uint32_t dst = w(SNAPSHOT_FLASH + 16 + 12 * i), src = w(SNAPSHOT_FLASH + 20 + 12 * i), len = w(SNAPSHOT_FLASH + 24 + 12 * i);
@@ -845,7 +892,7 @@ static void snapshot_restore_ranges(uint32_t mask)
         for (unsigned r = 0; r < sizeof restore_ranges / sizeof restore_ranges[0]; ++r)
             if ((mask >> r & 1u) && dst < restore_ranges[r][1] && dst + len > restore_ranges[r][0]) hit = true;
         if (!hit) continue;
-        for (uint32_t k = 0; k < len; k += 4) ww(dst + k, w(src + k));
+        snapshot_copy(dst, src, len);
         ++done;
     }
     dbg_puts("[shim] snapshot ranges restored, mask=0x"); dbg_u32(mask); dbg_puts(" pages="); dbg_dec(done); dbg_putc('\n');
@@ -868,12 +915,12 @@ static void stock_ram_init(void)
      * the flash hole by app/hybrid/build.py): stock's constructed object
      * graph without running its component initialisation. */
     uint32_t restored = 0;
-    if (w(SNAPSHOT_FLASH) == 0x50414e53u) {
+    if (snapshot_present()) {
         uint32_t n = w(SNAPSHOT_FLASH + 4);
         for (uint32_t i = 0; i < n; ++i) {
             uint32_t dst = w(SNAPSHOT_FLASH + 16 + 12 * i), src = w(SNAPSHOT_FLASH + 20 + 12 * i), len = w(SNAPSHOT_FLASH + 24 + 12 * i);
             if (dst >= app_lo && dst < app_hi) continue;   /* never over our own image */
-            for (uint32_t k = 0; k < len; k += 4) ww(dst + k, w(src + k));
+            snapshot_copy(dst, src, len);
             ++restored;
         }
         snapshot_pages = restored;
@@ -1053,6 +1100,7 @@ static uint32_t band_prepare(void)
     note(T_UNKNOWN, 0xb12a2, band_rc[2], band_q);
     dbg_puts("[shim] b12a2 -> "); dbg_dec(band_rc[2]); dbg_puts(" Q=0x"); dbg_u32(band_q); dbg_putc('\n');
     band_mark = arena_used; band_live = band_q != 0;
+    if (band_mark > prof_arena_peak) prof_arena_peak = band_mark;
     dbg_puts("[shim] band arena "); dbg_dec(band_mark); dbg_puts(" bytes live\n");
     return band_q ? 1u : 0xbad3;
 }
@@ -1126,7 +1174,7 @@ static uint32_t band_run(void)
     r = stock_call(STOCK_BAND_EXEC | 1u, q, 0, 0, 0, 0, 0);
     note(T_UNKNOWN, 0xe6b80, r, 0);
     dbg_puts("[shim] e6b80 -> "); dbg_dec(r); dbg_putc('\n');
-    band_finish(r, q);
+    { uint32_t t0 = app_clock_ticks(); band_finish(r, q); prof_add(HP_FINISH, t0); }
     return r;
 }
 
@@ -1174,7 +1222,7 @@ bool hybrid_panel_available(void)
 {
     /* Only the shape-B app linked in the stock hole may use these buttons.
      * A standalone app can leave old stock bytes behind in flash. */
-    return (uint32_t)app_entry == 0x201a8fe0u && w(SNAPSHOT_FLASH) == 0x50414e53u;
+    return (uint32_t)app_entry == 0x201a8fe0u && snapshot_present();
 }
 
 bool hybrid_panel_advance(void)
@@ -1217,8 +1265,8 @@ bool hybrid_run(unsigned value, unsigned index)
 void hybrid_poll(void)
 {
     if (!routine_pending) return;
-    unsigned routine = routine_pending; routine_pending = 0; running = true;
-    if (!ram_ready) stock_ram_init();
+    unsigned routine = routine_pending; routine_pending = 0; running = true; prof_routine = routine;
+    if (!ram_ready) { uint32_t t0 = app_clock_ticks(); stock_ram_init(); prof_add(HP_RAMINIT, t0); }
     if (stage_limit == 1) { ++routines_run; running = false; dbg_puts("[shim] stage 1 reached\n"); return; }
     if (!svc_ready && !register_stock_svc()) { ++errors; running = false; return; }
     if (stage_limit == 2) { ++routines_run; running = false; dbg_puts("[shim] stage 2 reached\n"); return; }
@@ -1231,8 +1279,8 @@ void hybrid_poll(void)
     case 2: r = stock_call(STOCK_UNCAP | 1u, 0, 1, 0, 0, 0, 0); break;
     case 3: r = stock_call(STOCK_WIPE | 1u, 0, 1, 0, 0, 0, 0); break;
     case 4: r = stock_call(STOCK_CLEAN | 1u, routine_type ? routine_type : 1u, 0, 0, 1, 0, 0); break;
-    case 5: r = band_prepare(); break;
-    case 6: r = band_prepare(); if (r == 1) r = band_run(); break;
+    case 5: { uint32_t t0 = app_clock_ticks(); r = band_prepare(); prof_add(HP_PREPARE, t0); } break;
+    case 6: { uint32_t t0 = app_clock_ticks(); r = band_prepare(); prof_add(HP_PREPARE, t0); } if (r == 1) r = band_run(); break;
     case 7: r = band_q ? band_run() : 0xbad7; break;   /* executor only: the prepared (or uploaded) raster */
     case 8: r = feed_load(); break;                     /* stock paper load (LF motion real only with 0x800) */
     case 9: r = feed_eject(); break;                    /* stock LF eject requests until the sensor clears */
@@ -1244,8 +1292,9 @@ void hybrid_poll(void)
       while ((cr_stock && (cr_running() || cr_motion_pending)) || (lf_live && (lf_motion_pending || *(volatile uint16_t *)(LF_TIMER_STATE + 2u) == 1u))) {
           poll_hardware_events(); shim_poll();
           if ((app_clock_ticks() - t0) / CLOCK_TICKS_PER_MS > 15000u) { ++errors; dbg_puts("[shim] motion drain timeout\n"); break; }
-      } }
-    last_result = r; ++routines_run; running = false;
+      }
+      prof_add(HP_DRAIN, t0); }
+    last_result = r; ++routines_run; running = false; prof_routine = 0;
     note(T_ROUTINE, routine, r, errors);
     if (r == 0xdead) { dbg_puts("[shim] stock call aborted by exception kind "); dbg_dec(exc_kind); dbg_puts(" lr=0x"); dbg_u32(exc_lr); dbg_puts(" spsr=0x"); dbg_u32(exc_spsr); dbg_putc('\n'); }
     dbg_puts("[shim] routine "); dbg_dec(routine); dbg_puts(" returned "); dbg_dec(r); dbg_puts(" errors="); dbg_dec(errors); dbg_putc('\n');

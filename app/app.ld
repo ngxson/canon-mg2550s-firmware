@@ -4,7 +4,11 @@ ENTRY(app_entry)
  * address for the hybrid build. */
 SECTIONS {
     .text APP_LOAD : {
-        KEEP(*(.app_entry)) *(.text*) *(.rodata*) *(.data*)
+        KEEP(*(.app_entry))
+        /* Linked with --gc-sections. The stock veneers (app/hybrid/build.py) and
+         * the emulator tests reach these by manifest symbol, not by a C reference. */
+        KEEP(*(.text.shim_*)) KEEP(*(.text.scanner_line_capacity))
+        *(.text*) *(.rodata*) *(.data*)
         . = ALIGN(32); __app_end = .;
     }
     .bss (NOLOAD) : {

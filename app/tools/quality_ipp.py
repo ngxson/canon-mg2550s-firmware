@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 """Short labelled print-quality page through normal IPP (no direct raster writes).
 
-Solid K/C/M/Y bars exercise both carriage segments and a band boundary.
-Run without --print to create the input image and URF for review.
+Solid K/C/M/Y bars exercise both carriage segments and a band boundary. With
+the sweep planner the left and right groups print as two cropped sweeps per
+pass; the centre cyan bar (rows 150..195, input x 1150..1330) straddles the
+planner's window boundary at output column 2176 so a sweep seam falls inside
+solid ink and across a one-pixel line. Run without --print to create the input
+image and URF for review.
 """
 import argparse
 import json
@@ -21,6 +25,8 @@ def main():
     ap.add_argument('--out', type=Path, required=True)
     ap.add_argument('--label', default='QI' + time.strftime('%d%H%M', time.gmtime()))
     ap.add_argument('--print', dest='do_print', action='store_true')
+    ap.add_argument('--sweeps', type=int, default=12, help='expected sweep count (3 bands x 2 segments x 2 passes)')
+    ap.add_argument('--top', type=int, default=0, help='blank input rows above the pattern (300 dpi): reuse a sheet lower down; empty passes are skipped')
     a = ap.parse_args()
     a.out.mkdir(parents=True, exist_ok=True)
     width, height = 2480, 200
@@ -35,6 +41,10 @@ def main():
             d.line((x + 50, 78, x + 50, 195), fill=colour, width=1)
             # A sloping sparse line makes a repeated/missing row apparent.
             d.line((x + 60, 78, x + 100, 195), fill=colour, width=1)
+    d.rectangle((1150, 150, 1329, 195), fill='cyan')          # across the sweep seam (output column 2176 = input x 1245)
+    d.line((1245, 100, 1245, 148), fill='cyan', width=1)      # one-pixel line on the seam column
+    if a.top:                                                  # pattern lower on the sheet; the rows above are blank
+        shifted = Image.new('RGB', (width, height + a.top), 'white'); shifted.paste(page, (0, a.top)); page = shifted; height += a.top
     page.save(a.out / f'{a.label}_input.png')
     raw = page.tobytes()
     rows = [raw[y * width * 3:(y + 1) * width * 3] for y in range(height)]
@@ -57,9 +67,7 @@ def main():
         status = ip.engine_status(dev)
         assert status['state'] not in ('receiving', 'printing'), status
         assert not status['dry'], status
-        intf = next(i for i in dev.get_active_configuration()
-                    if (i.bInterfaceClass, i.bInterfaceSubClass, i.bInterfaceProtocol) == (7, 1, 4))
-        conn = escl_usb.Connection(dev, intf)
+        conn = ip.claim_ipp(dev, escl_usb)
         logs.append(ip.drain_log(dev))
         http, _, body = conn.request('POST', '/ipp/print',
                                     ip.print_job_request(document, a.label),
@@ -77,8 +85,10 @@ def main():
                 break
             time.sleep(2)
         assert status['state'] == 'completed' and status['pages'] == 1, status
-        assert status['sweeps'] == 12 and status['failures'] == 0, status
+        assert status['failures'] == 0 and (a.top or status['sweeps'] == a.sweeps), status   # --top shifts band alignment; the count then varies
         record['completed'] = True
+        record['profile'] = ip.engine_profile(dev)
+        print('profile:', ip.format_profile(record['profile']), flush=True)
     finally:
         record['seconds'] = round(time.monotonic() - started, 2)
         (a.out / f'{a.label}_ipp.json').write_text(json.dumps(record, indent=2) + '\n')

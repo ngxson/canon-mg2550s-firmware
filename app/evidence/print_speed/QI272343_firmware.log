@@ -1,0 +1,446 @@
+
+[app] MG2550s open app
+[hb] previous run: loops=6115328 usb_reattach=0 section=main page=0x000e4f07 line=0x4fe4fe4f motor=0x00008200
+app_flash=0x00010000
+app_ram=0x20020000
+[power] ready; idle timeout 60 s (USB 0xa0 status, 0xa1 control)
+[app] usb up, entering main loop
+[btn] map 2
+[btn] B/W=one stock paper advance; release between presses; Cancel=stop; no firing
+[home] stock PI seek + verified backoff + repeat seek; mechanical reference
+[page] USB stop-and-capture page scan; returns home; Cancel=stop
+[escl] eSCL over IPP-USB (interfaces 2-3)
+[cart] USB 0x62 reads cartridge fuse ROM (read-only); 0x63 status
+[head] USB 0x81 stationary black prefire (stock ID24 list); 0x82 status
+[http] c0 POST /ipp/print
+[ipp] operation 0x0000000b status 0x00000000
+[http] c0 -> 200
+[http] c1 POST /ipp/faxout
+[http] c1 -> 404
+[http] c1 GET /eSCL/ScannerCapabilities
+[http] c1 -> 200
+[http] c1 POST /
+[ipp] operation 0x0000000b status 0x00000000
+[http] c1 -> 200
+[power] quiescing reason=1 owners=0x00000000
+[power] standby reason=1 owners=0x00000000
+[power] panel dark
+[print] job start
+[ipp] job 1 document streaming
+[print] page 1/1 2480x1700 colour
+[power] waking reason=4 owners=0x00004000
+[power] active reason=4 owners=0x00004000
+[motor] setup c0c41404=00000004
+[motor] setup c0c41408=00000005
+[motor] setup c0c41418=0000000a
+[motor] setup c0c81090=0000003f
+[motor] setup c0c57000=0000200d
+[motor] setup c0c57100=00700000
+[motor] setup c0c57148=00000001
+[motor] setup c0c57308=00000001
+[cr] homing toward the park wall
+[cr] park reference=0x00070000
+[cr] done result=2 x=0 ms=973 stalls=0
+[cart] fuse-ROM read, heads=3 wait_us=300 options=0x00000200
+[cart] head block before: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000
+[cart] head block after: 00000000 000003fc 000000ff 00000007 02022033 00000058 000000fc 04040506 02020303 00070701 00070701 00070700 00000008 000000fc 0000001c 0000000a 0000000a 00121c12 00000000
+[cart] connection black=1 colour=1
+[cart] head ctl 84604/54/64=1/1/1 bank 812c0/c4=0x00000000/0x000002e5
+[cart] black low=0x64f12b7f high=0x00000000 stable id=6 dest=19 rank1=37 inklvl=127 sense_idle=0
+[cart] colour low=0xa737853f high=0x000003ef stable id=10 dest=19 rank1=16 rank2=7 inklvl=63 sense_idle=1
+[cart] head interface left prepared
+[cr] frame: raw at park=0x00000a80 raw now=0x00000a80
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] stock SVC handler registered
+[shim] run routine 8 live
+[shim] NVM write offset=0x00000140 len=96 (dropped)
+[shim] NVM write offset=0x000001a8 len=96 (dropped)
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00000a80 cd6b6=1
+[shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=0 51400=0x00000000 28000=1 28080=167 51d04=0 51d0c=0 headticks=0
+[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x000019c0 ticks=98
+[shim] LF move ulf=2050 dir=1 profile=0x8000020b stock LF task
+[shim] CR motion complete ticks=98 raw=0x000019c0
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=0 ticks=376
+[shim] LF move ulf=12950 dir=1 profile=0x8000020c stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=1 ticks=577
+[shim] receive on empty mailbox 0x0000001b
+[shim] LF move ulf=646 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00001980 cd6b6=1
+[shim] head state=0 owner=0 87000=0 812c0=0x00000000 295f0=0 51400=0x00000000 28000=1 28080=167 51d04=0 51d0c=0 headticks=0
+[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000703 raw=0x00001980 ticks=0
+[shim] CR motion complete ticks=0 raw=0x00001980
+[shim] LF motion complete, paper=1 ticks=151
+[shim] event wait timeout id=0x0000001b mask=0x00000001
+[shim] stock load -> 0 servo ticks=151 asf=1
+[shim] routine 8 returned 0 errors=2
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=394 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=113
+[shim] advance ulf=394 raw before=0x00700000 after=0x0070093c paper=1
+[shim] routine 10 returned 0 errors=2
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=1200 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=245
+[shim] advance ulf=1200 raw before=0x00700000 after=0x00701c20 paper=1
+[shim] routine 10 returned 0 errors=2
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=1200 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=245
+[shim] advance ulf=1200 raw before=0x00700000 after=0x00701c20 paper=1
+[shim] routine 10 returned 0 errors=2
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=1200 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=242
+[shim] advance ulf=1200 raw before=0x00700000 after=0x00701c20 paper=1
+[shim] routine 10 returned 0 errors=2
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=1200 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=242
+[shim] advance ulf=1200 raw before=0x00700000 after=0x00701c20 paper=1
+[shim] routine 10 returned 0 errors=2
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=1200 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=245
+[shim] advance ulf=1200 raw before=0x00700000 after=0x00701c20 paper=1
+[shim] routine 10 returned 0 errors=2
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=80 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=99
+[shim] advance ulf=80 raw before=0x00700000 after=0x007001e0 paper=1
+[shim] routine 10 returned 0 errors=2
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202ec640
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x2031acd8
+[shim] band arena 1091816 bytes live
+[shim] routine 5 returned 1 errors=2
+[cr] frame: raw at park=0x00000a80 raw now=0x00001980
+[shim] run routine 7 live
+[shim] band N=2112 rows=304 place=1176 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=70292 profile=0x00000103
+[shim] event wait timeout id=0x0000001b mask=0x00000001
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00001980 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=17
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00012180 ticks=1512
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=1512 raw=0x00012180
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x20282980
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x20297a98
+[shim] band arena 554664 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x00012180
+[shim] run routine 7 live
+[shim] band N=928 rows=304 place=11224 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=91540 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x00012180 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=18
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x0000fb40 ticks=93
+[shim] CR motion complete ticks=93 raw=0x0000fb00
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x0000fac0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=18
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x000174c0 ticks=683
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=684 raw=0x000174c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=32 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=68
+[shim] advance ulf=32 raw before=0x00700000 after=0x007000c0 paper=1
+[shim] routine 10 returned 0 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202ec640
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x2031acd8
+[shim] band arena 1091816 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000174c0
+[shim] run routine 7 live
+[shim] band N=2112 rows=304 place=1112 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=70036 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00000000 965a=0 578e=1 raw=0x000174c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=19
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00005940 ticks=729
+[shim] CR motion complete ticks=729 raw=0x00005940
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00005940 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=19
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x000120c0 ticks=1121
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=1121 raw=0x000120c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202a7c40
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x202c5b58
+[shim] band arena 743272 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000120c0
+[shim] run routine 7 live
+[shim] band N=1344 rows=304 place=9560 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=91540 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x000120c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=20
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x0000e140 ticks=139
+[shim] CR motion complete ticks=139 raw=0x0000e140
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x0000e0c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=20
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x000174c0 ticks=824
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=824 raw=0x000174c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=272 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=100
+[shim] advance ulf=272 raw before=0x00700000 after=0x00700660 paper=1
+[shim] routine 10 returned 0 errors=3
+[print] page data complete: 3324 rows, 23 bands
+[http] c0 POST /ipp/print
+[ipp] operation 0x00000002 status 0x00000000
+[http] c0 -> 200
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202ec640
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x2031acd8
+[shim] band arena 1091816 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000174c0
+[shim] run routine 7 live
+[shim] band N=2112 rows=304 place=1112 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=70036 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x000174c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=21
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00005880 ticks=728
+[shim] CR motion complete ticks=728 raw=0x00005880
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00005880 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=21
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x000120c0 ticks=1121
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=1121 raw=0x000120c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202aaa00
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x202c9558
+[shim] band arena 758120 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000120c0
+[shim] run routine 7 live
+[shim] band N=1376 rows=304 place=9560 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=92052 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x000120c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=22
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x0000e100 ticks=139
+[shim] CR motion complete ticks=139 raw=0x0000e0c0
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x0000e040 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=22
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x000176c0 ticks=835
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=835 raw=0x000176c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=32 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=70
+[shim] advance ulf=32 raw before=0x00700000 after=0x007000c0 paper=1
+[shim] routine 10 returned 0 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202ec640
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x2031acd8
+[shim] band arena 1091816 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000176c0
+[shim] run routine 7 live
+[shim] band N=2112 rows=304 place=1112 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=70036 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x000176c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=23
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00005880 ticks=729
+[shim] CR motion complete ticks=729 raw=0x00005880
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00005880 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=23
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x000120c0 ticks=1116
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=1116 raw=0x000120c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x202aaa00
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x202c9558
+[shim] band arena 758120 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000120c0
+[shim] run routine 7 live
+[shim] band N=1376 rows=304 place=9560 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=92052 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x000120c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=24
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x0000e100 ticks=139
+[shim] CR motion complete ticks=139 raw=0x0000e0c0
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x0000e040 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=24
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x000176c0 ticks=833
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=833 raw=0x000176c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=272 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=97
+[shim] advance ulf=272 raw before=0x00700000 after=0x00700660 paper=1
+[shim] routine 10 returned 0 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x20243b00
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x20249af8
+[shim] band arena 235272 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000176c0
+[shim] run routine 7 live
+[shim] band N=224 rows=304 place=1112 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=39828 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x000176c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=25
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00005900 ticks=736
+[shim] CR motion complete ticks=736 raw=0x00005900
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00005900 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=25
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x0000aac0 ticks=467
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=467 raw=0x0000aac0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x20243b00
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x20249af8
+[shim] band arena 235272 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x0000aac0
+[shim] run routine 7 live
+[shim] band N=224 rows=304 place=11224 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=80276 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x0000aac0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=26
+[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x000148c0 ticks=880
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=880 raw=0x000148c0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 10 dry
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=32 dir=0 profile=0x80000006 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=67
+[shim] advance ulf=32 raw before=0x00700000 after=0x007000c0 paper=1
+[shim] routine 10 returned 0 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x20243b00
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x20249af8
+[shim] band arena 235272 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000148c0
+[shim] run routine 7 live
+[shim] band N=224 rows=304 place=1112 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=39828 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x000148c0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x00000100 28000=0 28080=167 51d04=0 51d0c=0 headticks=27
+[shim] CR task body -> 0 timer=0x00000000 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x00005840 ticks=699
+[shim] CR motion complete ticks=699 raw=0x00005840
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x00005840 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=27
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000003 raw=0x0000aac0 ticks=475
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=475 raw=0x0000aac0
+[shim] routine 7 returned 1 errors=3
+[shim] run routine 5 dry
+[shim] adc14 -> 8 manager6 base=0x20243b00
+[shim] a8422 -> 0
+[shim] b12a2 -> 1 Q=0x20249af8
+[shim] band arena 235272 bytes live
+[shim] routine 5 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x0000aac0
+[shim] run routine 7 live
+[shim] band N=224 rows=304 place=11224 masks 0xfffffffc 000000ff 00000000
+[shim] e6aea -> 0 lanes=0x00010101/01000100/00010000 target=80276 profile=0x00000103
+[shim] CR request 0x00004041 -> stock CR task; 5784=0x00004000 965a=0 578e=1 raw=0x0000aac0 cd6b6=1
+[shim] head state=4 owner=3 87000=1 812c0=0x00000001 295f0=8 51400=0x0000001e 28000=1 28080=167 51d04=167 51d0c=167 headticks=28
+[shim] CR task body -> 0 timer=0x00000001 active=0 drive=0x00000000 cmd=2000 ev1d=0x00000002 raw=0x000148c0 ticks=881
+[shim] e6b80 -> 1
+[shim] band finish done, errors=3
+[shim] CR motion complete ticks=881 raw=0x000148c0
+[shim] routine 7 returned 1 errors=3
+[cr] frame: raw at park=0x00000a80 raw now=0x000148c0
+[shim] stock RAM initialised (zero-init, SRAM copy, decompress, snapshot pages 62)
+[shim] run routine 9 live
+[shim] LF command 0x00004030
+[shim] LF task body -> 0 running=0
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=0
+[shim] LF motion complete, paper=1 ticks=457
+[shim] eject move 0 request->0 paper=1
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=0 ticks=453
+[shim] eject move 1 request->0 paper=0
+[shim] LF move ulf=3596 dir=0 profile=0x80000007 stock LF task
+[shim] LF task body -> 0 running=1
+[shim] LF motion complete, paper=0 ticks=447
+[shim] eject move 2 request->0 paper=0
+[shim] routine 9 returned 0 errors=3
+[cr] homing toward the park wall
+[cr] park reference=0x00000a40
+[cr] done result=2 x=64 ms=785 stalls=0
+[print] page printed, sweeps so far 12
+[print] job complete: 1 pages, 12 sweeps, 90292 ms
+[print] profile ms: total 90292 convert 33086 rows 1662 fill 439 fills 12 input-wait 1128 prepare 1231 fire 33356 advance 8967 load 5496 eject 2298 home 862 head 794 bytes 37006 other 2635 skipped 40
+[print] shim ms: cr 30255 cr-moves 23 lf 4720 lf-moves 18 wait 34706 waits 206 timeout 4002 timeouts 2 delay 10561 delays 95 raminit 867 prepare 938 finish 1 drain 9 arena 1091816 errors 3
+[power] ready reason=4 owners=0x00000000

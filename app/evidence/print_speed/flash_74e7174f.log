@@ -1,0 +1,16 @@
+Flashing 74e7174f (print_speed_planflags)
+Application: 2031616 bytes, SHA-256 74e7174f1981b88908c9cd2e1134f7389b3d6dcd487f9dbec5f5618e042def41
+{
+  "layout_version": 2,
+  "mode": "bootloader",
+  "held": true,
+  "busy": false,
+  "app_valid": true,
+  "dangerous_write": true,
+  "reboot_blocked": false,
+  "remaining_ms": 0,
+  "status": "C0",
+  "application_flash": "0x10000",
+  "application_capacity": 2031616
+}
+application up after 6 s

@@ -278,8 +278,44 @@ Print-Job end to end in the engine's dry mode (USB 0xa3 op 1: no homing, head
 or sheet checks, dry executor) and asserts two colour bands in eight sweeps
 with no allocation inside a live band. Add `HYBRID_IPP_QUALITY=1` to check
 every emitted paper dot, both segments, the band seam and trailing blanks;
-add `HYBRID_IPP_MONO=1` for the four-sweep mono case. These tests also forbid
-row conversion during stock routines. `tests/test_urf.c` is the native decoder test.
+add `HYBRID_IPP_MONO=1` for the four-sweep mono case, `HYBRID_IPP_SPARSE=1`
+for a sparse page (blank first and last phases, two narrow marks far apart,
+one mark across the old 2112-column seam), `HYBRID_IPP_DEEP=1` for the same
+marks behind four empty bands (feeds merge into 1200 + 16 Ulf), and
+`HYBRID_IPP_DOC=/path.urf` to replay a recorded document (e.g. a physical
+job's) and print its planned sweeps, feeds and stock delays per routine.
+These tests also forbid row conversion during stock routines.
+`tests/test_urf.c` is the native decoder test.
+
+Sweeps are planned per nozzle pass from the halftoned rows themselves
+(`plan_phase()` in `src/print_engine.c`): the 16-column tiles carrying ink
+are covered greedily by windows of at most one segment (2112 colour, 4224
+mono columns), each cropped to its last occupied tile at 32-column
+granularity; occupancy is read from the ring bytes when the pass starts
+(exact per tile). A pass with no ink is skipped; its feed is merged with the
+following skipped passes into moves of at most 1200 Ulf before the next
+printed pass (same total travel; feeds pending at the eject are dropped), so
+paper geometry is unchanged. `tests/print_quality_capture.py` re-derives the
+plan and the feed list from the expected paper image and requires the
+firmware's sweeps to match exactly (placement, width, order, skipped passes),
+then reconstructs every dot. The decoder flags rows with no non-white
+pixel (URF white tail or repeat), which the engine clears without
+halftoning; other rows are converted as a pair of output rows in one
+byte-at-a-time pass (bits gathered in registers, one store per plane and
+row). QI272343 spent 33 s halftoning 1500 white rows before this.
+
+Every job records a timing profile (print-speed brief, step 1): USB `0xa2`
+with wIndex 1 returns the engine phases (`PRF1`: total, convert, fill,
+input wait, prepare, fire, advance, load, eject, home, head, other, bytes,
+skipped passes; disjoint device milliseconds), wIndex 2 the shim's counters
+since the job started (`PRF2`: carriage and feed motion, event waits and
+timeouts, stock delays, RAM init, stock band preparation, finish, drain,
+arena peak, errors; motion overlaps the waits and both lie inside the engine's
+routine phases), wIndex 3 the split per stock routine (`PRF3`: delay ms and
+calls, satisfied wait ms and timeouts for routines 1..10). The first two are
+logged once at job completion as `[print] profile ms:` and `[print] shim ms:`; `tools/ipp_print.py` prints them after a job
+and with `--status`. Emulator clocks are a model (1 ms per clock read), so
+only the structure is checked there; physical timings come from the board.
 The shim keeps a prepared band's allocations live until the next prepare
 (`band_mark`), the fix for the per-pass pattern-buffer overwrite found by the
 brief 22 helper; the validator asserts it on every executed band.

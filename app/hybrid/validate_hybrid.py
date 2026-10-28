@@ -73,6 +73,20 @@ def main():
         e = HybridIppModel(image=image, metadata=md)
     else:
         e = HybridModel(image=image, metadata=md)
+    if __import__('os').environ.get('HYBRID_FLASH_READ_WATCH'):
+        # Which code reads these flash ranges? (e.g. "0x16a000-0x17a000,0x1e5000-0x1ee000": candidate
+        # regions for relocating the RAM snapshot). Summarised at exit by (pc, 4 KiB sector).
+        import atexit
+        from unicorn import UC_HOOK_MEM_READ
+        from unicorn.arm_const import UC_ARM_REG_PC as _WPC
+        from collections import Counter
+        watch_hits = Counter()
+        def watch_read(cpu, access, address, size, value, user):
+            watch_hits[(cpu.reg_read(_WPC), address & ~0xfff)] += 1
+        for rng in __import__('os').environ['HYBRID_FLASH_READ_WATCH'].split(','):
+            lo, hi = (int(x, 16) for x in rng.split('-'))
+            e.uc.hook_add(UC_HOOK_MEM_READ, watch_read, begin=lo, end=hi - 1)
+        atexit.register(lambda: print('flash read watch (pc, sector, reads):', sorted(((hex(pc), hex(sec), n) for (pc, sec), n in watch_hits.items()), key=lambda t: t[1])))
     # On the board 0x10000000, 0x18000000 and 0x20000000 are the same DRAM
     # (measured 2026-10-26); stock's allocator relies on the cached/uncached
     # alias arithmetic. Share one buffer across the three windows.
@@ -151,9 +165,9 @@ def main():
         e.run(lambda x, n=n, st=st: sum(1 for _, nm, _ in x.responses if nm == name) > n or len(x.stalls) > st, resume=True, budget=budget)
         assert (len(e.stalls) > st) == expect_stall, (name, e.stalls)
 
-    def read_in(name, req, length, value=0):
+    def read_in(name, req, length, value=0, index=0):
         n = sum(1 for _, nm, _ in e.responses if nm == name)
-        e.requests.appendleft((name, setup(0xc0, req, value, 0, length)))
+        e.requests.appendleft((name, setup(0xc0, req, value, index, length)))
         e.run(lambda x, n=n: sum(1 for _, nm, _ in x.responses if nm == name) > n, resume=True)
         return [d for _, nm, d in e.responses if nm == name][-1]
 
@@ -384,15 +398,23 @@ def main():
         e.run(lambda x: any(n == 'altset3' for g, n, d in x.responses if g == x.generation), resume=True)
         command('dry', 0xa3, 1, 1)
         quality = None
-        mono_quality = bool(os.environ.get('HYBRID_IPP_MONO'))
+        mono_quality = bool(os.environ.get('HYBRID_IPP_MONO')); sparse = bool(os.environ.get('HYBRID_IPP_SPARSE')); deep = bool(os.environ.get('HYBRID_IPP_DEEP'))
         if os.environ.get('HYBRID_IPP_QUALITY'):
             import print_quality_capture as pq
-            quality = pq.Capture(e, manifest, mono=mono_quality)
+            quality = pq.Capture(e, manifest, mono=mono_quality, sparse=sparse, deep=deep)
         width, rows_n = 2480, 60                                # 38 rows above the printable area, 22 printable -> 44 output rows -> 2 colour bands
         row = bytes([90, 150, 200]) * 1200 + bytes([255, 255, 255]) * (width - 1200)   # left: ink in all four planes; right: white
         if quality:
-            width, rows_n = pq.WIDTH, 200 if mono_quality else pq.HEIGHT
-        document = ip.urf_document([(width, rows_n, 1 if mono_quality else 3, pq.input_rows(mono_quality) if quality else [row] * rows_n)])
+            width, rows_n = pq.WIDTH, 200 if mono_quality else pq.HEIGHT + (pq.DEEP if deep else 0)
+        document = ip.urf_document([(width, rows_n, 1 if mono_quality else 3, pq.input_rows(mono_quality, sparse, deep) if quality else [row] * rows_n)])
+        replay = __import__('os').environ.get('HYBRID_IPP_DOC')        # replay a recorded URF document (e.g. a physical job's) and report its sweeps
+        if replay:
+            document = open(replay, 'rb').read(); rows_n = struct.unpack('>I', document[12 + 24:12 + 28])[0]
+            delays = []                                                 # (routines completed so far, delay ticks) for every stock delay()
+            syms = {k: int(v, 16) for k, v in manifest['symbols']['application'].items()}
+            from unicorn.arm_const import UC_ARM_REG_R0 as _DR0
+            e.uc.hook_add(UC_HOOK_CODE, lambda cpu, a, sz, u: delays.append((int.from_bytes(cpu.mem_read(syms['routines_run'], 4), 'little'), cpu.reg_read(_DR0))),
+                          begin=syms['shim_delay'], end=syms['shim_delay'])
         body = ip.print_job_request(document, 'emu', request_id=11)
         print(f'IPP print: URF {len(document)} bytes, request {len(body)} bytes')
         t0 = e.ticks
@@ -411,11 +433,37 @@ def main():
         lines = shim_log()
         print('shim/print log:'); [print('   ', l) for l in lines if '[print]' in l or 'returned' in l or 'arena' in l]
         assert state == 'completed' and w[6] == 1 and w[8] == 0, (state, w)
-        expected_sweeps = 4 if mono_quality else 8             # 2 bands x 1/2 segments x 2 disjoint row passes
-        assert w[7] == expected_sweeps, ('sweeps', w[7])
+        if replay:
+            print('replay sweeps:', [l for l in lines if 'band N=' in l])
+            print('replay advances:', [l for l in lines if 'advance ulf=' in l])
+            import collections
+            order = [l.split('run routine ')[1].split()[0] for l in lines if 'run routine ' in l]
+            per = collections.defaultdict(list)
+            for n, t in delays: per[n].append(t)
+            print('replay delays per routine (index: routine -> [ticks]):', [(n, order[n] if n < len(order) else '?', per[n]) for n in sorted(per)])
+            return
+        # Sweeps: the quality fixtures re-derive the plan from the expected paper image
+        # (print_quality_capture.expected_plan); the plain row's ink ends at output column
+        # 2083, so one cropped sweep per phase covers it: 2 bands x 2 passes x 1 sweep.
+        expected_sweeps, expected_skipped = (len(quality.expected_plan()[0]), quality.expected_plan()[1]) if quality else (4, 0)
+        assert w[7] == expected_sweeps, ('sweeps', w[7], expected_sweeps)
         expected_rows = 2 * (rows_n - 38)
-        assert sum(1 for l in lines if 'band arena' in l) == expected_sweeps and any(f'page data complete: {expected_rows} rows, 2 bands' in l for l in lines), lines[-20:]
+        expected_bands = 2 if not quality else max(1, -(-(expected_rows + (0 if mono_quality else 128)) // (304 if mono_quality else 152)))
+        assert sum(1 for l in lines if 'band arena' in l) == expected_sweeps and any(f'page data complete: {expected_rows} rows, {expected_bands} bands' in l for l in lines), lines[-20:]
         assert not pool_violations, pool_violations[:5]
+        # Job timing profile (print-speed brief step 1): USB 0xa2 wIndex 1 = engine phases, 2 = shim
+        # counters, both per job. The emulator's clock is a model (1 ms per clock read), so only the
+        # structure is checked here: disjoint phases sum within the job time, counts match the job.
+        p1 = struct.unpack('<17I', read_in('prf1', 0xa2, 68, index=1)); p2 = struct.unpack('<17I', read_in('prf2', 0xa2, 68, index=2))
+        assert p1[0] == 0x31465250 and p2[0] == 0x32465250, (hex(p1[0]), hex(p2[0]))
+        prof = dict(zip(ip.PROFILE_ENGINE, p1[1:])); shim = dict(zip(ip.PROFILE_SHIM, p2[1:]))
+        print('profile (model ms):', prof); print('shim (model ms):', shim)
+        assert prof['total'] > 0 and prof['fills'] == expected_sweeps and prof['rows'] == rows_n - 38 and prof['bytes'] == len(document), prof
+        assert sum(prof[k] for k in ('convert', 'fill', 'input-wait', 'prepare', 'fire', 'advance', 'load', 'eject', 'home', 'head', 'other')) == prof['total'], prof
+        assert prof['prepare'] > 0 and prof['fire'] > 0 and prof['home'] == 0 and prof['head'] == 0, prof   # dry mode: no homing or head work
+        assert prof['skipped'] == expected_skipped, (prof['skipped'], expected_skipped)
+        assert expected_sweeps <= shim['cr-moves'] <= 2 * expected_sweeps and shim['lf-moves'] >= 1 and shim['arena'] <= 1091816, shim   # dry: no return before the first sweep, advances refuse without paper
+        assert any(l.startswith('[print] profile ms: total') for l in lines) and any(l.startswith('[print] shim ms: cr') for l in lines), lines[-6:]
         if quality:
             quality.verify()
         body = ip.ipp_message(0x0009, 12, [(0x47, b'attributes-charset', b'utf-8'), (0x48, b'attributes-natural-language', b'en'),
@@ -423,7 +471,7 @@ def main():
         status, headers, resp, _ = v.http(e, 1, 'POST', '/ipp/print', body, headers=('Content-Type: application/ipp',))
         ipp_status, attrs = ip.ipp_parse(resp)
         assert ipp_status == 0 and attrs['job-state'] == [(0x23, b'\x00\x00\x00\x09')], (ipp_status, attrs)
-        print(f'PASS ipp print: Print-Job accepted (job 1 processing), engine completed 1 page in {expected_sweeps} sweeps over 2 bands, no allocation inside a live band, Get-Job-Attributes reports completed')
+        print(f'PASS ipp print: Print-Job accepted (job 1 processing), engine completed 1 page in {expected_sweeps} sweeps over 2 bands ({expected_skipped} empty phases skipped), no allocation inside a live band, Get-Job-Attributes reports completed')
         return
     if os.environ.get('HYBRID_COLOUR_ONLY'):
         # Colour band: stock print mode 7 (C/M/Y groups 61 slots, black 81, 8-row groups), the
@@ -603,7 +651,7 @@ def main():
     loop_hits = [0]
     def loop_hook(cpu, address, size, user): loop_hits[0] += 1
     e.uc.hook_add(UC_HOOK_CODE, loop_hook, begin=0xc87f0, end=0xc87f0)
-    e.uc.hook_del(_ring_handle)        # the per-instruction debug ring makes the servo loop 20x slower
+    if _ring_handle is not None: e.uc.hook_del(_ring_handle)   # the per-instruction debug ring makes the servo loop 20x slower
     try:
         command('run_feed', 0x97, 8 | 0x800 | 0x400, 0, budget=60000000)   # fresh snapshot
     except Exception as exc:

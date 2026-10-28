@@ -177,7 +177,16 @@ uint32_t hybrid_last_result(void);
 unsigned hybrid_routines_run(void);
 bool hybrid_sheet_loaded(void);
 uint8_t *hybrid_manager_raster(unsigned group, unsigned *slots, unsigned *width, unsigned *stride, unsigned *size);
-#define APP_REQUEST_PRINT_JOB_STATUS 0xa2u  /* IN: 16 words "PRT1", see src/print_engine.c */
+#define APP_REQUEST_PRINT_JOB_STATUS 0xa2u  /* IN: 16 words "PRT1" (wIndex 0); wIndex 1/2 = job timing profile "PRF1"/"PRF2", see src/print_engine.c */
+/* Stock-shim timing counters (device time, cumulative since boot; the print
+ * engine reports per-job deltas). cr/lf: request to motion complete; wait:
+ * every stock event wait that was satisfied; timeout: waits that expired;
+ * delay: stock delay() calls; raminit: snapshot/decompress; prepare: the
+ * stock part of band preparation; finish: the post-executor hand-back;
+ * drain: the motion drain after a routine. Motion overlaps the waits. */
+struct hybrid_profile { uint32_t cr_ms, cr_moves, lf_ms, lf_moves, wait_ms, waits, timeout_ms, timeouts, delay_ms, delays, raminit_ms, prepare_ms, finish_ms, drain_ms, arena_peak, errors; };
+void hybrid_profile_get(struct hybrid_profile *out);
+void hybrid_profile_routines(uint32_t *out);   /* 22 words: per routine 1..10 (index 0 = none) delay ms | calls << 20, then wait ms | timeouts << 20 */
 #define APP_REQUEST_PRINT_JOB_CONTROL 0xa3u /* OUT: wValue 1 = dry mode (wIndex 0/1, emulator only), 2 = cancel the job */
 bool hybrid_raster_begin(unsigned total, unsigned manager);   /* USB 0x99: start receiving a band raster into print-buffer manager 0..6 (6 = black) */
 void hybrid_raster_feed(const uint8_t *data, unsigned len);

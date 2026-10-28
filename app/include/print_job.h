@@ -16,14 +16,14 @@
 struct urf_page { unsigned width, height, dpi, components, bpp, index, count; };
 struct urf_sink {
     bool (*page)(const struct urf_page *page);                 /* false: cannot take a page now (retry later) */
-    bool (*row)(const uint8_t *pixels, unsigned width, unsigned components);   /* false: not accepted, re-offered */
+    bool (*row)(const uint8_t *pixels, unsigned width, unsigned components, bool blank);   /* blank: every pixel white; false: not accepted, re-offered */
     void (*page_end)(void);
 };
 struct urf_decoder {
     const struct urf_sink *sink;
     struct urf_page page;
     unsigned stage, need, pos, x, repeat, row_lines, run, fill;
-    bool error, done, row_pending, page_pending;
+    bool error, done, row_pending, page_pending, blank;   /* blank: no non-white pixel decoded into the current row */
     uint8_t head[32];
     uint8_t pixel[4];
     uint8_t row[URF_MAX_WIDTH * 3u];
@@ -42,6 +42,7 @@ void print_engine_finish(void);            /* no more document bytes */
 void print_engine_cancel(void);
 enum print_engine_state print_engine_state(void);
 unsigned print_engine_status(uint8_t *out); /* USB 0xa2: 16 words */
+unsigned print_engine_profile(uint8_t *out, unsigned which); /* USB 0xa2 wIndex 1 = engine phases "PRF1", 2 = shim counters "PRF2" (per job) */
 bool print_engine_control(unsigned op, unsigned arg);   /* USB 0xa3: 1 dry mode (wIndex 0/1, emulator), 2 cancel */
 void print_engine_poll(void);
 

@@ -76,7 +76,7 @@ def build(output, variant, load_address=LOAD_ADDRESS, ram_end=None):
         objects.append(obj)
 
     elf = output / 'application.elf'
-    run('gcc', '-mcpu=arm946e-s', '-marm', '-nostdlib', '-Wl,--build-id=none',
+    run('gcc', '-mcpu=arm946e-s', '-marm', '-nostdlib', '-Wl,--build-id=none', '-Wl,--gc-sections',
         '-Wl,-T,' + str(ROOT / 'app.ld'), '-Wl,-Map,' + str(output / 'application.map'),
         f'-Wl,--defsym,APP_LOAD={load_address:#x}',
         f'-Wl,--defsym,APP_RAM_END={(ram_end or 0x20420000):#x}',

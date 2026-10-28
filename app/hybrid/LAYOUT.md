@@ -85,3 +85,19 @@ it at boot (no initialised data), the fixture RAM snapshot (62 pages from the
 maintenance, band and feed runs) has no page between `0x18200000` and
 `0x18771000`, and the shim's RAM init skips our app/bss range. The same
 argument placed the app itself.
+
+## RAM snapshot storage (2026-10-28)
+
+The boot-state snapshot pages are stored word-run encoded (`zero_rle` in
+`build.py`: 121344 raw bytes become about 91 KB) and packed behind the
+application inside the hole, overflowing into the erased stock tail from
+`0x1f3000`; the page table (magic `SNAP`, count, raw bytes, format 1, then
+RAM address / absolute flash source / decoded length per page) is the tail
+sector `0x1f2000`. The shim decodes a page in `snapshot_copy()`. This frees
+the hole's fixed 132 KiB application limit: the app may grow to roughly
+220 KB before the encoded pages no longer fit. Only the hole and the erased
+tail are written; the maintenance-coverage "untouched" sector runs are not
+free for the print path (`HYBRID_FLASH_READ_WATCH` showed the band builder
+reading `0x16b000`, `0x16c000`, `0x178000` and `0x179000` during a job, and a
+trial with pages there crashed the loader).
+

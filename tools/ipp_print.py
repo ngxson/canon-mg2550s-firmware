@@ -20,6 +20,11 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'app' / 'tools'))
 PAGE_W, PAGE_H, DPI = 2480, 3508, 300        # A4 at 300 dpi
 ENGINE_STATES = ['idle', 'receiving', 'printing', 'completed', 'canceled', 'failed']
 STEPS = ['none', 'homing', 'head', 'loaded', 'first', 'band', 'prepared', 'fired', 'advanced', 'ejected', 'homing2']
+# Job timing profile (USB 0xa2 wIndex 1/2), device milliseconds unless named as a count.
+# Engine phases are disjoint; `other` is the remainder of the job time. Shim motion
+# (cr/lf) runs inside the fire/advance/load/eject phases and overlaps the event waits.
+PROFILE_ENGINE = ['total', 'convert', 'rows', 'fill', 'fills', 'input-wait', 'prepare', 'fire', 'advance', 'load', 'eject', 'home', 'head', 'bytes', 'other', 'skipped']
+PROFILE_SHIM = ['cr', 'cr-moves', 'lf', 'lf-moves', 'wait', 'waits', 'timeout', 'timeouts', 'delay', 'delays', 'raminit', 'prepare', 'finish', 'drain', 'arena', 'errors']
 
 
 def urf_rows(rows, width, components):
@@ -107,8 +112,54 @@ def engine_status(dev):
     f = w[1]
     return {'state': ENGINE_STATES[f & 0xff], 'step': STEPS[f >> 8 & 0xff], 'waiting': bool(f & 0x10000), 'mono': bool(f & 0x20000),
             'page_open': bool(f & 0x40000), 'input_done': bool(f & 0x80000), 'sheet': bool(f & 0x100000), 'dry': bool(f & 0x400000),
-            'rows_in': w[2], 'band': w[3], 'bands': w[4], 'segment': w[5], 'pages': w[6], 'sweeps': w[7], 'failures': w[8], 'last_fail': w[9],
+            'rows_in': w[2], 'band': w[3], 'bands': w[4], 'segment': w[5] & 0xff, 'segments': w[5] >> 8 & 0xff, 'skipped': w[5] >> 16, 'pages': w[6], 'sweeps': w[7], 'failures': w[8], 'last_fail': w[9],
             'urf': (w[10], w[11], w[12], w[13]), 'ms': w[14], 'routines': w[15]}
+
+
+def engine_profile(dev):
+    """Both profile blocks of the current/last job: {'engine': {...}, 'shim': {...}}."""
+    import usb.core
+    out = {}
+    for index, magic, names, key in ((1, 0x31465250, PROFILE_ENGINE, 'engine'), (2, 0x32465250, PROFILE_SHIM, 'shim')):
+        try:
+            w = struct.unpack('<17I', bytes(dev.ctrl_transfer(0xc0, 0xa2, 0, index, 68, timeout=2000)))
+        except usb.core.USBError:
+            return None                                       # package without the profile (stalls wIndex 1/2)
+        assert w[0] == magic, hex(w[0])
+        out[key] = dict(zip(names, w[1:]))
+    try:
+        w = struct.unpack('<23I', bytes(dev.ctrl_transfer(0xc0, 0xa2, 0, 3, 92, timeout=2000)))
+        assert w[0] == 0x33465250, hex(w[0])
+        names = {1: 'cap', 2: 'uncap', 3: 'wipe', 4: 'clean', 5: 'prepare', 6: 'prep+run', 7: 'fire', 8: 'load', 9: 'eject', 10: 'advance'}
+        out['routines'] = {names[r]: {'delay_ms': w[1 + r] & 0xfffff, 'delays': w[1 + r] >> 20, 'wait_ms': w[12 + r] & 0xfffff, 'timeouts': w[12 + r] >> 20}
+                           for r in range(1, 11) if w[1 + r] or w[12 + r]}
+    except usb.core.USBError:
+        pass
+    return out
+
+
+def format_profile(p):
+    if p is None: return 'no timing profile on this package'
+    e, s = p['engine'], p['shim']
+    return (f"job {e['total']} ms: fire {e['fire']} (cr motion {s['cr']} in {s['cr-moves']} moves), prepare {e['prepare']} (stock part {s['prepare']}), "
+            f"advance {e['advance']} (lf {s['lf']} in {s['lf-moves']} moves), load {e['load']}, eject {e['eject']}, home {e['home']}, head {e['head']}, "
+            f"convert {e['convert']} ({e['rows']} rows), fill {e['fill']} ({e['fills']}), input-wait {e['input-wait']}, other {e['other']}; "
+            f"shim waits {s['wait']} ({s['waits']}), timeouts {s['timeout']} ({s['timeouts']}), delays {s['delay']} ({s['delays']}), raminit {s['raminit']}, "
+            f"finish {s['finish']}, drain {s['drain']}, arena {s['arena']}, errors {s['errors']}, bytes {e['bytes']}, empty phases skipped {e['skipped']}"
+            + (f"; per routine {p['routines']}" if p.get('routines') else ''))
+
+
+def claim_ipp(dev, escl_usb):
+    """An IPP-USB connection on whichever 7/1/4 interface the host OS has not claimed (macOS takes one after enumeration)."""
+    import usb.core
+    last = None
+    for intf in dev.get_active_configuration():
+        if (intf.bInterfaceClass, intf.bInterfaceSubClass, intf.bInterfaceProtocol) != (7, 1, 4): continue
+        try:
+            return escl_usb.Connection(dev, intf)
+        except usb.core.USBError as e:
+            last = e
+    raise last
 
 
 def drain_log(dev):
@@ -137,15 +188,13 @@ def main():
         if a.cancel:
             dev.ctrl_transfer(0x40, 0xa3, 2, 0, b'', timeout=1000); print('cancel requested')
         if a.status or a.cancel:
-            print(engine_status(dev)); print(drain_log(dev)); return
+            print(engine_status(dev)); print(format_profile(engine_profile(dev))); print(drain_log(dev)); return
         if not a.image: ap.error('image required')
         label = a.label or ('IPP' + time.strftime('%H%M'))
         page = page_from_image(a.image, label, a.grey, a.scale)
         document = urf_document([page])
         print(f'{label}: {a.image.name} -> URF {len(document)} bytes ({"W8" if a.grey else "SRGB24"} {PAGE_W}x{PAGE_H})')
-        cfg = dev.get_active_configuration()
-        intf = next(i for i in cfg if (i.bInterfaceClass, i.bInterfaceSubClass, i.bInterfaceProtocol) == (7, 1, 4))
-        conn = escl_usb.Connection(dev, intf)
+        conn = claim_ipp(dev, escl_usb)
         drain_log(dev)
         t0 = time.monotonic()
         status, headers, body = conn.request('POST', '/ipp/print', print_job_request(document, label, grey=a.grey), 'application/ipp', timeout=1800000)
@@ -162,6 +211,7 @@ def main():
             if s['state'] in ('completed', 'canceled', 'failed', 'idle'): break
             time.sleep(3)
         print('done:', s['state'], f'{time.monotonic() - t0:.0f}s')
+        print('profile:', format_profile(engine_profile(dev)))
     finally:
         usb.util.dispose_resources(dev)
 
