@@ -54,7 +54,18 @@ def main():
     assert not e.spi_writes and not e.cpu_flash_stores and not r['faults']
     assert audit['registration_intact'] and audit['protected_prefix_unchanged'] and audit['full_image_unchanged']
     assert sum(x['bytes'] for x in e.native_ram_clears)==0x800000
-    assert int.from_bytes(e.uc.mem_read(0xe00008f4,4),'little')==84
+    pwr_state=int.from_bytes(e.uc.mem_read(0xe00008f4,4),'little')
+    assert pwr_state&0xff==84
+    if m.get('ink_off_boot'):
+        # one-shot boot re-assert ran to completion and set both monitoring-off
+        # bits in the EEPROM working cache (input eeprom.bin has 0x22c=0x0c:
+        # BK set, CL clear). The physical 24C08 write is stock's deferred group
+        # flush (same path as the verified USB 0xd5 override) and may land
+        # after this 450-tick window; the cache is the durable in-RAM state.
+        assert pwr_state&0x80000000, 'ink-off boot re-assert did not complete'
+        assert e.uc.mem_read(0x1878e200+0x22c,1)[0]&0x18==0x18, 'ink-off bits not both set in the EEPROM working cache'
+    else:
+        assert pwr_state==84
     assert e.pcs[0x50144]==1 and e.pcs[0x4a1d4]==1 and e.pcs[0x509e8]==1
     assert e.pcs[0x113c7c]==0 and not e.usb_errors
     state=list(e.uc.mem_read(0x1804099c,4))

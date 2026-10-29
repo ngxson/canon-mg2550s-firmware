@@ -1,0 +1,144 @@
+{
+  "status": "Running stock experiment with guarded restart/update and stock USB management path",
+  "startup_smoke": false,
+  "runtime": true,
+  "runtime_patches": [
+    {
+      "address": "0x126b2",
+      "original": "1400069a",
+      "replacement": "fdf7d3fe",
+      "purpose": "Stock USB request 0x30007 enters held rescue before queuing or EEPROM latch writes"
+    },
+    {
+      "address": "0x154146",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x154162",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x15417e",
+      "original": "10b53820",
+      "replacement": "07dffee7",
+      "purpose": "Intercept reset before timer shutdown and calls into replaced boot code"
+    },
+    {
+      "address": "0x11004",
+      "original": "190000eb",
+      "replacement": "080000ef",
+      "purpose": "Direct native app restart entry also enters our held rescue"
+    },
+    {
+      "address": "0x11020",
+      "original": "7dcc03fa",
+      "replacement": "0000a0e1",
+      "purpose": "Our MGAP and bootloader checks replace the incompatible native first-64-KiB checksum"
+    },
+    {
+      "address": "0x113f16",
+      "original": "10b50400",
+      "replacement": "01207047",
+      "purpose": "Observation mode reports a wake request at the standby eligibility check, using the native abort-standby branch before clocks and IRQs change"
+    },
+    {
+      "address": "0x12c7e2",
+      "original": "15490020896a",
+      "replacement": "e3f64bfe0020",
+      "purpose": "Read real panel keys with one startup Power pulse, then replay displaced r0=0; stock handles debounce and power-on"
+    },
+    {
+      "address": "0x111eee",
+      "original": "fff791fd",
+      "replacement": "fef6f7fa",
+      "purpose": "Ink-level reads (module 2 / group 0x1c = inkLevel_0..3) return full; the displaced field-resolve call is replayed for every other field"
+    },
+    {
+      "address": "0x111eda",
+      "original": "fff79bfd",
+      "replacement": "fef617fb",
+      "purpose": "Ink-level writes (module 2 / group 0x1c) are dropped; all other field writes replay the displaced resolve and proceed"
+    },
+    {
+      "address": "0xcd6cc",
+      "original": "214840787047",
+      "replacement": "00207047c046",
+      "purpose": "get AccessCoverCtrl (0x1807af92) always returns 0=closed (movs r0,#0; bx lr; nop); cover-open error never raised"
+    }
+  ],
+  "native_cpu": false,
+  "native_startup": true,
+  "checkpoint": null,
+  "irq_snapshot": 0,
+  "stay_awake": true,
+  "irq_snapshot_record_version": null,
+  "auto_power": true,
+  "telemetry": false,
+  "ink_clamp": true,
+  "fake_door": true,
+  "shim_symbols": {
+    "mg_boot_vector_api": "0x40",
+    "smoke_svc": "0x10210",
+    "caught_svc": "0x1025c",
+    "smoke_undef": "0x10264",
+    "smoke_pabort": "0x10274",
+    "smoke_dabort": "0x10284",
+    "smoke_reserved": "0x10294",
+    "smoke_fiq": "0x102a4",
+    "smoke_rescue": "0x102b4",
+    "stockapp_register": "0x102d4",
+    "stockapp_prepare_rescue": "0x103b8",
+    "stockapp_event_hook": "0x1045c",
+    "management_rescue": "0x10474",
+    "stockapp_power_key": "0x1047c",
+    "stockapp_management_event": "0x10498",
+    "stockapp_power_sample": "0x104b0",
+    "ink_getter_veneer": "0x104e0",
+    "ink_setter_veneer": "0x1050c",
+    "stockapp_native_startup": "0x10530",
+    "shim_entry": "0x200200f0",
+    "registration_failed": "0x20020134",
+    "__stockapp_register_veneer": "0x20020160",
+    "__smoke_rescue_veneer": "0x20020168",
+    "__stockapp_native_startup_veneer": "0x20020170"
+  },
+  "smoke_stop_patch": null,
+  "registered_vectors": true,
+  "stock_sha256": "4b032367cff5976aeb426c8723e08d3c431a38e622e245a614791a3e5067e533",
+  "protected_prefix_sha256": "f22df711f7afd8c3804c43e2d491b8029af59a49f6190c2cafe1097a702e4b92",
+  "stage0_sha256": "b5383aa702982e413601684c9982257ab4aced095e83769799740aaa145c30e8",
+  "candidate_sha256": "35c12ca7a4e69d6cb6a6376b1d76a2c5a714369597f892c2a496852e85a29c90",
+  "package_sha256": "b32531fd4705b062442573f9d59e32a0ce88367943fcdb43049c2815a61d77c4",
+  "payload_length": 2031584,
+  "payload_ram_end": "0x2020ffe0",
+  "shim_flash": "0x10110",
+  "shim_ram": "0x200200f0",
+  "shim_bytes": 1116,
+  "helper_veneer_patches": [
+    {
+      "pc": "0x1509c8",
+      "original_target": "0x10000",
+      "target": "0x10d00"
+    }
+  ],
+  "stock_dependencies": [
+    "stock runtime, RTOS, handlers and device drivers",
+    "stock short delay helpers copied into app-slot padding"
+  ],
+  "source_sha256": {
+    "emu/stockapp/build.py": "3aa3a694340908d2cff9d335625a319aae079a6d2949f0d24af2077b471061c2",
+    "app/stockapp/smoke/entry.S": "bfc8786f51378abae620d1e55ae365c15d0d6dab118a1f2607664599cb038b8c",
+    "app/stockapp/smoke/control.c": "cbe618e6b00729996f896d9665babe743e028ce938869525fadb5b723a19d1b6",
+    "app/stockapp/smoke/shim.ld": "2e70393cbee72188fdd1341f216ebd0aa74a19a1760fb7897d0f9d78e057fde3",
+    "bootloader/include/vectors.h": "1c675298f52de31b488cfc59559e9c48f6d5366d5e281928090a69ff205d2c91",
+    "app/stockapp/runtime/hook.S": "9e010812007ee245c25bb620c96ba4031d9611c18f6d9ce626734a8eafeafc92",
+    "app/stockapp/runtime/management.c": "b741f81ab2d611e2670dad40fe66b80699e73773410de1e10f82c3d28e26cddf",
+    "app/stockapp/runtime/auto_power.c": "65d9a2e9bc977c82e82127fecae25ae306f3b9afe68b83433e909d5dd38894f9",
+    "app/patch/ink_hook.S": "a7d0d7270733517a5d87d4fb7f970ef179b3e42f9da5ebce16463062441d16b7",
+    "app/stockapp/runtime/native_startup.c": "2f9a94f80375fca0c7671912ed0dcb56351070758fe4daf426498fa40bcca339"
+  }
+}

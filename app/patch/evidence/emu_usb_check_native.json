@@ -1,0 +1,33 @@
+{
+  "reports": [
+    {
+      "candidate": "app/patch/build/candidate.bin",
+      "run_error": null,
+      "final_pc": "0x104da2",
+      "emu_error": null,
+      "stop_reason": "tick limit at idle",
+      "svcs": 33489,
+      "irqs": 2884,
+      "usb_state_block": [
+        5,
+        0,
+        0,
+        0
+      ],
+      "usb_counters": {
+        "HardPwrOn": 0,
+        "SoftPwrOn": 1,
+        "DoPwrOff": 0,
+        "VBusOn": 0,
+        "BusRst": 0,
+        "BusRstEnd": 0,
+        "SetAddrEnd": 0,
+        "SetCfgEnd": 0,
+        "VBusOff": 0,
+        "VBusOffEnd": 0
+      },
+      "usb_phy_0xc0780804": 2,
+      "usb_connect_0xc0c88024": 256
+    }
+  ]
+}

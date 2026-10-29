@@ -97,7 +97,7 @@ and the owner-wait completion.
 back): bars, lines and the seam bar continuous. The left magenta bar's left
 edge is slightly ragged here and on QI272343 but not on QI272327: noted,
 not investigated. Package `74e7174f…` (blank-row flags in the planner) is
-installed afterwards, emulator-validated, not yet printed.
+installed afterwards, emulator-validated, not yet printed. It then did not enumerate on USB (2026-10-28); `c18905b7…` was reinstalled.
 
 ## Flash layout change
 

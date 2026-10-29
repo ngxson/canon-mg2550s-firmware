@@ -87,8 +87,8 @@ def request_reboot(dev, mode):
     usb.util.dispose_resources(dev)
 
 
-def enter_bootloader(serial_number=None):
-    dev, info = wait_device(serial_number=serial_number)
+def enter_bootloader(serial_number=None, timeout=15):
+    dev, info = wait_device(timeout=timeout, serial_number=serial_number)
     if info['mode'] == 'application':
         request_reboot(dev, 1)
         # The hybrid app (2 MiB image, two CRC passes) takes about 20 s to hand over.
@@ -309,6 +309,8 @@ def main():
     sub = parser.add_subparsers(dest='command', required=True)
     sub.add_parser('status')
     stay = sub.add_parser('stay'); stay.add_argument('--transport', choices=('usb', 'i2c'), default='usb')
+    stay.add_argument('--wait', type=float, default=15,
+                      help='Seconds to poll for a USB device; ~90 to catch the 5 s window after a power cycle')
     reboot = sub.add_parser('reboot')
     reboot.add_argument('--mode', choices=('normal', 'bootloader', 'application'),
                         default='bootloader', help='Reboot destination (default: persistent bootloader)')
@@ -350,7 +352,7 @@ def main():
                                         args.serial, args.report), indent=2))
     elif args.command == 'stay':
         if args.transport == 'usb':
-            dev = enter_bootloader(args.serial); usb.util.dispose_resources(dev)
+            dev = enter_bootloader(args.serial, args.wait); usb.util.dispose_resources(dev)
         else:
             with Bridge(args.port) as bridge: bridge.command(3)
     elif args.command == 'reboot':
@@ -397,7 +399,8 @@ def main():
                 with Bridge(args.port) as bridge: bridge.command(4)
             # USB might deliberately be disconnected for an I2C-only update.
             if args.transport == 'usb':
-                dev, info = wait_device('application', serial_number=args.serial)
+                # The hybrid app checks its 2 MiB image and runs stock init before USB: ~60 s.
+                dev, info = wait_device('application', timeout=120, serial_number=args.serial)
                 usb.util.dispose_resources(dev); print(json.dumps(info, indent=2))
 
 
